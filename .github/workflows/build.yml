@@ -1,0 +1,54 @@
+name: build
+
+on:
+  push:
+    branches: [master, development]
+  pull_request:
+    branches: [master, development]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_VERSION: 8.0.x
+  CONFIGURATION: Release
+
+jobs:
+  build_test_pack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore TheSingularityWorkshop.Gestures.slnx
+
+      - name: Build
+        run: dotnet build TheSingularityWorkshop.Gestures.slnx --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      - name: Test
+        run: dotnet test TheSingularityWorkshop.Gestures.slnx --configuration ${{ env.CONFIGURATION }} --no-build --logger "trx;LogFileName=gestures-tests.trx"
+
+      - name: Pack
+        run: dotnet pack src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.csproj --configuration ${{ env.CONFIGURATION }} --no-build --output artifacts/packages
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gestures-nuget-package
+          path: artifacts/packages/*.nupkg
+          if-no-files-found: error
+
+  publish_nuget:
+    if: ${{ github.event_name == 'push' && false }}
+    needs: build_test_pack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish is deliberately disabled
+        run: echo "NuGet publishing requires explicit approval and a reviewed version."
