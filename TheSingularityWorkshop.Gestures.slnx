@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.csproj" />
+  <Project Path="tests/TheSingularityWorkshop.Gestures.Tests/TheSingularityWorkshop.Gestures.Tests.csproj" />
+</Solution>
