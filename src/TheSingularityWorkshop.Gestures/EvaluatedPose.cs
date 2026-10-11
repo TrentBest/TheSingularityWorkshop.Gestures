@@ -12,7 +12,7 @@ public sealed class EvaluatedPose
         NormalizedProgress = normalizedProgress;
         IsComplete = isComplete;
         LocalTransforms = new ReadOnlyDictionary<string, PoseTransform>(
-            new Dictionary<string, PoseTransform>(localTransforms, StringComparer.Ordinal));
+            localTransforms.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal));
         RootOffset = rootOffset;
     }
 
