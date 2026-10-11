@@ -63,7 +63,7 @@ dotnet pack src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.
 - The CPU evaluator is the reference implementation against which later GPU evaluators can be tested.
 - The initial transform representation uses System.Numerics, not host-engine types.
 
-See [Architecture](docs/ARCHITECTURE.md), [Data Model](docs/DATA_MODEL.md), [Determinism](docs/DETERMINISM.md), and [Roadmap](docs/ROADMAP.md).
+See [Architecture](docs/ARCHITECTURE.md), [Data Model](docs/DATA_MODEL.md), [Determinism](docs/DETERMINISM.md), [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md), and [Roadmap](docs/ROADMAP.md).
 
 ## Release discipline
 
