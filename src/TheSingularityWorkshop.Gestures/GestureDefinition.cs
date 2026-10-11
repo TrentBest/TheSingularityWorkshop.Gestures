@@ -16,7 +16,7 @@ public sealed class GestureDefinition
             throw new ArgumentException("A Gesture requires at least two keyframes.", nameof(keyframes));
         if (Keyframes[0].Time != 0d || Keyframes[^1].Time != 1d)
             throw new ArgumentException("Gesture keyframes must begin at time 0 and end at time 1.", nameof(keyframes));
-        for (var i = 1; i < Keyframes.Length; i++)
+        for (var i = 1; i < Keyframes.Count; i++)
             if (Keyframes[i - 1].Time >= Keyframes[i].Time)
                 throw new ArgumentException("Keyframe times must be strictly increasing.", nameof(keyframes));
 
