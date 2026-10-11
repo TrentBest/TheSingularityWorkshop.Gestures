@@ -1,54 +1,106 @@
-name: build
+name: Build, test, and package Gestures
 
 on:
   push:
-    branches: [master, development]
+    branches:
+      - "**"
   pull_request:
-    branches: [master, development]
+    branches:
+      - master
+      - development
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the verified package to NuGet.org"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
 
-env:
-  DOTNET_VERSION: 8.0.x
-  CONFIGURATION: Release
-
 jobs:
-  build_test_pack:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: 8.0.x
 
       - name: Restore
         run: dotnet restore TheSingularityWorkshop.Gestures.slnx
 
       - name: Build
-        run: dotnet build TheSingularityWorkshop.Gestures.slnx --configuration ${{ env.CONFIGURATION }} --no-restore
+        run: dotnet build TheSingularityWorkshop.Gestures.slnx --configuration Release --no-restore
 
-      - name: Test
-        run: dotnet test TheSingularityWorkshop.Gestures.slnx --configuration ${{ env.CONFIGURATION }} --no-build --logger "trx;LogFileName=gestures-tests.trx"
+      - name: Test with coverage
+        run: >
+          dotnet test TheSingularityWorkshop.Gestures.slnx
+          --configuration Release
+          --no-build
+          --verbosity normal
+          --collect:"XPlat Code Coverage;Format=cobertura"
+          --results-directory ./TestResults
+          --logger "trx;LogFileName=testresults.trx"
+
+      - name: Prepare coverage report
+        shell: bash
+        run: |
+          set -euo pipefail
+          coverage_file="$(find ./TestResults -type f -name 'coverage.cobertura.xml' -print -quit)"
+          if [[ -z "$coverage_file" ]]; then
+            echo "No coverage.cobertura.xml file was produced."
+            find ./TestResults -maxdepth 4 -type f -print || true
+            exit 1
+          fi
+          cp "$coverage_file" ./TestResults/coverage.cobertura.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v6
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: TrentBest/TheSingularityWorkshop.Gestures
+          files: ./TestResults/coverage.cobertura.xml
+          fail_ci_if_error: true
 
       - name: Pack
-        run: dotnet pack src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.csproj --configuration ${{ env.CONFIGURATION }} --no-build --output artifacts/packages
+        run: dotnet pack src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.csproj --configuration Release --no-build --output ./artifacts
 
-      - name: Upload package artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload NuGet package artifact
+        uses: actions/upload-artifact@v7
         with:
           name: gestures-nuget-package
-          path: artifacts/packages/*.nupkg
-          if-no-files-found: error
+          path: ./artifacts/*.nupkg
+
+      - name: Upload test and coverage artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: gestures-test-results
+          path: ./TestResults/*
 
   publish_nuget:
-    if: ${{ github.event_name == 'push' && false }}
-    needs: build_test_pack
-    runs-on: ubuntu-latest
+    needs: build-and-test
+    runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - name: Publish is deliberately disabled
-        run: echo "NuGet publishing requires explicit approval and a reviewed version."
+      - name: Download NuGet package
+        uses: actions/download-artifact@v8
+        with:
+          name: gestures-nuget-package
+          path: ./artifacts
+
+      - name: Authenticate with NuGet Trusted Publishing
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: TheSingularityWorkshop
+
+      - name: Publish package to NuGet.org
+        run: dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
