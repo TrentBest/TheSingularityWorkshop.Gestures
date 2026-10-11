@@ -12,7 +12,7 @@ public sealed class GestureDefinition
         ArgumentNullException.ThrowIfNull(keyframes);
         Id = id;
         Keyframes = keyframes.ToArray();
-        if (Keyframes.Length < 2)
+        if (Keyframes.Count < 2)
             throw new ArgumentException("A Gesture requires at least two keyframes.", nameof(keyframes));
         if (Keyframes[0].Time != 0d || Keyframes[^1].Time != 1d)
             throw new ArgumentException("Gesture keyframes must begin at time 0 and end at time 1.", nameof(keyframes));
