@@ -4,6 +4,8 @@
 [![Coverage](https://img.shields.io/codecov/c/github/TrentBest/TheSingularityWorkshop.Gestures/development?style=flat-square&logo=codecov)](https://codecov.io/gh/TrentBest/TheSingularityWorkshop.Gestures/branch/development)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+![](docs/assets/dividers/star-gold.svg)
+
 **Procedural physical action, represented as data and evaluated deterministically.**
 
 TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluator for physical procedures: pose keyframes, interpolation, progression, stable individual variation, and evaluated pose output. It lets a capability describe how an interaction physically happens without requiring every consumer to author a conventional baked animation clip.
