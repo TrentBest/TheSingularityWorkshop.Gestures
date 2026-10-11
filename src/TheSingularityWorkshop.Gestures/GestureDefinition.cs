@@ -11,7 +11,7 @@ public sealed class GestureDefinition
             throw new ArgumentException("Gesture id must not be empty.", nameof(id));
         ArgumentNullException.ThrowIfNull(keyframes);
         Id = id;
-        Keyframes = keyframes.ToArray();
+        Keyframes = Array.AsReadOnly(keyframes.ToArray());
         if (Keyframes.Count < 2)
             throw new ArgumentException("A Gesture requires at least two keyframes.", nameof(keyframes));
         if (Keyframes[0].Time != 0d || Keyframes[^1].Time != 1d)
@@ -20,7 +20,7 @@ public sealed class GestureDefinition
             if (Keyframes[i - 1].Time >= Keyframes[i].Time)
                 throw new ArgumentException("Keyframe times must be strictly increasing.", nameof(keyframes));
 
-        Anchors = anchors?.ToArray() ?? [];
+        Anchors = Array.AsReadOnly(anchors?.ToArray() ?? []);
         var names = new HashSet<string>(StringComparer.Ordinal);
         foreach (var anchor in Anchors)
         {
