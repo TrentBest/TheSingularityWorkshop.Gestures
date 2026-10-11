@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <PackageId>TheSingularityWorkshop.Gestures</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>The Singularity Workshop</Authors>
+    <Description>Backend-neutral procedural Gesture models and deterministic CPU reference evaluation.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.Gestures</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>procedural-animation;pose;gesture;simulation;gamedev</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>
