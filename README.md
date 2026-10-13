@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
+
 # ✳️ 00 The Singularity Workshop — Gestures
 
 [![Build](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/actions/workflows/build.yml/badge.svg?branch=development)](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/actions/workflows/build.yml)
