@@ -16,6 +16,7 @@ public sealed class GestureKeyframe
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Transform names must not be empty.", nameof(localTransforms));
+            transform.ValidateFinite(nameof(localTransforms));
             copy.Add(name, transform);
         }
         Time = time;
