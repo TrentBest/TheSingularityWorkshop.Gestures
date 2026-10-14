@@ -21,6 +21,8 @@
 
 ## Milestone 2 — Rig and constraints
 
+- [x] Add a conceptual SVG showing humanoid, quadruped, and articulated-mechanism topologies without prescribing a universal skeleton.
+- [ ] Define the rig contract: hierarchy ownership, stable transform identity, local/world-space boundary, and target-rig mapping.
 - [ ] Define optional hierarchy metadata without requiring a universal humanoid skeleton.
 - [ ] Evaluate root-motion extraction versus root presentation offset.
 - [ ] Define attachment/anchor resolution expectations for consumers.
