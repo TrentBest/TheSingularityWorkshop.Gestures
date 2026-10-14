@@ -11,8 +11,8 @@ The program uses two real systems:
 1. **FSM_API** advances the demonstration through `Ready → Running → Complete`.
 2. **TheSingularityWorkshop.Gestures.GestureEvaluator** evaluates the five-keyframe `GestureDefinition` at 49 elapsed-time samples.
 
-The SVG polyline and marker animation values are serialized from the returned `EvaluatedPose.LocalTransforms["root"]` positions. The segments are straight because the current evaluator uses linear position interpolation. The browser animates between the serialized samples; it does not execute C# or call FSM_API at display time.
+The SVG polyline and marker animation values are serialized from the returned `EvaluatedPose.LocalTransforms["root"]` values. The marker position comes from evaluated position, its heading comes from the evaluated quaternion rotation, and its size comes from evaluated scale. The segments are straight because the current evaluator uses linear position interpolation. The browser animates between the serialized samples; it does not execute C# or call FSM_API at display time.
 
-This is deliberately a small, honest demonstration of the current contract—not a rig hierarchy, IK solver, collision model, or physics simulation. The local transform is used as a two-dimensional projection coordinate for this scene. The evaluator still computes its rotation and scale outputs, but the plot focuses on position/progression.
+This is deliberately a small, honest demonstration of the current contract—not a rig hierarchy, IK solver, collision model, or physics simulation. The local transform is used as a two-dimensional projection coordinate for this scene. The marker makes position, rotation, and scale visible without claiming a rig hierarchy that the evaluator does not currently resolve.
 
 The build workflow runs the generator and uploads the generated SVG as a workflow artifact. Package publication remains disabled.
