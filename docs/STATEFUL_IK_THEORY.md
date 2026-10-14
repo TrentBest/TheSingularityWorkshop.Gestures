@@ -226,7 +226,7 @@ Compare at equal quality and identical scenarios. Include simple cases where a c
 
 The current PlanarKinematics implementation is a deliberately small, engine-neutral two-link CPU reference. It calculates FK, generates two IK candidates, constrains those candidates, and measures endpoint error. That solver itself has no temporal memory, hierarchical rig evaluator, collision model, physics integration, damage model, or GPU implementation.
 
-A separate [Stateful Hinge Prototype](STATEFUL_IK_PROTOTYPE.md) now demonstrates one retained angle, a speed-limited step toward intent, the three movement classifications, joint-range enforcement, and explicit reporting when a requested target remains unmet. It is a kinematic controller—not a physical hinge simulation—and it does not yet propagate parent transforms or evaluate a joint hierarchy.
+A separate [Stateful IK Prototype](STATEFUL_IK_PROTOTYPE.md) now demonstrates a retained hinge, a speed-limited step toward intent, the three movement classifications, joint-range enforcement, explicit reporting when a requested target remains unmet, and a planar parent/child hierarchy. The hierarchy currently performs full reevaluation so it can serve as a correctness baseline; incremental invalidation and physical integration remain open work.
 
 These small experiments establish testable building blocks, not proof of the complete Stateful IK architecture or a performance advantage.
 
