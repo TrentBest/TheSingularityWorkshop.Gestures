@@ -301,6 +301,41 @@ public sealed class StatefulJointNodeTests
         Assert.Throws<ArgumentOutOfRangeException>(() => new StatefulJointNode("joint", float.PositiveInfinity, hinge));
     }
 
+    [Fact]
+    public void IncomingStructuralJointBreakIsReportedWithoutChangingKinematicTopology()
+    {
+        var root = CreateNode("root");
+        var breakable = new StatefulBreakableJoint(100f, 25f);
+        var child = new StatefulJointNode(
+            "child",
+            1f,
+            new StatefulHinge(0f, -MathF.PI, MathF.PI),
+            breakable);
+        root.AddChild(child);
+        root.EvaluateFull(Vector2.Zero);
+
+        var result = child.ObserveIncomingStructuralLoad(101f, 0f);
+
+        Assert.Equal(JointIntegrityState.Broken, result.Integrity);
+        Assert.True(result.BrokeThisStep);
+        Assert.Same(root, child.Parent);
+        Assert.Contains(child, root.Children);
+        Assert.Same(breakable, child.IncomingStructuralJoint);
+        Assert.Equal(2, root.EvaluateIncremental(Vector2.Zero));
+        Assert.True(child.HasEvaluated);
+    }
+
+    [Fact]
+    public void IncomingStructuralLoadRequiresAParentAndConfiguredJoint()
+    {
+        var root = CreateNode("root");
+        var childWithoutJoint = CreateNode("child");
+        root.AddChild(childWithoutJoint);
+
+        Assert.Throws<InvalidOperationException>(() => root.ObserveIncomingStructuralLoad(1f, 1f));
+        Assert.Throws<InvalidOperationException>(() => childWithoutJoint.ObserveIncomingStructuralLoad(1f, 1f));
+    }
+
     private static StatefulJointNode CreateNode(string name) =>
         new(name, 1f, new StatefulHinge(0f, -MathF.PI, MathF.PI));
 
