@@ -22,7 +22,8 @@
 - [x] Compare incremental and full evaluation across a deterministic event sequence and branched hierarchy.
 - [x] Exercise incremental propagation through a 256-joint chain.
 - [x] Test recovery after an incremental evaluation detects a non-finite derived transform.
-- [ ] Separate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
+- [x] Define a data-only contact observation handoff from the external physics/domain owner; Gestures does not infer physical contact or support.
+- [ ] Fully separate and integrate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
 - [ ] Model contact as an outcome: establish, load-test, slip/release, and feed measured contact back into the affected hierarchy (rock-climbing example).
 - [x] Prototype a single stateful hinge without assuming an FSM_API dependency; document its contract and limitations.
 - [x] Build a small parent/child hierarchy with explicit transform propagation and an initial dirty-path incremental update.
