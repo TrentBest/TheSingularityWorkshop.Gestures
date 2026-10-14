@@ -34,14 +34,14 @@ FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: 0,
 
 var handle = FSM_API.Create.CreateInstance("GestureMotionShowcase", context, group);
 context.StartRequested = true;
-handle.EvaluateConditions();
+handle.Update(group);
 
 var definition = CreateDefinition();
 var samples = new List<Sample>(sampleCount);
 for (var i = 0; i < sampleCount; i++)
 {
     context.ElapsedSeconds = duration * i / (sampleCount - 1);
-    handle.EvaluateConditions();
+    handle.Update(group);
     var evaluated = GestureEvaluator.Evaluate(definition, context.ElapsedSeconds, duration,
         GestureVariation.None, identitySeed: 0);
     var root = evaluated.LocalTransforms["root"];
