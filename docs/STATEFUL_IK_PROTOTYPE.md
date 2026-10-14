@@ -10,6 +10,7 @@ This is the first executable experiment in the Stateful IK research track. It no
 
 - The initial angle must lie inside the configured inclusive legal range.
 - Each update moves toward the requested angle by no more than speed × elapsed time.
+- The legal minimum and maximum are exposed as read-only values so callers can verify that geometric constraints agree with retained hinge constraints.
 - An out-of-range request is clamped to the nearest legal angle, but the original request remains visible and `TargetReached` remains false when the request itself was not reached.
 - `JointLimitConstrained` tells the caller when the requested angle fell outside the configured interval.
 - `JointMotionState` classifies the *observed angle change* as `MovingPositive`, `MovingNegative`, or `Stationary`, using a configurable angular tolerance.
@@ -40,7 +41,7 @@ The returned geometric solution is the requested kinematic destination; the retu
 
 This is the first connected control loop, not yet a complete feedback controller. It does not consume contact observations to select alternate targets, optimize whole-body balance, integrate dynamics, or solve 3D/multi-chain IK. Those are separate research steps and should be added with explicit tests rather than implied by the current API.
 
-The new tests cover speed-limited progress, convergence to a reachable target, honest reporting of an unreachable target, world-anchor translation, invalid input, and hierarchy validation.
+The tests cover speed-limited progress, convergence to a reachable target, honest reporting of an unreachable target, world-anchor translation, invalid input, hierarchy validation, and rejection of solver/hinge limit mismatches. The controller rejects mismatched ranges at construction instead of allowing a geometric solution that the retained hinges can never reach.
 
 ## Contact is an observation, not an IK calculation
 
