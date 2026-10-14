@@ -12,6 +12,7 @@
 - [x] Stateful IK research theory, animated hierarchy concept, and tracked research issue; the full architecture remains unimplemented and unbenchmarked.
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
 - [x] Confirm CI is green on the IK reference pull request after edge-case tests.
+- [x] Require solver angle limits to exactly match retained hinge limits; test rejection of mismatches.
 - [ ] Review public API names and package metadata before alpha publication.
 
 ## Stateful IK research track — single-joint prototype stage
@@ -24,6 +25,7 @@
 - [x] Test recovery after an incremental evaluation detects a non-finite derived transform.
 - [x] Define a data-only contact observation handoff from the external physics/domain owner; Gestures does not infer physical contact or support.
 - [ ] Fully separate and integrate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
+- [x] Add a deterministic contact-observation-to-recovery recommendation policy, with tests for supported, slipping, unsupported, absent, released, and unknown states.
 - [ ] Feed externally measured contact outcomes into target selection and recovery decisions; retain physics/domain ownership of contact, load-bearing, slip, and release (rock-climbing example).
 - [x] Prototype a single stateful hinge without assuming an FSM_API dependency; document its contract and limitations.
 - [x] Connect constrained two-link IK to retained hinges and measured hierarchy output in a speed-limited kinematic control loop; test reachable convergence, unreachable targets, and world-anchor offsets.
