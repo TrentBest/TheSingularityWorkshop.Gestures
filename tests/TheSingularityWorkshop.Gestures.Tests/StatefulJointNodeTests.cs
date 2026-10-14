@@ -248,6 +248,24 @@ public sealed class StatefulJointNodeTests
     }
 
     [Fact]
+    public void FailedIncrementalEvaluationKeepsHierarchyDirtyForRecovery()
+    {
+        var rootHinge = new StatefulHinge(float.MaxValue, 0f, float.MaxValue);
+        var childHinge = new StatefulHinge(float.MaxValue, 0f, float.MaxValue);
+        var root = new StatefulJointNode("root", 1f, rootHinge);
+        var child = new StatefulJointNode("child", 1f, childHinge);
+        root.AddChild(child);
+
+        Assert.Throws<InvalidOperationException>(() => root.EvaluateIncremental(Vector2.Zero));
+
+        childHinge.Advance(0f, 1f, float.MaxValue);
+        Assert.Equal(1, root.EvaluateIncremental(Vector2.Zero));
+        Assert.True(float.IsFinite(child.WorldAngleRadians));
+        Assert.True(float.IsFinite(child.WorldEnd.X));
+        Assert.True(float.IsFinite(child.WorldEnd.Y));
+    }
+
+    [Fact]
     public void RejectsCyclesAndChildrenAlreadyAttachedToAnotherParent()
     {
         var root = CreateNode("root");
