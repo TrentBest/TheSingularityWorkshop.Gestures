@@ -78,6 +78,7 @@ public sealed class StatefulJointNode
 
         child.Parent = this;
         _children.Add(child);
+        MarkAncestorsDirty();
     }
 
     /// <summary>
