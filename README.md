@@ -30,9 +30,9 @@ Baked animation clips can be useful, but they often encode a finished performanc
 
 The ideal Gesture establishes the intended action. Each entity's stable seed and experience/context profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise.
 
-## 🔺 03 How
+## 🩵 03 How
 
-![](docs/assets/dividers/triangle-red.svg)
+![](docs/assets/dividers/teal.svg)
 
 ```text
 Capability / Gesture Provider
