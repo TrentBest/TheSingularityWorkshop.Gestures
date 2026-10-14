@@ -4,7 +4,7 @@
 
 Each keyframe has a time in the closed interval [0, 1]. A valid definition contains at least two frames, starts exactly at 0, ends exactly at 1, and uses strictly increasing times. This makes evaluation independent of the real duration chosen by the caller. Non-finite times are rejected when each keyframe is created.
 
-The transform map is keyed by stable rig transform names. This first version does not impose a humanoid skeleton or assume a fixed number of joints. A provider may use a soldier rig, a vehicle mechanism, a hatch, or another named transform hierarchy. Transform position, rotation, and scale components must be finite; malformed data is rejected at the data boundary instead of propagating NaN or infinity through evaluation. A zero-length quaternion is currently interpreted as identity by the reference interpolator.
+The transform map is keyed by stable rig transform names. This first version does not impose a humanoid skeleton or assume a fixed number of joints. A provider may use a soldier rig, a vehicle mechanism, a hatch, or another named transform hierarchy. Transform position, rotation, and scale components must be finite; malformed data is rejected at the data boundary instead of propagating NaN or infinity through evaluation. The reference interpolator treats zero-length and sufficiently small quaternions as identity. Quaternion normalization scales components before computing their length, avoiding overflow for very large finite rotations.
 
 ## Transform interpolation
 
