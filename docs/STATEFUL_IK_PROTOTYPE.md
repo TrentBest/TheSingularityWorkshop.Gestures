@@ -27,6 +27,6 @@ Incremental evaluation is an early correctness prototype, not yet a demonstrated
 
 ## Tests and next decisions
 
-The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, and a deterministic sequence compared against full reevaluation. Next, stress-test deep hierarchies and invalid-state recovery, then benchmark update counts and total runtime before making performance claims.
+The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, and a deterministic sequence compared against full reevaluation. Tests now also exercise a 256-joint chain, including a leaf-only change and a root change. Next, test recovery after invalid or interrupted evaluation, then benchmark update counts and total runtime before making performance claims.
 
 This experiment is a correctness baseline. No performance advantage is claimed.
