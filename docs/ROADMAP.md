@@ -19,12 +19,12 @@
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
 - [ ] Add deterministic golden test vectors and numerical tolerance policy.
 
-## Milestone 2 — Rig and constraints
+## Milestone 2 — Articulated targets and constraints
 
 - [x] Add a conceptual SVG showing humanoid, quadruped, and articulated-mechanism topologies without prescribing a universal skeleton.
-- [x] Write a non-binding rig contract proposal and list the decisions that require consumer evidence.
+- [x] Write a non-binding articulated-motion contract proposal and list the decisions that require consumer evidence.
 - [ ] Validate the draft contract with representative humanoid, quadruped, and mechanism examples.
-- [ ] Define the rig contract: hierarchy ownership, stable transform identity, local/world-space boundary, and target-rig mapping.
+- [ ] Define the articulated-target contract: hierarchy ownership, stable transform identity, local/world-space boundary, and target mapping.
 - [ ] Define optional hierarchy metadata without requiring a universal humanoid skeleton.
 - [ ] Evaluate root-motion extraction versus root presentation offset.
 - [ ] Define attachment/anchor resolution expectations for consumers.
