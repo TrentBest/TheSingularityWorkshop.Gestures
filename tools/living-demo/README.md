@@ -12,7 +12,7 @@ The program generates three coordinated living SVGs from the same evaluated samp
 
 - `docs/assets/gesture-motion.svg` shows three independently evaluated named-transform tracks.
 - `docs/assets/gesture-channels.svg` plots the root transform's X, Y, rotation, and scale channels over normalized time.
-- `docs/assets/gesture-target-agnostic.svg` applies the same evaluated root transform samples to three different illustrative target silhouettes in separate lanes.
+- `docs/assets/gesture-target-agnostic.svg` contrasts root motion with an anchored articulated tool whose illustrative links rotate within clamped joint-angle ranges.
 
 The program uses two real systems:
 
@@ -23,6 +23,6 @@ The definition contains three named transforms: `root`, `tool`, and `load`. For 
 
 **Important boundary:** the evaluator interpolates named transforms independently. This demonstration does not compose a rig hierarchy, resolve parent-child relationships, run IK, detect collisions, or simulate physical forces. The labels `root`, `tool`, and `load` are example data keys, not proof that the evaluator understands a mechanical assembly. Their 2-D positions are projected into a shared diagram for visual comparison.
 
-The third scene deliberately separates motion data from target identity: all three target silhouettes receive the same evaluated root position, rotation, and scale samples. The drawings are presentation glyphs, not a simulation of target-specific behavior. The browser plays serialized samples; it does not execute C# or call FSM_API at display time. The build workflow regenerates all three SVGs, validates their XML, uploads them as artifacts, and checks that the committed assets match the C# output. Reduced-motion preferences are respected.
+The third scene contrasts the evaluated root transform on the humanoid and tracked-vehicle glyphs with a mounted articulated tool. The tool's base remains fixed; its two links rotate around joints using clamped illustrative angles derived from evaluated root rotation/scale. Those angles are not GestureEvaluator joint output and do not constitute a solved kinematic chain. The browser plays serialized samples; it does not execute C# or call FSM_API at display time. The build workflow regenerates all three SVGs, validates their XML, uploads them as artifacts, and checks that the committed assets match the C# output. Reduced-motion preferences are respected.
 
 This is deliberately an honest visual of the current evaluator contract. It is CPU reference evaluation, not GPU batching. A future GPU path should batch compatible operations across targets regardless of object names, and should be demonstrated with real generated output and measurements. A later motion-model demo should only depict forces, contact, hierarchy, or environmental causality after a real implementation produces and tests those results. Package publication remains disabled.
