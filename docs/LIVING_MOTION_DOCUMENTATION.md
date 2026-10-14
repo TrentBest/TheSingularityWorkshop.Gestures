@@ -26,15 +26,15 @@ The second scene uses the same 49 samples to plot root X, root Y, rotation, and 
 
 **What this does not demonstrate:** force, acceleration, momentum, damping, contact, or a physical solver. Those values are not outputs of the current evaluator and must not be invented for an attractive diagram.
 
-### 3. One gesture, different targets
+### 3. Root motion versus an anchored articulated mechanism
 
-![The same evaluated gesture applied to three different target silhouettes](assets/gesture-target-agnostic.svg)
+![Shared root motion alongside an anchored, joint-limited articulated-tool illustration](assets/gesture-target-agnostic.svg)
 
-This scene applies the **same 49 `GestureEvaluator` root-transform samples** to three illustrative target silhouettes: a humanoid, a tracked vehicle, and an articulated tool. Their separate lanes share the same normalized X progression, vertical deviations, rotation, and scale values. Only the silhouette and lane projection differ.
+The humanoid and tracked-vehicle glyphs illustrate the evaluated root transform. The articulated-tool glyph deliberately uses a different contract: its base is fixed, its two links rotate around joints, and the illustrative angles are clamped to declared ranges. The angle values are derived from the evaluator's root rotation and scale channels solely to make constrained articulation visible.
 
-**What this demonstrates:** the motion data does not need to encode an object category. Compatible targets can consume the same evaluated transform channels while their owning systems retain responsibility for domain behavior and physical simulation.
+**What this demonstrates:** a mounted mechanism should not be translated as if it were a free-moving object. Its motion is relative to an anchor and limited by its joint configuration. The graphic makes that physical distinction visible.
 
-**What this does not demonstrate:** target-specific behavior, a rig hierarchy, vehicle dynamics, soldier locomotion, tool constraints, or GPU execution. The glyphs are presentation shapes; the underlying transform values are actual C# evaluator output.
+**What this does not demonstrate:** joint values emitted by `GestureEvaluator`, a solved forward/inverse-kinematics chain, measured link geometry, collision/contact, or a physical solver. The articulated angles are presentation-only derivations, not runtime outputs. A future physically meaningful scene must use actual target joint definitions and a tested kinematics contract.
 
 ## Scene contract
 
