@@ -88,7 +88,8 @@ This is a source-repository verification path, not a claim that the package has 
 - [Data Model](docs/DATA_MODEL.md) — learn the initial keyframe, transform, anchor, and evaluated-output contracts.
 - [Determinism](docs/DETERMINISM.md) — understand what stable evaluation means and which inputs determine the result.
 - [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore the candidate force, inertia, spring, damping, easing, and training-variance model. This is exploratory mathematics, not a frozen package contract.
-- [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — learn the intuition, geometry, equations, reachability, constraints, and CPU-to-GPU validation strategy, with living SVG diagrams.\n- [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — inspect the implemented two-link CPU IK reference, its measured limits, and its exact algorithmic boundary.
+- [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — learn the intuition, geometry, equations, reachability, constraints, and CPU-to-GPU validation strategy, with living SVG diagrams.
+- [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — inspect the implemented two-link CPU IK reference, its measured limits, and its exact algorithmic boundary.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
