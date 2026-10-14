@@ -58,6 +58,8 @@ public sealed class StatefulPlanarIkController
 
         ValidateLimits(shoulderLimits, nameof(shoulderLimits));
         ValidateLimits(elbowLimits, nameof(elbowLimits));
+        ValidateMatchingLimits(shoulder.Hinge, shoulderLimits, nameof(shoulderLimits));
+        ValidateMatchingLimits(elbow.Hinge, elbowLimits, nameof(elbowLimits));
 
         _shoulder = shoulder;
         _elbow = elbow;
@@ -121,6 +123,16 @@ public sealed class StatefulPlanarIkController
             endEffector,
             errorDistance,
             status);
+    }
+
+    private static void ValidateMatchingLimits(StatefulHinge hinge, JointAngleLimits limits, string parameterName)
+    {
+        if (hinge.MinimumRadians != limits.MinimumRadians || hinge.MaximumRadians != limits.MaximumRadians)
+        {
+            throw new ArgumentException(
+                "Solver limits must exactly match the corresponding retained hinge's legal range.",
+                parameterName);
+        }
     }
 
     private static void ValidateLimits(JointAngleLimits limits, string parameterName)
