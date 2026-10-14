@@ -21,10 +21,12 @@ Positive and negative are relative to the hinge's declared coordinate convention
 
 This is a deterministic, speed-limited kinematic controller, not a physical hinge simulation. It does not integrate torque, inertia, acceleration, collisions, contact forces, friction, adhesion, balance, or damage. A target request is not proof of physical success. Those responsibilities must be introduced through explicit contracts and adapters rather than implied by this class.
 
-It also does not yet implement a hierarchy, parent-to-child invalidation, retained velocity, external impulses, or incremental-vs-full evaluation. The next research step is a small parent/child hierarchy with tests that compare incremental results against full reevaluation.
+The companion `StatefulJointNode` prototype now connects retained hinges into a planar parent/child hierarchy. Each link extends along local +X; a child's local angle is added to its parent's world angle, and the child starts at the parent's endpoint. `EvaluateFull` recalculates the entire subtree, intentionally providing a correctness baseline for later incremental evaluation. It rejects cycles, multiple parents, non-finite anchors, and evaluation starting below the root.
+
+The hierarchy does not yet implement incremental invalidation, retained velocity, external impulses, collision, contact, or physical integration. It is a kinematic transform hierarchy, not a climbing/contact solver.
 
 ## Tests and next decisions
 
-The unit tests cover bounded progress, all three movement classifications, target completion, unreachable-by-limit requests, zero elapsed time, and invalid inputs. Before expanding the public API, review whether the motion enum and result fields express the needed contract without conflating kinematic limits with physical contact or stability.
+The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, and parent-to-descendant propagation after a parent angle changes. Next, compare full reevaluation with a proposed incremental implementation over deterministic event sequences; do not optimize before the two agree within a defined tolerance.
 
 This experiment is a correctness baseline. No performance advantage is claimed.
