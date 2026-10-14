@@ -83,7 +83,7 @@
 
   <path d="M88 315 H872" stroke="#3d536c" stroke-width="2"/>
   <circle r="6" fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
-    <animate attributeName="cx" values="88;392;690;872;88" keyTimes="0;0.38;0.72;1;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="88;392;690;872;88" keyTimes="0;0.38;0.72;0.9;1" dur="5s" repeatCount="indefinite"/>
     <animate attributeName="cy" values="315;315;315;315;315" dur="5s" repeatCount="indefinite"/>
   </circle>
   <g class="minor">
