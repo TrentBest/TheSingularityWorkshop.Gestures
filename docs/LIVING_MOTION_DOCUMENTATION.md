@@ -26,6 +26,16 @@ The second scene uses the same 49 samples to plot root X, root Y, rotation, and 
 
 **What this does not demonstrate:** force, acceleration, momentum, damping, contact, or a physical solver. Those values are not outputs of the current evaluator and must not be invented for an attractive diagram.
 
+### 3. One gesture, different targets
+
+![The same evaluated gesture applied to three different target silhouettes](assets/gesture-target-agnostic.svg)
+
+This scene applies the **same 49 `GestureEvaluator` root-transform samples** to three illustrative target silhouettes: a humanoid, a tracked vehicle, and an articulated tool. Their separate lanes share the same normalized X progression, vertical deviations, rotation, and scale values. Only the silhouette and lane projection differ.
+
+**What this demonstrates:** the motion data does not need to encode an object category. Compatible targets can consume the same evaluated transform channels while their owning systems retain responsibility for domain behavior and physical simulation.
+
+**What this does not demonstrate:** target-specific behavior, a rig hierarchy, vehicle dynamics, soldier locomotion, tool constraints, or GPU execution. The glyphs are presentation shapes; the underlying transform values are actual C# evaluator output.
+
 ## Scene contract
 
 Every living scene added here should:
