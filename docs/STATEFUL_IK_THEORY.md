@@ -24,6 +24,10 @@ Stateful IK asks what happens when that calculation becomes part of a continuing
 
 This is not a claim that all conventional animation is baked, or that existing engines lack physics-aware tools. It is a contrast between a pose-sampling baseline and the stateful, physically accountable behavior we want to investigate.
 
+![Comparison of sampled baked animation, procedural IK, and the proposed Stateful IK feedback loop](assets/animation-models.svg)
+
+*The diagram explains conceptual differences; it is not a benchmark and does not imply that the three approaches are mutually exclusive.*
+
 ## 2. The joint as a small state machine
 
 A useful first abstraction classifies a joint's movement direction into three motion states:
