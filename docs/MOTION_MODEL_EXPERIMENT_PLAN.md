@@ -109,7 +109,7 @@ Sampling should happen at a declared boundary (for example, when an entity begin
 
 **Skill is a policy, not a law of nature.** The design hypothesis is that inexperienced performers can have broader ranges and experienced performers tighter ranges around an ideal. That does not mean every parameter must shrink with skill. A profile should define which dimensions change and by how much; the hypothesis must be evaluated visually and quantitatively. “Veteran” should mean a narrower distribution where intended, not identical output.
 
-![Analytic step responses for underdamped, critically damped, and overdamped scalar spring-damper systems](assets/motion-model-step-response.svg)
+![Living illustration: an articulated figure progressing through a Gesture pose path](assets/gesture-motion.svg)\n\n*The figure and limb cycle are explanatory SVG animation, not runtime output. Use this scene to understand procedure progression; use the analytic plot below to study the separate spring-damper hypothesis.*\n\n![Analytic step responses for underdamped, critically damped, and overdamped scalar spring-damper systems](assets/motion-model-step-response.svg)
 
 *This plot is an analytic reference for a normalized scalar second-order system, not output from the current Gesture evaluator. It makes the damping trade-off visible before any runtime implementation is proposed.*
 
