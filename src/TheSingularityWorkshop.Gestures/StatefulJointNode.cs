@@ -88,7 +88,15 @@ public sealed class StatefulJointNode
     public void EvaluateFull(Vector2 rootAnchor)
     {
         ValidateRootAndAnchor(rootAnchor);
-        EvaluateDescendantsFull(rootAnchor, 0f);
+        try
+        {
+            EvaluateDescendantsFull(rootAnchor, 0f);
+        }
+        catch
+        {
+            MarkAncestorsDirty();
+            throw;
+        }
     }
 
     /// <summary>
@@ -98,7 +106,15 @@ public sealed class StatefulJointNode
     public int EvaluateIncremental(Vector2 rootAnchor)
     {
         ValidateRootAndAnchor(rootAnchor);
-        return EvaluateDescendantsIncremental(rootAnchor, 0f);
+        try
+        {
+            return EvaluateDescendantsIncremental(rootAnchor, 0f);
+        }
+        catch
+        {
+            MarkAncestorsDirty();
+            throw;
+        }
     }
 
     private void ValidateRootAndAnchor(Vector2 rootAnchor)
