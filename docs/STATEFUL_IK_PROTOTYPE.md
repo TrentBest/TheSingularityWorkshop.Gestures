@@ -25,8 +25,17 @@ The companion `StatefulJointNode` prototype connects retained hinges into a plan
 
 Incremental evaluation is an early correctness prototype, not yet a demonstrated performance win. It does not implement retained velocity, external impulses, collision, contact, or physical integration. It is a kinematic transform hierarchy, not a climbing/contact solver.
 
+
+## Contact is an observation, not an IK calculation
+
+`ContactObservation` is a data-only handoff from the external physics or domain owner. It records whether contact exists, whether the current load is supported/slipping/unsupported, and optional reported force magnitudes. A load-bearing outcome without an active contact is rejected as contradictory input.
+
+The `AvailableTangentialForceNewtons` value is supplied by the external model; Gestures does not derive it from friction coefficients, normal force, grip, or adhesion. A specialized climbing model may include adhesion, but that mechanism must be implemented and validated by its owner. The hierarchy can retain the latest observation on a joint node, but observing contact does not itself move the joint or fabricate a recovery action. A controller must decide what to request next, and the physics owner remains authoritative for the next measured result.
+
+This is an integration seam, not a physics engine. Contact geometry, multi-contact balance, collision resolution, and whole-body response remain outside this prototype.
+
 ## Tests and next decisions
 
-The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, and a deterministic sequence compared against full reevaluation. Tests now also exercise a 256-joint chain, including a leaf-only change and a root change, and recovery after a non-finite derived transform. Next, broaden failure recovery and benchmark update counts and total runtime before making performance claims.
+The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, a deterministic sequence compared against full reevaluation, a 256-joint chain, recovery after a non-finite derived transform, and the data-only external contact observation contract. Next, broaden failure recovery and benchmark update counts and total runtime before making performance claims.
 
 This experiment is a correctness baseline. No performance advantage is claimed.
