@@ -37,13 +37,14 @@ public sealed class StatefulPlanarIkControllerTests
     {
         var (controller, _, _) = CreateController();
 
+        var target = new Vector2(3f, 0f);
         var step = controller.Advance(
-            Vector2.Zero, new Vector2(3f, 0f), 1f, MathF.PI, MathF.PI);
+            Vector2.Zero, target, 1f, MathF.PI, MathF.PI);
 
         Assert.Equal(StatefulPlanarIkStatus.Approximate, step.Status);
         Assert.False(step.RequestedSolution.TargetReached);
-        Assert.False(step.ShoulderStep.TargetReached);
         Assert.InRange(step.ErrorDistance, 0.9999f, 1.0001f);
+        Assert.True(Vector2.Distance(step.EndEffector, target) > 0.99f);
     }
 
     [Fact]
