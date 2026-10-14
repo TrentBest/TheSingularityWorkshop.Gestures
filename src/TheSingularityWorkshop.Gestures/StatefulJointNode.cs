@@ -61,6 +61,20 @@ public sealed class StatefulJointNode
     /// <summary>Whether world-space output has been calculated by a hierarchy evaluation.</summary>
     public bool HasEvaluated { get; private set; }
 
+    /// <summary>The latest contact outcome reported by the external physics/domain owner, if any.</summary>
+    public ContactObservation? LastContactObservation { get; private set; }
+
+    /// <summary>
+    /// Stores a contact observation from the external physics/domain owner.
+    /// This does not move the joint or calculate physical support; a controller may use the observation
+    /// to choose the next action.
+    /// </summary>
+    public void ObserveContact(ContactObservation observation)
+    {
+        ArgumentNullException.ThrowIfNull(observation);
+        LastContactObservation = observation;
+    }
+
     /// <summary>Adds a child link, rejecting self-links, cycles, and nodes already attached elsewhere.</summary>
     public void AddChild(StatefulJointNode child)
     {
