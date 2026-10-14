@@ -291,9 +291,10 @@ static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
   {{curves}}
   {{labels}}
   <g class="animated" opacity=".9">
-    <path d="M0 112V{{endY}}" stroke="#f3f6fb" stroke-width="1.5" stroke-dasharray="4 4">
-      <animate attributeName="d" values="{{string.Join(";", samples.Select(s => $"M{N(TimeX(s.ElapsedFraction))} 112V{endY}"))}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
-    </path>
+    <line x1="{{N(left)}}" x2="{{N(left)}}" y1="112" y2="{{endY}}" stroke="#f3f6fb" stroke-width="1.5" stroke-dasharray="4 4">
+      <animate attributeName="x1" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="x2" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+    </line>
     <circle r="4" fill="#f3f6fb">
       <animate attributeName="cx" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
       <animate attributeName="cy" values="{{string.Join(";", samples.Select(_ => N(firstTop - 9)))}}" dur="4s" repeatCount="indefinite"/>
