@@ -31,6 +31,28 @@ public readonly record struct PoseTransform(Vector3 Position, Quaternion Rotatio
         float.IsFinite(value.X) && float.IsFinite(value.Y) &&
         float.IsFinite(value.Z) && float.IsFinite(value.W);
 
-    private static Quaternion NormalizeOrIdentity(Quaternion value) =>
-        value.LengthSquared() < 1e-12f ? Quaternion.Identity : Quaternion.Normalize(value);
+    private static Quaternion NormalizeOrIdentity(Quaternion value)
+    {
+        // Scale first so LengthSquared cannot overflow for very large, finite components.
+        var maxComponent = MathF.Max(
+            MathF.Max(MathF.Abs(value.X), MathF.Abs(value.Y)),
+            MathF.Max(MathF.Abs(value.Z), MathF.Abs(value.W)));
+
+        if (maxComponent == 0f)
+            return Quaternion.Identity;
+
+        var scaled = new Quaternion(
+            value.X / maxComponent,
+            value.Y / maxComponent,
+            value.Z / maxComponent,
+            value.W / maxComponent);
+        var scaledLengthSquared = scaled.LengthSquared();
+
+        // Preserve the existing near-zero fallback without squaring a large component.
+        if (maxComponent < 1e-6f &&
+            scaledLengthSquared * maxComponent * maxComponent < 1e-12f)
+            return Quaternion.Identity;
+
+        return Quaternion.Normalize(scaled);
+    }
 }
