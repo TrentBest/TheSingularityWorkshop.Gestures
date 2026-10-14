@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 540" role="img" aria-labelledby="title desc">
+  <title id="title">Three ways to produce motion</title>
+  <desc id="desc">Three panels compare a sampled baked animation clip, procedural pose calculation, and Stateful IK as a proposed feedback loop. The first follows authored poses over time, the second computes a pose from parameters and a target, and the third carries joint state forward while checking physical outcomes. This comparison is conceptual, not a performance benchmark.</desc>
+  <defs>
+    <style>
+      text{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#172033}
+      .h{font-size:21px;font-weight:750}.sub{font-size:14px}.node{fill:#fff;stroke:#66758b;stroke-width:2}.blue{fill:#eaf2ff;stroke:#2c65ad;stroke-width:2}.green{fill:#eaf8f0;stroke:#2e8057;stroke-width:2}.orange{fill:#fff2e4;stroke:#b76424;stroke-width:2}.arrow{fill:none;stroke:#52627a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7;animation:flow 2.4s linear infinite}.pulse{animation:pulse 1.8s ease-in-out infinite}
+      @keyframes flow{to{stroke-dashoffset:-56}}@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+      @media(prefers-reduced-motion:reduce){.dash,.pulse{animation:none}}
+    </style>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#52627a"/></marker>
+  </defs>
+  <rect x="10" y="10" width="1060" height="520" rx="22" fill="#f7f9fc" stroke="#d4dce8"/>
+  <text x="36" y="49" class="h">Same visible goal, different source of motion</text>
+  <text x="36" y="73" class="sub">These models can coexist. The important difference is what is remembered, what is recomputed, and what is authoritative.</text>
+
+  <rect x="30" y="100" width="320" height="380" rx="16" fill="#fff" stroke="#d4dce8"/>
+  <text x="50" y="134" class="h">1. Baked animation</text>
+  <text x="50" y="157" class="sub">Authored poses sampled over time</text>
+  <rect x="50" y="184" width="80" height="72" rx="10" class="node"/>
+  <rect x="145" y="184" width="80" height="72" rx="10" class="node"/>
+  <rect x="240" y="184" width="80" height="72" rx="10" class="node"/>
+  <g stroke="#50627d" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M74 238 L91 215 L111 202"/><path d="M169 238 L192 219 L210 202"/><path d="M264 238 L281 220 L302 225"/>
+  </g>
+  <path d="M132 220 H141 M227 220 H236" class="arrow" marker-end="url(#a)"/>
+  <text x="90" y="277" class="sub" text-anchor="middle">t₀</text><text x="185" y="277" class="sub" text-anchor="middle">t₁</text><text x="280" y="277" class="sub" text-anchor="middle">t₂</text>
+  <rect x="50" y="309" width="280" height="63" rx="10" fill="#f2f5f9" stroke="#b9c4d4"/>
+  <text x="190" y="334" text-anchor="middle" font-size="15" font-weight="650">Sample / blend pose data</text>
+  <text x="190" y="354" text-anchor="middle" class="sub">Great for authored performance</text>
+  <text x="50" y="408" class="sub">A clip alone doesn't establish whether</text>
+  <text x="50" y="428" class="sub">a handle was reached or a foot slipped.</text>
+  <text x="50" y="457" class="sub">External systems can add those checks.</text>
+
+  <rect x="380" y="100" width="320" height="380" rx="16" fill="#fff" stroke="#d4dce8"/>
+  <text x="400" y="134" class="h">2. Procedural IK</text>
+  <text x="400" y="157" class="sub">Compute a pose from a goal</text>
+  <rect x="400" y="184" width="130" height="68" rx="10" class="blue"/>
+  <text x="465" y="211" text-anchor="middle" font-size="15" font-weight="650">Target + rig</text>
+  <text x="465" y="232" text-anchor="middle" class="sub">constraints</text>
+  <path d="M533 218 H550" class="arrow" marker-end="url(#a)"/>
+  <rect x="555" y="184" width="125" height="68" rx="10" class="node"/>
+  <text x="617" y="211" text-anchor="middle" font-size="15" font-weight="650">IK solve</text>
+  <text x="617" y="232" text-anchor="middle" class="sub">joint values</text>
+  <rect x="400" y="279" width="280" height="93" rx="10" fill="#f2f5f9" stroke="#b9c4d4"/>
+  <text x="540" y="305" text-anchor="middle" font-size="15" font-weight="650">Pose output + error check</text>
+  <text x="540" y="328" text-anchor="middle" class="sub">Can report unreachable targets</text>
+  <text x="540" y="348" text-anchor="middle" class="sub">when designed to do so</text>
+  <text x="400" y="408" class="sub">A solve can be recomputed each frame;</text>
+  <text x="400" y="428" class="sub">history and physical outcomes are not</text>
+  <text x="400" y="448" class="sub">automatic consequences of IK geometry.</text>
+
+  <rect x="730" y="100" width="320" height="380" rx="16" fill="#fff" stroke="#d4dce8"/>
+  <text x="750" y="134" class="h">3. Stateful IK</text>
+  <text x="750" y="157" class="sub">Proposed: state plus feedback</text>
+  <rect x="750" y="184" width="280" height="58" rx="10" class="green"/>
+  <text x="890" y="208" text-anchor="middle" font-size="15" font-weight="650">Joint FSM hierarchy</text>
+  <text x="890" y="228" text-anchor="middle" class="sub">state + intent + local limits</text>
+  <path d="M890 242 V266" class="arrow dash" marker-end="url(#a)"/>
+  <rect x="750" y="269" width="280" height="57" rx="10" class="orange"/>
+  <text x="890" y="292" text-anchor="middle" font-size="15" font-weight="650">Physics / contact outcome</text>
+  <text x="890" y="312" text-anchor="middle" class="sub">what actually happened</text>
+  <path d="M1030 297 H1040 V352 H890 V372" class="arrow dash" marker-end="url(#a)"/>
+  <rect x="750" y="374" width="280" height="44" rx="10" class="node"/>
+  <text x="890" y="401" text-anchor="middle" font-size="15" font-weight="650">Update state for next step</text>
+  <text x="750" y="449" class="sub pulse">Research hypothesis — not yet implemented</text>
+</svg>
