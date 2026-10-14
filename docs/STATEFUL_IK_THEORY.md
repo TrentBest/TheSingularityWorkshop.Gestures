@@ -90,7 +90,37 @@ A geometrically valid pose may be dynamically infeasible. A controller may reque
 
 Damage or injury is a domain-specific consequence model, not an automatic property of IK. The system can only predict injury, wear, or structural damage to the extent that the relevant thresholds and mechanics are represented and validated.
 
-## 6. Why history may help
+## 6. Contact is an outcome, not a pose guarantee
+
+Rock climbing makes the distinction between a requested pose and a physical outcome easy to see.
+
+A climber's hand or foot may be directed toward a hold, but the target does not guarantee that the limb can reach it, that contact occurs, or that the contact can support the load. A useful model must represent the entire range of outcomes—from a stable, successful hold to a near miss, a blocked reach, a brief contact, and a slip.
+
+A candidate contact loop is:
+
+1. **Approach:** Treat the hold as a desired contact region, with tolerances and approach constraints, rather than a guaranteed endpoint.
+2. **Reach:** Evaluate the available joint range and legal motion. If the target is out of reach, retain the closest legal result and report the remaining error.
+3. **Establish contact:** Let collision/contact evaluation determine whether the hand or foot actually touches the surface. Being visually close is not proof of contact.
+4. **Evaluate support:** Use the physical model's contact forces, friction limits, load, and any modeled grip or adhesion mechanics to determine whether the contact can hold.
+5. **Respond:** If the support is insufficient, permit sliding or loss of contact. Feed the measured outcome back into the next control step and the affected hierarchy.
+6. **Recover or fail:** The character may adjust another limb, shift its center of mass, find another hold, or fall. Those are outcomes of the modeled body and environment—not success states to fabricate in the IK layer.
+
+In ordinary solid-contact models, grip is not a vague scalar called “surface tension”: support depends on the contact model and its assumptions, including normal force and friction. If a domain models special adhesion, that mechanism must be specified separately. The model should only claim the behavior it actually computes.
+
+This separates four related but different questions:
+
+- **Kinematic feasibility:** Can the limb's geometry and joint limits reach the contact region?
+- **Contact validity:** Is there a real contact under the collision/contact rules?
+- **Load-bearing stability:** Can the contact forces support the current load without violating the model's friction, force, or stability limits?
+- **Whole-body response:** What happens to the rest of the body when the contact holds, moves, or disappears?
+
+A kinematically reachable pose can still be physically unsustainable. Conversely, an unreachable target does not mean the whole action is useless: a best-effort approach, partial reach, or alternate contact may still be meaningful. Report the actual result and its constraints instead of collapsing every outcome into a binary “IK succeeded/failed.”
+
+The same principle applies beyond climbing: a foot can touch a moving vehicle without having a stable foothold; a robot gripper can reach an object without securing it; a mechanism can reach a position but stall under load. Stateful IK should preserve the difference between intent, pose, contact, and consequence.
+
+*Scope boundary:* IK alone does not calculate friction, grip, balance, falling, injury, or damage. Those outcomes require a defined physical/domain model. The research goal is to connect the layers without pretending that one layer already implements the others.
+
+## 7. Why history may help
 
 A memoryless solver typically derives a pose from current inputs and a target. A stateful controller can additionally use previous joint state, direction, velocity, the prior solution, and the reason progress stopped.
 
@@ -105,7 +135,7 @@ Potential benefits to test include:
 
 These are hypotheses, not free optimizations. Cached state can become stale; sparse updates can miss dependencies; early stopping can cause drift; continuity can preserve the wrong local minimum; and extra state can cost more memory and branching than it saves. Each proposed optimization needs an invariant, a correctness test, and a benchmark.
 
-## 7. A candidate joint transition model
+## 8. A candidate joint transition model
 
 A first motion-direction state machine might look like this:
 
@@ -128,7 +158,7 @@ This diagram is conceptual. Actual transitions need hysteresis or tolerances so 
 
 Do not confuse this three-state direction classifier with the entire joint FSM. Events and orthogonal conditions may be better represented separately than by exploding every combination into a giant enumerated state.
 
-## 8. From an IK request to a physical result
+## 9. From an IK request to a physical result
 
 A candidate loop for research is:
 
@@ -159,7 +189,7 @@ The exact ownership boundaries matter. Gestures can define procedural action and
 
 No dependency on FSM_API should be added merely to make the name sound aligned. First establish whether the existing FSM_API can express the required local transitions and what its actual overhead and semantics are. Then compare reuse against a small purpose-built data-oriented state representation using real tests.
 
-## 9. Performance: make a falsifiable claim
+## 10. Performance: make a falsifiable claim
 
 The hypothesis is not “three states are faster.” A useful claim would be:
 
@@ -179,7 +209,7 @@ Measure at least:
 
 Compare at equal quality and identical scenarios. Include simple cases where a conventional full solve is expected to win. GPU transfer/dispatch and synchronization belong in the total cost. Thousands of joints may offer parallelism, but hierarchy dependencies can limit it.
 
-## 10. Suggested research sequence
+## 11. Suggested research sequence
 
 1. **Write the contract:** define coordinates, local axes, parent/child frames, units, tolerances, joint types, and result statuses.
 2. **Keep the planar CPU solver as a baseline:** it tests geometry and unreachable-target reporting, but it is not the Stateful IK implementation.
@@ -192,13 +222,13 @@ Compare at equal quality and identical scenarios. Include simple cases where a c
 9. **Test adversarial cases:** unreachable targets, joint limits, collision, external impulses, reversals, near-zero velocities, and state invalidation.
 10. **Document evidence:** publish results, methodology, hardware/runtime details, quality tolerances, and failed hypotheses alongside any speedup claim.
 
-## 11. Relationship to the current implementation
+## 12. Relationship to the current implementation
 
 The current PlanarKinematics implementation is a deliberately small, engine-neutral two-link CPU reference. It calculates FK, generates two IK candidates, constrains those candidates, and measures endpoint error. It has no joint FSMs, temporal memory, hierarchical rig evaluator, collision model, physics integration, damage model, or GPU implementation.
 
 That small reference remains useful: Stateful IK still needs geometry and error measurements. But it is a lower-level building block, not proof of the proposed architecture.
 
-## 12. Open questions, not hidden assumptions
+## 13. Open questions, not hidden assumptions
 
 - Are joint FSMs the actual storage model, or the conceptual model compiled into a compact array?
 - Which state is persistent and authoritative: angle, transform, velocity, intent, motion class, constraint status, or some combination?
