@@ -8,12 +8,12 @@
 - [x] Deterministic bounded speed and root-offset variation.
 - [x] Unit tests for core invariants and repeatability.
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
-- [ ] Confirm CI is green on the initial pull request.
+- [ ] Confirm CI is green on the latest proposal head.
 - [ ] Review public API names and package metadata before alpha publication.
 
 ## Milestone 1 — Real domain examples
 
-- [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
+- [ ] Add an illustrative soldier movement Gesture with a rig-independent sample target.
 - [ ] Add a provider-owned interaction example, such as boarding a vehicle through named anchors.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
