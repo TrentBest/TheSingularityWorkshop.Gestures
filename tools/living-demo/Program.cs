@@ -132,7 +132,10 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
     <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <style>
       text{font-family:"Segoe UI",Arial,sans-serif} .muted{fill:#b9c8d9;font-size:12px} .grid{stroke:#31465e;stroke-width:1;stroke-dasharray:3 7} .motion{fill:none;stroke:#78dcff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round} .static{display:none}
-      @media(prefers-reduced-motion:reduce){\n        .animated{display:none}\n        .static{display:inline}\n      }
+      @media(prefers-reduced-motion:reduce){
+        .animated{display:none}
+        .static{display:inline}
+      }
     </style>
   </defs>
   <rect width="960" height="480" rx="18" fill="url(#bg)"/>
