@@ -49,6 +49,18 @@ public sealed class StatefulHingeTests
     }
 
     [Fact]
+    public void RequestOutsideLimitRemainsUnmetEvenInsidePositionTolerance()
+    {
+        var hinge = new StatefulHinge(0.5f, -1f, 0.5f, stationaryToleranceRadians: 0.01f);
+
+        var result = hinge.Advance(0.505f, 1f, 1f);
+
+        Assert.Equal(0.5f, result.AngleRadians);
+        Assert.False(result.TargetReached);
+        Assert.True(result.JointLimitConstrained);
+    }
+
+    [Fact]
     public void ReachesAnInRangeTargetWhenSpeedBudgetIsSufficient()
     {
         var hinge = new StatefulHinge(0f, -1f, 1f);
