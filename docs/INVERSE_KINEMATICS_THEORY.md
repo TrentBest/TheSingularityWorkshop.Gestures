@@ -30,12 +30,12 @@ FK is a direct calculation: the angles determine the pose. IK works backward fro
 
 For a deliberately small reference model, we use:
 
-- A fixed anchor at the origin \\((0,0)\\).
-- A first link of length \\(L_1\\).
-- A second link of length \\(L_2\\).
-- A shoulder angle \\(\\theta_1\\), measured from the positive X axis.
-- An elbow angle \\(\\theta_2\\), measured relative to the first link.
-- A target point \\(T=(x,y)\\).
+- A fixed anchor at the origin \((0,0)\).
+- A first link of length \(L_1\).
+- A second link of length \(L_2\).
+- A shoulder angle \(\theta_1\), measured from the positive X axis.
+- An elbow angle \(\theta_2\), measured relative to the first link.
+- A target point \(T=(x,y)\).
 
 The elbow is the end of the first link. The end effector—the “hand” in this example—is the end of the second link.
 
@@ -45,20 +45,20 @@ The elbow is the end of the first link. The end effector—the “hand” in thi
 
 The elbow position is
 
-\\[
-E_x=L_1\\cos(\\theta_1),\\qquad
-E_y=L_1\\sin(\\theta_1)
-\\]
+\[
+E_x=L_1\cos(\theta_1),\qquad
+E_y=L_1\sin(\theta_1)
+\]
 
-The second link uses the combined orientation \\(\\theta_1+\\theta_2\\), so the endpoint is
+The second link uses the combined orientation \(\theta_1+\theta_2\), so the endpoint is
 
-\\[
-x=L_1\\cos(\\theta_1)+L_2\\cos(\\theta_1+\\theta_2)
-\\]
+\[
+x=L_1\cos(\theta_1)+L_2\cos(\theta_1+\theta_2)
+\]
 
-\\[
-y=L_1\\sin(\\theta_1)+L_2\\sin(\\theta_1+\\theta_2)
-\\]
+\[
+y=L_1\sin(\theta_1)+L_2\sin(\theta_1+\theta_2)
+\]
 
 That is the FK calculation implemented by `PlanarKinematics.ForwardKinematics`. It gives us a trustworthy way to check any candidate joint angles: calculate where they actually put the endpoint.
 
@@ -66,40 +66,40 @@ That is the FK calculation implemented by `PlanarKinematics.ForwardKinematics`. 
 
 Let the target distance from the anchor be
 
-\\[
-r=\\sqrt{x^2+y^2}
-\\]
+\[
+r=\sqrt{x^2+y^2}
+\]
 
 The links and the anchor form a triangle. The law of cosines gives the elbow angle:
 
-\\[
-\\cos(\\theta_2)=
-\\frac{x^2+y^2-L_1^2-L_2^2}{2L_1L_2}
-\\]
+\[
+\cos(\theta_2)=
+\frac{x^2+y^2-L_1^2-L_2^2}{2L_1L_2}
+\]
 
 For an unconstrained, reachable target, the two possible elbow configurations are
 
-\\[
-\\theta_2=\\pm\\arccos\\left(
-\\frac{x^2+y^2-L_1^2-L_2^2}{2L_1L_2}
-\\right)
-\\]
+\[
+\theta_2=\pm\arccos\left(
+\frac{x^2+y^2-L_1^2-L_2^2}{2L_1L_2}
+\right)
+\]
 
 These are often described as the two “elbow-up / elbow-down” solutions. The shoulder angle can then be found from the target direction and the triangle's internal angle:
 
-\\[
-\\theta_1=\\operatorname{atan2}(y,x)-
-\\operatorname{atan2}(L_2\\sin\\theta_2,
-L_1+L_2\\cos\\theta_2)
-\\]
+\[
+\theta_1=\operatorname{atan2}(y,x)-
+\operatorname{atan2}(L_2\sin\theta_2,
+L_1+L_2\cos\theta_2)
+\]
 
 The signs and visual names depend on the coordinate convention. The important point is that **a target may correspond to more than one valid pose**.
 
-The cosine expression can drift slightly outside \\([-1,1]\\) due to floating-point rounding, or because a target is outside the arm's reach. Clamping it keeps `acos` numerically defined, but does **not** make an unreachable target reachable. The resulting endpoint must still be calculated and checked against the requested target.
+The cosine expression can drift slightly outside \([-1,1]\) due to floating-point rounding, or because a target is outside the arm's reach. Clamping it keeps `acos` numerically defined, but does **not** make an unreachable target reachable. The resulting endpoint must still be calculated and checked against the requested target.
 
 ## 5. Reach is a real limit
 
-With no joint restrictions, a two-link arm cannot extend farther than \\(L_1+L_2\\) from its anchor. Its nearest possible distance is \\(\\lvert L_1-L_2\\rvert\\). These bounds describe an annulus when both links can rotate freely.
+With no joint restrictions, a two-link arm cannot extend farther than \(L_1+L_2\) from its anchor. Its nearest possible distance is \(\lvert L_1-L_2\rvert\). These bounds describe an annulus when both links can rotate freely.
 
 Real mechanisms add more limits: a hinge may only rotate through a particular range, a shoulder may be blocked by the body, or a linkage may be forbidden from folding through itself. The target can be inside the simple reach envelope and still be impossible under those joint constraints.
 
