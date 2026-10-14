@@ -65,6 +65,10 @@ The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, 
 
 ![](docs/assets/dividers/green.svg)
 
+![Animated keyframe path and current evaluator baseline, with the exploratory spring-damper equation clearly separated](docs/assets/gesture-motion.svg)
+
+The moving marker above illustrates the idea of progressing through a pose path. **It is a conceptual diagram, not output captured from the evaluator.** The implemented CPU baseline interpolates translation and scale linearly and rotation with quaternion slerp; the mass-spring-damper expression is future exploration, not implemented physics.
+
 You need the **.NET 8 SDK**. From the repository root:
 
 ```bash
