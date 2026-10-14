@@ -19,7 +19,11 @@ public sealed class StatefulJointNode
     private float _lastParentWorldAngle;
 
     /// <summary>Creates a joint node with a stable diagnostic name, link length, and retained hinge controller.</summary>
-    public StatefulJointNode(string name, float linkLength, StatefulHinge hinge)
+    public StatefulJointNode(
+        string name,
+        float linkLength,
+        StatefulHinge hinge,
+        StatefulBreakableJoint? incomingStructuralJoint = null)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Joint name must not be empty.", nameof(name));
@@ -30,6 +34,7 @@ public sealed class StatefulJointNode
         Name = name;
         LinkLength = linkLength;
         Hinge = hinge;
+        IncomingStructuralJoint = incomingStructuralJoint;
         Hinge.AngleChanged += MarkAncestorsDirty;
         _readOnlyChildren = _children.AsReadOnly();
     }
@@ -42,6 +47,13 @@ public sealed class StatefulJointNode
 
     /// <summary>Retained controller for this joint's local angle.</summary>
     public StatefulHinge Hinge { get; }
+
+    /// <summary>
+    /// Optional structural joint for the connection from this node to its parent.
+    /// It describes the incoming connection, not this node's outgoing connections.
+    /// A root has no incoming connection; the property is ignored for root topology.
+    /// </summary>
+    public StatefulBreakableJoint? IncomingStructuralJoint { get; }
 
     /// <summary>Parent node, or null for a hierarchy root.</summary>
     public StatefulJointNode? Parent { get; private set; }
@@ -73,6 +85,28 @@ public sealed class StatefulJointNode
     {
         ArgumentNullException.ThrowIfNull(observation);
         LastContactObservation = observation;
+    }
+
+    /// <summary>
+    /// Submits externally calculated loads to this node's optional incoming structural joint.
+    /// This records structural failure only; it deliberately does not detach the kinematic node,
+    /// rewrite hierarchy links, or decide injury/gameplay consequences.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// The node is a root or has no configured incoming structural joint.
+    /// </exception>
+    public JointBreakResult ObserveIncomingStructuralLoad(
+        float forceMagnitudeNewtons,
+        float torqueMagnitudeNewtonMeters)
+    {
+        if (Parent is null)
+            throw new InvalidOperationException("A root node has no incoming structural joint.");
+        if (IncomingStructuralJoint is null)
+            throw new InvalidOperationException("No incoming structural joint is configured for this node.");
+
+        return IncomingStructuralJoint.ObserveLoad(
+            forceMagnitudeNewtons,
+            torqueMagnitudeNewtonMeters);
     }
 
     /// <summary>Adds a child link, rejecting self-links, cycles, and nodes already attached elsewhere.</summary>
