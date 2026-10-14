@@ -91,7 +91,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — learn the intuition, geometry, equations, reachability, constraints, and CPU-to-GPU validation strategy, with living SVG diagrams.
 - [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — inspect the implemented two-link CPU IK reference, its measured limits, and its exact algorithmic boundary.
 - [Stateful IK Theory](docs/STATEFUL_IK_THEORY.md) — explore stateful joint FSMs, hierarchy propagation, unreachable targets, physical constraints, and a falsifiable performance research plan. The full architecture remains proposed.
-- [Stateful Hinge Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect the first executable single-joint experiment, its motion classifications, speed limits, tests, and explicit non-physics boundary.
+- [Stateful IK Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect the retained hinge and planar parent/child hierarchy, motion classifications, speed limits, propagation tests, and explicit non-physics boundary.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
