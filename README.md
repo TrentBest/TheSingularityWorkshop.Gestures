@@ -88,7 +88,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Data Model](docs/DATA_MODEL.md) — learn the initial keyframe, transform, anchor, and evaluated-output contracts.
 - [Determinism](docs/DETERMINISM.md) — understand what stable evaluation means and which inputs determine the result.
 - [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore the candidate force, inertia, spring, damping, easing, and training-variance model. This is exploratory mathematics, not a frozen package contract.
-- [Motion Model Experiment Plan](docs/MOTION_MODEL_EXPERIMENT_PLAN.md) — compare candidate models, derive interpretable parameter ranges, and define measurable experiments before choosing an implementation.
+- [Motion Model Experiment Plan](docs/MOTION_MODEL_EXPERIMENT_PLAN.md) — compare candidate models, see analytic damping-response curves, derive interpretable parameter ranges, and define measurable experiments before choosing an implementation.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
