@@ -66,6 +66,9 @@ public sealed class StatefulHinge
     /// <summary>The currently retained hinge angle in radians.</summary>
     public float AngleRadians { get; private set; }
 
+    // Internal invalidation signal: hierarchy nodes subscribe so an angle change dirties its ancestor path.
+    internal event Action? AngleChanged;
+
     /// <summary>
     /// Advances toward a requested angle by at most maximumAngularSpeedRadiansPerSecond * deltaTimeSeconds.
     /// Out-of-range requests are constrained to the nearest legal limit and explicitly reported as unmet.
@@ -90,6 +93,8 @@ public sealed class StatefulHinge
         var maximumStep = maximumAngularSpeedRadiansPerSecond * deltaTimeSeconds;
         var step = Math.Clamp(remaining, -maximumStep, maximumStep);
         AngleRadians = Math.Clamp(previous + step, _minimumRadians, _maximumRadians);
+        if (AngleRadians != previous)
+            AngleChanged?.Invoke();
 
         var change = AngleRadians - previous;
         var motionState = change > _stationaryToleranceRadians
