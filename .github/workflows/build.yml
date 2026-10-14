@@ -41,19 +41,21 @@ jobs:
         run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release -- --output docs/assets/gesture-motion.svg
 
       - name: Validate generated SVG XML
-        run: python -c "import xml.etree.ElementTree as ET; ET.parse('docs/assets/gesture-motion.svg')"
+        run: python -c "import xml.etree.ElementTree as ET; ET.parse('docs/assets/gesture-motion.svg'); ET.parse('docs/assets/gesture-channels.svg')"
 
       - name: Upload C#-generated living SVG
         uses: actions/upload-artifact@v7
         with:
           name: gesture-motion-svg
-          path: docs/assets/gesture-motion.svg
+          path: |
+            docs/assets/gesture-motion.svg
+            docs/assets/gesture-channels.svg
 
       - name: Verify generated SVG formatting
-        run: git diff --check -- docs/assets/gesture-motion.svg
+        run: git diff --check -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg
 
       - name: Verify committed SVG matches C# output
-        run: git diff --exit-code -- docs/assets/gesture-motion.svg
+        run: git diff --exit-code -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg
 
       - name: Test with coverage
         run: >
