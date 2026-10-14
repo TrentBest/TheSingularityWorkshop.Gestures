@@ -26,6 +26,22 @@ The companion `StatefulJointNode` prototype connects retained hinges into a plan
 Incremental evaluation is an early correctness prototype, not yet a demonstrated performance win. It does not implement retained velocity, external impulses, collision, contact, or physical integration. It is a kinematic transform hierarchy, not a climbing/contact solver.
 
 
+## Closed-loop kinematic controller
+
+`StatefulPlanarIkController` now connects the geometric reference to the retained hinge and hierarchy prototypes. Each `Advance` call:
+
+1. Converts the requested world-space target to the root-anchor-relative planar frame.
+2. Computes a constrained two-link reference solution.
+3. Advances each retained hinge by no more than its configured angular-speed limit and the elapsed time.
+4. Evaluates the hierarchy and measures the actual world-space endpoint.
+5. Reports `Reached`, `Moving`, or `Approximate` from the measured endpoint and reference reachability.
+
+The returned geometric solution is the requested kinematic destination; the returned endpoint and error describe the pose actually produced by this update. A reachable target can therefore report `Moving` while the hinges are still progressing. A target outside the constrained solver's reach reports `Approximate`, along with its remaining error. The status is strictly kinematic: it does not mean that a hand touched a surface, that a contact can bear load, or that a physical body is stable.
+
+This is the first connected control loop, not yet a complete feedback controller. It does not consume contact observations to select alternate targets, optimize whole-body balance, integrate dynamics, or solve 3D/multi-chain IK. Those are separate research steps and should be added with explicit tests rather than implied by the current API.
+
+The new tests cover speed-limited progress, convergence to a reachable target, honest reporting of an unreachable target, world-anchor translation, invalid input, and hierarchy validation.
+
 ## Contact is an observation, not an IK calculation
 
 `ContactObservation` is a data-only handoff from the external physics or domain owner. It records whether contact exists, whether the current load is supported/slipping/unsupported, and optional reported force magnitudes. A load-bearing outcome without an active contact is rejected as contradictory input.
