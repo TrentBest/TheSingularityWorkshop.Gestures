@@ -9,9 +9,21 @@
 - [x] Unit tests for core invariants and repeatability.
 - [x] First constrained two-link planar IK CPU reference, with deterministic geometry tests.
 - [x] Accessible IK theory guide with animated SVG geometry and explicit implementation boundaries.
+- [x] Initial Stateful IK research theory, animated hierarchy concept, and tracked research issue; proposal remains unimplemented and unbenchmarked.
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
 - [x] Confirm CI is green on the IK reference pull request after edge-case tests.
 - [ ] Review public API names and package metadata before alpha publication.
+
+## Stateful IK research track — proposed, not yet implemented
+
+- [ ] Define joint-local state separately from the three-way motion classification (positive, negative, stationary).
+- [ ] Specify hierarchy invalidation and parent-to-descendant transform propagation.
+- [ ] Separate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
+- [ ] Prototype a single stateful hinge and small hierarchy without assuming an FSM_API dependency.
+- [ ] Compare incremental updates with full reevaluation for correctness before performance claims.
+- [ ] Benchmark 1–10,000 joints and record total-step cost, allocations, update ratios, error, and failure behavior.
+
+Tracked in [Stateful IK research issue #11](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/11).
 
 ## Milestone 1 — Real domain examples
 
