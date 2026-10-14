@@ -219,6 +219,35 @@ public sealed class StatefulJointNodeTests
     }
 
     [Fact]
+    public void IncrementalEvaluationHandlesDeepHierarchyAndLeafOnlyChange()
+    {
+        const int jointCount = 256;
+        var nodes = new List<StatefulJointNode>(jointCount);
+        var root = CreateNode("joint-0");
+        nodes.Add(root);
+        for (var i = 1; i < jointCount; i++)
+        {
+            var child = CreateNode($"joint-{i}");
+            nodes[^1].AddChild(child);
+            nodes.Add(child);
+        }
+
+        Assert.Equal(jointCount, root.EvaluateIncremental(Vector2.Zero));
+        Assert.Equal(0, root.EvaluateIncremental(Vector2.Zero));
+
+        nodes[^1].Hinge.Advance(0.5f, 1f, 0.5f);
+        Assert.Equal(1, root.EvaluateIncremental(Vector2.Zero));
+
+        var incrementalEnds = nodes.Select(node => node.WorldEnd).ToArray();
+        root.EvaluateFull(Vector2.Zero);
+        for (var i = 0; i < jointCount; i++)
+            AssertNear(incrementalEnds[i], nodes[i].WorldEnd);
+
+        root.Hinge.Advance(0.25f, 1f, 0.25f);
+        Assert.Equal(jointCount, root.EvaluateIncremental(Vector2.Zero));
+    }
+
+    [Fact]
     public void RejectsCyclesAndChildrenAlreadyAttachedToAnotherParent()
     {
         var root = CreateNode("root");
