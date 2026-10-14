@@ -1,12 +1,12 @@
-# Rig Contract Proposal (Draft)
+# Articulated Motion Contract Proposal (Draft)
 
 > **Status: proposal, not a frozen public contract.** This document separates what the current implementation guarantees from the decisions that need real consumer examples before becoming API or serialization commitments.
 
 ## Purpose
 
-A Gesture describes a physical procedure as normalized keyframes containing named local transforms, plus optional semantic anchors. It must not require a humanoid skeleton. Candidate consumers include humanoids, quadrupeds, birds, segmented creatures, and articulated mechanisms.
+A Gesture describes a physical procedure as normalized keyframes containing named local transforms, plus optional semantic anchors. It must not require a humanoid skeleton—or even a biological body. Candidate consumers include humanoids, quadrupeds, birds, segmented creatures, turrets, vehicle mechanisms, and industrial manipulators. “Gait” is a useful name for locomotion patterns, but Gestures covers the broader class of physical procedures.
 
-![Conceptual examples of distinct rig topologies using the same general Gesture data flow](assets/gesture-rig-topologies.svg)
+![Conceptual examples of distinct articulated structures using the same general Gesture data flow](assets/gesture-rig-topologies.svg)
 
 ## What exists today
 
@@ -19,13 +19,19 @@ A Gesture describes a physical procedure as normalized keyframes containing name
 
 These guarantees allow many transform sets to be represented, but they do **not** mean any Gesture can automatically drive any target rig.
 
+## Motion intent and individual variation
+
+The design goal is not to produce one ideal performance and then replay identical copies. The ideal procedure defines a useful reference; a stable per-entity seed selects deterministic differences within explicit parameter ranges. A capability, skill, training, damage, fatigue, or other domain profile may choose how wide those ranges are. Tighter ranges keep motion closer to the ideal; wider ranges allow more individual character and, where appropriate, greater error or instability. This is bounded, reproducible variation—not fresh random noise every frame.
+
+The current evaluator implements only a small baseline of this idea: bounded deterministic speed deviation and lateral root offset, plus linear position/scale interpolation and quaternion slerp. The earlier force-based and spring/damper motion equation remains exploratory; springy easing, skill-derived range policies, articulated-body solving, IK, and per-tendon simulation are not implemented contracts. We should derive and validate that equation against reference motions before presenting it as settled mathematics.
+
 ## Candidate ownership split
 
 | Concern | Candidate owner | Reason |
 | --- | --- | --- |
 | Procedure intent, normalized keyframes, semantic anchor names | Gesture definition/provider | Domain-neutral reusable data |
-| Actual rig hierarchy, bind/rest pose, target transform IDs | Rig descriptor or host-owned rig adapter | Different assets and domains have different topology |
-| Mapping a Gesture transform name to a target rig transform | Consumer/adapter | Avoids guessing that names or topology are universally compatible |
+| Articulated target hierarchy, rest pose, target transform IDs | Target descriptor or host-owned adapter | Different assets and domains have different topology |
+| Mapping a Gesture transform name to a target transform | Consumer/adapter | Avoids guessing that names or topology are universally compatible |
 | Anchor lookup and alignment to an interaction target | Provider + consumer adapter | Meaning is domain-specific; spatial resolution is target-specific |
 | Reachability, IK, collision, balance, authoritative locomotion | Simulation/optional solver layer | These are not guaranteed by interpolation |
 | Presentation fidelity and rendering | Renderer / presentation layer | Keep Gestures independent of rendering technology |
@@ -47,8 +53,8 @@ This split is a working hypothesis to test, not a new runtime API.
 - Is hierarchy metadata supplied by the target rig, declared alongside a Gesture, or split between both?
 - Should names remain the only required transform identity, with optional semantic tags as hints?
 - What are the exact validation outcomes for unknown names, duplicate/missing target transforms, and incompatible hierarchies?
-- Should anchor `ParentJoint` be renamed to a rig-neutral term such as `ParentTransform` before public API stabilization? A vehicle hinge or tentacle segment need not be a joint in the skeletal-animation sense.
-- Does a future rig descriptor need rest/bind transforms, units, handedness, or coordinate-system metadata, or should those stay in an adapter?
+- Should anchor `ParentJoint` be renamed to a more general term such as `ParentTransform` before public API stabilization? A vehicle hinge, turret axis, or tentacle segment need not be a joint in the skeletal-animation sense.
+- Does a future articulated-target descriptor need rest/bind transforms, units, handedness, or coordinate-system metadata, or should those stay in an adapter?
 - How should consumers explicitly opt into retargeting, if it is ever added, and how will results be validated against reference poses?
 
 ## Next evidence required
