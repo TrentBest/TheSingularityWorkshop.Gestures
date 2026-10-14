@@ -91,6 +91,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Determinism](docs/DETERMINISM.md) — understand what stable evaluation means and which inputs determine the result.
 - [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore the candidate force, inertia, spring, damping, easing, and training-variance model. This is exploratory mathematics, not a frozen package contract.
 - [Motion Model Experiment Plan](docs/MOTION_MODEL_EXPERIMENT_PLAN.md) — compare candidate models, see analytic damping-response curves, derive interpretable parameter ranges, and define measurable experiments before choosing an implementation.
+- [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — explore the evidence standard, current generated scenes, and the next visual milestones.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
