@@ -158,3 +158,55 @@ The success criterion is not “we have an equation.” It is: **we can explain 
 ---
 
 *The Singularity Workshop — edify, not mystify.*
+
+
+## Derivation ledger: what follows from physics, and what must be chosen
+
+The historical recollection is that the original model was *derived* by rearranging and combining terms from Newton's second law, with factors and constants introduced along the way. The exact derivation is not currently available. Preserve that distinction explicitly: a plausible equation is not a recovered equation.
+
+Start with the vector law:
+
+\[
+\mathbf F_{\mathrm{net}}=m\mathbf a
+\]
+
+For constant mass in one translational coordinate:
+
+\[
+F_{\mathrm{net}}=m\ddot{x}
+\qquad\Longrightarrow\qquad
+\ddot{x}=\frac{F_{\mathrm{net}}}{m}
+\]
+
+This rearrangement is algebraically equivalent to Newton's law. It does not, by itself, specify what forces act on the moving part. Each additional term needs a stated physical interpretation or must be labelled as a chosen control law.
+
+| Term or choice | Status | What must be justified |
+|---|---|---|
+| \(m\ddot{x}\) | Newtonian inertial term for constant mass | What coordinate and effective mass/inertia are represented? |
+| \(-k(x-r)\) | Assumed linear restoring-force model | Why does displacement error produce a force proportional to error, and over what range? |
+| \(-c\dot{x}\) | Assumed viscous damping against a fixed frame | What medium, mechanism, or effective dissipation does this approximate? |
+| \(-c(\dot{x}-\dot r)\) | Assumed damping relative to a moving target | Why should damping act on relative rather than absolute velocity? |
+| \(F_{\mathrm{drive}}\) | Additional applied/control force | Is this an external force, active actuation, or a procedural controller? Define units and behavior. |
+| \(m\ddot r\) or target feed-forward | Optional control term | Is it a real applied force in the model, a cancellation term, or a controller convenience? Derive its sign and role. |
+| Seeded profile variation | Parameter-selection policy, not a force law | Which physical/control parameters vary, how are they bounded, and when are they sampled? |
+| Experience-dependent range | Behavioral hypothesis, not a law of mechanics | What evidence supports narrowing each selected range with experience? |
+
+For every proposed term, keep a derivation record with: (1) the starting law, (2) the modelling assumption, (3) algebraic steps, (4) units/dimensional check, (5) valid operating range, (6) limiting cases, and (7) a test that could falsify the intended behavior.
+
+### Dimensional checks
+
+For a translational scalar model, if position is measured in metres and time in seconds, then force has units of kg·m/s². In the linear spring-damper model:
+
+- \(m\): kg;
+- \(\ddot{x}\): m/s²;
+- \(k\): N/m = kg/s²;
+- \(c\): N·s/m = kg/s;
+- \(F_{\mathrm{drive}}\): N.
+
+The equation is dimensionally consistent only if all terms on its force side have force units. Dimensionless factors—such as a bounded seed sample or a damping ratio—may scale a parameter, but must not silently repair incompatible units. Rotational coordinates require the corresponding torque and moment-of-inertia units.
+
+### Rearrangement is not derivation of a force law
+
+Moving terms across an equals sign or dividing by mass preserves an equation already specified. Introducing stiffness, damping, response factors, constants, or experience profiles adds modelling choices unless those terms can be derived from an explicitly stated physical system. The historical work may have made those choices through a longer chain of reasoning; we should reconstruct that chain if source material or notes resurface, not retrofit certainty onto the current candidate.
+
+Until then, retain candidate models side by side and label each added assumption. The goal is not merely to keep the final expression compatible with units: it is to explain where every term comes from and which claims are Newtonian mechanics versus useful procedural approximations.
