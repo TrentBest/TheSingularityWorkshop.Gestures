@@ -24,10 +24,11 @@
 - [x] Test recovery after an incremental evaluation detects a non-finite derived transform.
 - [x] Define a data-only contact observation handoff from the external physics/domain owner; Gestures does not infer physical contact or support.
 - [ ] Fully separate and integrate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
-- [ ] Model contact as an outcome: establish, load-test, slip/release, and feed measured contact back into the affected hierarchy (rock-climbing example).
+- [ ] Feed externally measured contact outcomes into target selection and recovery decisions; retain physics/domain ownership of contact, load-bearing, slip, and release (rock-climbing example).
 - [x] Prototype a single stateful hinge without assuming an FSM_API dependency; document its contract and limitations.
+- [x] Connect constrained two-link IK to retained hinges and measured hierarchy output in a speed-limited kinematic control loop; test reachable convergence, unreachable targets, and world-anchor offsets.
 - [x] Build a small parent/child hierarchy with explicit transform propagation and an initial dirty-path incremental update.
-- [ ] Compare incremental updates with full reevaluation for correctness before performance claims.
+- [x] Compare incremental updates with full reevaluation for correctness before performance claims.
 - [ ] Benchmark 1–10,000 joints and record total-step cost, allocations, update ratios, error, and failure behavior.
 
 Tracked in [Stateful IK research issue #11](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/11).
