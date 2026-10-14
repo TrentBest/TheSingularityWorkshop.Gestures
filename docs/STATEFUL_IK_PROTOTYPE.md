@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is the first executable experiment in the Stateful IK research track. It takes the theory's smallest useful unit—a retained joint angle—and makes its transition rules testable before introducing parent/child hierarchy or physical contact.
+This is the first executable experiment in the Stateful IK research track. It now includes a retained hinge, a planar parent/child hierarchy, dirty-path incremental evaluation, and a data-only handoff for externally measured contact outcomes. It still does not implement the physical model that produces those observations.
 
 ## Contract
 
@@ -19,7 +19,7 @@ Positive and negative are relative to the hinge's declared coordinate convention
 
 ## What this prototype does not do
 
-This is a deterministic, speed-limited kinematic controller, not a physical hinge simulation. It does not integrate torque, inertia, acceleration, collisions, contact forces, friction, adhesion, balance, or damage. A target request is not proof of physical success. Those responsibilities must be introduced through explicit contracts and adapters rather than implied by this class.
+This is a deterministic, speed-limited kinematic controller, not a physical hinge simulation. It does not integrate torque, inertia, acceleration, collisions, contact forces, friction, adhesion, balance, or damage; contact is only retained as an external observation. A target request is not proof of physical success. Those responsibilities must be introduced through explicit contracts and adapters rather than implied by this class.
 
 The companion `StatefulJointNode` prototype connects retained hinges into a planar parent/child hierarchy. Each link extends along local +X; a child's local angle is added to its parent's world angle, and the child starts at the parent's endpoint. `EvaluateFull` recalculates every node and acts as a correctness reference. `EvaluateIncremental` uses hinge-change notifications and ancestor dirty flags to recalculate only changed transforms and affected descendants; it returns the number of transforms recalculated. Unchanged hierarchies return zero, and adding a child invalidates the relevant path. The hierarchy rejects cycles, multiple parents, non-finite anchors, and evaluation starting below the root.
 
