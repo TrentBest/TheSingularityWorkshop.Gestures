@@ -53,7 +53,7 @@ This split is a working hypothesis to test, not a new runtime API.
 
 ## Next evidence required
 
-Build small, named-transform examples for a humanoid, a quadruped, and an articulated mechanism. Record the mapping assumptions for each and test keyframe evaluation independently of rendering. Use those examples to answer the questions above before introducing a hierarchy type, semantic-tag API, serialized rig schema, or new dependencies.
+The test suite now exercises the same generic evaluator with distinct humanoid, quadruped, and articulated-mechanism transform vocabularies (`hips`/`left_hand`, `spine`/`front_left_paw`, and `base_hinge`/`tool_tip`). These are deliberately small data-shape tests, not full rig adapters. Next, build richer named-transform examples, record the mapping assumptions for each, and test keyframe evaluation independently of rendering. Use those examples to answer the questions above before introducing a hierarchy type, semantic-tag API, serialized rig schema, or new dependencies.
 
 ## Non-goals
 
