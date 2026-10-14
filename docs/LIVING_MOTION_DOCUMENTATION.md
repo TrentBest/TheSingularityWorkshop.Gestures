@@ -1,5 +1,7 @@
 # Living motion documentation
 
+Gestures teaches reusable animation principles. A gesture describes motion over time; it does not need to know whether its target is a soldier, tank, spaceship, tool, or abstract transform. The target's behavior and any physical simulation remain owned by their respective systems. Shared evaluation operations can later be batched across compatible targets, including on the GPU, without baking object-specific assumptions into Gestures. That batching is a future optimization, not a claim about the current CPU reference evaluator.
+
 The documentation is part of the product experience: it should help readers *see* what the current implementation does, understand why the behavior matters, and follow the evidence back to real code.
 
 ## Current generated scenes
@@ -8,7 +10,7 @@ The documentation is part of the product experience: it should help readers *see
 
 ![Three evaluated named-transform tracks](assets/gesture-motion.svg)
 
-The C# demonstration creates one `GestureDefinition` with three named transforms and samples `GestureEvaluator.Evaluate` 49 times. FSM_API coordinates the demo lifecycle. The path geometry and animated marker position, rotation, and scale are serialized from those evaluated outputs.
+The C# demonstration creates one `GestureDefinition` with three named transforms and samples `GestureEvaluator.Evaluate` 49 times. These are generic transform targets chosen to make the motion principles visible; their names do not make this a vehicle, character, or tool behavior. FSM_API coordinates the demo lifecycle. The path geometry and animated marker position, rotation, and scale are serialized from those evaluated outputs.
 
 **What this demonstrates:** keyframe data, normalized progress, linear position interpolation, quaternion rotation interpolation, scale interpolation, and how evaluated data can feed presentation.
 
@@ -48,6 +50,12 @@ These are priorities for future iterations, not claims about current functionali
 | 4 | Multiple transforms with actual hierarchy | A documented parent/child composition contract and a tested evaluator/adapter that resolves it; named dictionary keys alone are insufficient |
 | 5 | Dynamic response to forces/contact | A real, tested motion model producing state updates from declared forces, environment, and contact inputs; never substitute a hand-authored slip or impact animation |
 | 6 | Baked motion-model data | A reproducible offline bake, metadata for its assumptions/domain, runtime interpolation, and explicit handling of out-of-domain inputs |
+
+## Reuse and batching: operations, not object names
+
+The long-term performance goal is to make detailed motion affordable at scale. Prefer grouping targets by compatible evaluation work, data layout, and fidelity—not by labels such as `tank` or `soldier`. Different kinds of targets may share interpolation or other motion kernels; targets of the same kind may still be running different behaviors. A GPU implementation should batch only work whose semantics and data contract are compatible, with the CPU reference evaluator remaining a correctness baseline.
+
+This is an architectural direction, not current functionality: the present evaluator is a CPU reference implementation, and these SVGs do not demonstrate GPU execution or performance. A future performance scene should show measured work and output from an actual batch implementation, alongside correctness comparisons and the tested workload.
 
 ## Future physics scenes: causality, not labels
 
