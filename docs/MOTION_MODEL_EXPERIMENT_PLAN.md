@@ -1,6 +1,8 @@
 # Motion Model Experiment Plan
 
 > **Status: derivation and experiment plan. Not an implementation contract.** This document narrows the mathematical questions for the Gesture motion equation. It does not claim to recover the exact historical equation; that original derivation should be preserved if found.
+>
+> For explicit per-contribution contracts, gate/mode vocabulary, and a proposed validation matrix, see the [Motion Contribution Catalogue](MOTION_CONTRIBUTION_CATALOGUE.md).
 
 ## The question we are actually solving
 
