@@ -89,7 +89,7 @@ These are often described as the two “elbow-up / elbow-down” solutions. The 
 
 \\[
 \\theta_1=\\operatorname{atan2}(y,x)-
-\\operatorname{atan2}(L_2\\sin\\theta_2,,
+\\operatorname{atan2}(L_2\\sin\\theta_2,
 L_1+L_2\\cos\\theta_2)
 \\]
 
