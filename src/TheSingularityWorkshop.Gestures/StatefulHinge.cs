@@ -66,6 +66,12 @@ public sealed class StatefulHinge
     /// <summary>The currently retained hinge angle in radians.</summary>
     public float AngleRadians { get; private set; }
 
+    /// <summary>The inclusive minimum legal hinge angle in radians.</summary>
+    public float MinimumRadians => _minimumRadians;
+
+    /// <summary>The inclusive maximum legal hinge angle in radians.</summary>
+    public float MaximumRadians => _maximumRadians;
+
     // Internal invalidation signal: hierarchy nodes subscribe so an angle change dirties its ancestor path.
     internal event Action? AngleChanged;
 
