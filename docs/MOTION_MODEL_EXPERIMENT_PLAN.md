@@ -210,3 +210,56 @@ The equation is dimensionally consistent only if all terms on its force side hav
 Moving terms across an equals sign or dividing by mass preserves an equation already specified. Introducing stiffness, damping, response factors, constants, or experience profiles adds modelling choices unless those terms can be derived from an explicitly stated physical system. The historical work may have made those choices through a longer chain of reasoning; we should reconstruct that chain if source material or notes resurface, not retrofit certainty onto the current candidate.
 
 Until then, retain candidate models side by side and label each added assumption. The goal is not merely to keep the final expression compatible with units: it is to explain where every term comes from and which claims are Newtonian mechanics versus useful procedural approximations.
+
+
+## Composable motion terms and environment-driven contact
+
+The author's further architectural hypothesis is that a motion law can be understood as a composition of distinct contributions—not as one opaque formula or a collection of bespoke animations. Spring-like response is one possible contribution; contact friction, damping, drive/actuation, impact, and other effects can be represented separately when the model actually supports them.
+
+For a generalized coordinate vector \(\mathbf q\), a useful *organizational sketch* is:
+
+\[
+\mathbf M(\mathbf q)\ddot{\mathbf q}
+= \sum_i g_i\,\mathbf Q_i(\mathbf q,\dot{\mathbf q},\mathbf z,\mathbf e)
+\]
+
+Here \(\mathbf M\) represents the chosen inertia model; each \(\mathbf Q_i\) is a separately defined generalized-force contribution; \(g_i\) is an explicit dimensionless gate/scale; \(\mathbf z\) is material/contact state; and \(\mathbf e\) is environmental state. This is an architectural template, **not a solved equation or an implementation claim**. Constraints, contact impulses, nonlinear effects, and configuration-dependent inertia may require a more complete formulation than a simple sum.
+
+A gate can express several different intentions, which should not be conflated:
+
+- **Excluded:** \(g_i=0\), so that contribution is absent from this model evaluation.
+- **Fully included:** \(g_i=1\), so its defined contribution is applied as specified.
+- **Scaled:** \(0<g_i<1\), if scaling that particular contribution has a meaningful interpretation.
+- **Condition-selected:** a declared rule chooses a gate from contact, material, or other state.
+
+A gate does not make an invalid force law physical, and not every term should be blended continuously. Contact creation/loss, static-to-kinetic friction, impacts, and phase transitions may need explicit mode changes or complementarity/constraint handling. In particular, scaling a constraint force is not generally equivalent to scaling an ordinary applied force. Document the semantics per term rather than expose universal sliders that imply every effect can be blended safely.
+
+### Example: ice should emerge from coupled state, not an ice animation
+
+The intended causal chain is:
+
+1. An environmental/thermal model updates the local temperature and relevant conditions.
+2. A material/phase model determines whether the water is liquid, freezing, or solid under its modeled pressure and other assumptions.
+3. The resulting material state supplies contact properties to the contact model.
+4. The contact model computes normal and tangential forces/impulses subject to its friction and contact rules.
+5. Those forces change the body's motion; the same rules apply to any eligible body that contacts that surface.
+
+This only works if the simulation actually represents those links. A temperature threshold alone is a simplified phase rule, not a complete heat-transfer/freezing simulation; at ordinary atmospheric pressure pure water freezes near 0 °C (32 °F), but pressure, dissolved substances, supercooling, and model scope can matter. Likewise, ice does not have one universal friction coefficient or literally zero friction: effective friction depends on conditions such as temperature, speed, surface state, and lubrication/contamination.
+
+For a simple dry-contact approximation, kinetic friction magnitude is often modelled as \(\mu_k N\), opposing relative tangential motion; static friction instead adjusts up to a limit \(|F_t|\leq\mu_s N\). These are modelling approximations with defined operating assumptions, not a universal law that can be inserted unchanged into every contact solver. The material/phase model provides or selects \(\mu_s\), \(\mu_k\), and other contact parameters; the contact solver remains responsible for applying them consistently.
+
+The architectural payoff is generality: a character can slip because the computed contact mechanics changed, rather than because someone authored an “ice-slip” animation for that character. The same surface rule can affect different bodies, provided their contact geometry, mass/inertia, constraints, and motion are represented by the simulation.
+
+### Research boundaries and validation
+
+Keep this compositional hypothesis separate from the current scalar spring-damper experiment. Before claiming a unified motion/material simulation, a future experiment would need to specify:
+
+- the state variables and units for each contribution;
+- which terms are forces, torques, constraints, impulses, or procedural controls;
+- each gate's meaning, range, and mode-transition behavior;
+- how material state is derived from environmental state, including simplifications;
+- contact normal, relative tangential velocity, friction regime, and solver assumptions;
+- energy/force consistency, numerical stability, and behavior at transitions;
+- tests showing that changing temperature changes phase/material properties and that those properties—not a hard-coded character animation—change contact motion.
+
+For now, this section records the architecture the model should investigate. It does **not** imply that Gestures currently simulates temperature, freezing, material friction, contact mechanics, or generalized multi-body dynamics.
