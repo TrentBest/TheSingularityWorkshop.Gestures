@@ -133,7 +133,7 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
     <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <style>
       text{font-family:"Segoe UI",Arial,sans-serif} .muted{fill:#b9c8d9;font-size:12px} .grid{stroke:#31465e;stroke-width:1;stroke-dasharray:3 7} .motion{fill:none;stroke:#78dcff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round} .static{display:none}
-      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}
+      @media(prefers-reduced-motion:reduce){\n        .animated{display:none}\n        .static{display:inline}\n      }
     </style>
   </defs>
   <rect width="960" height="480" rx="18" fill="url(#bg)"/>
@@ -145,28 +145,28 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
     <path d="M82 156V340 M281 156V340 M480 156V340 M679 156V340 M878 156V340"/>
   </g>
   <path d="M82 156H878 M82 340H878" stroke="#51657b" stroke-width="1.5"/>
-  <polyline points="{{{points}}}" class="motion"/>
-  {{{keyframeDots}}}
+  <polyline points="{{points}}" class="motion"/>
+  {{keyframeDots}}
   <g fill="#b9c8d9" font-size="11">
     <text x="82" y="362">progress 0</text><text x="480" y="362" text-anchor="middle">normalized progression</text><text x="878" y="362" text-anchor="end">progress 1</text>
   </g>
   <g class="animated" filter="url(#glow)">
     <circle r="9" fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
-      <animate attributeName="cx" values="{{{xValues}}}" keyTimes="{{{keyTimes}}}" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="cy" values="{{{yValues}}}" keyTimes="{{{keyTimes}}}" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="{{xValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="{{yValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
     </circle>
   </g>
-  <circle class="static" cx="{{{N(X(mid.X))}}}" cy="{{{N(Y(mid.Y))}}}" r="9" fill="#e8b84b" stroke="#fff0b9" stroke-width="2"/>
+  <circle class="static" cx="{{N(X(mid.X))}}" cy="{{N(Y(mid.Y))}}" r="9" fill="#e8b84b" stroke="#fff0b9" stroke-width="2"/>
   <path d="M82 394H878" stroke="#31465e" stroke-width="2"/>
   <circle class="animated" r="5" fill="#78dcff">
-    <animate attributeName="cx" values="{{{progressValues}}}" keyTimes="{{{keyTimes}}}" dur="4s" repeatCount="indefinite"/>
-    <animate attributeName="cy" values="{{{string.Join(";", samples.Select(_ => "394"))}}}" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="{{progressValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="{{string.Join(";", samples.Select(_ => "394"))}}" dur="4s" repeatCount="indefinite"/>
   </circle>
   <circle class="static" cx="480" cy="394" r="5" fill="#78dcff"/>
   <text x="34" y="426" font-size="11" letter-spacing="1.5" fill="#78dcff">OBSERVED C# OUTPUT</text>
   <text x="34" y="448" font-size="13" fill="#f3f6fb">49 evaluator samples · linear position interpolation · quaternion rotation interpolation · scale interpolation</text>
   <text x="926" y="426" text-anchor="end" font-size="11" letter-spacing="1.5" fill="#e8b84b">FSM_API LIFECYCLE</text>
-  <text x="926" y="448" text-anchor="end" font-size="13" fill="#f3f6fb">{{{Esc(string.Join(" → ", transitions))}}}</text>
+  <text x="926" y="448" text-anchor="end" font-size="13" fill="#f3f6fb">{{Esc(string.Join(" → ", transitions))}}</text>
 </svg>
 """;
 }
