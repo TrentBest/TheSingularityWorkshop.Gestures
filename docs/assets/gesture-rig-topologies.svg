@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Rig-neutral overview for TheSingularityWorkshop.Gestures.
+  Articulated-motion overview for TheSingularityWorkshop.Gestures.
   This is a conceptual data-model diagram, not a runtime screenshot or a
   claim that retargeting, IK, collision solving, or animal-specific solvers exist.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">One Gesture model, many rig topologies</title>
+  <title id="title">One Gesture model, many articulated worlds</title>
   <desc id="desc">Three example articulated systems—a humanoid, a quadruped, and an industrial arm—are represented as named local transforms. A generic Gesture definition and CPU reference evaluator produce evaluated transform data for a consumer-specific rig adapter and renderer. The diagram does not imply automatic retargeting or inverse kinematics.</desc>
   <defs>
     <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
@@ -35,13 +35,13 @@
   <rect width="1200" height="720" rx="22" fill="url(#canvas)"/>
   <text x="40" y="44" class="smallcaps">GESTURES / RIG-NEUTRAL MODEL</text>
   <text x="40" y="82" class="heading">One procedure model. Many articulated worlds.</text>
-  <text x="40" y="110" class="subhead">Gesture data names local transforms; the target rig supplies its own topology and domain meaning.</text>
+  <text x="40" y="110" class="subhead">Gesture data names local transforms; the target supplies its own topology and domain meaning.</text>
 
   <!-- Example topology cards -->
   <g transform="translate(35 140)">
     <rect width="350" height="255" rx="14" class="card"/>
     <text x="20" y="32" class="cardtitle">Humanoid</text>
-    <text x="20" y="52" class="label">example topology · not a required schema</text>
+    <text x="20" y="52" class="label">example articulation · not a required schema</text>
     <g class="bone">
       <path d="M175 101 L175 151 L175 190"/>
       <path d="M175 124 L132 145 L112 179"/>
@@ -86,7 +86,7 @@
   <g transform="translate(815 140)">
     <rect width="350" height="255" rx="14" class="card"/>
     <text x="20" y="32" class="cardtitle">Articulated mechanism</text>
-    <text x="20" y="52" class="label">same general idea outside biological rigs</text>
+    <text x="20" y="52" class="label">same general idea outside biological motion</text>
     <g class="bone">
       <path d="M108 215 L108 169 L160 142 L211 100 L264 91"/>
       <path d="M264 91 L285 113 L275 129"/>
@@ -111,7 +111,7 @@
 
   <path d="M600 537 V564" class="connector"/>
   <rect x="255" y="570" width="690" height="58" rx="12" fill="#202c40" stroke="#e8bd61" stroke-width="1.5"/>
-  <text x="600" y="594" text-anchor="middle" fill="#f4f6fb" font-size="17" font-weight="700">EvaluatedPose → consumer-owned rig adapter → renderer</text>
+  <text x="600" y="594" text-anchor="middle" fill="#f4f6fb" font-size="17" font-weight="700">EvaluatedPose → consumer-owned target adapter → renderer</text>
   <text x="600" y="615" text-anchor="middle" fill="#c1d0df" font-size="12">Mapping / retargeting is not implied; collision, IK, and authoritative motion remain external.</text>
-  <text x="40" y="672" fill="#a8bbcf" font-size="12">Conceptual architecture diagram. The example rigs illustrate possible topologies, not a frozen rig schema or captured runtime output.</text>
+  <text x="40" y="672" fill="#a8bbcf" font-size="12">Conceptual architecture diagram. Examples illustrate possible articulated targets, not a frozen schema or captured runtime output.</text>
 </svg>
