@@ -70,7 +70,10 @@ File.WriteAllText(output, BuildSvg(samples, transitions), new UTF8Encoding(false
 var channelsOutput = Path.Combine("docs", "assets", "gesture-channels.svg");
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(channelsOutput))!);
 File.WriteAllText(channelsOutput, BuildChannelsSvg(samples), new UTF8Encoding(false));
-Console.WriteLine($"Generated {output} and {channelsOutput}");
+var targetsOutput = Path.Combine("docs", "assets", "gesture-target-agnostic.svg");
+Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(targetsOutput))!);
+File.WriteAllText(targetsOutput, BuildTargetSvg(samples), new UTF8Encoding(false));
+Console.WriteLine($"Generated {output}, {channelsOutput}, and {targetsOutput}");
 Console.WriteLine($"Lifecycle: {string.Join(" -> ", transitions)}");
 Console.WriteLine($"Samples: {samples.Count}; named transforms: {string.Join(", ", samples[0].Transforms.Keys.Order())}; source: GestureEvaluator.Evaluate; coordinator: FSM_API");
 
@@ -237,6 +240,95 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
 }
 
 
+static string BuildTargetSvg(IReadOnlyList<Sample> samples)
+{
+    const double left = 92, width = 790;
+    static string N(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
+    double X(double x) => left + Math.Clamp(x, 0, 1) * width;
+    var keyTimes = string.Join(";", samples.Select(s => N(s.ElapsedFraction)));
+    var targets = new[]
+    {
+        new TargetTrack("HUMANOID", 174, "#78dcff", "soldier"),
+        new TargetTrack("TRACKED VEHICLE", 294, "#e8b84b", "tank"),
+        new TargetTrack("ARTICULATED TOOL", 414, "#f5a7ff", "tool")
+    };
+    var lanes = new StringBuilder();
+    foreach (var target in targets)
+    {
+        var values = samples.Select(s => s.Transforms["root"]).ToArray();
+        double Y(TransformSample value) => target.CenterY - (value.Y - 0.25) * 76;
+        var points = string.Join(" ", values.Select(v => $"{N(X(v.X))},{N(Y(v))}"));
+        var positionValues = string.Join(";", values.Select(v => $"{N(X(v.X))} {N(Y(v))}"));
+        var rotations = string.Join(";", values.Select(v => N(v.RotationDegrees)));
+        var scales = string.Join(";", values.Select(v => $"{N(v.Scale)} {N(v.Scale)}"));
+        var middle = values[values.Length / 2];
+        var silhouette = target.Kind switch
+        {
+            "soldier" => """
+                <circle cx="0" cy="-19" r="5" fill="currentColor"/>
+                <path d="M-6 -12 Q0 -16 6 -12 L8 3 L4 4 L3 -5 L2 9 L-2 9 L-3 -4 L-5 4 L-9 3 Z" fill="currentColor"/>
+                <path d="M-5 -10 L-13 -2 M5 -10 L13 -3 M-2 9 L-7 20 M2 9 L8 19" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M-6 -23 Q0 -29 6 -23 L7 -19 L-7 -19 Z" fill="#d9e7f5"/>
+                """,
+            "tank" => """
+                <rect x="-23" y="-8" width="46" height="15" rx="4" fill="currentColor"/>
+                <path d="M-7 -9 L-5 -16 L10 -16 L15 -9 Z" fill="currentColor"/>
+                <path d="M8 -13 L25 -13" stroke="#d9e7f5" stroke-width="4" stroke-linecap="round"/>
+                <rect x="-21" y="5" width="42" height="8" rx="4" fill="#d9e7f5" opacity=".9"/>
+                <g fill="#17283b" stroke="#d9e7f5" stroke-width="1.5"><circle cx="-13" cy="9" r="3.5"/><circle cx="-4" cy="9" r="3.5"/><circle cx="5" cy="9" r="3.5"/><circle cx="14" cy="9" r="3.5"/></g>
+                """,
+            _ => """
+                <path d="M-20 18 L-13 8 L-4 8 L4 -5 L16 -12" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M-20 18 L-8 18 M-24 22 L-4 22" fill="none" stroke="#d9e7f5" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="-13" cy="8" r="4" fill="#17283b" stroke="#d9e7f5" stroke-width="2"/>
+                <circle cx="4" cy="-5" r="4" fill="#17283b" stroke="#d9e7f5" stroke-width="2"/>
+                <path d="M16 -12 L22 -17 M16 -12 L23 -9" fill="none" stroke="#d9e7f5" stroke-width="3" stroke-linecap="round"/>
+                """
+        };
+        lanes.Append($"""
+          <text x="34" y="{{N(target.CenterY - 27)}}" font-size="12" font-weight="700" letter-spacing="1.4" fill="{{target.Color}}">{{target.Label}}</text>
+          <polyline points="{{points}}" fill="none" stroke="{{target.Color}}" stroke-width="1.5" stroke-dasharray="3 7" opacity=".35"/>
+          <g class="animated" color="{{target.Color}}">
+            <g>
+              <animateTransform attributeName="transform" type="translate" values="{{positionValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+              <g>
+                <animateTransform attributeName="transform" type="rotate" values="{{rotations}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+                <g>
+                  <animateTransform attributeName="transform" type="scale" values="{{scales}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+                  {{silhouette}}
+                </g>
+              </g>
+            </g>
+          </g>
+          <g class="static" color="{{target.Color}}" transform="translate({{N(X(middle.X))}} {{N(Y(middle))}}) rotate({{N(middle.RotationDegrees)}}) scale({{N(middle.Scale)}})">
+            {{silhouette}}
+          </g>
+        """);
+    }
+    return $"""
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 510" role="img" aria-labelledby="targets-title targets-desc">
+  <title id="targets-title">One evaluated gesture applied to three different target types</title>
+  <desc id="targets-desc">Generated by the C# demonstration from the same 49 GestureEvaluator samples used by the other living scenes. The exact same evaluated root position, rotation, and scale channels drive three different illustrative target silhouettes in separate lanes. The silhouettes are presentation glyphs, not soldier, vehicle, or tool behavior simulations. The gesture evaluator remains target-agnostic; owning systems define target-specific behavior and physical simulation.</desc>
+  <defs>
+    <linearGradient id="targets-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
+    <style>
+      text{font-family:"Segoe UI",Arial,sans-serif}.static{display:none}
+      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}
+    </style>
+  </defs>
+  <rect width="960" height="510" rx="18" fill="url(#targets-bg)"/>
+  <text x="34" y="34" font-size="11" letter-spacing="2" fill="#8da7c5">THE SINGULARITY WORKSHOP / C# EVALUATOR DATA</text>
+  <text x="34" y="69" font-size="25" font-weight="700" fill="#f3f6fb">One gesture. Different targets.</text>
+  <text x="34" y="94" font-size="12" fill="#b9c8d9">Same evaluated transform channels · target-specific behavior stays elsewhere</text>
+  <g stroke="#31465e" stroke-width="1" stroke-dasharray="4 7">
+    <path d="M34 220H926 M34 340H926 M34 460H926"/>
+  </g>
+  {{lanes}}
+  <text x="34" y="491" font-size="11" fill="#b9c8d9">49 real evaluator samples · position, quaternion rotation, and scale serialized by the C# generator</text>
+</svg>
+""";
+}
+
 static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
 {
     const double left = 120, width = 720, panelHeight = 58, gap = 25, firstTop = 122;
@@ -313,6 +405,7 @@ static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
 }
 
 internal sealed record ChannelPanel(string Title, string Unit, string Color, double[] Values, double Min, double Max);
+internal sealed record TargetTrack(string Label, double CenterY, string Color, string Kind);
 
 internal sealed class MotionContext : IStateContext
 {
