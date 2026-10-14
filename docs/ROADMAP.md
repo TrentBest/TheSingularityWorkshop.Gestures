@@ -7,8 +7,8 @@
 - [x] CPU interpolation for position, rotation, and scale.
 - [x] Deterministic bounded speed and root-offset variation.
 - [x] Unit tests for core invariants and repeatability.
+- [x] Fixed-input deterministic reference vectors for the CPU implementation.
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
-- [ ] Confirm CI is green on the initial pull request.
 - [ ] Review public API names and package metadata before alpha publication.
 
 ## Milestone 1 — Real domain examples
@@ -17,7 +17,6 @@
 - [ ] Add a provider-owned interaction example, such as boarding a vehicle through named anchors.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
-- [ ] Add deterministic golden test vectors and numerical tolerance policy.
 
 ## Milestone 2 — Rig and constraints
 
