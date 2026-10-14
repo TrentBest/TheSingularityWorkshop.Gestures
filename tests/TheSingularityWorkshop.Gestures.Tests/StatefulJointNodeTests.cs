@@ -250,16 +250,18 @@ public sealed class StatefulJointNodeTests
     [Fact]
     public void FailedIncrementalEvaluationKeepsHierarchyDirtyForRecovery()
     {
-        var rootHinge = new StatefulHinge(float.MaxValue, 0f, float.MaxValue);
-        var childHinge = new StatefulHinge(float.MaxValue, 0f, float.MaxValue);
-        var root = new StatefulJointNode("root", 1f, rootHinge);
-        var child = new StatefulJointNode("child", 1f, childHinge);
+        var rootHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var root = new StatefulJointNode("root", float.MaxValue, rootHinge);
+        var child = CreateNode("child");
         root.AddChild(child);
+        var anchor = new Vector2(float.MaxValue, 0f);
 
-        Assert.Throws<InvalidOperationException>(() => root.EvaluateIncremental(Vector2.Zero));
+        Assert.Throws<InvalidOperationException>(() => root.EvaluateIncremental(anchor));
 
-        childHinge.Advance(0f, 1f, float.MaxValue);
-        Assert.Equal(1, root.EvaluateIncremental(Vector2.Zero));
+        rootHinge.Advance(MathF.PI, 1f, MathF.PI);
+        Assert.Equal(2, root.EvaluateIncremental(anchor));
+        Assert.True(float.IsFinite(root.WorldEnd.X));
+        Assert.True(float.IsFinite(root.WorldEnd.Y));
         Assert.True(float.IsFinite(child.WorldAngleRadians));
         Assert.True(float.IsFinite(child.WorldEnd.X));
         Assert.True(float.IsFinite(child.WorldEnd.Y));
