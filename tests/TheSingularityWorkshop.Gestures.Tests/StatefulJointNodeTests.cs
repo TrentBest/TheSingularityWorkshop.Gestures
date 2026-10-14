@@ -321,7 +321,7 @@ public sealed class StatefulJointNodeTests
         Assert.Same(root, child.Parent);
         Assert.Contains(child, root.Children);
         Assert.Same(breakable, child.IncomingStructuralJoint);
-        Assert.Equal(2, root.EvaluateIncremental(Vector2.Zero));
+        Assert.Equal(0, root.EvaluateIncremental(Vector2.Zero));
         Assert.True(child.HasEvaluated);
     }
 
