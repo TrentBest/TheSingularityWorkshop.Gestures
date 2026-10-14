@@ -174,7 +174,7 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
 internal sealed class MotionContext : IStateContext
 {
     public string Name { get; set; } = "Gesture motion documentation";
-    public bool IsValid => true;
+    public bool IsValid { get; set; } = true;
     public bool StartRequested { get; set; }
     public double DurationSeconds { get; set; }
     public double ElapsedSeconds { get; set; }
