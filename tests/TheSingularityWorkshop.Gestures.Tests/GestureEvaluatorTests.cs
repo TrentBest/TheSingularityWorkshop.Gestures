@@ -99,6 +99,21 @@ public sealed class GestureEvaluatorTests
     }
 
     [Fact]
+    public void NormalizesVeryLargeFiniteQuaternionComponentsWithoutOverflow()
+    {
+        var largeRotation = new Quaternion(float.MaxValue, float.MaxValue, float.MaxValue, float.MaxValue);
+        var transform = new PoseTransform(Vector3.Zero, largeRotation, Vector3.One);
+
+        var result = PoseTransform.Interpolate(transform, transform, 0.5f);
+
+        Assert.True(float.IsFinite(result.Rotation.X));
+        Assert.True(float.IsFinite(result.Rotation.Y));
+        Assert.True(float.IsFinite(result.Rotation.Z));
+        Assert.True(float.IsFinite(result.Rotation.W));
+        Assert.InRange(result.Rotation.Length(), 0.9999f, 1.0001f);
+    }
+
+    [Fact]
     public void DefensiveCopyProtectsKeyframeTransforms()
     {
         var transforms = new Dictionary<string, PoseTransform> { ["root"] = PoseTransform.Identity };
