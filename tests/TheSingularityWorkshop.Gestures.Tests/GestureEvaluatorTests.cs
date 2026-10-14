@@ -71,6 +71,34 @@ public sealed class GestureEvaluatorTests
     }
 
     [Fact]
+    public void RejectsNonFinitePositionRotationAndScaleComponents()
+    {
+        Assert.Throws<ArgumentException>(() => new GestureKeyframe(0,
+            new Dictionary<string, PoseTransform>
+            {
+                ["position"] = new PoseTransform(new Vector3(float.NaN, 0f, 0f), Quaternion.Identity, Vector3.One)
+            }));
+        Assert.Throws<ArgumentException>(() => new GestureKeyframe(0,
+            new Dictionary<string, PoseTransform>
+            {
+                ["rotation"] = new PoseTransform(Vector3.Zero, new Quaternion(0f, float.PositiveInfinity, 0f, 1f), Vector3.One)
+            }));
+        Assert.Throws<ArgumentException>(() => new GestureKeyframe(0,
+            new Dictionary<string, PoseTransform>
+            {
+                ["scale"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, new Vector3(1f, float.NegativeInfinity, 1f))
+            }));
+    }
+
+    [Fact]
+    public void RejectsNonFiniteAnchorTransformComponents()
+    {
+        var anchor = new GestureAnchor("grip", "hand",
+            new PoseTransform(new Vector3(0f, 0f, float.NaN), Quaternion.Identity, Vector3.One));
+        Assert.Throws<ArgumentException>(() => anchor.Validate());
+    }
+
+    [Fact]
     public void DefensiveCopyProtectsKeyframeTransforms()
     {
         var transforms = new Dictionary<string, PoseTransform> { ["root"] = PoseTransform.Identity };
