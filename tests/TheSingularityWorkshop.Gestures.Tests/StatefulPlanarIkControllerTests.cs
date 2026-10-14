@@ -79,6 +79,21 @@ public sealed class StatefulPlanarIkControllerTests
             Vector2.Zero, new Vector2(float.NaN, 0f), 1f, 1f, 1f));
     }
 
+
+    [Fact]
+    public void RejectsSolverLimitsThatDisagreeWithRetainedHinges()
+    {
+        var shoulder = CreateNode("shoulder");
+        var elbow = CreateNode("elbow");
+        shoulder.AddChild(elbow);
+
+        Assert.Throws<ArgumentException>(() => new StatefulPlanarIkController(
+            shoulder, elbow, new JointAngleLimits(-1f, 1f), FullTurn));
+
+        Assert.Throws<ArgumentException>(() => new StatefulPlanarIkController(
+            shoulder, elbow, FullTurn, new JointAngleLimits(-1f, 1f)));
+    }
+
     private static (StatefulPlanarIkController Controller, StatefulJointNode Shoulder, StatefulJointNode Elbow)
         CreateController()
     {
