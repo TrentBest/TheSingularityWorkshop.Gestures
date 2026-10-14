@@ -17,11 +17,12 @@
 ## Stateful IK research track — single-joint prototype stage
 
 - [x] Define a minimal joint angle controller separately from its three-way motion classification (positive, negative, stationary).
-- [ ] Specify hierarchy invalidation and parent-to-descendant transform propagation.
+- [x] Specify and test parent-to-descendant transform propagation in a full-reevaluation planar hierarchy.
+- [ ] Design and test incremental hierarchy invalidation against full reevaluation.
 - [ ] Separate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
 - [ ] Model contact as an outcome: establish, load-test, slip/release, and feed measured contact back into the affected hierarchy (rock-climbing example).
 - [x] Prototype a single stateful hinge without assuming an FSM_API dependency; document its contract and limitations.
-- [ ] Build a small parent/child hierarchy with explicit transform propagation and invalidation.
+- [x] Build a small parent/child hierarchy with explicit transform propagation; incremental invalidation remains open.
 - [ ] Compare incremental updates with full reevaluation for correctness before performance claims.
 - [ ] Benchmark 1–10,000 joints and record total-step cost, allocations, update ratios, error, and failure behavior.
 
