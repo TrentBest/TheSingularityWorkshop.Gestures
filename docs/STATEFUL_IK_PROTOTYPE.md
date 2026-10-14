@@ -21,12 +21,12 @@ Positive and negative are relative to the hinge's declared coordinate convention
 
 This is a deterministic, speed-limited kinematic controller, not a physical hinge simulation. It does not integrate torque, inertia, acceleration, collisions, contact forces, friction, adhesion, balance, or damage. A target request is not proof of physical success. Those responsibilities must be introduced through explicit contracts and adapters rather than implied by this class.
 
-The companion `StatefulJointNode` prototype now connects retained hinges into a planar parent/child hierarchy. Each link extends along local +X; a child's local angle is added to its parent's world angle, and the child starts at the parent's endpoint. `EvaluateFull` recalculates the entire subtree, intentionally providing a correctness baseline for later incremental evaluation. It rejects cycles, multiple parents, non-finite anchors, and evaluation starting below the root.
+The companion `StatefulJointNode` prototype connects retained hinges into a planar parent/child hierarchy. Each link extends along local +X; a child's local angle is added to its parent's world angle, and the child starts at the parent's endpoint. `EvaluateFull` recalculates every node and acts as a correctness reference. `EvaluateIncremental` uses hinge-change notifications and ancestor dirty flags to recalculate only changed transforms and affected descendants; it returns the number of transforms recalculated. Unchanged hierarchies return zero, and adding a child invalidates the relevant path. The hierarchy rejects cycles, multiple parents, non-finite anchors, and evaluation starting below the root.
 
-The hierarchy does not yet implement incremental invalidation, retained velocity, external impulses, collision, contact, or physical integration. It is a kinematic transform hierarchy, not a climbing/contact solver.
+Incremental evaluation is an early correctness prototype, not yet a demonstrated performance win. It does not implement retained velocity, external impulses, collision, contact, or physical integration. It is a kinematic transform hierarchy, not a climbing/contact solver.
 
 ## Tests and next decisions
 
-The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, and parent-to-descendant propagation after a parent angle changes. Next, compare full reevaluation with a proposed incremental implementation over deterministic event sequences; do not optimize before the two agree within a defined tolerance.
+The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, and incremental results against full reevaluation. Next, broaden deterministic event-sequence tests, test deeper and branched hierarchies, then benchmark update counts and total runtime before making performance claims.
 
 This experiment is a correctness baseline. No performance advantage is claimed.
