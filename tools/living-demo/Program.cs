@@ -14,7 +14,7 @@ var context = new MotionContext { DurationSeconds = duration };
 var transitions = new List<string>();
 
 FSM_API.Create.CreateProcessingGroup(group);
-FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: 0, processingGroup: group)
+FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: -1, processingGroup: group)
     .State("Ready", onEnter: ctx =>
     {
         if (ctx is MotionContext motion) { motion.Phase = "Ready"; transitions.Add("Ready"); }
@@ -32,17 +32,17 @@ FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: 0,
     .Transition("Running", "Complete", ctx => ctx is MotionContext motion && motion.ElapsedSeconds >= motion.DurationSeconds)
     .BuildDefinition();
 
-var handle = FSM_API.Create.CreateInstance("GestureMotionShowcase", context, group);
-handle.Update(group); // Enter the declared Ready state before accepting the start request.
+FSM_API.Create.CreateInstance("GestureMotionShowcase", context, group);
+FSM_API.Interaction.Update(group); // Enter the declared Ready state before accepting the start request.
 context.StartRequested = true;
-handle.Update(group);
+FSM_API.Interaction.Update(group);
 
 var definition = CreateDefinition();
 var samples = new List<Sample>(sampleCount);
 for (var i = 0; i < sampleCount; i++)
 {
     context.ElapsedSeconds = duration * i / (sampleCount - 1);
-    handle.Update(group);
+    FSM_API.Interaction.Update(group);
     var evaluated = GestureEvaluator.Evaluate(definition, context.ElapsedSeconds, duration,
         GestureVariation.None, identitySeed: 0);
     var root = evaluated.LocalTransforms["root"];
