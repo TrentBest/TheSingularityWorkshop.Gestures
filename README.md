@@ -12,7 +12,7 @@
 
 TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluator for physical procedures: pose keyframes, interpolation, progression, stable individual variation, and evaluated pose output. It lets a capability describe how an interaction physically happens without requiring every consumer to author a conventional baked animation clip.
 
-> **Status: early alpha foundation.** This first milestone establishes a small, testable CPU contract. It is not a physics solver, authoring tool, complete animation system, or GPU evaluator. This repository does not publish to NuGet. The Stateful IK work is research-stage: a speed-limited hinge, planar hierarchy with incremental updates, and data-only external contact observations now exist. No physical contact solver, GPU implementation, or performance advantage has been demonstrated.
+> **Status: early alpha foundation.** This first milestone establishes a small, testable CPU contract. It is not a physics solver, authoring tool, complete animation system, or GPU evaluator. This repository does not publish to NuGet. The Stateful IK work is research-stage: a speed-limited hinge, planar hierarchy with incremental updates, a connected two-link kinematic control loop, and data-only external contact observations now exist. No physical contact solver, GPU implementation, or performance advantage has been demonstrated.
 
 ## 🟦 01 What
 
@@ -91,7 +91,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — learn the intuition, geometry, equations, reachability, constraints, and CPU-to-GPU validation strategy, with living SVG diagrams.
 - [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — inspect the implemented two-link CPU IK reference, its measured limits, and its exact algorithmic boundary.
 - [Stateful IK Theory](docs/STATEFUL_IK_THEORY.md) — explore stateful joint FSMs, hierarchy propagation, unreachable targets, physical constraints, and a falsifiable performance research plan. The full architecture remains proposed.
-- [Stateful IK Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect the retained hinge, incremental planar hierarchy, external contact-observation handoff, propagation tests, and explicit non-physics boundary.
+- [Stateful IK Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect the retained hinge, incremental planar hierarchy, connected two-link kinematic control loop, external contact-observation handoff, propagation tests, and explicit non-physics boundary.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
