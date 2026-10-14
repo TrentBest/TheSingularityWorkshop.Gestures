@@ -38,6 +38,76 @@ public sealed class StatefulJointNodeTests
     }
 
     [Fact]
+    public void IncrementalEvaluationRecomputesOnlyAffectedPathAndMatchesFullEvaluation()
+    {
+        var rootHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var childHinge = new StatefulHinge(MathF.PI / 2f, -MathF.PI, MathF.PI);
+        var leafHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var root = new StatefulJointNode("root", 2f, rootHinge);
+        var child = new StatefulJointNode("child", 1f, childHinge);
+        var leaf = new StatefulJointNode("leaf", 1f, leafHinge);
+        root.AddChild(child);
+        child.AddChild(leaf);
+        var anchor = new Vector2(10f, 0f);
+
+        Assert.Equal(3, root.EvaluateIncremental(anchor));
+        Assert.Equal(0, root.EvaluateIncremental(anchor));
+
+        childHinge.Advance(MathF.PI / 4f, 1f, MathF.PI / 4f);
+        Assert.Equal(2, root.EvaluateIncremental(anchor));
+        AssertNear(new Vector2(12f, 0f), root.WorldEnd);
+        AssertNear(new Vector2(12f + MathF.Sqrt(0.5f), MathF.Sqrt(0.5f)), child.WorldEnd);
+        AssertNear(new Vector2(12f + MathF.Sqrt(2f), MathF.Sqrt(2f)), leaf.WorldEnd);
+
+        var incrementalPoses = new[]
+        {
+            (root.WorldStart, root.WorldEnd, root.WorldAngleRadians),
+            (child.WorldStart, child.WorldEnd, child.WorldAngleRadians),
+            (leaf.WorldStart, leaf.WorldEnd, leaf.WorldAngleRadians)
+        };
+        root.EvaluateFull(anchor);
+        var fullPoses = new[]
+        {
+            (root.WorldStart, root.WorldEnd, root.WorldAngleRadians),
+            (child.WorldStart, child.WorldEnd, child.WorldAngleRadians),
+            (leaf.WorldStart, leaf.WorldEnd, leaf.WorldAngleRadians)
+        };
+
+        for (var i = 0; i < incrementalPoses.Length; i++)
+        {
+            AssertNear(incrementalPoses[i].Item1, fullPoses[i].Item1);
+            AssertNear(incrementalPoses[i].Item2, fullPoses[i].Item2);
+            Assert.InRange(MathF.Abs(incrementalPoses[i].Item3 - fullPoses[i].Item3), 0f, 1e-5f);
+        }
+    }
+
+    [Fact]
+    public void IncrementalEvaluationRecalculatesDescendantsWhenRootAnchorMoves()
+    {
+        var root = CreateNode("root");
+        var child = CreateNode("child");
+        root.AddChild(child);
+
+        Assert.Equal(2, root.EvaluateIncremental(Vector2.Zero));
+        Assert.Equal(2, root.EvaluateIncremental(new Vector2(3f, 4f)));
+        AssertNear(new Vector2(4f, 4f), root.WorldEnd);
+        AssertNear(new Vector2(5f, 4f), child.WorldEnd);
+    }
+
+    [Fact]
+    public void IncrementalEvaluationFindsChildAddedAfterInitialEvaluation()
+    {
+        var root = CreateNode("root");
+        Assert.Equal(1, root.EvaluateIncremental(Vector2.Zero));
+
+        var child = CreateNode("child");
+        root.AddChild(child);
+
+        Assert.Equal(1, root.EvaluateIncremental(Vector2.Zero));
+        Assert.True(child.HasEvaluated);
+    }
+
+    [Fact]
     public void RejectsCyclesAndChildrenAlreadyAttachedToAnotherParent()
     {
         var root = CreateNode("root");
