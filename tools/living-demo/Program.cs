@@ -112,8 +112,9 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
     double X(double x) => left + Math.Clamp(x, 0, 1) * width;
     double Y(double y) => top + (0.5 - y) * height;
     var points = string.Join(" ", samples.Select(s => $"{N(X(s.X))},{N(Y(s.Y))}"));
-    var xValues = string.Join(";", samples.Select(s => N(X(s.X))));
-    var yValues = string.Join(";", samples.Select(s => N(Y(s.Y))));
+    var positionValues = string.Join(";", samples.Select(s => $"{N(X(s.X))} {N(Y(s.Y))}"));
+    var rotationValues = string.Join(";", samples.Select(s => N(s.RotationDegrees)));
+    var scaleValues = string.Join(";", samples.Select(s => $"{N(s.Scale)} {N(s.Scale)}"));
     var progressValues = string.Join(";", samples.Select(s => N(left + s.ElapsedFraction * width)));
     var keyTimes = string.Join(";", samples.Select(s => N(s.ElapsedFraction)));
     var start = samples[0];
@@ -153,12 +154,22 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
     <text x="82" y="362">root X {{N(start.X)}}</text><text x="480" y="362" text-anchor="middle">root X / root Y projection</text><text x="878" y="362" text-anchor="end">root X {{N(end.X)}}</text>
   </g>
   <g class="animated" filter="url(#glow)">
-    <circle r="9" fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
-      <animate attributeName="cx" values="{{xValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="cy" values="{{yValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
-    </circle>
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="{{positionValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="{{rotationValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+        <g>
+          <animateTransform attributeName="transform" type="scale" values="{{scaleValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+          <circle r="7" fill="#e8b84b" stroke="#fff0b9" stroke-width="2"/>
+          <path d="M0 0 L17 0" stroke="#78dcff" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </g>
+    </g>
   </g>
-  <circle class="static" cx="{{N(X(mid.X))}}" cy="{{N(Y(mid.Y))}}" r="9" fill="#e8b84b" stroke="#fff0b9" stroke-width="2"/>
+  <g class="static" transform="translate({{N(X(mid.X))}} {{N(Y(mid.Y))}}) rotate({{N(mid.RotationDegrees)}}) scale({{N(mid.Scale)}})">
+    <circle r="7" fill="#e8b84b" stroke="#fff0b9" stroke-width="2"/>
+    <path d="M0 0 L17 0" stroke="#78dcff" stroke-width="3" stroke-linecap="round"/>
+  </g>
   <path d="M82 394H878" stroke="#31465e" stroke-width="2"/>
   <circle class="animated" r="5" fill="#78dcff">
     <animate attributeName="cx" values="{{progressValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
