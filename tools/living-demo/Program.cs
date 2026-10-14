@@ -147,7 +147,7 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
   <polyline points="{{points}}" class="motion"/>
   {{keyframeDots}}
   <g fill="#b9c8d9" font-size="11">
-    <text x="82" y="362">progress 0</text><text x="480" y="362" text-anchor="middle">normalized progression</text><text x="878" y="362" text-anchor="end">progress 1</text>
+    <text x="82" y="362">root X {{N(start.X)}}</text><text x="480" y="362" text-anchor="middle">root X / root Y projection</text><text x="878" y="362" text-anchor="end">root X {{N(end.X)}}</text>
   </g>
   <g class="animated" filter="url(#glow)">
     <circle r="9" fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
