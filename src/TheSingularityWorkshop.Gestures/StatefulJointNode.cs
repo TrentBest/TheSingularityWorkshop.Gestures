@@ -14,6 +14,9 @@ public sealed class StatefulJointNode
 {
     private readonly List<StatefulJointNode> _children = [];
     private readonly IReadOnlyList<StatefulJointNode> _readOnlyChildren;
+    private bool _isDirty = true;
+    private float _lastEvaluatedLocalAngle;
+    private float _lastParentWorldAngle;
 
     /// <summary>Creates a joint node with a stable diagnostic name, link length, and retained hinge controller.</summary>
     public StatefulJointNode(string name, float linkLength, StatefulHinge hinge)
@@ -27,6 +30,7 @@ public sealed class StatefulJointNode
         Name = name;
         LinkLength = linkLength;
         Hinge = hinge;
+        Hinge.AngleChanged += MarkAncestorsDirty;
         _readOnlyChildren = _children.AsReadOnly();
     }
 
@@ -78,21 +82,72 @@ public sealed class StatefulJointNode
 
     /// <summary>
     /// Fully evaluates this hierarchy from a world-space root anchor. Only a root node may start evaluation.
-    /// The method intentionally recalculates every descendant to provide a correctness baseline.
+    /// Every descendant is recalculated, providing the correctness baseline for incremental evaluation.
     /// </summary>
     public void EvaluateFull(Vector2 rootAnchor)
     {
-        if (Parent is not null)
-            throw new InvalidOperationException("Full hierarchy evaluation must begin at the root node.");
-        if (!float.IsFinite(rootAnchor.X) || !float.IsFinite(rootAnchor.Y))
-            throw new ArgumentOutOfRangeException(nameof(rootAnchor), "Anchor coordinates must be finite.");
-
-        EvaluateDescendants(rootAnchor, 0f);
+        ValidateRootAndAnchor(rootAnchor);
+        EvaluateDescendantsFull(rootAnchor, 0f);
     }
 
-    private void EvaluateDescendants(Vector2 start, float parentWorldAngleRadians)
+    /// <summary>
+    /// Recalculates only nodes whose local angle or incoming parent transform changed, plus affected descendants.
+    /// Returns the number of nodes whose world transforms were recalculated; an unchanged hierarchy returns zero.
+    /// </summary>
+    public int EvaluateIncremental(Vector2 rootAnchor)
+    {
+        ValidateRootAndAnchor(rootAnchor);
+        return EvaluateDescendantsIncremental(rootAnchor, 0f);
+    }
+
+    private void ValidateRootAndAnchor(Vector2 rootAnchor)
+    {
+        if (Parent is not null)
+            throw new InvalidOperationException("Hierarchy evaluation must begin at the root node.");
+        if (!float.IsFinite(rootAnchor.X) || !float.IsFinite(rootAnchor.Y))
+            throw new ArgumentOutOfRangeException(nameof(rootAnchor), "Anchor coordinates must be finite.");
+    }
+
+    private void EvaluateDescendantsFull(Vector2 start, float parentWorldAngleRadians)
+    {
+        CalculateWorldPose(start, parentWorldAngleRadians);
+        foreach (var child in _children)
+            child.EvaluateDescendantsFull(WorldEnd, WorldAngleRadians);
+    }
+
+    private int EvaluateDescendantsIncremental(Vector2 start, float parentWorldAngleRadians)
+    {
+        var wasDirty = _isDirty;
+        var needsOwnEvaluation = !HasEvaluated
+            || start != WorldStart
+            || parentWorldAngleRadians != _lastParentWorldAngle
+            || Hinge.AngleRadians != _lastEvaluatedLocalAngle;
+
+        if (!wasDirty && !needsOwnEvaluation)
+            return 0;
+
+        var recalculated = 0;
+        if (needsOwnEvaluation)
+        {
+            CalculateWorldPose(start, parentWorldAngleRadians);
+            recalculated = 1;
+        }
+        else
+        {
+            _isDirty = false;
+        }
+
+        foreach (var child in _children)
+            recalculated += child.EvaluateDescendantsIncremental(WorldEnd, WorldAngleRadians);
+
+        return recalculated;
+    }
+
+    private void CalculateWorldPose(Vector2 start, float parentWorldAngleRadians)
     {
         WorldStart = start;
+        _lastParentWorldAngle = parentWorldAngleRadians;
+        _lastEvaluatedLocalAngle = Hinge.AngleRadians;
         WorldAngleRadians = parentWorldAngleRadians + Hinge.AngleRadians;
         if (!float.IsFinite(WorldAngleRadians))
             throw new InvalidOperationException("Accumulated world angle is not finite.");
@@ -104,7 +159,12 @@ public sealed class StatefulJointNode
             throw new InvalidOperationException("Evaluated world position is not finite.");
 
         HasEvaluated = true;
-        foreach (var child in _children)
-            child.EvaluateDescendants(WorldEnd, WorldAngleRadians);
+        _isDirty = false;
+    }
+
+    private void MarkAncestorsDirty()
+    {
+        for (StatefulJointNode? node = this; node is not null; node = node.Parent)
+            node._isDirty = true;
     }
 }
