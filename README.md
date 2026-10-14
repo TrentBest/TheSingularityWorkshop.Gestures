@@ -50,6 +50,10 @@ Capability / Gesture Provider
  Renderer selects fidelity -> Visualize executes GPU presentation
 ```
 
+![Conceptual rig-neutral Gesture data flow across humanoid, quadruped, and articulated mechanism examples](docs/assets/gesture-rig-topologies.svg)
+
+The examples show why Gestures does not require a humanoid bone list: the current data model uses named transforms. **This is an architectural illustration, not an implemented retargeter.** A formal hierarchy/rig-adapter contract remains open; IK, collision solving, and automatic mapping are not part of the current evaluator.
+
 Each part has a clear owner:
 
 - **Gestures** owns Gesture data, anchors, deterministic reference evaluation, and evaluated pose output.
