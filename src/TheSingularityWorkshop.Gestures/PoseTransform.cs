@@ -18,6 +18,19 @@ public readonly record struct PoseTransform(Vector3 Position, Quaternion Rotatio
             Quaternion.Normalize(rotation), Vector3.Lerp(from.Scale, to.Scale, t));
     }
 
+    internal void ValidateFinite(string parameterName)
+    {
+        if (!IsFinite(Position) || !IsFinite(Rotation) || !IsFinite(Scale))
+            throw new ArgumentException("Transform position, rotation, and scale components must be finite.", parameterName);
+    }
+
+    private static bool IsFinite(Vector3 value) =>
+        float.IsFinite(value.X) && float.IsFinite(value.Y) && float.IsFinite(value.Z);
+
+    private static bool IsFinite(Quaternion value) =>
+        float.IsFinite(value.X) && float.IsFinite(value.Y) &&
+        float.IsFinite(value.Z) && float.IsFinite(value.W);
+
     private static Quaternion NormalizeOrIdentity(Quaternion value) =>
         value.LengthSquared() < 1e-12f ? Quaternion.Identity : Quaternion.Normalize(value);
 }
