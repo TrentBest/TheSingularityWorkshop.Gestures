@@ -94,6 +94,7 @@ public sealed class StatefulJointNode
         }
         catch
         {
+            MarkSubtreeDirty();
             MarkAncestorsDirty();
             throw;
         }
@@ -112,6 +113,7 @@ public sealed class StatefulJointNode
         }
         catch
         {
+            MarkSubtreeDirty();
             MarkAncestorsDirty();
             throw;
         }
@@ -183,5 +185,12 @@ public sealed class StatefulJointNode
     {
         for (StatefulJointNode? node = this; node is not null; node = node.Parent)
             node._isDirty = true;
+    }
+
+    private void MarkSubtreeDirty()
+    {
+        _isDirty = true;
+        foreach (var child in _children)
+            child.MarkSubtreeDirty();
     }
 }
