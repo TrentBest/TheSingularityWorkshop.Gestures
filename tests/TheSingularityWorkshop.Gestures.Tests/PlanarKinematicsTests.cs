@@ -77,4 +77,51 @@ public sealed class PlanarKinematicsTests
             new JointAngleLimits(1f, -1f),
             new JointAngleLimits(-MathF.PI, MathF.PI)));
     }
+
+    [Fact]
+    public void RejectsNonFiniteLengthsAndAngles()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.ForwardKinematics(float.NaN, 1f, 0f, 0f));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.ForwardKinematics(1f, float.PositiveInfinity, 0f, 0f));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.ForwardKinematics(1f, 1f, float.NaN, 0f));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.ForwardKinematics(1f, 1f, 0f, float.NegativeInfinity));
+    }
+
+    [Fact]
+    public void RejectsNonFiniteTargetsAndJointLimits()
+    {
+        var validLimits = new JointAngleLimits(-MathF.PI, MathF.PI);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.SolveTwoLink(1f, 1f, new Vector2(float.NaN, 0f), validLimits, validLimits));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.SolveTwoLink(1f, 1f, new Vector2(0f, float.PositiveInfinity), validLimits, validLimits));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.SolveTwoLink(
+                1f, 1f, Vector2.One,
+                new JointAngleLimits(float.NaN, 1f), validLimits));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PlanarKinematics.SolveTwoLink(
+                1f, 1f, Vector2.One,
+                validLimits, new JointAngleLimits(-1f, float.PositiveInfinity)));
+    }
+
+    [Fact]
+    public void SelectsEquivalentAnglesInsideLimitsAcrossFullTurnBoundary()
+    {
+        var result = PlanarKinematics.SolveTwoLink(
+            1f,
+            1f,
+            new Vector2(-1f, 1f),
+            new JointAngleLimits(0f, 2f * MathF.PI),
+            new JointAngleLimits(0f, 2f * MathF.PI));
+
+        Assert.InRange(result.ShoulderRadians, 0f, 2f * MathF.PI);
+        Assert.InRange(result.ElbowRadians, 0f, 2f * MathF.PI);
+        Assert.True(result.TargetReached);
+    }
 }
