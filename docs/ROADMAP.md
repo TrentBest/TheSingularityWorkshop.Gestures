@@ -19,6 +19,7 @@
 - [ ] Define joint-local state separately from the three-way motion classification (positive, negative, stationary).
 - [ ] Specify hierarchy invalidation and parent-to-descendant transform propagation.
 - [ ] Separate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
+- [ ] Model contact as an outcome: establish, load-test, slip/release, and feed measured contact back into the affected hierarchy (rock-climbing example).
 - [ ] Prototype a single stateful hinge and small hierarchy without assuming an FSM_API dependency.
 - [ ] Compare incremental updates with full reevaluation for correctness before performance claims.
 - [ ] Benchmark 1–10,000 joints and record total-step cost, allocations, update ratios, error, and failure behavior.
