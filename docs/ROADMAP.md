@@ -19,7 +19,8 @@
 - [x] Define a minimal joint angle controller separately from its three-way motion classification (positive, negative, stationary).
 - [x] Specify and test parent-to-descendant transform propagation in a full-reevaluation planar hierarchy.
 - [x] Prototype dirty-path incremental invalidation and compare results with full reevaluation for representative updates.
-- [ ] Stress-test deterministic event sequences, deep/branched hierarchies, and invalid-state recovery.
+- [x] Compare incremental and full evaluation across a deterministic event sequence and branched hierarchy.
+- [ ] Stress-test deep hierarchies and invalid-state recovery.
 - [ ] Separate geometric reachability, control intent, physical integration, collision/contact, and domain-owned damage.
 - [ ] Model contact as an outcome: establish, load-test, slip/release, and feed measured contact back into the affected hierarchy (rock-climbing example).
 - [x] Prototype a single stateful hinge without assuming an FSM_API dependency; document its contract and limitations.
