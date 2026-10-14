@@ -97,7 +97,10 @@ public sealed class StatefulHinge
             : change < -_stationaryToleranceRadians
                 ? JointMotionState.MovingNegative
                 : JointMotionState.Stationary;
-        var targetReached = MathF.Abs(AngleRadians - requestedAngleRadians) <= _stationaryToleranceRadians;
+        var jointLimitConstrained = requestedAngleRadians < _minimumRadians
+            || requestedAngleRadians > _maximumRadians;
+        var targetReached = !jointLimitConstrained
+            && MathF.Abs(AngleRadians - requestedAngleRadians) <= _stationaryToleranceRadians;
 
         return new StatefulHingeStep(
             previous,
@@ -105,7 +108,7 @@ public sealed class StatefulHinge
             requestedAngleRadians,
             motionState,
             targetReached,
-            requestedAngleRadians < _minimumRadians || requestedAngleRadians > _maximumRadians);
+            jointLimitConstrained);
     }
 
     private static void ValidateFinite(float value, string parameterName)
