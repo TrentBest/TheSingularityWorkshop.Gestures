@@ -113,6 +113,21 @@ public sealed class GestureEvaluatorTests
         Assert.InRange(result.Rotation.Length(), 0.9999f, 1.0001f);
     }
 
+    [Theory]
+    [InlineData(0f)]
+    [InlineData(0.0000001f)]
+    public void InterpolationUsesIdentityForZeroAndNearZeroQuaternions(float component)
+    {
+        var degenerate = new PoseTransform(
+            Vector3.Zero,
+            new Quaternion(component, 0f, 0f, 0f),
+            Vector3.One);
+
+        var result = PoseTransform.Interpolate(degenerate, PoseTransform.Identity, 0.5f);
+
+        Assert.Equal(Quaternion.Identity, result.Rotation);
+    }
+
     [Fact]
     public void DefensiveCopyProtectsKeyframeTransforms()
     {
