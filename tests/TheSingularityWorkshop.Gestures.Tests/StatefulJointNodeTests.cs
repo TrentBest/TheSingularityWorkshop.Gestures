@@ -82,6 +82,35 @@ public sealed class StatefulJointNodeTests
     }
 
     [Fact]
+    public void IncrementalEvaluationLeavesUnaffectedSiblingSubtreeUnrecalculated()
+    {
+        var root = CreateNode("root");
+        var leftHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var rightHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var left = new StatefulJointNode("left", 1f, leftHinge);
+        var right = new StatefulJointNode("right", 1f, rightHinge);
+        var leftLeaf = CreateNode("left-leaf");
+        var rightLeaf = CreateNode("right-leaf");
+        root.AddChild(left);
+        root.AddChild(right);
+        left.AddChild(leftLeaf);
+        right.AddChild(rightLeaf);
+        var anchor = Vector2.Zero;
+
+        Assert.Equal(5, root.EvaluateIncremental(anchor));
+        var rightEndBefore = right.WorldEnd;
+        var rightLeafEndBefore = rightLeaf.WorldEnd;
+
+        leftHinge.Advance(MathF.PI / 2f, 1f, MathF.PI / 2f);
+        Assert.Equal(2, root.EvaluateIncremental(anchor));
+
+        Assert.Equal(rightEndBefore, right.WorldEnd);
+        Assert.Equal(rightLeafEndBefore, rightLeaf.WorldEnd);
+        AssertNear(new Vector2(1f, 1f), left.WorldEnd);
+        AssertNear(new Vector2(1f, 2f), leftLeaf.WorldEnd);
+    }
+
+    [Fact]
     public void IncrementalEvaluationRecalculatesDescendantsWhenRootAnchorMoves()
     {
         var root = CreateNode("root");
