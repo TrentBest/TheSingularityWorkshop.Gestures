@@ -36,6 +36,27 @@ public sealed class GestureEvaluatorTests
     }
 
     [Fact]
+    public void FixedInputsMatchDeterministicReferenceVectors()
+    {
+        var variation = new GestureVariation { MaximumSpeedDeviation = 0.1, MaximumLateralOffset = 0.25f };
+        var vectors = new[]
+        {
+            (Seed: 0UL, Progress: 0.43066486465709142, LateralOffset: -0.034236001475745015),
+            (Seed: 1UL, Progress: 0.40532492601378256, LateralOffset: 0.20629860179722659),
+            (Seed: 1234UL, Progress: 0.41845332196324991, LateralOffset: 0.24507822290086051)
+        };
+
+        foreach (var vector in vectors)
+        {
+            var pose = GestureEvaluator.Evaluate(CreateGesture(), 0.4, 1.0, variation, vector.Seed);
+            Assert.Equal(vector.Progress, pose.NormalizedProgress, 12);
+            Assert.Equal(vector.LateralOffset, pose.RootOffset.X, 6);
+            Assert.Equal(0f, pose.RootOffset.Y);
+            Assert.Equal(0f, pose.RootOffset.Z);
+        }
+    }
+
+    [Fact]
     public void VariationStaysWithinConfiguredBounds()
     {
         var variation = new GestureVariation { MaximumSpeedDeviation = 0.1, MaximumLateralOffset = 0.25f };
