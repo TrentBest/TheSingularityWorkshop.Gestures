@@ -19,9 +19,9 @@ public sealed class ContactObservationTests
         Assert.Equal(ContactPresence.Contact, observation.Presence);
         Assert.Equal(ContactLoadOutcome.Slipping, observation.LoadOutcome);
         Assert.Equal("granite-hold-17", observation.ContactId);
-        Assert.Equal(120f, observation.NormalForceNewtons);
-        Assert.Equal(90f, observation.TangentialLoadNewtons);
-        Assert.Equal(60f, observation.AvailableTangentialForceNewtons);
+        Assert.Equal(120f, observation.NormalForceNewtons!.Value);
+        Assert.Equal(90f, observation.TangentialLoadNewtons!.Value);
+        Assert.Equal(60f, observation.AvailableTangentialForceNewtons!.Value);
     }
 
     [Fact]
