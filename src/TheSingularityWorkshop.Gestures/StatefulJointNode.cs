@@ -7,8 +7,8 @@ namespace TheSingularityWorkshop.Gestures;
 /// Local angles are relative to the parent link's world angle; each link extends along its local +X axis.
 /// </summary>
 /// <remarks>
-/// This is a full-reevaluation correctness prototype. It does not perform incremental invalidation,
-/// collision detection, physical integration, contact evaluation, or parallel/GPU processing.
+/// This research prototype supports full reevaluation and dirty-path incremental transform updates.
+/// It does not perform collision detection, physical integration, contact evaluation, or parallel/GPU processing.
 /// </remarks>
 public sealed class StatefulJointNode
 {
@@ -49,16 +49,16 @@ public sealed class StatefulJointNode
     /// <summary>Child links evaluated from this link's endpoint.</summary>
     public IReadOnlyList<StatefulJointNode> Children => _readOnlyChildren;
 
-    /// <summary>World-space start position from the most recent full evaluation.</summary>
+    /// <summary>World-space start position from the most recent hierarchy evaluation.</summary>
     public Vector2 WorldStart { get; private set; }
 
-    /// <summary>World-space endpoint from the most recent full evaluation.</summary>
+    /// <summary>World-space endpoint from the most recent hierarchy evaluation.</summary>
     public Vector2 WorldEnd { get; private set; }
 
-    /// <summary>Accumulated world angle from the most recent full evaluation.</summary>
+    /// <summary>Accumulated world angle from the most recent hierarchy evaluation.</summary>
     public float WorldAngleRadians { get; private set; }
 
-    /// <summary>Whether world-space output has been calculated by a full evaluation.</summary>
+    /// <summary>Whether world-space output has been calculated by a hierarchy evaluation.</summary>
     public bool HasEvaluated { get; private set; }
 
     /// <summary>Adds a child link, rejecting self-links, cycles, and nodes already attached elsewhere.</summary>
