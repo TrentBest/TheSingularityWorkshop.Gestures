@@ -123,7 +123,12 @@ public sealed class GestureEvaluatorTests
             new Quaternion(component, 0f, 0f, 0f),
             Vector3.One);
 
-        var result = PoseTransform.Interpolate(degenerate, PoseTransform.Identity, 0.5f);
+        var target = new PoseTransform(
+            Vector3.Zero,
+            Quaternion.CreateFromAxisAngle(Vector3.UnitY, 1f),
+            Vector3.One);
+
+        var result = PoseTransform.Interpolate(degenerate, target, 0f);
 
         Assert.Equal(Quaternion.Identity, result.Rotation);
     }
