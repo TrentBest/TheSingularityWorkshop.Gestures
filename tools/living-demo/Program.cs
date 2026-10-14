@@ -67,7 +67,10 @@ if (samples.Count != sampleCount || samples[0].Progress != 0d || samples[^1].Pro
 var output = GetOutputPath(args);
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output))!);
 File.WriteAllText(output, BuildSvg(samples, transitions), new UTF8Encoding(false));
-Console.WriteLine($"Generated {output}");
+var channelsOutput = Path.Combine("docs", "assets", "gesture-channels.svg");
+Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(channelsOutput))!);
+File.WriteAllText(channelsOutput, BuildChannelsSvg(samples), new UTF8Encoding(false));
+Console.WriteLine($"Generated {output} and {channelsOutput}");
 Console.WriteLine($"Lifecycle: {string.Join(" -> ", transitions)}");
 Console.WriteLine($"Samples: {samples.Count}; named transforms: {string.Join(", ", samples[0].Transforms.Keys.Order())}; source: GestureEvaluator.Evaluate; coordinator: FSM_API");
 
@@ -232,6 +235,83 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
 </svg>
 """;
 }
+
+
+static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
+{
+    const double left = 120, width = 720, panelHeight = 58, gap = 25, firstTop = 122;
+    static string N(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
+    double TimeX(double fraction) => left + Math.Clamp(fraction, 0, 1) * width;
+    var root = samples.Select(s => s.Transforms["root"]).ToArray();
+    var panels = new[]
+    {
+        new ChannelPanel("POSITION X", "normalized", "#78dcff", root.Select(s => s.X).ToArray(), 0, 1),
+        new ChannelPanel("POSITION Y", "normalized", "#f5a7ff", root.Select(s => s.Y).ToArray(), 0, .5),
+        new ChannelPanel("ROTATION", "degrees", "#e8b84b", root.Select(s => s.RotationDegrees).ToArray(), -20, 25),
+        new ChannelPanel("SCALE", "uniform factor", "#91e6a7", root.Select(s => s.Scale).ToArray(), .7, 1.2)
+    };
+    var grid = new StringBuilder();
+    var curves = new StringBuilder();
+    var labels = new StringBuilder();
+    for (var panelIndex = 0; panelIndex < panels.Length; panelIndex++)
+    {
+        var panel = panels[panelIndex];
+        var top = firstTop + panelIndex * (panelHeight + gap);
+        double ValueY(double value) => top + panelHeight * (1 - (value - panel.Min) / (panel.Max - panel.Min));
+        var points = string.Join(" ", panel.Values.Select((value, i) => $"{N(TimeX(samples[i].ElapsedFraction))},{N(ValueY(value))}"));
+        grid.Append($"<path d=\"M{N(left)} {N(top)}H{N(left + width)} M{N(left)} {N(top + panelHeight / 2)}H{N(left + width)} M{N(left)} {N(top + panelHeight)}H{N(left + width)}\"/>");
+        curves.Append($"<polyline points=\"{points}\" fill=\"none\" stroke=\"{panel.Color}\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/>");
+        foreach (var sampleIndex in new[] { 0, 12, 24, 36, 48 })
+            curves.Append($"<circle cx=\"{N(TimeX(samples[sampleIndex].ElapsedFraction))}\" cy=\"{N(ValueY(panel.Values[sampleIndex]))}\" r=\"3\" fill=\"{panel.Color}\"/>");
+        labels.Append($"<text x=\"34\" y=\"{N(top + 15)}\" font-size=\"12\" font-weight=\"700\" letter-spacing=\"1.2\" fill=\"{panel.Color}\">{panel.Title}</text>");
+        labels.Append($"<text x=\"34\" y=\"{N(top + 33)}\" font-size=\"10\" fill=\"#b9c8d9\">{panel.Unit}</text>");
+        labels.Append($"<text x=\"{N(left - 10)}\" y=\"{N(top + 4)}\" text-anchor=\"end\" font-size=\"10\" fill=\"#b9c8d9\">{N(panel.Max)}</text>");
+        labels.Append($"<text x=\"{N(left - 10)}\" y=\"{N(top + panelHeight)}\" text-anchor=\"end\" font-size=\"10\" fill=\"#b9c8d9\">{N(panel.Min)}</text>");
+    }
+    var keyTimes = string.Join(";", samples.Select(s => N(s.ElapsedFraction)));
+    var cursorValues = string.Join(";", samples.Select(s => N(TimeX(s.ElapsedFraction))));
+    var middleX = N(TimeX(samples[samples.Count / 2].ElapsedFraction));
+    var endY = N(firstTop + panels.Length * (panelHeight + gap) - gap + 18);
+    return $"""
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="channels-title channels-desc">
+  <title id="channels-title">Live data channels from the evaluated root transform</title>
+  <desc id="channels-desc">Generated from the same 49 C# GestureEvaluator samples as the motion scene. Four plots show root X position, root Y position, rotation in degrees, and scale against normalized time. A cursor moves across the plots. These are evaluated keyframe interpolation values, not physics telemetry.</desc>
+  <defs>
+    <linearGradient id="channels-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
+    <style>
+      text{font-family:"Segoe UI",Arial,sans-serif}.grid{stroke:#31465e;stroke-width:1;stroke-dasharray:3 6}.static{display:none}
+      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}
+    </style>
+  </defs>
+  <rect width="900" height="480" rx="16" fill="url(#channels-bg)"/>
+  <text x="30" y="34" font-size="11" letter-spacing="2" fill="#8da7c5">THE SINGULARITY WORKSHOP / C# EVALUATOR DATA</text>
+  <text x="30" y="66" font-size="24" font-weight="700" fill="#f3f6fb">A pose is more than a point on a path.</text>
+  <text x="30" y="89" font-size="12" fill="#b9c8d9">The same evaluated root transform, separated into measurable channels.</text>
+  <g class="grid">{{grid}}</g>
+  {{curves}}
+  {{labels}}
+  <g class="animated" opacity=".9">
+    <path d="M0 112V{{endY}}" stroke="#f3f6fb" stroke-width="1.5" stroke-dasharray="4 4">
+      <animate attributeName="d" values="{{string.Join(";", samples.Select(s => $"M{N(TimeX(s.ElapsedFraction))} 112V{endY}"))}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <circle r="4" fill="#f3f6fb">
+      <animate attributeName="cx" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="{{string.Join(";", samples.Select(_ => N(firstTop - 9)))}}" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <g class="static">
+    <path d="M{{middleX}} 112V{{endY}}" stroke="#f3f6fb" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <circle cx="{{middleX}}" cy="{{N(firstTop - 9)}}" r="4" fill="#f3f6fb"/>
+  </g>
+  <text x="{{N(left)}}" y="447" font-size="11" fill="#b9c8d9">START · 0%</text>
+  <text x="{{N(left + width / 2)}}" y="447" text-anchor="middle" font-size="11" fill="#b9c8d9">NORMALIZED PROGRESS</text>
+  <text x="{{N(left + width)}}" y="447" text-anchor="end" font-size="11" fill="#b9c8d9">100% · COMPLETE</text>
+  <text x="30" y="468" font-size="10" fill="#8da7c5">Linear position/scale interpolation · quaternion rotation interpolation · not a physics solver</text>
+</svg>
+""";
+}
+
+internal sealed record ChannelPanel(string Title, string Unit, string Color, double[] Values, double Min, double Max);
 
 internal sealed class MotionContext : IStateContext
 {
