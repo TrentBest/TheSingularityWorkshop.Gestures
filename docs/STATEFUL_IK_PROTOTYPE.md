@@ -70,6 +70,8 @@ The class does **not** calculate the loads or decide what a broken joint means t
 
 This gives the physics-to-effects path a concrete contract: physics reports loads → the joint evaluates its declared structural limits → the domain reacts to the state transition. The prototype does not yet detach hierarchy nodes or implement a physical body solver.
 
+`StatefulJointNode` can optionally carry an `IncomingStructuralJoint` for its connection to its parent and forward externally supplied load observations through `ObserveIncomingStructuralLoad`. A reported break intentionally does not detach the node or rewrite the kinematic hierarchy: the kinematic pose tree and the physical body's constraint/topology graph have different owners and must not be silently conflated. Root nodes have no incoming connection, and nodes without a configured incoming structural joint reject load submission.
+
 ## Tests and next decisions
 
 The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, a deterministic sequence compared against full reevaluation, a 256-joint chain, recovery after a non-finite derived transform, the data-only external contact observation contract, force/torque break thresholds and irreversible break state, and deterministic recommendations for supported, slipping, unsupported, absent, released, and unknown contact states. Next, connect recommendations to caller-owned target selection, broaden failure recovery, and benchmark update counts and total runtime before making performance claims.
