@@ -98,7 +98,92 @@ Likewise, do not hard-code friction as zero on ice. Use explicit contact assumpt
 | Timestep sensitivity | Repeat with multiple declared timesteps | Error/stability trend is measured and documented |
 | Determinism | Repeat exact initial state and inputs | Output satisfies the chosen exact or tolerance-based repeatability contract |
 
-## 6. Non-goals and current boundary
+## 6. Gravity and environmental acceleration
+
+Gravity belongs in the world/environment model as an acceleration field (or, in a force-based formulation, as the corresponding mass-dependent force). It must not be silently baked into the target pose or assumed to point toward a fixed global floor.
+
+For a point mass in a declared inertial frame, a minimal model is:
+
+```text
+a_total = g(position, time) + sum(F_applied) / mass
+```
+
+This is a teaching-level translational form, not the complete equation for an articulated body. A multi-body solver must account for generalized coordinates, coupled inertia, joint forces, angular dynamics, and constraints consistently.
+
+The environmental input should support, at minimum, a uniform field as a reference case and a zero vector as the zero-gravity limit. Low gravity scales the field; it does not scale away mass, momentum, inertia, or the effects of an impulse. If the frame is rotating or accelerating, apparent/inertial forces require an explicitly declared non-inertial-frame model rather than being smuggled into ordinary gravity.
+
+**Required checks**
+- With no other forces or constraints, a free body follows the declared constant-gravity solution within numerical tolerance.
+- Changing gravity magnitude changes acceleration, not instantaneous velocity.
+- Setting gravity to zero removes gravitational acceleration while preserving the same initial momentum and other contributions.
+- The same environmental field applies consistently to all bodies in its domain.
+- Units and coordinate-frame conventions are explicit; changing the up-axis must not silently change the physical field.
+
+## 7. Disturbance, articulated response, locomotion, and recovery scenarios
+
+These are target scenarios for the future method, not features implemented by the current evaluator. They deliberately span different output types and should not be collapsed into one additive “motion weight.”
+
+### 7.1 Explosion or other sudden disturbance
+
+Represent a blast as either a time-varying external force or a bounded impulse, with application point, direction, duration/profile, and affected bodies declared. An impulse changes momentum over an event; it is not just a very large force sample. An off-center impulse also changes angular momentum. The articulated body's resulting motion depends on mass distribution, joint constraints, contact, and any active joint control.
+
+A convincing result needs two separately testable layers:
+1. **Passive physical response:** the disturbance changes linear/angular momentum and the body reacts through articulated dynamics and constraints.
+2. **Active response/recovery:** a controller uses the current estimated state and task objective to command joint torques or other actuator outputs. It must be allowed to fail when authority, time, contact, or energy is insufficient.
+
+Do not prescribe a universal arm-and-leg “flail” animation. Limb motion should emerge from the chosen passive model and controller, with any procedural variation bounded and clearly identified as control policy rather than physical law.
+
+### 7.2 Abrupt braking and direction changes
+
+A locomotion target may request a new velocity or heading immediately; the body's physical velocity must not teleport to that target. The controller requests forces/torques, while contact and friction limits determine what the ground can actually transmit. If the requested tangential force exceeds the model's available traction, slip should occur. If the body cannot redirect its momentum quickly enough, the path curves or the body loses balance.
+
+The experiment should distinguish:
+- desired velocity/heading (a target or control objective);
+- achieved acceleration (result of forces, torque, inertia, and constraints);
+- available traction (contact/material/load dependent);
+- balance/recovery (a controller objective with finite capability).
+
+A hard 90-degree change can be a desired command, but not an instantaneous change in velocity under finite forces. Any arcade-style exception must be an explicit alternative mode, not a hidden violation in the physics path.
+
+### 7.3 Zero-g recovery and exoskeleton thrusters
+
+In zero-g there may be no floor to push against. Joint motion alone can reorient a free-floating body and its limbs relative to each other, but it cannot change the total linear momentum of the complete isolated system; internal actuation cannot propel the center of mass arbitrarily. To translate the soldier back toward a contact surface, the system needs an external interaction, such as a thruster expelling reaction mass, a tether, or contact with an object.
+
+Define thruster authority explicitly: force/impulse, direction, moment arm, fuel or energy budget if modeled, activation delay, and control limits. Then test two distinct objectives:
+- **attitude recovery:** orient the body and limbs toward a desired configuration;
+- **translation/recontact:** change center-of-mass motion so the soldier can reach a specified surface, without assuming a surface is reachable or that the available thrust is sufficient.
+
+When contact becomes available, contact constraints and friction provide a new control opportunity. The controller must transition between free flight and contact-aware behavior without a discontinuous pose snap.
+
+### 7.4 Extreme speed and “Flash” cases
+
+Keep requested motion, physically achieved motion, and presentation/visual effects separate. For game-scale high-speed movement, test acceleration, braking distance, turn radius, collision detection, numerical stability, and timestep sensitivity. A target speed is not a guarantee that the body can reach or change it instantly.
+
+Declare the model's validity regime. Newtonian mechanics is a reasonable starting point for ordinary game speeds. If a scenario explicitly approaches relativistic speeds, classical equations are no longer sufficient; a relativistic model would be a separate physical regime, not a slider on the same unqualified equation. Likewise, any superhuman actuator strength, energy source, or injury immunity should be declared as a world/character assumption rather than disguised as ordinary physics.
+
+### 7.5 Scenario-level acceptance matrix
+
+| Scenario | Controlled input | Required observable | Failure modes to preserve |
+|---|---|---|---|
+| Normal / low / zero gravity | Same initial state, vary only `g` | Acceleration changes with field; zero-g preserves inertial motion | No gravity baked into pose or assumed floor direction |
+| Off-center blast | Same body, vary impulse point/direction | Linear and angular momentum respond consistently | No canned pose reset; no force/impulse unit confusion |
+| Articulated blast recovery | Same disturbance, compare passive and active control | Joint response and controller effort are separately observable | Controller may fail if torque, time, or contact is insufficient |
+| Sudden braking | Same speed, vary traction and actuator limit | Stopping distance and slip change plausibly | No instantaneous velocity cancellation |
+| Sharp turn | Same incoming momentum, vary available lateral traction | Finite turn radius or slip/loss of balance when limits are exceeded | No instantaneous heading-to-velocity snap |
+| Zero-g thruster recovery | Same initial state, vary thrust budget and geometry | Attitude and center-of-mass translation are measured separately | No free translation from internal joint motion alone |
+| Recontact / landing | Same approach, vary surface and contact conditions | Impact, joint response, contact stability, and recovery are measurable | No automatic snap-to-ground or guaranteed safe landing |
+| Extreme-speed regime | Same target, vary speed, timestep, and collision resolution | Acceleration, turning, collision, and numerical error are measured | No undefined validity regime or silent arcade exceptions |
+
+## 8. Research references
+
+These references support the separation of articulated dynamics, contact/impact constraints, and active control. They are background material, not a claim that Gestures already implements these methods.
+
+- [MIT Underactuated Robotics — Multi-Body Dynamics and Contact](https://underactuated.mit.edu/multibody.html): contact, constraints, collision events, and friction.
+- [Practical Physics for Articulated Characters (GDC slides)](https://media.gdcvault.com/gdc04/slides/practical_physics_for.pdf): articulated contact, impact constraints, friction, joint limits, and motion control.
+- [Interactive Physics-Based Control of Articulated Characters](https://publications.ri.cmu.edu/storage/publications/pub_files/pub4/kim_junggon_2008_1/kim_junggon_2008_1.pdf): why realistic articulated response depends on control as well as dynamics.
+- [NVIDIA PhysX — Articulations](https://nvidia-omniverse.github.io/PhysX/physx/5.6.0/docs/Articulations.html): an implementation-oriented reference for articulation forces, gravity, external forces, constraints, and stability considerations.
+
+## 9. Non-goals and current boundary
 
 This document does not specify a complete rigid-body or articulated-body solver. It does not select a final public API, prescribe a universal friction law, or reconstruct the lost historical equation. The current Gestures evaluator remains a keyframe-oriented motion evaluator; it does not simulate temperature, phase transitions, contact friction, impact, or generalized multi-body dynamics.
 
