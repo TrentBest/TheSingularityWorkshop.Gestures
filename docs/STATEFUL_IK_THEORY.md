@@ -10,6 +10,10 @@ The Singularity Workshop's proposed **Stateful IK** starts from a different prem
 
 This document defines a research hypothesis and vocabulary, not a claim that the full system is already implemented or proven faster.
 
+![Stateful IK hierarchy with local joint state and feedback from measured physical outcomes](assets/stateful-ik-hierarchy.svg)
+
+*The animated diagram is a conceptual architecture sketch, not a runtime capture or benchmark result.*
+
 ## 1. Start with familiar animation
 
 A conventional baked animation clip is often authored as a sequence of poses over time. At a given time, a player samples or blends pose data and presents the result. This can be efficient and predictable, but a baked pose does not by itself know whether the hand actually contacted the handle, whether the door was moved, whether the character's foot slipped, or whether a target became physically unreachable.
