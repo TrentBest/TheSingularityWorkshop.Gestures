@@ -17,7 +17,7 @@ flowchart TD
 
 ## Articulated targets: current support and open contract
 
-![Conceptual articulated-target topology and data-flow overview](assets/gesture-rig-topologies.svg)
+![Conceptual articulated-target topology and data-flow overview](assets/gesture-articulated-topologies.svg)
 
 The current keyframe model maps stable transform names to local `PoseTransform` values. It does not prescribe a humanoid bone list, so the data shape can represent humanoids, quadrupeds, birds, segmented bodies, turrets, and articulated mechanisms. “Gait” is a locomotion-specific concept; Gestures covers the broader space of physical procedures. That flexibility is not the same as automatic target compatibility: this repository has not yet frozen a hierarchy descriptor, naming/semantic-tag rules, target mapping, or retargeting contract.
 
