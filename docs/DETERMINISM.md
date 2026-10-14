@@ -13,9 +13,21 @@ A consuming application should choose seed inputs deliberately. Entity identity 
 ## Current bounded controls
 
 - MaximumSpeedDeviation: fractional speed deviation in [0, 1). For example, 0.1 bounds speed to 0.9–1.1 of ideal speed.
-- MaximumLateralOffset: maximum absolute X offset returned separately as a root/presentation offset.
+- MaximumLateralOffset: maximum absolute local X offset returned separately as a root/presentation offset.
 
 Variation settings are validated before evaluation. They are bounds, not guarantees of a statistically uniform population distribution.
+
+## Reference vectors
+
+The following vectors lock down the current integer mixer and conversion contract. They use elapsed time 0.4, duration 1.0, MaximumSpeedDeviation = 0.1, and MaximumLateralOffset = 0.25. The test gesture has two keyframes at normalized times 0 and 1, with identity rotation and unit scale.
+
+| Identity seed | Normalized progress | Root offset X |
+|---:|---:|---:|
+| 0 | 0.43066486465709142 | -0.034236001475745015 |
+| 1 | 0.40532492601378256 | 0.20629860179722659 |
+| 1234 | 0.41845332196324991 | 0.24507822290086051 |
+
+The unit-test assertions use a numeric tolerance for floating-point output. These are reference vectors for the current CPU implementation, not yet a cross-language or CPU/GPU bit-for-bit guarantee. A port should first match the integer mixer and 53-bit unit-interval conversion, then document its floating-point comparison tolerance.
 
 ## Important limitations
 
@@ -25,8 +37,6 @@ Variation settings are validated before evaluation. They are bounds, not guarant
 - This first evaluator uses a fixed integer mixer. If the package later needs cross-language bit-for-bit parity, integer width, overflow semantics, float conversion, and test vectors must be specified explicitly.
 - GPU floating-point math may differ slightly from CPU math. Define comparison tolerances and test edge cases such as endpoints and zero-length segments.
 
-## Reference test vectors
+## Verification
 
-The test suite establishes linear interpolation at half progress, clamping and completion after duration, same-seed repeatability, bounded speed and lateral variation across a seed sample, and rejection of invalid keyframe ordering and endpoints.
-
-As the data contract matures, add published fixed-input/fixed-output vectors so independent CPU and GPU evaluators can validate themselves without sharing implementation code.
+The test suite covers linear interpolation at half progress, clamping and completion after duration, same-seed repeatability, fixed-input reference vectors, bounded speed and lateral variation across a seed sample, and rejection of invalid keyframe ordering and endpoints.
