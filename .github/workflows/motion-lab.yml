@@ -1,0 +1,40 @@
+name: Motion-model research harness
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "tools/motion-lab/**"
+      - ".github/workflows/motion-lab.yml"
+  pull_request:
+    branches:
+      - master
+      - development
+    paths:
+      - "tools/motion-lab/**"
+      - ".github/workflows/motion-lab.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reference-experiment:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Run standard-library tests
+        run: python -m unittest discover -s tools/motion-lab -p "test_*.py" -v
+
+      - name: Smoke-test CSV generation
+        run: |
+          python tools/motion-lab/motion_experiment.py --output "$RUNNER_TEMP/motion-experiment.csv" --population 4
+          python -c "import csv, os; p=os.path.join(os.environ['RUNNER_TEMP'], 'motion-experiment.csv'); rows=list(csv.DictReader(open(p, newline='', encoding='utf-8'))); assert rows, 'CSV has no data rows'; assert {'model','seed','time','target','position','velocity','acceleration','error'} <= set(rows[0]); print(f'Validated {len(rows)} samples')"
