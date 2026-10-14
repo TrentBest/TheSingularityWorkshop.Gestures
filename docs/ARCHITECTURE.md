@@ -15,13 +15,13 @@ flowchart TD
     Renderer --> Visualize[Visualize executes presentation]
 ```
 
-## Rig neutrality: current support and open contract
+## Articulated targets: current support and open contract
 
-![Conceptual rig topology and data-flow overview](assets/gesture-rig-topologies.svg)
+![Conceptual articulated-target topology and data-flow overview](assets/gesture-rig-topologies.svg)
 
-The current keyframe model maps stable transform names to local `PoseTransform` values. It does not prescribe a humanoid bone list, so the data shape can represent humanoids, quadrupeds, birds, segmented rigs, and articulated mechanisms. That flexibility is not the same as automatic rig compatibility: this repository has not yet frozen a hierarchy descriptor, naming/semantic-tag rules, target-rig mapping, or retargeting contract.
+The current keyframe model maps stable transform names to local `PoseTransform` values. It does not prescribe a humanoid bone list, so the data shape can represent humanoids, quadrupeds, birds, segmented bodies, turrets, and articulated mechanisms. “Gait” is a locomotion-specific concept; Gestures covers the broader space of physical procedures. That flexibility is not the same as automatic target compatibility: this repository has not yet frozen a hierarchy descriptor, naming/semantic-tag rules, target mapping, or retargeting contract.
 
-The illustrated topologies are examples, not standardized schemas. A consumer or future rig adapter must define how names map to its actual hierarchy. Evaluated local transforms do not imply inverse kinematics, collision solving, world-space reachability, or authoritative locomotion. Missing-transform behavior is described in the current data model and should not be interpreted as deleting a target joint.
+The illustrated topologies are examples, not standardized schemas. A consumer or future articulated-target adapter must define how names map to its actual hierarchy. Evaluated local transforms do not imply inverse kinematics, collision solving, world-space reachability, or authoritative locomotion. Missing-transform behavior is described in the current data model and should not be interpreted as deleting a target joint.
 
 ## Responsibilities by package
 
@@ -39,7 +39,7 @@ The illustrated topologies are examples, not standardized schemas. A consumer or
 - **GestureDefinition**: stable ID, ordered keyframes, optional anchors.
 - **GestureKeyframe**: normalized time and a named map of local transforms.
 - **PoseTransform**: position, rotation, and scale represented with System.Numerics.
-- **GestureAnchor**: semantic point relative to a provider-owned joint/transform.
+- **GestureAnchor**: semantic point relative to a provider-owned transform.
 - **GestureVariation**: explicit bounds for deterministic per-identity variation.
 - **EvaluatedPose**: output for a single instant, exposed through read-only interfaces.
 
