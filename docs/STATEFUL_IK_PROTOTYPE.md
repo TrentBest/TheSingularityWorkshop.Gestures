@@ -62,8 +62,16 @@ This is an integration seam, not a physics engine. Contact geometry, multi-conta
 
 This deliberately stops at a recommendation. It does not produce target coordinates, infer force or friction, move a joint, or claim a recovery succeeded. The calling domain chooses and executes the next target; the external physics/domain owner reports the resulting contact outcome. The mapping is a small deterministic policy seam, not a whole-body balance or climbing controller.
 
+## Externally driven structural failure
+
+`StatefulBreakableJoint` adds an explicit structural failure threshold without pretending to be a force solver. A joint declares a break-force threshold in newtons and a break-torque threshold in newton-metres. The physics/domain owner supplies the measured or computed load magnitudes through `ObserveLoad`. Exceeding either threshold transitions the retained integrity state from `Intact` to `Broken`; equality alone does not break it, and the broken state is persistent for this instance.
+
+The class does **not** calculate the loads or decide what a broken joint means to a character. The owning simulation remains responsible for collision and force calculation, and the game/domain layer maps a confirmed break to consequences such as disabling a constraint, changing the articulated body, playing a reaction, spawning detached parts, or recording an injury. Ligament tears, fractures, and dismemberment are different consequence models and should not be conflated with one generic joint break. If tissue damage is desired, model its own thresholds and accumulation rules from physical observations.
+
+This gives the physics-to-effects path a concrete contract: physics reports loads → the joint evaluates its declared structural limits → the domain reacts to the state transition. The prototype does not yet detach hierarchy nodes or implement a physical body solver.
+
 ## Tests and next decisions
 
-The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, a deterministic sequence compared against full reevaluation, a 256-joint chain, recovery after a non-finite derived transform, the data-only external contact observation contract, and deterministic recommendations for supported, slipping, unsupported, absent, released, and unknown contact states. Next, connect recommendations to caller-owned target selection, broaden failure recovery, and benchmark update counts and total runtime before making performance claims.
+The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, a deterministic sequence compared against full reevaluation, a 256-joint chain, recovery after a non-finite derived transform, the data-only external contact observation contract, force/torque break thresholds and irreversible break state, and deterministic recommendations for supported, slipping, unsupported, absent, released, and unknown contact states. Next, connect recommendations to caller-owned target selection, broaden failure recovery, and benchmark update counts and total runtime before making performance claims.
 
 This experiment is a correctness baseline. No performance advantage is claimed.
