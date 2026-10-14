@@ -33,6 +33,7 @@ FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: 0,
     .BuildDefinition();
 
 var handle = FSM_API.Create.CreateInstance("GestureMotionShowcase", context, group);
+handle.Update(group); // Enter the declared Ready state before accepting the start request.
 context.StartRequested = true;
 handle.Update(group);
 
