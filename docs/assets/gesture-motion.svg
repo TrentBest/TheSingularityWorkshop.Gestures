@@ -1,11 +1,11 @@
 <!--
-  Conceptual illustration of the current reference evaluator.
-  The moving marker illustrates keyframe interpolation only; it is not a physics simulation.
-  The spring-damper equation is an explicitly exploratory future model.
+  Living conceptual illustration for the Gestures documentation.
+  The articulated figure is illustrative motion, not captured evaluator output.
+  Keyframe path and limb cycle explain procedure progression; no physics solver is implied.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
-  <title id="title">Gesture motion: keyframes, evaluated pose, and equation exploration</title>
-  <desc id="desc">An animated marker travels between three pose keyframes on a simple path. The current CPU evaluator interpolates transforms. A separate panel shows the exploratory mass-spring-damper equation, not yet implemented.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">A Gesture in motion: an articulated figure follows a pose path</title>
+  <desc id="desc">A small articulated figure travels through three named pose keyframes while its arms and legs cycle. A timeline marker advances with the figure. The current evaluator interpolates named transforms; spring-damper dynamics remain future exploration.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#101827"/>
@@ -16,41 +16,85 @@
       <stop offset="1" stop-color="#75d6ff" stop-opacity=".9"/>
     </linearGradient>
     <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; }
+      .minor { fill: #b9c8d9; font-size: 12px; }
+      .pose { fill: #e8b84b; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+      .limb { fill: none; stroke: #78dcff; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .joint { fill: #f3f6fb; stroke: #78dcff; stroke-width: 1.5; }
+      @media (prefers-reduced-motion: reduce) {
+        .limb-cycle { animation: none; }
+      }
+    </style>
   </defs>
-  <rect width="960" height="420" rx="18" fill="url(#bg)"/>
-  <g font-family="Segoe UI, Arial, sans-serif" fill="#f3f6fb">
-    <text x="34" y="40" font-size="12" letter-spacing="2.2" fill="#8da7c5">GESTURES / REFERENCE MODEL</text>
-    <text x="34" y="72" font-size="25" font-weight="700">A procedure is a path through poses</text>
-    <text x="34" y="96" font-size="13" fill="#b9c8d9">Keyframes define intent · the evaluator produces a pose at a requested time</text>
+  <rect width="960" height="480" rx="18" fill="url(#bg)"/>
+  <g fill="#f3f6fb">
+    <text x="34" y="40" font-size="12" letter-spacing="2.2" fill="#8da7c5">GESTURES / LIVING DOCUMENTATION</text>
+    <text x="34" y="72" font-size="25" font-weight="700">A procedure is motion through poses</text>
+    <text x="34" y="96" font-size="13" fill="#b9c8d9">Keyframes describe intent · evaluation turns normalized progress into a pose</text>
   </g>
-  <g>
-    <path d="M88 202 C210 202 270 145 392 145 S570 235 690 235 S790 196 872 196" fill="none" stroke="#334b65" stroke-width="2" stroke-dasharray="5 8"/>
-    <path d="M88 202 C210 202 270 145 392 145 S570 235 690 235 S790 196 872 196" fill="none" stroke="url(#trail)" stroke-width="3"/>
-    <g fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
-      <circle cx="88" cy="202" r="8"/><circle cx="392" cy="145" r="8"/><circle cx="690" cy="235" r="8"/>
-    </g>
-    <g font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#dbe7f5">
-      <text x="66" y="228">t = 0</text><text x="370" y="124">t = 0.5</text><text x="667" y="261">t = 1</text>
-      <text x="66" y="183" fill="#e8b84b">POSE A</text><text x="370" y="105" fill="#e8b84b">POSE B</text><text x="667" y="216" fill="#e8b84b">POSE C</text>
-    </g>
-    <g filter="url(#glow)">
-      <circle r="11" fill="#78dcff" stroke="#e4f9ff" stroke-width="2">
-        <animateMotion dur="5s" repeatCount="indefinite" path="M88 202 C210 202 270 145 392 145 S570 235 690 235 S790 196 872 196"/>
-      </circle>
-    </g>
-    <path d="M88 290 H872" stroke="#3d536c" stroke-width="1"/>
-    <g font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#b9c8d9">
-      <text x="88" y="312">normalized progress 0</text><text x="480" y="312" text-anchor="middle">evaluated pose</text><text x="872" y="312" text-anchor="end">normalized progress 1</text>
+
+  <path d="M88 222 C210 222 270 166 392 166 S570 250 690 250 S790 211 872 211"
+        fill="none" stroke="#334b65" stroke-width="2" stroke-dasharray="5 8"/>
+  <path d="M88 222 C210 222 270 166 392 166 S570 250 690 250 S790 211 872 211"
+        fill="none" stroke="url(#trail)" stroke-width="3"/>
+  <g fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
+    <circle cx="88" cy="222" r="7"/><circle cx="392" cy="166" r="7"/><circle cx="690" cy="250" r="7"/>
+  </g>
+  <g class="pose">
+    <text x="64" y="195">POSE A</text><text x="368" y="139">POSE B</text><text x="666" y="224">POSE C</text>
+  </g>
+  <g class="minor">
+    <text x="64" y="246">t = 0</text><text x="368" y="187">t = 0.5</text><text x="666" y="274">t = 1</text>
+  </g>
+
+  <!-- A deliberately simple articulated performer makes the motion visible. -->
+  <g filter="url(#glow)">
+    <g>
+      <animateMotion dur="5s" repeatCount="indefinite" rotate="0"
+        path="M88 222 C210 222 270 166 392 166 S570 250 690 250 S790 211 872 211"/>
+      <circle class="joint" cx="0" cy="-17" r="6"/>
+      <path class="limb" d="M0 -10 L0 8"/>
+      <g transform="translate(0 -7)">
+        <g class="limb-cycle">
+          <animateTransform attributeName="transform" type="rotate" values="-28 0 0;28 0 0;-28 0 0" dur="0.9s" repeatCount="indefinite"/>
+          <path class="limb" d="M0 0 L-11 10 L-15 17"/>
+        </g>
+        <g class="limb-cycle">
+          <animateTransform attributeName="transform" type="rotate" values="28 0 0;-28 0 0;28 0 0" dur="0.9s" repeatCount="indefinite"/>
+          <path class="limb" d="M0 0 L11 10 L15 17"/>
+        </g>
+      </g>
+      <g transform="translate(0 8)">
+        <g>
+          <animateTransform attributeName="transform" type="rotate" values="30 0 0;-30 0 0;30 0 0" dur="0.9s" repeatCount="indefinite"/>
+          <path class="limb" d="M0 0 L-7 14 L-14 25"/>
+        </g>
+        <g>
+          <animateTransform attributeName="transform" type="rotate" values="-30 0 0;30 0 0;-30 0 0" dur="0.9s" repeatCount="indefinite"/>
+          <path class="limb" d="M0 0 L7 14 L14 25"/>
+        </g>
+      </g>
     </g>
   </g>
-  <g>
-    <rect x="28" y="334" width="904" height="62" rx="10" fill="#0b1421" stroke="#344d67"/>
-    <text x="46" y="356" font-family="Segoe UI, Arial, sans-serif" font-size="11" letter-spacing="1.5" fill="#78dcff">IMPLEMENTED BASELINE</text>
-    <text x="46" y="378" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#f3f6fb">Position / scale: linear interpolation  ·  Rotation: quaternion slerp</text>
-    <text x="914" y="356" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="11" letter-spacing="1.5" fill="#e8b84b">EXPLORATION</text>
-    <text x="914" y="378" text-anchor="end" font-family="Georgia, serif" font-size="13" fill="#f3f6fb">mẍ = Fdrive − cẋ − k(x − xtarget)</text>
+
+  <path d="M88 315 H872" stroke="#3d536c" stroke-width="2"/>
+  <circle r="6" fill="#e8b84b" stroke="#fff0b9" stroke-width="2">
+    <animate attributeName="cx" values="88;392;690;872;88" keyTimes="0;0.38;0.72;1;1" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="315;315;315;315;315" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <g class="minor">
+    <text x="88" y="338">progress 0</text><text x="480" y="338" text-anchor="middle">evaluated pose at current time</text><text x="872" y="338" text-anchor="end">progress 1</text>
   </g>
+
+  <rect x="28" y="360" width="904" height="92" rx="10" fill="#0b1421" stroke="#344d67"/>
+  <text x="46" y="383" font-size="11" letter-spacing="1.5" fill="#78dcff">IMPLEMENTED BASELINE</text>
+  <text x="46" y="405" font-size="14" fill="#f3f6fb">Named transforms · linear position/scale interpolation · quaternion slerp</text>
+  <text x="46" y="430" font-size="12" fill="#b9c8d9">Illustrative motion only — not a screenshot or a physics simulation.</text>
+  <text x="914" y="383" text-anchor="end" font-size="11" letter-spacing="1.5" fill="#e8b84b">FUTURE EXPLORATION</text>
+  <text x="914" y="405" text-anchor="end" font-family="Georgia, serif" font-size="13" fill="#f3f6fb">F = ma</text>
+  <text x="914" y="430" text-anchor="end" font-size="12" fill="#b9c8d9">Participant-specific laws; explicit assumptions</text>
 </svg>
