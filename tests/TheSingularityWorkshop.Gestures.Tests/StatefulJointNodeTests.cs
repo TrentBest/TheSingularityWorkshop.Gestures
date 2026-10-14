@@ -82,6 +82,27 @@ public sealed class StatefulJointNodeTests
     }
 
     [Fact]
+    public void IncrementalParentAngleChangeRecalculatesTheAffectedSubtree()
+    {
+        var rootHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var childHinge = new StatefulHinge(MathF.PI / 2f, -MathF.PI, MathF.PI);
+        var leafHinge = new StatefulHinge(0f, -MathF.PI, MathF.PI);
+        var root = new StatefulJointNode("root", 2f, rootHinge);
+        var child = new StatefulJointNode("child", 1f, childHinge);
+        var leaf = new StatefulJointNode("leaf", 1f, leafHinge);
+        root.AddChild(child);
+        child.AddChild(leaf);
+
+        Assert.Equal(3, root.EvaluateIncremental(Vector2.Zero));
+        rootHinge.Advance(MathF.PI / 2f, 1f, MathF.PI / 2f);
+
+        Assert.Equal(3, root.EvaluateIncremental(Vector2.Zero));
+        AssertNear(new Vector2(0f, 2f), root.WorldEnd);
+        AssertNear(new Vector2(-1f, 2f), child.WorldEnd);
+        AssertNear(new Vector2(-2f, 2f), leaf.WorldEnd);
+    }
+
+    [Fact]
     public void IncrementalEvaluationLeavesUnaffectedSiblingSubtreeUnrecalculated()
     {
         var root = CreateNode("root");
