@@ -90,6 +90,7 @@ This is a source-repository verification path, not a claim that the package has 
 
 - [Architecture](docs/ARCHITECTURE.md) — understand ownership boundaries and how evaluated poses reach the renderer.
 - [Data Model](docs/DATA_MODEL.md) — learn the initial keyframe, transform, anchor, and evaluated-output contracts.
+- [Rig Contract Proposal](docs/RIG_CONTRACT_PROPOSAL.md) — review the draft rig-neutral ownership split and the decisions still open before any rig schema is frozen.
 - [Determinism](docs/DETERMINISM.md) — understand what stable evaluation means and which inputs determine the result.
 - [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore the candidate force, inertia, spring, damping, easing, and training-variance model. This is exploratory mathematics, not a frozen package contract.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
