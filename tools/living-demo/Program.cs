@@ -13,7 +13,7 @@ const int sampleCount = 49;
 var context = new MotionContext { DurationSeconds = duration };
 var transitions = new List<string>();
 
-FSM_API.Create.CreateProcessingGroup(group);
+FSM_API.CreateProcessingGroup(group);
 FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: 1, processingGroup: group)
     .State("Ready", onEnter: ctx =>
     {
