@@ -14,7 +14,7 @@ var context = new MotionContext { DurationSeconds = duration };
 var transitions = new List<string>();
 
 FSM_API.Create.CreateProcessingGroup(group);
-FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: -1, processingGroup: group)
+FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: 0, processingGroup: group)
     .State("Ready", onEnter: ctx =>
     {
         if (ctx is MotionContext motion) { motion.Phase = "Ready"; transitions.Add("Ready"); }
@@ -28,21 +28,20 @@ FSM_API.Create.CreateFiniteStateMachine("GestureMotionShowcase", processRate: -1
         if (ctx is MotionContext motion) { motion.Phase = "Complete"; transitions.Add("Complete"); }
     }, onUpdate: null, onExit: null)
     .WithInitialState("Ready")
-    .Transition("Ready", "Running", ctx => ctx is MotionContext motion && motion.StartRequested)
-    .Transition("Running", "Complete", ctx => ctx is MotionContext motion && motion.ElapsedSeconds >= motion.DurationSeconds)
     .BuildDefinition();
 
-FSM_API.Create.CreateInstance("GestureMotionShowcase", context, group);
-FSM_API.Interaction.Update(group); // Enter the declared Ready state before accepting the start request.
-context.StartRequested = true;
-FSM_API.Interaction.Update(group);
+var handle = FSM_API.Create.CreateInstance("GestureMotionShowcase", context, group);
+context.Phase = handle.CurrentState;
+transitions.Add(handle.CurrentState);
+handle.TransitionTo("Running");
 
 var definition = CreateDefinition();
 var samples = new List<Sample>(sampleCount);
 for (var i = 0; i < sampleCount; i++)
 {
     context.ElapsedSeconds = duration * i / (sampleCount - 1);
-    FSM_API.Interaction.Update(group);
+    if (i == sampleCount - 1)
+        handle.TransitionTo("Complete");
     var evaluated = GestureEvaluator.Evaluate(definition, context.ElapsedSeconds, duration,
         GestureVariation.None, identitySeed: 0);
     var root = evaluated.LocalTransforms["root"];
@@ -175,7 +174,6 @@ internal sealed class MotionContext : IStateContext
 {
     public string Name { get; set; } = "Gesture motion documentation";
     public bool IsValid { get; set; } = true;
-    public bool StartRequested { get; set; }
     public double DurationSeconds { get; set; }
     public double ElapsedSeconds { get; set; }
     public string Phase { get; set; } = "Created";
