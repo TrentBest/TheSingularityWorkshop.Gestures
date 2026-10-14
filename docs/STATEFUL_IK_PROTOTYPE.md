@@ -51,8 +51,19 @@ The `AvailableTangentialForceNewtons` value is supplied by the external model; G
 
 This is an integration seam, not a physics engine. Contact geometry, multi-contact balance, collision resolution, and whole-body response remain outside this prototype.
 
+## Contact-informed recovery recommendations
+
+`ContactRecoveryPolicy.Recommend` translates an optional `ContactObservation` into a deterministic next-intent recommendation:
+
+- Missing, unknown, or unevaluated observations return `AwaitObservation`.
+- `NoContact` recommends `SeekContact`; `Released` recommends `ReacquireContact`.
+- An externally assessed `Supported` contact recommends `ContinueCurrentTarget`.
+- `Slipping` recommends `SeekAlternativeContact`; `Unsupported` recommends `RepositionToReduceLoad`.
+
+This deliberately stops at a recommendation. It does not produce target coordinates, infer force or friction, move a joint, or claim a recovery succeeded. The calling domain chooses and executes the next target; the external physics/domain owner reports the resulting contact outcome. The mapping is a small deterministic policy seam, not a whole-body balance or climbing controller.
+
 ## Tests and next decisions
 
-The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, a deterministic sequence compared against full reevaluation, a 256-joint chain, recovery after a non-finite derived transform, and the data-only external contact observation contract. Next, broaden failure recovery and benchmark update counts and total runtime before making performance claims.
+The unit tests cover bounded hinge progress, all three movement classifications, target completion, joint-limit constraints, zero elapsed time, invalid inputs, parent-to-descendant propagation, no-op updates, child-only changes, root-anchor changes, branched hierarchies, a deterministic sequence compared against full reevaluation, a 256-joint chain, recovery after a non-finite derived transform, the data-only external contact observation contract, and deterministic recommendations for supported, slipping, unsupported, absent, released, and unknown contact states. Next, connect recommendations to caller-owned target selection, broaden failure recovery, and benchmark update counts and total runtime before making performance claims.
 
 This experiment is a correctness baseline. No performance advantage is claimed.
