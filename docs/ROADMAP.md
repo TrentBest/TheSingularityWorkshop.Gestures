@@ -7,7 +7,8 @@
 - [x] CPU interpolation for position, rotation, and scale.
 - [x] Deterministic bounded speed and root-offset variation.
 - [x] Unit tests for core invariants and repeatability.
-- [x] First constrained two-link planar IK CPU reference, with deterministic geometry tests.\n- [x] Accessible IK theory guide with animated SVG geometry and explicit implementation boundaries.
+- [x] First constrained two-link planar IK CPU reference, with deterministic geometry tests.
+- [x] Accessible IK theory guide with animated SVG geometry and explicit implementation boundaries.
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
 - [x] Confirm CI is green on the IK reference pull request after edge-case tests.
 - [ ] Review public API names and package metadata before alpha publication.
