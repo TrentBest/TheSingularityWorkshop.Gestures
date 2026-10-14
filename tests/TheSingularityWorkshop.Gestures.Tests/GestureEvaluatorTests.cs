@@ -79,6 +79,41 @@ public sealed class GestureEvaluatorTests
         Assert.Equal(Vector3.Zero, frame.LocalTransforms["root"].Position);
     }
 
+    [Theory]
+    [InlineData("humanoid", "hips", "left_hand")]
+    [InlineData("quadruped", "spine", "front_left_paw")]
+    [InlineData("mechanism", "base_hinge", "tool_tip")]
+    public void EvaluatesNamedTransformsWithoutAssumingHumanoidBoneNames(
+        string rigKind,
+        string rootTransformName,
+        string endpointTransformName)
+    {
+        var start = new Dictionary<string, PoseTransform>
+        {
+            [rootTransformName] = PoseTransform.Identity,
+            [endpointTransformName] = PoseTransform.Identity
+        };
+        var end = new Dictionary<string, PoseTransform>
+        {
+            [rootTransformName] = new PoseTransform(
+                new Vector3(2f, 0f, 0f), Quaternion.Identity, Vector3.One),
+            [endpointTransformName] = new PoseTransform(
+                new Vector3(0f, 4f, 0f), Quaternion.Identity, Vector3.One)
+        };
+        var definition = new GestureDefinition($"example.{rigKind}", new[]
+        {
+            new GestureKeyframe(0d, start),
+            new GestureKeyframe(1d, end)
+        });
+
+        var pose = GestureEvaluator.Evaluate(definition, 0.5d, 1d);
+
+        Assert.Equal(new[] { rootTransformName, endpointTransformName }.OrderBy(x => x),
+            pose.LocalTransforms.Keys.OrderBy(x => x));
+        Assert.Equal(new Vector3(1f, 0f, 0f), pose.LocalTransforms[rootTransformName].Position);
+        Assert.Equal(new Vector3(0f, 2f, 0f), pose.LocalTransforms[endpointTransformName].Position);
+    }
+
     private static GestureDefinition CreateGesture()
     {
         var start = new Dictionary<string, PoseTransform>
