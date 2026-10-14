@@ -183,7 +183,78 @@ These references support the separation of articulated dynamics, contact/impact 
 - [Interactive Physics-Based Control of Articulated Characters](https://publications.ri.cmu.edu/storage/publications/pub_files/pub4/kim_junggon_2008_1/kim_junggon_2008_1.pdf): why realistic articulated response depends on control as well as dynamics.
 - [NVIDIA PhysX — Articulations](https://nvidia-omniverse.github.io/PhysX/physx/5.6.0/docs/Articulations.html): an implementation-oriented reference for articulation forces, gravity, external forces, constraints, and stability considerations.
 
-## 9. Non-goals and current boundary
+## 9. Participant-owned equations and environmental interaction
+
+The architectural target is not one equation that describes every object. It is a shared composition method in which each physical participant defines the constitutive law or equation appropriate to its own domain, while common mechanics provide the contracts for combining their effects.
+
+Newton's second law is the deliberately small common foundation:
+
+```text
+F_net = m * a
+```
+
+For a point mass with a declared inertial frame, this can be rearranged to `a = F_net / m` when mass is nonzero. It does **not** tell us by itself which forces exist, how a ski grips snow, how a track deforms mud, how a joint actuates, or when dust becomes airborne. Those behaviors belong to separately defined models with explicit assumptions. For a rigid body or articulated system, angular/generalized dynamics and constraints must also be accounted for; do not misapply the point-mass equation as a complete solver.
+
+### 9.1 Local ownership, shared contracts
+
+Each participant/model should declare:
+- its state and reference frame;
+- the equation/law it owns and the conditions under which it applies;
+- environmental and interaction inputs it requires;
+- the type of output it contributes (force, torque, impulse, constraint, material/state update, or control command);
+- its limits, units, and energy/stability expectations;
+- what it reports so other models can respond without knowing its implementation.
+
+Examples are a ski's ski–snow interaction law, a tank track's track–terrain interaction law, a thruster's force/impulse output, and a joint actuator's torque/control model. They can be composed because their interfaces are explicit—not because their equations are all identical. A model should not silently own another participant's behavior, and no central domain catalogue should have to enumerate every possible object type in advance.
+
+Interaction is the bridge between participants. A contact pair can report contact geometry and relative motion, while the relevant surface/material models supply constitutive parameters and the contact solver enforces non-penetration and resolves normal/tangential response. Where an interaction transmits forces between two modeled bodies, its bookkeeping must preserve the chosen conservation and solver conventions; it must not apply the same interaction twice.
+
+### 9.2 Environment as queried state, not object-specific scripting
+
+A participant should receive environmental facts through a declared query/interface rather than contain bespoke rules such as `if tank then dust`. Depending on the model, useful facts may include:
+- whether contact exists, plus contact point(s), surface normal(s), and the identities/material state of the contacted surface;
+- relative velocity and tangential slip at the contact;
+- normal load/contact impulse and local pressure where the contact model can provide them;
+- surface type and physical state (for example, dry loose soil, wet cohesive mud, compacted dirt, grass, snow, or ice);
+- moisture, temperature, particle/cohesion properties, and other state only when a chosen material model actually uses them.
+
+A boolean `IsInContact` is a useful coarse gate, not a sufficient contact law. If it is false, a contact-dependent contribution should not invent traction or ground-generated particles. If it is true, the detailed contact state determines the response.
+
+Environmental facts should describe the simulated world; the participant's own model decides how those facts affect it. A terrain/material model may change its parameters as water content or temperature changes. A track model may calculate slip and transmitted shear. A particle/debris model may emit particles only when its physical activation criteria are met. The tank does not need a special “make dust on dirt” instruction.
+
+### 9.3 Effects as downstream consequences
+
+Visual effects should consume physical interaction outputs rather than determine them. For example, dust emission could depend on a material's particle availability/erodibility, contact pressure or shear, relative slip speed, and a threshold or rate law. Wet cohesive mud may instead deform, adhere, and displace as clumps or spray; grass may bend or break without producing a dry-soil dust plume. These are hypotheses for material-specific models to validate, not universal rules implied by `F = ma`.
+
+Keep the causal direction explicit:
+
+```text
+environment + participant state
+             ↓
+participant / interaction equations
+             ↓
+forces, impulses, constraints, material-state changes
+             ↓
+motion and contact outcomes
+             ↓
+secondary effects (dust, mud displacement, spray, debris)
+             ↓
+rendering
+```
+
+The simulation may use approximations and authored material parameters, but it must label them as such. A threshold or emission-rate heuristic is still a model decision that needs inputs and tests; it is not “physics did it” merely because it runs after the force calculation.
+
+### 9.4 Acceptance tests for composability
+
+- A new participant can register its own equation/model without adding a type-specific branch to a universal motion equation.
+- With contact disabled, contact-dependent traction and contact-generated effects are absent.
+- For identical contact geometry and relative state, changing only the surface's declared material properties changes the interaction according to that material law, not according to the name of the vehicle.
+- Dry loose soil, wet cohesive mud, grass, and compacted dirt can produce different validated responses through material/interactions models; none is hard-coded as a tank-only visual behavior.
+- Force/torque, impulse, constraint, material-state update, and visual-event outputs remain distinct types with explicit conversions only where physically justified.
+- Secondary effects are reproducible from their declared physical inputs and policy; they cannot feed back into motion unless an explicit physical interaction (for example, particle drag or impact) is modeled.
+- Adding a new participant or surface type does not require rewriting unrelated participants' equations.
+
+## 10. Non-goals and current boundary
 
 This document does not specify a complete rigid-body or articulated-body solver. It does not select a final public API, prescribe a universal friction law, or reconstruct the lost historical equation. The current Gestures evaluator remains a keyframe-oriented motion evaluator; it does not simulate temperature, phase transitions, contact friction, impact, or generalized multi-body dynamics.
 
