@@ -31,7 +31,7 @@
 - [x] Prototype a single stateful hinge without assuming an FSM_API dependency; document its contract and limitations.
 - [x] Connect constrained two-link IK to retained hinges and measured hierarchy output in a speed-limited kinematic control loop; test reachable convergence, unreachable targets, and world-anchor offsets.
 - [x] Build a small parent/child hierarchy with explicit transform propagation and an initial dirty-path incremental update.
-- [x] Compare incremental updates with full reevaluation for correctness before performance claims.
+- [x] Compare incremental and full evaluation for correctness before performance claims.
 - [ ] Benchmark 1–10,000 joints and record total-step cost, allocations, update ratios, error, and failure behavior.
 
 Tracked in [Stateful IK research issue #11](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/11).
@@ -55,6 +55,7 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 - [x] Add a first static [skill-distribution concept visual](assets/skill-distribution-concept.svg) showing the intended comparison and the distinction between movement samples and target outcomes; this is a design artifact, not the implemented interactive demo.
 - [x] Add a test-backed, rig-independent [soldier movement Gesture example](SOLDIER_MOVEMENT_GESTURE.md) with named local transforms and provider-defined interaction anchors.
 - [x] Add a test-backed [provider-owned vehicle boarding Gesture example](VEHICLE_BOARDING_GESTURE.md) using named interaction anchors.
+- [ ] Implement a deterministic Star Port routing/task-graph fixture for the [proposed crew routing scenario](STARPORT_CREW_ROUTING_SCENARIO.md): shared waypoint, role-based routing, provider-owned ground tasks, flight-crew boarding, return/seal checks, and a separate ATC clearance gate. Keep host outcomes explicit inputs; test failure, delay, missing evidence, blocked movement, and denied clearance before any live simulation claims.
 - [x] Document a proposed consumer-owned interruption, reversal, pause/resume, and re-entry policy; keep it explicitly provisional pending a real host integration.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
 - [x] Add initial deterministic linear-translation golden vectors and document a provisional numeric tolerance policy; rotation/backend parity remains open.
