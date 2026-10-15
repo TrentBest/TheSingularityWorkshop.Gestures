@@ -70,7 +70,7 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 
 ## Milestone 3 — Renderer and GPU validation
 
-- [ ] Agree on a narrow evaluated-pose interchange contract with Renderer.
+- [ ] Agree on a narrow evaluated-pose interchange contract with Renderer; see the explicitly provisional [pose handoff proposal](RENDERER_POSE_HANDOFF_PROPOSAL.md).
 - [ ] Produce CPU reference outputs for representative gestures and population sizes.
 - [ ] Prototype GPU evaluation behind Visualize/backend-specific code.
 - [ ] Compare CPU and GPU results, memory traffic, dispatch cost, and event-horizon fidelity.
