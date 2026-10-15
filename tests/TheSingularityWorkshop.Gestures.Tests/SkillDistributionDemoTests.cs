@@ -11,7 +11,9 @@ public sealed class SkillDistributionDemoTests
         var first = SkillDistributionDemo.Generate(1729, 128, 0.2, 0.05);
         var second = SkillDistributionDemo.Generate(1729, 128, 0.2, 0.05);
 
-        Assert.Equal(first, second);
+        Assert.Equal(first.MeanPoseError, second.MeanPoseError);
+        Assert.Equal(first.MovementVariance, second.MovementVariance);
+        Assert.Equal(first.OutcomeSpread, second.OutcomeSpread);
         Assert.Equal(first.Samples, second.Samples);
     }
 
