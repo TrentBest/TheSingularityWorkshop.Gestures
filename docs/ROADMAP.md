@@ -57,7 +57,7 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 - [x] Add a test-backed [provider-owned vehicle boarding Gesture example](VEHICLE_BOARDING_GESTURE.md) using named interaction anchors.
 - [x] Document a proposed consumer-owned interruption, reversal, pause/resume, and re-entry policy; keep it explicitly provisional pending a real host integration.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
-- [ ] Add deterministic golden test vectors and numerical tolerance policy.
+- [x] Add initial deterministic linear-translation golden vectors and document a provisional numeric tolerance policy; rotation/backend parity remains open.
 
 ## Milestone 2 — Rig and constraints
 
