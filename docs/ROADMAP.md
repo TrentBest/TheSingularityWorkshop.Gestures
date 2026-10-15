@@ -49,7 +49,7 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 ## Milestone 1 — Real domain examples
 
 - [ ] Demonstrate skill as a movement distribution, not only a scalar rating: render a ghost ideal pose/aim line, show narrow and broad fuzzy movement envelopes, and compare the resulting outcome distributions on a target. Keep pose error, movement variance, and outcome spread as separate measurements; use explicitly seeded/supplied samples and label the demo as illustrative rather than physical validation.
-- [x] Add a first static concept visual showing the intended comparison and the distinction between movement samples and target outcomes; this is a design artifact, not the implemented interactive demo.
+- [x] Add a first static [skill-distribution concept visual](assets/skill-distribution-concept.svg) showing the intended comparison and the distinction between movement samples and target outcomes; this is a design artifact, not the implemented interactive demo.
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
 - [ ] Add a provider-owned interaction example, such as boarding a vehicle through named anchors.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
