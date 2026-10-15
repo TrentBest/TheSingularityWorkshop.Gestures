@@ -69,6 +69,12 @@ The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, 
 
 The moving marker above illustrates the idea of progressing through a pose path. **It is a conceptual diagram, not output captured from the evaluator.** The implemented CPU baseline interpolates translation and scale linearly and rotation with quaternion slerp; the mass-spring-damper expression is future exploration, not implemented physics.
 
+### Skill as a movement distribution (concept)
+
+![Illustrative comparison of narrow and broad movement envelopes and their separate target outcome distributions](docs/assets/skill-distribution-concept.svg)
+
+This is a design concept built from illustrative geometry, not captured movement, a physical model, or measured performance. It makes three quantities visually distinct: ideal-pose error, movement variance, and outcome spread. An interactive, deterministic sample demonstration remains on the [roadmap](docs/ROADMAP.md).
+
 You need the **.NET 8 SDK**. From the repository root:
 
 ```bash
