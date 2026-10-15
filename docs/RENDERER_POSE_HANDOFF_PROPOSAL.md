@@ -2,6 +2,8 @@
 
 **Status: proposal only.** This is a boundary sketch based on the current Gestures and Renderer source, not an agreed or implemented integration contract.
 
+WebPage implementation handoff: [GESTURES_RENDERER_WEBPAGELLM_HANDOFF.md](https://github.com/TrentBest/WebPage/blob/development/docs/integrations/GESTURES_RENDERER_WEBPAGELLM_HANDOFF.md). The handoff describes a truthful first visible experience and explicitly forbids presenting mock motion as evaluator output.
+
 ## Why keep a boundary?
 
 Gestures currently evaluates a definition at a caller-supplied time and returns an `EvaluatedPose`. Renderer currently owns observer-relative representation and render-frame command construction. Neither project should need to become the other's implementation detail just to pass an evaluated pose toward presentation.
