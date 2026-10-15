@@ -92,8 +92,9 @@ public static class MotionResponseComparison
         double tolerance,
         double stepSeconds)
     {
-        // Require 100 ms of consecutive samples inside both position and velocity tolerances.
-        var requiredSamples = Math.Max(1, (int)Math.Ceiling(0.1d / stepSeconds));
+        // Require a sampled interval spanning at least 100 ms inside both position and velocity tolerances.
+        var requiredIntervals = Math.Max(1, (int)Math.Ceiling(0.1d / stepSeconds));
+        var requiredSamples = requiredIntervals + 1;
         for (var start = 0; start < samples.Count; start++)
         {
             var first = samples[start];
