@@ -73,7 +73,7 @@ The moving marker above illustrates the idea of progressing through a pose path.
 
 ![Illustrative comparison of narrow and broad movement envelopes and their separate target outcome distributions](docs/assets/skill-distribution-concept.svg)
 
-The committed SVG above is a design concept, not captured movement, a physical model, or measured performance. The library now also has a deterministic sample model and an SVG-string renderer that draws generated movement/outcome points and reports ideal-pose error, movement variance, and outcome spread separately. This is executable illustrative data, not physical validation; an interactive host with adjustable controls remains on the [roadmap](docs/ROADMAP.md).
+The committed SVG above is a design concept, not captured movement, a physical model, or measured performance. The library now also has a deterministic sample model and an SVG-string renderer that draws generated movement/outcome points and reports ideal-pose error, movement variance, and outcome spread separately. This is executable illustrative data, not physical validation. A standalone [interactive browser demo](docs/skill-distribution-demo.html) exposes seed, sample count, narrow/broad movement spread, and independent outcome noise; it mirrors the documented seeded sample algorithm and remains an explanatory visualization, not physical validation.
 
 You need the **.NET 8 SDK**. From the repository root:
 
