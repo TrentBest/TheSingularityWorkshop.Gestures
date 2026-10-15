@@ -78,7 +78,10 @@ main{max-width:1240px;margin:auto;padding:clamp(16px,3vw,36px)}h1{font-size:clam
     ctx.globalAlpha=1;ctx.fillStyle='#b8c7d3';ctx.font='18px system-ui';ctx.fillText(label,26,32);ctx.font='15px system-ui';ctx.fillText('seed '+seed+' · '+result.samples.length+' samples · spread '+spread.toFixed(2),26,h-12);
   }
   function render(){
-    const seed=+$('seed').value,count=+$('count').value,narrow=+$('narrow').value,broad=+$('broad').value,noise=+$('noise').value;
+    const seed=+$('seed').value,count=+$('count').value,narrow=+$('narrow').value,noise=+$('noise').value;
+    // Keep the comparison honest: the broad envelope must never be narrower.
+    let broad=+$('broad').value;
+    if(broad<narrow){broad=narrow;$('broad').value=String(broad);}
     $('seedOut').value=seed;$('countOut').value=count;$('narrowOut').value=narrow.toFixed(2);$('broadOut').value=broad.toFixed(2);$('noiseOut').value=noise.toFixed(2);
     const a=model(seed,count,narrow,noise),b=model(seed,count,broad,noise);
     draw($('plotNarrow'),a,'Narrow envelope',seed,narrow);draw($('plotBroad'),b,'Broad envelope',seed,broad);
