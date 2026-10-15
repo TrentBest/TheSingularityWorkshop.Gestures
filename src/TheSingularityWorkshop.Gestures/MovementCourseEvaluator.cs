@@ -81,12 +81,15 @@ public static class MovementCourseEvaluator
         ArgumentNullException.ThrowIfNull(course);
         ArgumentNullException.ThrowIfNull(observations);
 
+        var courseElementIds = course.Elements
+            .Select(element => element.Id)
+            .ToHashSet(StringComparer.Ordinal);
         var byId = new Dictionary<string, MovementCourseObservation>(StringComparer.Ordinal);
         foreach (var observation in observations)
         {
             if (observation is null)
                 throw new ArgumentException("Observations must not contain null entries.", nameof(observations));
-            if (!course.Elements.Any(element => string.Equals(element.Id, observation.ElementId, StringComparison.Ordinal)))
+            if (!courseElementIds.Contains(observation.ElementId))
                 throw new ArgumentException(
                     $"Observation references unknown course element '{observation.ElementId}'.",
                     nameof(observations));
