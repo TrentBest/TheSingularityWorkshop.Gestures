@@ -53,7 +53,7 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 - [x] Add a deterministic SVG comparison renderer that draws generated movement/outcome samples, an ideal ghost pose/aim line, a bullseye, and separately reported metrics; the renderer returns SVG text but is not yet wired to an interactive host.
 - [x] Add a standalone interactive HTML comparison using the same seeded Xorshift32 sample algorithm, with controls for seed, sample count, movement spreads, and independent outcome noise. Browser rendering is illustrative and is not a physical model.
 - [x] Add a first static [skill-distribution concept visual](assets/skill-distribution-concept.svg) showing the intended comparison and the distinction between movement samples and target outcomes; this is a design artifact, not the implemented interactive demo.
-- [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
+- [x] Add a test-backed, rig-independent [soldier movement Gesture example](SOLDIER_MOVEMENT_GESTURE.md) with named local transforms and provider-defined interaction anchors.
 - [ ] Add a provider-owned interaction example, such as boarding a vehicle through named anchors.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
