@@ -12,7 +12,7 @@
 
 TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluator for physical procedures: pose keyframes, interpolation, progression, stable individual variation, and evaluated pose output. It lets a capability describe how an interaction physically happens without requiring every consumer to author a conventional baked animation clip.
 
-> **Status: early alpha foundation.** This first milestone establishes a small, testable CPU contract. It is not a physics solver, authoring tool, complete animation system, or GPU evaluator. This repository does not publish to NuGet.
+> **Status: early alpha foundation.** The core evaluator remains a deterministic keyframe-interpolation baseline. An optional one-dimensional spring-damper response primitive now makes one candidate motion equation executable for research, but it is not yet integrated into Gesture evaluation and is not a physics solver. This repository does not publish to NuGet.
 
 ## 🟦 01 What
 
@@ -34,7 +34,7 @@ The ideal Gesture establishes the intended action. Each entity's stable seed and
 
 ![](docs/assets/dividers/teal.svg)
 
-```text
+\`\`\`text
 Capability / Gesture Provider
            | defines physical procedure
            v
@@ -48,7 +48,7 @@ Capability / Gesture Provider
            |
            v
  Renderer selects fidelity -> Visualize executes GPU presentation
-```
+\`\`\`
 
 Each part has a clear owner:
 
@@ -59,7 +59,7 @@ Each part has a clear owner:
 - **Visualize** performs GPU-facing presentation.
 - **raWWar** supplies domain capabilities and authoritative game state.
 
-The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, or game-specific types. The initial evaluator linearly interpolates translation and scale and uses quaternion spherical interpolation for rotation. This is a reference baseline, not a final high-fidelity motion solver.
+The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, or game-specific types. The initial evaluator linearly interpolates translation and scale and uses quaternion spherical interpolation for rotation. The optional spring-damper reference is a separate stateful experiment; it does not alter those semantics.
 
 ## 🟢 04 See it in a minute
 
@@ -67,16 +67,16 @@ The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, 
 
 ![Animated keyframe path and current evaluator baseline, with the exploratory spring-damper equation clearly separated](docs/assets/gesture-motion.svg)
 
-The moving marker above illustrates the idea of progressing through a pose path. **It is a conceptual diagram, not output captured from the evaluator.** The implemented CPU baseline interpolates translation and scale linearly and rotation with quaternion slerp; the mass-spring-damper expression is future exploration, not implemented physics.
+The moving marker above illustrates the idea of progressing through a pose path. **It is a conceptual diagram, not output captured from the evaluator.** The implemented CPU baseline interpolates translation and scale linearly and rotation with quaternion slerp. The [Scalar Spring-Damper Reference](docs/SCALAR_SPRING_DAMPER_REFERENCE.md) is an executable one-dimensional research primitive, not yet part of the pose evaluator or a physical simulation.
 
 You need the **.NET 8 SDK**. From the repository root:
 
-```bash
+\`\`\`bash
 dotnet restore TheSingularityWorkshop.Gestures.slnx
 dotnet build TheSingularityWorkshop.Gestures.slnx --configuration Release --no-restore
 dotnet test TheSingularityWorkshop.Gestures.slnx --configuration Release --no-build
 dotnet pack src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.csproj --configuration Release --no-build
-```
+\`\`\`
 
 This is a source-repository verification path, not a claim that the package has been published or that the early evaluator is a complete motion solver. Evaluation is deterministic for the same definition, elapsed time, and variation seed; the tests are the place to verify the guarantees of the current implementation.
 
@@ -87,7 +87,8 @@ This is a source-repository verification path, not a claim that the package has 
 - [Architecture](docs/ARCHITECTURE.md) — understand ownership boundaries and how evaluated poses reach the renderer.
 - [Data Model](docs/DATA_MODEL.md) — learn the initial keyframe, transform, anchor, and evaluated-output contracts.
 - [Determinism](docs/DETERMINISM.md) — understand what stable evaluation means and which inputs determine the result.
-- [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore the candidate force, inertia, spring, damping, easing, and training-variance model. This is exploratory mathematics, not a frozen package contract.
+- [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore candidate force, inertia, spring, damping, easing, and training-variance models.
+- [Scalar Spring-Damper Reference](docs/SCALAR_SPRING_DAMPER_REFERENCE.md) — inspect the executable scalar response primitive, numerical method, tests, and limitations.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
@@ -100,6 +101,7 @@ This is a source-repository verification path, not a claim that the package has 
 - Evaluated pose data is an output projection, not authoritative movement or collision state.
 - The CPU evaluator is the reference implementation against which later GPU evaluators can be tested.
 - The initial transform representation uses System.Numerics, not host-engine types.
+- The spring-damper reference is stateful and timestep-sensitive; it is separate from the keyframe evaluator until comparative evidence supports integration.
 
 ## 🟣 Release discipline
 
