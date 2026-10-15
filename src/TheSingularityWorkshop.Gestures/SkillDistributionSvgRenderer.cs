@@ -56,18 +56,18 @@ public static class SkillDistributionSvgRenderer
         svg.AppendLine($"<text x=\"{F(left + 22)}\" y=\"150\" fill=\"#b8c7d3\" font-size=\"12\" font-family=\"sans-serif\">seed {seed} · {result.Samples.Count} samples · spread {F(movementSpread)}</text>");
         svg.AppendLine($"<line x1=\"{F(centerX - 205)}\" y1=\"{F(centerY)}\" x2=\"{F(centerX + 205)}\" y2=\"{F(centerY)}\" stroke=\"#354a5b\"/>");
         svg.AppendLine($"<line x1=\"{F(centerX)}\" y1=\"{F(centerY - 175)}\" x2=\"{F(centerX)}\" y2=\"{F(centerY + 175)}\" stroke=\"#354a5b\"/>");
-        svg.AppendLine($"<line x1=\"{F(centerX)}\" y1=\"{F(centerY)}\" x2=\"{F(centerX + 185)}\" y2=\"{F(centerY - 120)}\" stroke=\"#e6edf3\" stroke-dasharray=\"6 5\" stroke-width=\"2\"/>");
+        svg.AppendLine($"<line x1=\"{F(centerX)}\" y1=\"{F(centerY)}\" x2=\"{F(centerX + 145)}\" y2=\"{F(centerY - 95)}\" stroke=\"#e6edf3\" stroke-dasharray=\"6 5\" stroke-width=\"2\"/>");
         svg.AppendLine($"<circle cx=\"{F(centerX)}\" cy=\"{F(centerY)}\" r=\"13\" fill=\"none\" stroke=\"#f4f7fa\" stroke-width=\"2\" stroke-dasharray=\"3 3\"/>");
         svg.AppendLine($"<path d=\"M {F(centerX - 8)} {F(centerY)} H {F(centerX + 8)} M {F(centerX)} {F(centerY - 8)} V {F(centerY + 8)}\" stroke=\"#f4f7fa\" stroke-width=\"2\"/>");
-        svg.AppendLine($"<circle cx=\"{F(centerX + 185)}\" cy=\"{F(centerY - 120)}\" r=\"28\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
-        svg.AppendLine($"<circle cx=\"{F(centerX + 185)}\" cy=\"{F(centerY - 120)}\" r=\"17\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
-        svg.AppendLine($"<circle cx=\"{F(centerX + 185)}\" cy=\"{F(centerY - 120)}\" r=\"5\" fill=\"#f2bd55\"/>");
+        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 95)}\" r=\"28\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
+        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 95)}\" r=\"17\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
+        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 95)}\" r=\"5\" fill=\"#f2bd55\"/>");
         foreach (var sample in result.Samples)
         {
             var mx = centerX + sample.MovementX * scale;
             var my = centerY - sample.MovementY * scale;
-            var ox = centerX + 185 + sample.OutcomeX * scale;
-            var oy = centerY - 120 - sample.OutcomeY * scale;
+            var ox = centerX + 145 + sample.OutcomeX * scale;
+            var oy = centerY - 95 - sample.OutcomeY * scale;
             svg.AppendLine($"<circle cx=\"{F(mx)}\" cy=\"{F(my)}\" r=\"3.2\" fill=\"#57c8a5\" fill-opacity=\"0.72\"/>");
             svg.AppendLine($"<circle cx=\"{F(ox)}\" cy=\"{F(oy)}\" r=\"3.2\" fill=\"#f2bd55\" fill-opacity=\"0.78\"/>");
         }
