@@ -79,6 +79,17 @@ public sealed class MagicSpellGestureTests
     }
 
     [Fact]
+    public void ForgivingAndPrecisionSpellsCanDeclareDifferentThicknessTolerance()
+    {
+        var forgiving = CreateSpell(minimumThickness: 0.2f, maximumThickness: 1.0f);
+        var precision = CreateSpell(minimumThickness: 0.4f, maximumThickness: 0.7f);
+        var thickWeave = ValidWeave(thickness: 0.9f);
+
+        Assert.True(forgiving.TryAccept(thickWeave, triggerReleased: true, out _));
+        Assert.False(precision.TryAccept(thickWeave, triggerReleased: true, out _));
+    }
+
+    [Fact]
     public void NonFiniteThicknessIsRejected()
     {
         var invalid = ValidWeave().Select(thread => thread.Element == MagicElement.Water
@@ -104,9 +115,11 @@ public sealed class MagicSpellGestureTests
         [new GestureAnchor(anchorName, transformName, At(0f, 0f, 0f))]);
     }
 
-    private static SpellWeaveDefinition CreateSpell() => new(
-        minimumThickness: 0.25f,
-        maximumThickness: 1.0f,
+    private static SpellWeaveDefinition CreateSpell(
+        float minimumThickness = 0.25f,
+        float maximumThickness = 1.0f) => new(
+        minimumThickness,
+        maximumThickness,
         requiredElements: [MagicElement.Earth, MagicElement.Air, MagicElement.Water, MagicElement.Fire, MagicElement.Spirit]);
 
     private static SpellThread[] ValidWeave(float thickness = 0.5f) =>
