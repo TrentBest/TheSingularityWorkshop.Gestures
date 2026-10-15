@@ -60,6 +60,18 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
 - [x] Add initial deterministic linear-translation golden vectors and document a provisional numeric tolerance policy; rotation/backend parity remains open.
 
+## Singularity Arena — event and performance research track
+
+The [Singularity Arena Performance Scenario](SINGULARITY_ARENA_PERFORMANCE_SCENARIO.md) extends the environment-defined Gesture vocabulary to concerts and karaoke. These are planned work items, not implemented features:
+
+- [ ] Define a stable, replayable event-cue contract for a concert timeline, separate from the Gestures core.
+- [ ] Build a deterministic fixture with a lead performer, backing/instrument roles, and individually stateful audience participants.
+- [ ] Evaluate actual GestureDefinition poses for stage approach, microphone pickup, lead-vocal posture, clapping, singing along, and settling back to watching; verify the current public API before authoring fixture code.
+- [ ] Preserve independently chosen audience responses, bounded stable reaction offsets, quiet/nonparticipating participants, and local social influence without synchronized crowd-wide resets.
+- [ ] Test interruptions and evidence boundaries: unreachable microphone, blocked path, corrected/cancelled cue, audio drift, repeated cue, late arrival, and leaving/returning.
+- [ ] Add the venue/event scheduling MicroBundle in the domain/composition layer, with shared venue infrastructure and separate soccer/concert providers.
+- [ ] Keep voice/audio generation, authoritative movement/contact, pose hierarchy mapping, and Renderer integration as explicit separate contracts.
+
 ## Milestone 2 — Rig and constraints
 
 - [ ] Define optional hierarchy metadata without requiring a universal humanoid skeleton.
