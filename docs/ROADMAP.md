@@ -1,5 +1,7 @@
 # Roadmap
 
+See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit gates required before claiming the Gestures domain is complete.
+
 ## Milestone 0 — Reference contract (current)
 
 - [x] Engine-neutral .NET 8 library.
