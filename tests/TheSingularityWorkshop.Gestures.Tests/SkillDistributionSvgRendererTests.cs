@@ -18,7 +18,7 @@ public sealed class SkillDistributionSvgRendererTests
         Assert.Contains("Mean pose error:", first);
         Assert.Contains("Movement variance:", first);
         Assert.Contains("Outcome spread:", first);
-        Assert.Contains("not a physical or ballistic model", first);
+        Assert.Contains("Not a physical or ballistic model", first);
     }
 
     [Theory]
