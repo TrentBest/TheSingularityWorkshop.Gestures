@@ -26,7 +26,7 @@ public sealed class SkillDistributionSvgRendererTests
     {
         var svg = SkillDistributionSvgRenderer.RenderComparison(1729, 240, 1.0, 1.5, 0.8);
         var document = System.Xml.Linq.XDocument.Parse(svg);
-        XNamespace ns = "http://www.w3.org/2000/svg";
+        System.Xml.Linq.XNamespace ns = "http://www.w3.org/2000/svg";
         var points = document.Descendants(ns + "circle").ToArray();
 
         Assert.NotEmpty(points);
