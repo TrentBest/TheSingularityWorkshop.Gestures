@@ -61,6 +61,17 @@ public sealed class ScalarSpringDamperTests
     }
 
     [Fact]
+    public void DefaultStructParametersAreRejectedEvenForZeroDuration()
+    {
+        var motion = new ScalarSpringDamper(initialPosition: 2d, initialVelocity: 3d);
+
+        Assert.Throws<ArgumentException>(() => motion.Advance(10d, 0d, default));
+
+        Assert.Equal(2d, motion.Position);
+        Assert.Equal(3d, motion.Velocity);
+    }
+
+    [Fact]
     public void NonFiniteComputedStateThrowsWithoutMutatingRetainedState()
     {
         var motion = new ScalarSpringDamper(initialPosition: -double.MaxValue);
