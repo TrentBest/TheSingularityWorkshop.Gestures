@@ -99,6 +99,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — inspect the implemented two-link CPU IK reference, its measured limits, and its exact algorithmic boundary.
 - [Stateful IK Theory](docs/STATEFUL_IK_THEORY.md) — explore stateful joint FSMs, hierarchy propagation, unreachable targets, physical constraints, and a falsifiable performance research plan. The full architecture remains proposed.
 - [Stateful IK Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect the retained hinge, incremental planar hierarchy, connected two-link kinematic control loop, external contact-observation handoff, propagation tests, and explicit non-physics boundary.
+- [Star Port Crew Routing Scenario](docs/STARPORT_CREW_ROUTING_SCENARIO.md) — proposed common waypoint, role-based routing, provider-owned ground tasks, flight-crew boarding, return/seal checks, and ATC clearance gate; scenario design only, not an implemented simulation.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
