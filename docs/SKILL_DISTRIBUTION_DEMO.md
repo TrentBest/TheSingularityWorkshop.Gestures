@@ -25,3 +25,8 @@ These statistics are intentionally not collapsed into one “skill score.” Con
 ## Current boundary
 
 The model and unit tests are executable, but the two-panel SVG remains a static concept image. The interactive/visual demonstration is **not complete** until a view consumes these generated samples and metrics, exposes the seed/spread inputs, and displays the distributions without implying physical validation.
+## SVG comparison renderer
+
+`SkillDistributionSvgRenderer.RenderComparison(seed, sampleCount, narrowMovementSpread, broadMovementSpread, outcomeNoise)` returns a standalone SVG string. Both panels use the same seed and sample count; only the movement-spread parameter differs, while outcome noise is held constant. The view includes the ideal ghost marker and aim line, target bullseye, movement sample points, outcome points, and all three metrics.
+
+The SVG is generated from the executable sample model rather than hand-authored point positions. It is still an illustrative visualization: it does not run in a browser app, expose live controls, animate movement, or establish physical validity. Consumers can save the returned string as an `.svg` file or embed it in a host view.
