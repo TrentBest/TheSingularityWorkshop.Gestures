@@ -19,8 +19,9 @@
 - [x] Add an executable target-response comparison: direct target following versus spring-damper tracking of the same linear ramp-and-hold target.
 - [x] Report tracking error, peak overshoot, and observed settling time separately; `null` settling time means the experiment window did not demonstrate settling.
 - [x] Document that these are scalar numerical experiments, not a physical solver and not yet integrated into GestureEvaluator.
+- [x] Add deterministic, bounded experience-profile sampling for the evaluator's existing speed and lateral-offset channels.
 - [ ] Compare additional target trajectories, timesteps, parameter ranges, and integration methods.
-- [ ] Add seeded experience-profile parameter sampling and a side-by-side population visualization only after the parameter ranges and comparison metrics are explicit.
+- [ ] Add a side-by-side population visualization once the profile sampler's ranges and comparison metrics are explicit.
 - [ ] Decide whether the eventual motion-law contract should be stateful, absolute-time evaluable, or expose both as separate capabilities.
 
 ## Milestone 1 — Real domain examples
