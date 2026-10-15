@@ -32,6 +32,10 @@ Each Digiten keeps independent identity, current task, location/seat context, ge
 
 The venue must constrain these procedures to its layout and conditions: seats, rows, aisles, stairs, accessible paths, occupied space, and safe movement zones. The gesture vocabulary describes available behavior; a Digiten's context determines which procedure is appropriate. This is a design direction for the soccer arena, not a claim that a complete spectator catalog, locomotion system, crowd simulation, or stadium rig adapter is implemented in Gestures.
 
+## Concerts and karaoke
+
+The same environment-defined pattern extends beyond sport. See the [Singularity Arena Performance Scenario](SINGULARITY_ARENA_PERFORMANCE_SCENARIO.md) for a concert/karaoke event, including performer roles, audience gesture choices, deterministic cue timing, independent participant state, and the boundary between body motion, audio generation, and authoritative event outcomes. It is a scenario and implementation plan, not a claim that those systems are already implemented.
+
 ## Ownership boundaries
 
 | Layer | Responsibility |
