@@ -11,6 +11,16 @@
 - [ ] Confirm CI is green on the initial pull request.
 - [ ] Review public API names and package metadata before alpha publication.
 
+## Motion-law research track — scalar response prototype
+
+- [x] Add a one-dimensional stateful spring-damper reference with validated effective mass, stiffness, and damping.
+- [x] Specify semi-implicit Euler stepping and preserve retained state on invalid input or non-finite computed output.
+- [x] Test deterministic replay, fixed-step convergence for a declared parameter set, zero-duration behavior, and validation failures.
+- [x] Document that this is a scalar response primitive, not a physical solver and not yet integrated into GestureEvaluator.
+- [ ] Compare direct interpolation and candidate response laws across declared target trajectories, timesteps, and parameter ranges.
+- [ ] Add seeded experience-profile parameter sampling and a side-by-side population visualization only after the parameter ranges and comparison metrics are explicit.
+- [ ] Decide whether the eventual motion-law contract should be stateful, absolute-time evaluable, or expose both as separate capabilities.
+
 ## Milestone 1 — Real domain examples
 
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
