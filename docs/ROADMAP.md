@@ -55,7 +55,7 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 - [x] Add a first static [skill-distribution concept visual](assets/skill-distribution-concept.svg) showing the intended comparison and the distinction between movement samples and target outcomes; this is a design artifact, not the implemented interactive demo.
 - [x] Add a test-backed, rig-independent [soldier movement Gesture example](SOLDIER_MOVEMENT_GESTURE.md) with named local transforms and provider-defined interaction anchors.
 - [x] Add a test-backed [provider-owned vehicle boarding Gesture example](VEHICLE_BOARDING_GESTURE.md) using named interaction anchors.
-- [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
+- [x] Document a proposed consumer-owned interruption, reversal, pause/resume, and re-entry policy; keep it explicitly provisional pending a real host integration.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
 - [ ] Add deterministic golden test vectors and numerical tolerance policy.
 
