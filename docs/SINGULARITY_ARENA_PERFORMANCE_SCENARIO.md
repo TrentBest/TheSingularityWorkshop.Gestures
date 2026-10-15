@@ -2,6 +2,8 @@
 
 **Status: domain scenario and implementation plan.** This document extends the environment-defined Gesture vocabulary into a second venue event type: live performance. The current Gestures evaluator is a CPU reference for named local transforms and deterministic bounded variation. This scenario does not claim that a complete concert simulation, audio engine, singer controller, crowd simulator, venue model, or Renderer adapter already exists.
 
+**Cross-repository progress:** [MicroBundleDomain's Singularity Arena fixture](https://github.com/TrentBest/TheSingularityWorkshop.MicroBundleDomain/blob/work/soccer-domain-microbundle/docs/SINGULARITY_ARENA_PERFORMANCE.md) now demonstrates an in-memory shared venue schedule for soccer and concerts, validated event lifecycle transitions, a deterministic concert cue timeline, and individual audience-intention projection. Gestures tests now evaluate representative lead-vocal and audience-clap definitions through the real CPU evaluator. These are executable reference fixtures, not a live concert.
+
 ## The proving ground
 
 Singularity Arena is one venue with a reusable event schedule, spatial layout, and participant flow. Soccer is one event type; concerts are another. The venue can schedule an event, admit participants, assign stage and audience anchors, and publish event context. Event-specific MicroBundles provide the vocabulary and rules for that event.
