@@ -26,6 +26,7 @@
 ## Milestone 1 — Real domain examples
 
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
+- [ ] Add a controlled martial-arts practice/choreography example for Singularity City: forms, footwork, balance, partner drills, and clear practice/recovery states before any contact-oriented scenario. Coordinate the consumer experience with the [WebPage hidden-dojos handoff PR #117](https://github.com/TrentBest/WebPage/pull/117); WebPage owns discovery/presentation, while Gestures owns reusable movement descriptions and deterministic variation.
 - [ ] Add a provider-owned interaction example, such as boarding a vehicle through named anchors.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
