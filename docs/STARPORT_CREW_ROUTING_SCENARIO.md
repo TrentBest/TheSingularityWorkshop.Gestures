@@ -144,6 +144,12 @@ Track each agent's assignment, current directive, route, provider task, Gesture 
 
 A failed or unknown observation should not silently advance the route. The host should hold, retry, request inspection, reroute, or escalate according to explicit policy.
 
+## Executable contract fixture
+
+The test suite now includes [`StarPortRoutingScenarioTests`](../tests/TheSingularityWorkshop.Gestures.Tests/StarPortRoutingScenarioTests.cs), a small consumer-side fixture that exercises the intended orchestration boundaries: the shared waypoint, role routing, per-agent ground tasks, evidence-gated return, assigned flight stations, door-seal prerequisites, and the separate readiness/ATC gates. It also checks that missing/failed evidence and a completed Gesture pose cannot masquerade as task success.
+
+This fixture is deliberately test-only. It does not add a Star Port scheduler to the Gestures package, simulate navigation or equipment, validate real pressure/cover state, or connect to Renderer. Its observations are synthetic inputs used to test decision rules. The remaining implementation sequence below describes work still needed beyond this contract fixture.
+
 ## Implementation sequence
 
 1. Model this scenario as a deterministic, engine-neutral routing/task graph with stable directive, role, task, station, and evidence identifiers.
