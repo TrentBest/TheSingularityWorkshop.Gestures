@@ -14,6 +14,7 @@
 - [x] Confirm CI is green on the IK reference pull request after edge-case tests.
 - [x] Require solver angle limits to exactly match retained hinge limits; test rejection of mismatches.
 - [ ] Review public API names and package metadata before alpha publication.
+- [x] Add an initial agent-independent movement-course geometry contract with stable element IDs, ordered regions, consistent units, and validated axis-aligned bounds.
 
 ## Stateful IK research track — single-joint prototype stage
 
@@ -34,6 +35,16 @@
 - [ ] Benchmark 1–10,000 joints and record total-step cost, allocations, update ratios, error, and failure behavior.
 
 Tracked in [Stateful IK research issue #11](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/11).
+
+## Movement-course research track — authored challenge contract
+
+- [x] Define engine-neutral ordered course elements for approach/acceleration zones, hurdles, clearance and landing zones, continuation, gaps, vaults, balance sections, climbs, checkpoints, and finish markers.
+- [x] Validate stable course-local IDs, finite centers, positive finite extents, and immutable authored order.
+- [ ] Define physics-owner outcome evidence and a deterministic evaluator that never treats target reachability as proof of course completion.
+- [ ] Add a minimal hurdle-course fixture and tests for clear, collision, missed hurdle, unsafe landing, and indeterminate evidence.
+- [ ] Add deterministic seeded course generation and a serialization contract only after the authored model stabilizes.
+
+Tracked in [movement-course research issue #12](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/12).
 
 ## Milestone 1 — Real domain examples
 
