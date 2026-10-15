@@ -16,15 +16,15 @@ public sealed class StatefulJointNodeIncrementalWorkTests
     }
 
     [Fact]
-    public void LeafHingeChangeRecalculatesOnlyItsAncestorPathAndLeaf()
+    public void LeafHingeChangeRecalculatesOnlyTheLeafTransform()
     {
         var root = BuildBranchingHierarchy(out var hinges);
         root.EvaluateIncremental(Vector2.Zero);
 
-        // Node 6 is a leaf in the right subtree: only nodes 0, 2, and 6 should need new transforms.
+        // A leaf's local angle changes its own endpoint and orientation, not its ancestors.
         hinges[6].Advance(0.5f, 1f, 1f);
 
-        Assert.Equal(3, root.EvaluateIncremental(Vector2.Zero));
+        Assert.Equal(1, root.EvaluateIncremental(Vector2.Zero));
         Assert.Equal(0, root.EvaluateIncremental(Vector2.Zero));
     }
 
