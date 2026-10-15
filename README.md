@@ -100,6 +100,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Stateful IK Theory](docs/STATEFUL_IK_THEORY.md) — explore stateful joint FSMs, hierarchy propagation, unreachable targets, physical constraints, and a falsifiable performance research plan. The full architecture remains proposed.
 - [Stateful IK Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect the retained hinge, incremental planar hierarchy, connected two-link kinematic control loop, external contact-observation handoff, propagation tests, and explicit non-physics boundary.
 - [Star Port Crew Routing Scenario](docs/STARPORT_CREW_ROUTING_SCENARIO.md) — proposed common waypoint, role-based routing, provider-owned ground tasks, flight-crew boarding, return/seal checks, and ATC clearance gate; scenario design only, not an implemented simulation.
+- [Environment-Defined Gesture Vocabulary](docs/ENVIRONMENT_DEFINED_GESTURE_VOCABULARY.md) — explains how an environment supplies acceptable procedures while teams and participants select among them; includes a soccer example and explicit domain/physics boundaries.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
