@@ -40,8 +40,8 @@ Tracked in [Stateful IK research issue #11](https://github.com/TrentBest/TheSing
 
 - [x] Define engine-neutral ordered course elements for approach/acceleration zones, hurdles, clearance and landing zones, continuation, gaps, vaults, balance sections, climbs, checkpoints, and finish markers.
 - [x] Validate stable course-local IDs, finite centers, positive finite extents, and immutable authored order.
-- [ ] Define physics-owner outcome evidence and a deterministic evaluator that never treats target reachability as proof of course completion.
-- [ ] Add a minimal hurdle-course fixture and tests for clear, collision, missed hurdle, unsafe landing, and indeterminate evidence.
+- [x] Define caller-supplied outcome observations and a deterministic evaluator that never treats target reachability as proof of course completion; the data contract does not authenticate evidence provenance.
+- [x] Add a minimal hurdle-course fixture and tests for clear, collision, missed hurdle, unsafe landing, missing evidence, and indeterminate evidence.
 - [ ] Add deterministic seeded course generation and a serialization contract only after the authored model stabilizes.
 
 Tracked in [movement-course research issue #12](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/12).
