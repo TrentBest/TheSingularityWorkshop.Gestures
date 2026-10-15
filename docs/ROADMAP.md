@@ -24,6 +24,14 @@
 - [ ] Add a side-by-side population visualization once the profile sampler's ranges and comparison metrics are explicit.
 - [ ] Decide whether the eventual motion-law contract should be stateful, absolute-time evaluable, or expose both as separate capabilities.
 
+## Crowd-flow reference track
+
+- [x] Add experience-authored gates/routes with validated IDs and host-local waypoints.
+- [x] Define individual/group × unhurried/hurried intent profiles and lifecycle state vocabulary.
+- [x] Document the ownership boundary and explicitly mark crowd solving as future work.
+- [ ] Implement a deterministic CPU reference stepper with per-agent state, yielding/local avoidance, and group cohesion.
+- [ ] Test route following, crowded bottlenecks, group arrival, and deterministic replay before any population-scale claims.
+
 ## Milestone 1 — Real domain examples
 
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
