@@ -35,6 +35,19 @@ The current `EvaluatedPose` exposes:
 
 The pose is presentation data, not authoritative world state. In particular, `IsComplete` means the time-based Gesture evaluation reached its end; it does not prove that a hand contacted a handhold, a foot landed, a vehicle was boarded, or a physical action succeeded.
 
+
+## What the current Renderer API actually accepts
+
+A source inspection of `TheSingularityWorkshop.Renderer` on its current `master` branch establishes an important limit on the proposed first slice:
+
+- `RenderFrame` contains a `RenderView` and a snapshot of `RenderDrawCommand` values.
+- Each `RenderDrawCommand` requires geometry and material resource IDs, an already-resolved `Matrix4x4 WorldTransform`, index parameters, and a `RendererRepresentation` classification.
+- The current public frame contract does **not** expose a rig, named skeleton nodes, a skeletal pose buffer, or an input slot for `EvaluatedPose`.
+
+Therefore, a Gesture pose cannot currently be handed directly to `RenderFrame`. A consumer must first map the name-keyed local transforms onto an actual rig/entity representation, compose them according to that rig's hierarchy and coordinate convention, and decide which resolved transforms are used to construct draw commands. A single `RenderDrawCommand.WorldTransform` is a draw's world transform; it is not, by itself, a multi-node animated pose contract.
+
+This is not a reason to add a dependency from Renderer to Gestures. It means the first integration slice needs a concrete host/rig fixture and a small explicit adapter contract. If no current Renderer input represents the resolved animated geometry, that gap should be recorded as a Renderer-side design decision rather than disguised by converting a pose into arbitrary draw commands.
+
 ## Proposed responsibilities
 
 ### Gestures
