@@ -102,6 +102,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Star Port Crew Routing Scenario](docs/STARPORT_CREW_ROUTING_SCENARIO.md) — proposed common waypoint, role-based routing, provider-owned ground tasks, flight-crew boarding, return/seal checks, and ATC clearance gate; scenario design only, not an implemented simulation.
 - [Environment-Defined Gesture Vocabulary](docs/ENVIRONMENT_DEFINED_GESTURE_VOCABULARY.md) — explains how an environment supplies acceptable procedures while teams and participants select among them; includes a soccer example and explicit domain/physics boundaries.
 - [Singularity Arena Performance Scenario](docs/SINGULARITY_ARENA_PERFORMANCE_SCENARIO.md) — extends the shared venue to concerts and karaoke, with performer procedures, independently reacting audiences, cue timing, ownership boundaries, and staged implementation/acceptance criteria; scenario and plan, not a completed concert simulation.
+- [VR Magic Spellcasting Scenario](docs/MAGIC_SPELLCASTING_SCENARIO.md) — five-element weaving, Spirit alignment, limb-to-elbow-to-casting-sphere procedures, thread thickness constraints, and cast validation; an evaluator-backed reference fixture, not a live VR implementation.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
