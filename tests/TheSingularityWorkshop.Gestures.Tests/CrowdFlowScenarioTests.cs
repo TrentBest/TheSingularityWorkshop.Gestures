@@ -1,4 +1,5 @@
 using System.Numerics;
+using Xunit;
 using TheSingularityWorkshop.Gestures;
 
 namespace TheSingularityWorkshop.Gestures.Tests;
