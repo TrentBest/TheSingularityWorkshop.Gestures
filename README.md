@@ -30,6 +30,8 @@ Baked animation clips can be useful, but they often encode a finished performanc
 
 The ideal Gesture establishes the intended action. Each entity's stable seed and authored experience profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise. The current profile sampler covers the evaluator's existing speed and lateral-offset channels only; it does not yet vary individual joints or model competence.
 
+Crowd-flow contracts now describe experience-authored entrances/exits and the four common traversal intents; see [Crowd Flow Reference](docs/CROWD_FLOW_REFERENCE.md). This is a validated configuration contract, not yet a crowd solver.
+
 ## 🩵 03 How
 
 ![](docs/assets/dividers/teal.svg)
