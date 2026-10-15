@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Gesture skill as a movement distribution</title>
+  <desc id="desc">An illustrative, seeded geometric sample compares narrow and broad movement envelopes. Each panel shows an ideal ghost pose and aim line, a fuzzy movement envelope, and a separate target outcome distribution. This is not physical validation.</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#d9e2ec" stroke-width="1"/></pattern>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6Z" fill="#64748b"/></marker>
+    <g id="target"><circle r="66" fill="#fff" stroke="#334155" stroke-width="2"/><circle r="49" fill="none" stroke="#64748b" stroke-width="1.5"/><circle r="32" fill="none" stroke="#64748b" stroke-width="1.5"/><circle r="15" fill="none" stroke="#64748b" stroke-width="1.5"/><path d="M-74 0H74M0 -74V74" stroke="#94a3b8" stroke-width="1"/></g>
+    <g id="ghost"><circle cx="0" cy="0" r="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 3"/><path d="M0 12L0 62M0 26L-27 47M0 26L25 40M0 62L-20 92M0 62L19 92" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-dasharray="5 4" opacity=".7"/><path d="M22 40L50 24" fill="none" stroke="#2563eb" stroke-width="5" stroke-linecap="round"/><path d="M50 24L74 12" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="5 4"/></g>
+    <g id="actual"><circle cx="0" cy="0" r="12" fill="#fef3c7" stroke="#b45309" stroke-width="2"/><path d="M0 12L0 62M0 26L-27 47M0 26L25 40M0 62L-20 92M0 62L19 92" fill="none" stroke="#b45309" stroke-width="4" stroke-linecap="round"/><path d="M22 40L50 24" fill="none" stroke="#b45309" stroke-width="5" stroke-linecap="round"/><path d="M50 24L74 12" fill="none" stroke="#b45309" stroke-width="3"/></g>
+  </defs>
+  <rect width="1200" height="760" fill="#f8fafc"/>
+  <text x="48" y="52" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#0f172a">Skill is a distribution, not just a number</text>
+  <text x="48" y="82" font-family="Arial,sans-serif" font-size="16" fill="#475569">Illustrative seeded geometry • compare ideal pose, movement variation, and outcome spread separately</text>
+  <g transform="translate(42 118)">
+    <rect width="544" height="514" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="1" y="1" width="542" height="512" rx="17" fill="url(#grid)" opacity=".5"/>
+    <text x="24" y="38" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#0f172a">A · Narrow movement envelope</text>
+    <text x="24" y="64" font-family="Arial,sans-serif" font-size="14" fill="#475569">Lower sample variance around the ideal pose</text>
+    <ellipse cx="156" cy="214" rx="76" ry="34" fill="#f59e0b" opacity=".12" stroke="#b45309" stroke-width="2" stroke-dasharray="6 5"/>
+    <use href="#ghost" x="150" y="174"/>
+    <use href="#actual" x="143" y="171" opacity=".85"/>
+    <use href="#actual" x="159" y="180" opacity=".85"/>
+    <use href="#actual" x="151" y="165" opacity=".85"/>
+    <use href="#actual" x="164" y="173" opacity=".85"/>
+    <use href="#actual" x="146" y="184" opacity=".85"/>
+    <path d="M228 190L316 190" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="234" y="176" font-family="Arial,sans-serif" font-size="12" fill="#475569">sample outcomes</text>
+    <g transform="translate(415 196)"><use href="#target"/><g fill="#b45309"><circle cx="-5" cy="-7" r="4"/><circle cx="4" cy="5" r="4"/><circle cx="8" cy="-2" r="4"/><circle cx="-9" cy="4" r="4"/><circle cx="1" cy="-12" r="4"/><circle cx="-2" cy="10" r="4"/></g><circle r="5" fill="#2563eb"/></g>
+    <text x="24" y="330" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Movement sample</text>
+    <text x="24" y="353" font-family="Arial,sans-serif" font-size="13" fill="#475569">Observed poses cluster near the ghost.</text>
+    <text x="24" y="397" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Target outcome sample</text>
+    <text x="24" y="420" font-family="Arial,sans-serif" font-size="13" fill="#475569">Impact points cluster near the bullseye.</text>
+    <text x="24" y="478" font-family="Arial,sans-serif" font-size="12" fill="#64748b">Illustration only — not measured performance</text>
+  </g>
+  <g transform="translate(614 118)">
+    <rect width="544" height="514" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="1" y="1" width="542" height="512" rx="17" fill="url(#grid)" opacity=".5"/>
+    <text x="24" y="38" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#0f172a">B · Broad movement envelope</text>
+    <text x="24" y="64" font-family="Arial,sans-serif" font-size="14" fill="#475569">Higher sample variance around the ideal pose</text>
+    <ellipse cx="156" cy="214" rx="112" ry="65" fill="#f59e0b" opacity=".12" stroke="#b45309" stroke-width="2" stroke-dasharray="6 5"/>
+    <use href="#ghost" x="150" y="174"/>
+    <use href="#actual" x="103" y="154" transform="rotate(-13 103 154)" opacity=".8"/>
+    <use href="#actual" x="194" y="166" transform="rotate(12 194 166)" opacity=".8"/>
+    <use href="#actual" x="130" y="219" transform="rotate(7 130 219)" opacity=".8"/>
+    <use href="#actual" x="185" y="223" transform="rotate(-10 185 223)" opacity=".8"/>
+    <use href="#actual" x="161" y="145" transform="rotate(18 161 145)" opacity=".8"/>
+    <use href="#actual" x="92" y="207" transform="rotate(-8 92 207)" opacity=".8"/>
+    <path d="M270 190L316 190" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="267" y="176" font-family="Arial,sans-serif" font-size="12" fill="#475569">sample outcomes</text>
+    <g transform="translate(415 196)"><use href="#target"/><g fill="#b45309"><circle cx="-32" cy="-26" r="4"/><circle cx="25" cy="17" r="4"/><circle cx="39" cy="-8" r="4"/><circle cx="-24" cy="34" r="4"/><circle cx="6" cy="-43" r="4"/><circle cx="-4" cy="12" r="4"/><circle cx="30" cy="-30" r="4"/><circle cx="-44" cy="2" r="4"/><circle cx="11" cy="40" r="4"/><circle cx="-13" cy="-10" r="4"/></g><circle r="5" fill="#2563eb"/></g>
+    <text x="24" y="330" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Movement sample</text>
+    <text x="24" y="353" font-family="Arial,sans-serif" font-size="13" fill="#475569">Observed poses spread farther from the ghost.</text>
+    <text x="24" y="397" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Target outcome sample</text>
+    <text x="24" y="420" font-family="Arial,sans-serif" font-size="13" fill="#475569">Impact points show a broader distribution.</text>
+    <text x="24" y="478" font-family="Arial,sans-serif" font-size="12" fill="#64748b">Illustration only — not measured performance</text>
+  </g>
+  <g transform="translate(48 664)">
+    <circle cx="8" cy="8" r="7" fill="#dbeafe" stroke="#2563eb" stroke-width="2" stroke-dasharray="3 2"/><text x="23" y="13" font-family="Arial,sans-serif" font-size="13" fill="#334155">Ghost = ideal pose / aim line</text>
+    <circle cx="252" cy="8" r="7" fill="#fef3c7" stroke="#b45309" stroke-width="2"/><text x="267" y="13" font-family="Arial,sans-serif" font-size="13" fill="#334155">Amber = sampled movement / outcomes</text>
+    <circle cx="570" cy="8" r="7" fill="#2563eb"/><text x="585" y="13" font-family="Arial,sans-serif" font-size="13" fill="#334155">Blue center = intended bullseye</text>
+  </g>
+  <text x="48" y="720" font-family="Arial,sans-serif" font-size="13" fill="#475569">Pose error ≠ movement variance ≠ outcome spread. A real demonstration should compute and report each independently.</text>
+</svg>
