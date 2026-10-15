@@ -1,3 +1,4 @@
+using System.Numerics;
 using TheSingularityWorkshop.Gestures;
 using Xunit;
 
@@ -107,8 +108,14 @@ public sealed class StarPortRoutingScenarioTests
         var gesture = new GestureDefinition(
             "crew.inspect",
             [
-                new GestureKeyframe(0.0, new Dictionary<string, PoseTransform>()),
-                new GestureKeyframe(1.0, new Dictionary<string, PoseTransform>())
+                new GestureKeyframe(0.0, new Dictionary<string, PoseTransform>
+                {
+                    ["root"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, Vector3.One)
+                }),
+                new GestureKeyframe(1.0, new Dictionary<string, PoseTransform>
+                {
+                    ["root"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, Vector3.One)
+                })
             ]);
         var pose = GestureEvaluator.Evaluate(gesture, 1.0, 1.0);
 
