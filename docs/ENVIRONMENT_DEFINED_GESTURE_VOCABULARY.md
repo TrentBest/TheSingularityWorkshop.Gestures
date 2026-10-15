@@ -63,3 +63,8 @@ The gesture evaluator stays domain-neutral. Domain-specific meaning is carried b
 - Make missing, failed, delayed, and indeterminate observations explicit. Do not silently convert missing evidence into success.
 - Keep the core library independent of soccer, Star Port, a universal skeleton, a specific engine, and a GPU API.
 - Treat this document as an architectural example until a concrete consumer, test fixture, rig contract, and authoritative outcome integration exist.
+
+
+## Soccer MicroBundle design
+
+The companion [Soccer Domain MicroBundle design](https://github.com/TrentBest/TheSingularityWorkshop.MicroBundleDomain/blob/work/soccer-domain-microbundle/docs/SOCCER_DOMAIN_MICROBUNDLE.md) expands the soccer environment into field availability, match readiness, tactical zones, action vocabulary, skill-dependent opportunities, and authoritative outcome boundaries. It is a design contract on a review branch, not a published bundle or implemented match simulation.
