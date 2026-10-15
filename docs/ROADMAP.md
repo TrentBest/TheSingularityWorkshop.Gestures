@@ -64,12 +64,12 @@ Tracked in [movement-course research issue #12](https://github.com/TrentBest/The
 
 The [Singularity Arena Performance Scenario](SINGULARITY_ARENA_PERFORMANCE_SCENARIO.md) extends the environment-defined Gesture vocabulary to concerts and karaoke. These are planned work items, not implemented features:
 
-- [ ] Define a stable, replayable event-cue contract for a concert timeline, separate from the Gestures core.
-- [ ] Build a deterministic fixture with a lead performer, backing/instrument roles, and individually stateful audience participants.
-- [ ] Evaluate actual GestureDefinition poses for stage approach, microphone pickup, lead-vocal posture, clapping, singing along, and settling back to watching; verify the current public API before authoring fixture code.
+- [x] Define a stable, replayable concert cue timeline in the MicroBundleDomain reference fixture, separate from the Gestures core.
+- [ ] Build a richer deterministic fixture with a lead performer, backing/instrument roles, and independently stateful participant progression.
+- [x] Evaluate representative lead-vocal and audience-clap GestureDefinition poses through the real CPU evaluator in tests; expand coverage to stage approach, microphone pickup, singing along, and recovery.
 - [ ] Preserve independently chosen audience responses, bounded stable reaction offsets, quiet/nonparticipating participants, and local social influence without synchronized crowd-wide resets.
 - [ ] Test interruptions and evidence boundaries: unreachable microphone, blocked path, corrected/cancelled cue, audio drift, repeated cue, late arrival, and leaving/returning.
-- [ ] Add the venue/event scheduling MicroBundle in the domain/composition layer, with shared venue infrastructure and separate soccer/concert providers.
+- [x] Add an in-memory reference venue/event scheduling MicroBundle in MicroBundleDomain, with shared venue scheduling and separate soccer/concert providers. Production persistence, multiple spaces, capacity, and live dispatch remain open.
 - [ ] Keep voice/audio generation, authoritative movement/contact, pose hierarchy mapping, and Renderer integration as explicit separate contracts.
 
 ## Milestone 2 — Rig and constraints
