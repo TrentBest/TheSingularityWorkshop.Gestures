@@ -72,6 +72,17 @@ The [Singularity Arena Performance Scenario](SINGULARITY_ARENA_PERFORMANCE_SCENA
 - [x] Add an in-memory reference venue/event scheduling MicroBundle in MicroBundleDomain, with shared venue scheduling and separate soccer/concert providers. Production persistence, multiple spaces, capacity, and live dispatch remain open.
 - [ ] Keep voice/audio generation, authoritative movement/contact, pose hierarchy mapping, and Renderer integration as explicit separate contracts.
 
+## VR magic-weaving scenario
+
+The [VR Magic Spellcasting Scenario](MAGIC_SPELLCASTING_SCENARIO.md) now has an evaluator-backed test fixture for element reach/channel/arc procedures and a small consumer-owned weave acceptance model. This is reference groundwork, not controller integration or a production spell system.
+
+- [x] Evaluate reach, channel-to-elbow, and arc-to-casting-sphere procedure definitions through the real CPU Gesture evaluator.
+- [x] Test five-element completeness, Spirit alignment validation, trigger-release gating, finite thread thickness, and permitted thickness variation.
+- [ ] Connect tracked controller/joint observations to provider-defined anchors and a real kinematic solution in a VR consumer.
+- [ ] Replace the test-only weave acceptance model with a domain-owned spell grammar and per-spell thread tolerances.
+- [ ] Add host-owned interruption/recovery tests for tracking loss, unreachable nodes, stale trigger release, and invalidated weave state.
+- [ ] Demonstrate colored thread presentation and thickness-driven amplification from accepted spell state; do not claim this from the current evaluator fixture.
+
 ## Milestone 2 — Rig and constraints
 
 - [ ] Define optional hierarchy metadata without requiring a universal humanoid skeleton.
