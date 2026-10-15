@@ -37,10 +37,10 @@ public sealed class ConcertPerformanceGestureTests
         var gesture = CreateAudienceClap();
 
         var early = GestureEvaluator.Evaluate(gesture, elapsedSeconds: 0.25d, durationSeconds: 1d);
-        var late = GestureEvaluator.Evaluate(gesture, elapsedSeconds: 0.75d, durationSeconds: 1d);
+        var late = GestureEvaluator.Evaluate(gesture, elapsedSeconds: 0.5d, durationSeconds: 1d);
 
         Assert.Equal(0.25d, early.NormalizedProgress);
-        Assert.Equal(0.75d, late.NormalizedProgress);
+        Assert.Equal(0.5d, late.NormalizedProgress);
         Assert.NotEqual(early.LocalTransforms["left_hand"].Position, late.LocalTransforms["left_hand"].Position);
 
         // The result describes pose progression only. It contains no claim that
