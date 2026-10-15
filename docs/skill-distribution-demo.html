@@ -58,10 +58,10 @@ main{max-width:1240px;margin:auto;padding:clamp(16px,3vw,36px)}h1{font-size:clam
   }
   const fmt=n=>n.toFixed(4);
   function metric(label,value){return '<div class="metric"><span>'+label+'</span><strong>'+fmt(value)+'</strong></div>'}
-  function draw(canvas, result, label, seed, spread) {
+  function draw(canvas, result, label, seed, spread, scale) {
     const ctx=canvas.getContext('2d'), w=canvas.width,h=canvas.height;
     ctx.clearRect(0,0,w,h);ctx.fillStyle='#14212b';ctx.fillRect(0,0,w,h);
-    const cx=w*.34,cy=h*.52,scale=92;
+    const cx=w*.34,cy=h*.52;
     ctx.strokeStyle='#354a5b';ctx.lineWidth=1;
     for(let x=60;x<w;x+=60){ctx.beginPath();ctx.moveTo(x,30);ctx.lineTo(x,h-30);ctx.stroke()}
     for(let y=60;y<h;y+=60){ctx.beginPath();ctx.moveTo(30,y);ctx.lineTo(w-30,y);ctx.stroke()}
@@ -84,7 +84,9 @@ main{max-width:1240px;margin:auto;padding:clamp(16px,3vw,36px)}h1{font-size:clam
     if(broad<narrow){broad=narrow;$('broad').value=String(broad);}
     $('seedOut').value=seed;$('countOut').value=count;$('narrowOut').value=narrow.toFixed(2);$('broadOut').value=broad.toFixed(2);$('noiseOut').value=noise.toFixed(2);
     const a=model(seed,count,narrow,noise),b=model(seed,count,broad,noise);
-    draw($('plotNarrow'),a,'Narrow envelope',seed,narrow);draw($('plotBroad'),b,'Broad envelope',seed,broad);
+    // Scale both panels together so even the widest allowed outcome envelope stays visible.
+    const scale=Math.min(92,105/Math.max(0.01,broad+noise));
+    draw($('plotNarrow'),a,'Narrow envelope',seed,narrow,scale);draw($('plotBroad'),b,'Broad envelope',seed,broad,scale);
     $('metricsNarrow').innerHTML=metric('Mean pose error',a.poseError)+metric('Movement variance',a.movementVariance)+metric('Outcome spread',a.outcomeSpread);
     $('metricsBroad').innerHTML=metric('Mean pose error',b.poseError)+metric('Movement variance',b.movementVariance)+metric('Outcome spread',b.outcomeSpread);
     $('status').textContent='Rendered '+count+' deterministic samples per panel. Same seed; movement spread differs.';
