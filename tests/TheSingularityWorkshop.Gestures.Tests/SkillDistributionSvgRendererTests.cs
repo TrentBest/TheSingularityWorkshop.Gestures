@@ -22,6 +22,20 @@ public sealed class SkillDistributionSvgRendererTests
     }
 
     [Theory]
+    [InlineData(0, 0.1, 0.1)]
+    [InlineData(8, 0.1, double.NaN)]
+    [InlineData(8, 0.1, double.PositiveInfinity)]
+    [InlineData(8, 0.1, -0.1)]
+    public void InvalidSampleCountOrOutcomeNoiseIsRejected(
+        int sampleCount,
+        double narrow,
+        double outcomeNoise)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            SkillDistributionSvgRenderer.RenderComparison(1, sampleCount, narrow, 0.8, outcomeNoise));
+    }
+
+    [Theory]
     [InlineData(-0.1, 0.8)]
     [InlineData(0.8, 0.1)]
     [InlineData(0.1, double.NaN)]
