@@ -85,4 +85,54 @@ public sealed class CrowdFlowScenarioTests
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             new CrowdTraversalProfile(CrowdTraversalMode.GroupHurried, 1f, 0.3f, 1.1f));
     }
+
+    [Fact]
+    public void GateRejectsBlankIdsAndNonFinitePositions()
+    {
+        Assert.Throws<ArgumentException>(() => new CrowdFlowGate(" ", Vector2.Zero));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CrowdFlowGate("bad-position", new Vector2(float.PositiveInfinity, 0)));
+    }
+
+    [Fact]
+    public void RouteRejectsBlankIdentifiers()
+    {
+        Assert.Throws<ArgumentException>(() => new CrowdFlowRoute("", "a", "b"));
+        Assert.Throws<ArgumentException>(() => new CrowdFlowRoute("route", " ", "b"));
+        Assert.Throws<ArgumentException>(() => new CrowdFlowRoute("route", "a", ""));
+    }
+
+    [Fact]
+    public void ScenarioRejectsMissingInputsAndNullEntries()
+    {
+        Assert.Throws<ArgumentException>(() => new CrowdFlowScenario("", [], []));
+        Assert.Throws<ArgumentNullException>(() => new CrowdFlowScenario("scenario", null!, []));
+        Assert.Throws<ArgumentNullException>(() => new CrowdFlowScenario("scenario", [], null!));
+        Assert.Throws<ArgumentNullException>(() => new CrowdFlowScenario("scenario", [null!], []));
+        Assert.Throws<ArgumentNullException>(() => new CrowdFlowScenario("scenario",
+            [new CrowdFlowGate("a", Vector2.Zero), new CrowdFlowGate("b", Vector2.One)], [null!]));
+    }
+
+    [Fact]
+    public void ScenarioRejectsUnknownRouteLookup()
+    {
+        var scenario = new CrowdFlowScenario("scenario",
+            [new CrowdFlowGate("a", Vector2.Zero), new CrowdFlowGate("b", Vector2.One)],
+            [new CrowdFlowRoute("route", "a", "b")]);
+
+        Assert.Throws<KeyNotFoundException>(() => scenario.GetRoute("missing"));
+    }
+
+    [Fact]
+    public void ProfileRejectsUndefinedModesAndNonFiniteTuning()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CrowdTraversalProfile((CrowdTraversalMode)999, 1f, 0.3f, 0f));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CrowdTraversalProfile(CrowdTraversalMode.GroupUnhurried, float.NaN, 0.3f, 0.2f));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CrowdTraversalProfile(CrowdTraversalMode.GroupUnhurried, 1f, float.PositiveInfinity, 0.2f));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CrowdTraversalProfile(CrowdTraversalMode.GroupUnhurried, 1f, 0.3f, float.NaN));
+    }
 }
