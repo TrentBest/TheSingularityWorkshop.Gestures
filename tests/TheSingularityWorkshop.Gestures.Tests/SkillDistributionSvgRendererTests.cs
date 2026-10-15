@@ -1,0 +1,33 @@
+using TheSingularityWorkshop.Gestures;
+using Xunit;
+
+namespace TheSingularityWorkshop.Gestures.Tests;
+
+public sealed class SkillDistributionSvgRendererTests
+{
+    [Fact]
+    public void RenderComparisonProducesRepeatableStandaloneSvgWithBothPanelsAndMetrics()
+    {
+        var first = SkillDistributionSvgRenderer.RenderComparison(1729, 64, 0.1, 0.7, 0.08);
+        var second = SkillDistributionSvgRenderer.RenderComparison(1729, 64, 0.1, 0.7, 0.08);
+
+        Assert.Equal(first, second);
+        Assert.Contains("<svg", first);
+        Assert.Contains("Narrow movement envelope", first);
+        Assert.Contains("Broad movement envelope", first);
+        Assert.Contains("Mean pose error:", first);
+        Assert.Contains("Movement variance:", first);
+        Assert.Contains("Outcome spread:", first);
+        Assert.Contains("not a physical or ballistic model", first);
+    }
+
+    [Theory]
+    [InlineData(-0.1, 0.8)]
+    [InlineData(0.8, 0.1)]
+    [InlineData(0.1, double.NaN)]
+    public void InvalidMovementSpreadComparisonIsRejected(double narrow, double broad)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            SkillDistributionSvgRenderer.RenderComparison(1, 8, narrow, broad, 0.1));
+    }
+}
