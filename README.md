@@ -28,7 +28,7 @@ Examples include a soldier entering a vehicle cockpit using anchors supplied by 
 
 Baked animation clips can be useful, but they often encode a finished performance rather than a reusable procedure that can adapt to identity, context, and a desired level of variation. Gestures aims to make the procedure and its transition rules reusable data.
 
-The ideal Gesture establishes the intended action. Each entity's stable seed and experience/context profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise.
+The ideal Gesture establishes the intended action. Each entity's stable seed and authored experience profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise. The current profile sampler covers the evaluator's existing speed and lateral-offset channels only; it does not yet vary individual joints or model competence.
 
 ## 🩵 03 How
 
@@ -88,7 +88,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Data Model](docs/DATA_MODEL.md) — learn the initial keyframe, transform, anchor, and evaluated-output contracts.
 - [Determinism](docs/DETERMINISM.md) — understand what stable evaluation means and which inputs determine the result.
 - [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore candidate force, inertia, spring, damping, easing, and training-variance models.
-- [Scalar Spring-Damper Reference](docs/SCALAR_SPRING_DAMPER_REFERENCE.md) — inspect the executable scalar response primitive, numerical method, tests, and limitations.
+- [Scalar Spring-Damper Reference](docs/SCALAR_SPRING_DAMPER_REFERENCE.md) — inspect the executable scalar response primitive, numerical method, tests, and limitations.\n- [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — inspect deterministic bounded profile sampling and the limits of novice/veteran illustrations.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 
 ## 🩵 Design guarantees and boundaries
