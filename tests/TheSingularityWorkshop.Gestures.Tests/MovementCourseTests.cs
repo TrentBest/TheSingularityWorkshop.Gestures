@@ -29,6 +29,40 @@ public sealed class MovementCourseTests
     }
 
     [Fact]
+    public void CourseExposesReadOnlyElementCollection()
+    {
+        var course = new MovementCourse("practice",
+        [
+            new MovementCourseElement("start", MovementCourseElementKind.ApproachZone,
+                Vector3.Zero, Vector3.One)
+        ]);
+        var elements = Assert.IsAssignableFrom<IList<MovementCourseElement>>(course.Elements);
+
+        Assert.Throws<NotSupportedException>(() => elements.Add(
+            new MovementCourseElement("finish", MovementCourseElementKind.Finish,
+                Vector3.One, Vector3.One)));
+    }
+
+    [Fact]
+    public void CourseRejectsBlankIdsNullElementsAndUnknownKinds()
+    {
+        Assert.Throws<ArgumentException>(() => new MovementCourse(" ", [
+            new MovementCourseElement("start", MovementCourseElementKind.ApproachZone,
+                Vector3.Zero, Vector3.One)
+        ]));
+        Assert.Throws<ArgumentException>(() => new MovementCourse("practice", [
+            new MovementCourseElement("start", MovementCourseElementKind.ApproachZone,
+                Vector3.Zero, Vector3.One)
+        ], " "));
+        Assert.Throws<ArgumentException>(() => new MovementCourse("practice",
+            new MovementCourseElement[] { null! }));
+        Assert.Throws<ArgumentException>(() => new MovementCourseElement(" ",
+            MovementCourseElementKind.Hurdle, Vector3.Zero, Vector3.One));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new MovementCourseElement("bad-kind",
+            (MovementCourseElementKind)999, Vector3.Zero, Vector3.One));
+    }
+
+    [Fact]
     public void CourseCopiesInputCollectionSoLaterAuthoringChangesDoNotMutateIt()
     {
         var elements = new List<MovementCourseElement>
