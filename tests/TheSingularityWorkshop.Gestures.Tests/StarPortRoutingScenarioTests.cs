@@ -41,6 +41,15 @@ public sealed class StarPortRoutingScenarioTests
         Assert.False(scenario.CanSealAccessDoor);
 
         scenario.ConfirmReturnedAndClear("ground-01");
+        Assert.False(scenario.CanSealAccessDoor);
+
+        // The access door also remains open until the flight crew is boarded
+        // and their assigned station occupancy has been verified.
+        scenario.RouteAtCommonWaypoint("flight-01");
+        scenario.RouteByRole("flight-01");
+        scenario.AssignFlightStation("flight-01", "pilot-seat");
+        scenario.ConfirmBoardedAndStationOccupied("flight-01");
+
         Assert.True(scenario.CanSealAccessDoor);
         scenario.SealAccessDoor();
         Assert.True(scenario.AccessDoorSealed);
