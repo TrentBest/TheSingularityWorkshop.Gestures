@@ -37,6 +37,47 @@ public sealed class StatefulJointNodeIncrementalWorkTests
         Assert.Equal(7, root.EvaluateIncremental(new Vector2(2f, -3f)));
     }
 
+
+    [Fact]
+    public void InternalHingeChangeRecalculatesItsDescendantsButNotSiblingBranches()
+    {
+        var root = BuildBranchingHierarchy(out var hinges);
+        root.EvaluateIncremental(Vector2.Zero);
+
+        var unaffectedSibling = root.Children[1];
+        var siblingStartBefore = unaffectedSibling.WorldStart;
+        var siblingEndBefore = unaffectedSibling.WorldEnd;
+        var affectedBranch = root.Children[0];
+        var affectedGrandchildEndBefore = affectedBranch.Children[0].WorldEnd;
+
+        hinges[1].Advance(0.5f, 1f, 1f);
+
+        // The changed joint and its two descendants change; the other root branch does not.
+        Assert.Equal(3, root.EvaluateIncremental(Vector2.Zero));
+        Assert.Equal(siblingStartBefore, unaffectedSibling.WorldStart);
+        Assert.Equal(siblingEndBefore, unaffectedSibling.WorldEnd);
+        Assert.NotEqual(affectedGrandchildEndBefore, affectedBranch.Children[0].WorldEnd);
+
+        var incrementalEnds = CaptureEnds(root);
+        root.EvaluateFull(Vector2.Zero);
+        Assert.Equal(incrementalEnds, CaptureEnds(root));
+        Assert.Equal(0, root.EvaluateIncremental(Vector2.Zero));
+    }
+
+    private static Vector2[] CaptureEnds(StatefulJointNode root)
+    {
+        var ends = new List<Vector2>();
+        CaptureEnds(root, ends);
+        return ends.ToArray();
+    }
+
+    private static void CaptureEnds(StatefulJointNode node, List<Vector2> ends)
+    {
+        ends.Add(node.WorldEnd);
+        foreach (var child in node.Children)
+            CaptureEnds(child, ends);
+    }
+
     private static StatefulJointNode BuildBranchingHierarchy(out StatefulHinge[] hinges)
     {
         var nodes = new StatefulJointNode[7];
