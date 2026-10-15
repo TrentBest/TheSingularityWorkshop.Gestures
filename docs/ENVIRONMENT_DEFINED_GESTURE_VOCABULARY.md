@@ -68,3 +68,5 @@ The gesture evaluator stays domain-neutral. Domain-specific meaning is carried b
 ## Soccer MicroBundle design
 
 The companion [Soccer Domain MicroBundle design](https://github.com/TrentBest/TheSingularityWorkshop.MicroBundleDomain/blob/work/soccer-domain-microbundle/docs/SOCCER_DOMAIN_MICROBUNDLE.md) expands the soccer environment into field availability, match readiness, tactical zones, action vocabulary, skill-dependent opportunities, and authoritative outcome boundaries. It is a design contract on a review branch, not a published bundle or implemented match simulation.
+
+The [Soccer Match Experience plan](https://github.com/TrentBest/TheSingularityWorkshop.MicroBundleDomain/blob/work/soccer-domain-microbundle/docs/SOCCER_MATCH_EXPERIENCE.md) describes how authoritative match events should drive presentation while Gestures remains responsible for pose evaluation. Both soccer documents are design work on review branches, not an implemented live match.
