@@ -32,6 +32,8 @@ public static class SkillDistributionSvgRenderer
 
         var narrow = SkillDistributionDemo.Generate(seed, sampleCount, narrowMovementSpread, outcomeNoise);
         var broad = SkillDistributionDemo.Generate(seed, sampleCount, broadMovementSpread, outcomeNoise);
+        // Use one scale for both panels and reserve enough room for movement plus outcome noise.
+        var plotScale = Math.Min(150d, 100d / Math.Max(0.01d, broadMovementSpread + outcomeNoise));
         var svg = new StringBuilder(Width * 3);
         svg.AppendLine($"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 {Width} {Height}\" role=\"img\" aria-labelledby=\"title desc\">");
         svg.AppendLine("<title id=\"title\">Deterministic skill distribution comparison</title>");
@@ -39,35 +41,34 @@ public static class SkillDistributionSvgRenderer
         svg.AppendLine("<rect width=\"1200\" height=\"680\" fill=\"#101820\" rx=\"18\"/>");
         svg.AppendLine("<text x=\"40\" y=\"45\" fill=\"#f4f7fa\" font-size=\"24\" font-family=\"sans-serif\" font-weight=\"700\">Skill is a distribution, not one number</text>");
         svg.AppendLine("<text x=\"40\" y=\"73\" fill=\"#b8c7d3\" font-size=\"14\" font-family=\"sans-serif\">Same seed and sample count · ideal pose is fixed · movement spread changes · outcome noise is independent</text>");
-        AppendPanel(svg, 30, "Narrow movement envelope", narrow, narrowMovementSpread, seed);
-        AppendPanel(svg, 610, "Broad movement envelope", broad, broadMovementSpread, seed);
+        AppendPanel(svg, 30, "Narrow movement envelope", narrow, narrowMovementSpread, seed, plotScale);
+        AppendPanel(svg, 610, "Broad movement envelope", broad, broadMovementSpread, seed, plotScale);
         svg.AppendLine("<text x=\"40\" y=\"645\" fill=\"#d5e0e8\" font-size=\"13\" font-family=\"sans-serif\">Illustrative dimensionless units. Pose error ≠ movement variance ≠ outcome spread. Not a physical or ballistic model.</text>");
         svg.AppendLine("</svg>");
         return svg.ToString();
     }
 
-    private static void AppendPanel(StringBuilder svg, int left, string title, SkillDistributionResult result, double movementSpread, int seed)
+    private static void AppendPanel(StringBuilder svg, int left, string title, SkillDistributionResult result, double movementSpread, int seed, double scale)
     {
         var centerX = left + PanelWidth / 2;
         var centerY = PanelTop + 210;
-        const double scale = 150;
         svg.AppendLine($"<rect x=\"{F(left)}\" y=\"90\" width=\"560\" height=\"520\" rx=\"14\" fill=\"#1b2935\" stroke=\"#425565\"/>");
         svg.AppendLine($"<text x=\"{F(left + 22)}\" y=\"125\" fill=\"#f4f7fa\" font-size=\"18\" font-family=\"sans-serif\" font-weight=\"700\">{title}</text>");
         svg.AppendLine($"<text x=\"{F(left + 22)}\" y=\"150\" fill=\"#b8c7d3\" font-size=\"12\" font-family=\"sans-serif\">seed {seed} · {result.Samples.Count} samples · spread {F(movementSpread)}</text>");
         svg.AppendLine($"<line x1=\"{F(centerX - 205)}\" y1=\"{F(centerY)}\" x2=\"{F(centerX + 205)}\" y2=\"{F(centerY)}\" stroke=\"#354a5b\"/>");
         svg.AppendLine($"<line x1=\"{F(centerX)}\" y1=\"{F(centerY - 175)}\" x2=\"{F(centerX)}\" y2=\"{F(centerY + 175)}\" stroke=\"#354a5b\"/>");
-        svg.AppendLine($"<line x1=\"{F(centerX)}\" y1=\"{F(centerY)}\" x2=\"{F(centerX + 145)}\" y2=\"{F(centerY - 95)}\" stroke=\"#e6edf3\" stroke-dasharray=\"6 5\" stroke-width=\"2\"/>");
+        svg.AppendLine($"<line x1=\"{F(centerX)}\" y1=\"{F(centerY)}\" x2=\"{F(centerX + 145)}\" y2=\"{F(centerY - 55)}\" stroke=\"#e6edf3\" stroke-dasharray=\"6 5\" stroke-width=\"2\"/>");
         svg.AppendLine($"<circle cx=\"{F(centerX)}\" cy=\"{F(centerY)}\" r=\"13\" fill=\"none\" stroke=\"#f4f7fa\" stroke-width=\"2\" stroke-dasharray=\"3 3\"/>");
         svg.AppendLine($"<path d=\"M {F(centerX - 8)} {F(centerY)} H {F(centerX + 8)} M {F(centerX)} {F(centerY - 8)} V {F(centerY + 8)}\" stroke=\"#f4f7fa\" stroke-width=\"2\"/>");
-        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 95)}\" r=\"28\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
-        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 95)}\" r=\"17\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
-        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 95)}\" r=\"5\" fill=\"#f2bd55\"/>");
+        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 55)}\" r=\"28\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
+        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 55)}\" r=\"17\" fill=\"none\" stroke=\"#f2bd55\" stroke-width=\"2\"/>");
+        svg.AppendLine($"<circle cx=\"{F(centerX + 145)}\" cy=\"{F(centerY - 55)}\" r=\"5\" fill=\"#f2bd55\"/>");
         foreach (var sample in result.Samples)
         {
             var mx = centerX + sample.MovementX * scale;
             var my = centerY - sample.MovementY * scale;
             var ox = centerX + 145 + sample.OutcomeX * scale;
-            var oy = centerY - 95 - sample.OutcomeY * scale;
+            var oy = centerY - 55 - sample.OutcomeY * scale;
             svg.AppendLine($"<circle cx=\"{F(mx)}\" cy=\"{F(my)}\" r=\"3.2\" fill=\"#57c8a5\" fill-opacity=\"0.72\"/>");
             svg.AppendLine($"<circle cx=\"{F(ox)}\" cy=\"{F(oy)}\" r=\"3.2\" fill=\"#f2bd55\" fill-opacity=\"0.78\"/>");
         }
