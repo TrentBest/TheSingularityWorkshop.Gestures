@@ -21,6 +21,24 @@ public sealed class SkillDistributionSvgRendererTests
         Assert.Contains("Not a physical or ballistic model", first);
     }
 
+    [Fact]
+    public void MaximumSupportedSpreadKeepsRenderedOutcomePointsInsideBothPanels()
+    {
+        var svg = SkillDistributionSvgRenderer.RenderComparison(1729, 240, 1.0, 1.5, 0.8);
+        var points = System.Text.RegularExpressions.Regex.Matches(
+            svg,
+            "<circle cx=\\"(?<x>[^\\"]+)\\" cy=\\"(?<y>[^\\"]+)\\"");
+
+        Assert.NotEmpty(points);
+        foreach (System.Text.RegularExpressions.Match point in points)
+        {
+            var x = double.Parse(point.Groups["x"].Value, System.Globalization.CultureInfo.InvariantCulture);
+            var y = double.Parse(point.Groups["y"].Value, System.Globalization.CultureInfo.InvariantCulture);
+            Assert.InRange(x, 30, 1170);
+            Assert.InRange(y, 90, 610);
+        }
+    }
+
     [Theory]
     [InlineData(0, 0.1, 0.1)]
     [InlineData(8, 0.1, double.NaN)]
