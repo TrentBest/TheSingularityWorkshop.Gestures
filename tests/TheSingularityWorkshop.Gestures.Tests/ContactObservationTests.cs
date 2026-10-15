@@ -46,6 +46,12 @@ public sealed class ContactObservationTests
             new ContactObservation(ContactPresence.Contact, ContactLoadOutcome.Supported, availableTangentialForceNewtons: float.PositiveInfinity));
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             new ContactObservation((ContactPresence)999, ContactLoadOutcome.Unknown));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new ContactObservation(ContactPresence.Contact, (ContactLoadOutcome)999));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new ContactObservation(ContactPresence.Contact, ContactLoadOutcome.Supported, normalForceNewtons: float.NegativeInfinity));
+        Assert.Throws<ArgumentException>(() =>
+            new ContactObservation(ContactPresence.Contact, ContactLoadOutcome.Supported, contactId: " "));
     }
 
     [Fact]
