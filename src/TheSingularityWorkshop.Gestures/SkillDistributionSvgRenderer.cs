@@ -13,7 +13,6 @@ public static class SkillDistributionSvgRenderer
     private const int Height = 680;
     private const double PanelWidth = 560;
     private const double PanelTop = 100;
-    private const double PanelHeight = 500;
 
     /// <summary>
     /// Generates a two-panel SVG comparing narrow and broad movement spreads using the
