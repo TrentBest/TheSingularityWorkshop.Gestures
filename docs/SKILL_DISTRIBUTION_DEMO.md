@@ -24,9 +24,15 @@ These statistics are intentionally not collapsed into one “skill score.” Con
 
 ## Current boundary
 
-The model and unit tests are executable, but the two-panel SVG remains a static concept image. The interactive/visual demonstration is **not complete** until a view consumes these generated samples and metrics, exposes the seed/spread inputs, and displays the distributions without implying physical validation.
+The model and unit tests are executable. The generated SVG and standalone interactive HTML both consume the sample model's equivalent deterministic algorithm; neither is a physical simulation or a validated human-performance predictor. The HTML exposes seed, sample count, movement spread, and outcome noise. Both panels rescale together so the largest supported outcome envelope remains visible, and the broad spread is kept at least as wide as the narrow spread.
 ## SVG comparison renderer
 
 `SkillDistributionSvgRenderer.RenderComparison(seed, sampleCount, narrowMovementSpread, broadMovementSpread, outcomeNoise)` returns a standalone SVG string. Both panels use the same seed and sample count; only the movement-spread parameter differs, while outcome noise is held constant. The view includes the ideal ghost marker and aim line, target bullseye, movement sample points, outcome points, and all three metrics.
 
-The SVG is generated from the executable sample model rather than hand-authored point positions. It is still an illustrative visualization: it does not run in a browser app, expose live controls, animate movement, or establish physical validity. Consumers can save the returned string as an `.svg` file or embed it in a host view.
+The SVG is generated from the executable sample model rather than hand-authored point positions. Its shared plot scale reserves room for movement spread plus outcome noise, keeping the full supported distribution within the panels. It does not animate movement or establish physical validity. Consumers can save the returned string as an `.svg` file or embed it in a host view.
+
+## Interactive HTML demo
+
+Open [`skill-distribution-demo.html`](skill-distribution-demo.html) in a browser. It has no external dependencies and regenerates both plots when the controls change. The comparison is deterministic for a given seed and input set. The plots share a scale based on the broad movement spread plus outcome noise, so the widest allowed outcome envelope stays visible rather than being silently clipped.
+
+The browser page mirrors the C# Xorshift32 sample-generation order. Small floating-point differences in derived metrics may still occur across runtimes; the visualization is illustrative, not a cross-platform numerical certification.
