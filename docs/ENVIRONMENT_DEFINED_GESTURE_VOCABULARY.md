@@ -24,6 +24,14 @@ The field does not need to dictate one fixed performance for every player. It su
 
 The same separation applies to a tackle: a tackle gesture can describe the intended movement, but the soccer simulation decides whether contact occurred, whether the ball changed possession, and whether a foul occurred.
 
+## Example: Digitens attending a stadium event
+
+Spectators are participants in the venue's gesture environment, too. When Digitens arrive at a soccer stadium, the arena can offer spectator procedures such as enter the venue, navigate an aisle, move to a seat, sit in the bleachers, stand where venue rules allow, orient attention toward the pitch, react to a developing chance, cheer, celebrate, and settle back into watching. These are arena-provided capabilities; they are not all mandatory actions and should not be played as one synchronized crowd animation.
+
+Each Digiten keeps independent identity, current task, location/seat context, gesture progress, and reaction state. A venue or crowd director can stagger responses across people and sections. A dangerous attack may increase attention and anticipation; a saved shot, a miss, and a confirmed goal should lead to distinguishable responses. A goal celebration is triggered by an authoritative `GoalAwarded` outcome, not by the shooter reaching a pose or merely attempting a shot. Spectator gestures affect the presentation and participant behavior, never the authoritative score or match rules.
+
+The venue must constrain these procedures to its layout and conditions: seats, rows, aisles, stairs, accessible paths, occupied space, and safe movement zones. The gesture vocabulary describes available behavior; a Digiten's context determines which procedure is appropriate. This is a design direction for the soccer arena, not a claim that a complete spectator catalog, locomotion system, crowd simulation, or stadium rig adapter is implemented in Gestures.
+
 ## Ownership boundaries
 
 | Layer | Responsibility |
