@@ -32,6 +32,16 @@ public readonly struct SpringDamperParameters
 
     /// <summary>Gets the non-negative velocity damping.</summary>
     public double Damping { get; }
+
+    internal void Validate()
+    {
+        if (!double.IsFinite(EffectiveMass) || EffectiveMass <= 0d)
+            throw new ArgumentException("Effective mass must be finite and positive.", nameof(EffectiveMass));
+        if (!double.IsFinite(Stiffness) || Stiffness < 0d)
+            throw new ArgumentException("Stiffness must be finite and non-negative.", nameof(Stiffness));
+        if (!double.IsFinite(Damping) || Damping < 0d)
+            throw new ArgumentException("Damping must be finite and non-negative.", nameof(Damping));
+    }
 }
 
 /// <summary>
@@ -80,6 +90,7 @@ public sealed class ScalarSpringDamper
         ValidateFinite(target, nameof(target));
         if (!double.IsFinite(elapsedSeconds) || elapsedSeconds < 0d)
             throw new ArgumentOutOfRangeException(nameof(elapsedSeconds), "Elapsed time must be finite and non-negative.");
+        parameters.Validate();
         if (elapsedSeconds == 0d)
             return Position;
 
