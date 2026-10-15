@@ -25,10 +25,16 @@ The implementation is deterministic for the same initial state, parameter values
 - A zero-duration step is a no-op.
 - Invalid inputs are rejected before changing state. If arithmetic produces a non-finite result, the step throws and preserves the previous state.
 
+## Executable comparison
+
+`MotionResponseComparison.Run(...)` supplies the same linear ramp-and-hold target to direct following and the spring-damper response. It records target position, direct position, spring position, and spring velocity, then reports mean and maximum absolute tracking error, peak overshoot, and observed settling time separately.
+
+See [Motion Response Comparison](MOTION_RESPONSE_COMPARISON.md) for the exact trajectory, metric definitions, and limits. The harness is deterministic and covered by unit tests. It is a numerical comparison, not a benchmark of runtime performance and not evidence that either response is physically correct.
+
 ## What this proves—and what it does not
 
-The tests cover fixed-step convergence for one damped parameter set, deterministic replay, zero-duration behavior, parameter validation, and state preservation after invalid input or numerical overflow.
+The tests cover fixed-step convergence for one damped parameter set, deterministic replay, zero-duration behavior, parameter validation, and state preservation after invalid input or numerical overflow. Comparison tests cover deterministic sample generation, direct-following identity, observed settling, and the case where the observation window is too short to establish settling.
 
 This is a **one-dimensional response primitive**, not yet wired into GestureEvaluator and not an articulated-body solver. It does not calculate a physical mass distribution, joint torque, collision, contact, constraints, or balance. Caller-supplied units must be consistent; the API does not impose a universal physical unit system. No claim is made that the sample parameters represent human biomechanics or that this method is optimal for every target trajectory.
 
-The next useful experiment is to compare this response with direct interpolation and other integrators across declared target trajectories and parameter ranges, then visualize the same seeds under wider and narrower experience profiles. The existing Gesture evaluator remains the unchanged deterministic keyframe-interpolation baseline until those comparisons justify a separately reviewed integration contract.
+The next useful experiment is to compare this response with other integrators across more declared target trajectories and parameter ranges, then visualize the same seeds under wider and narrower experience profiles. The existing Gesture evaluator remains the unchanged deterministic keyframe-interpolation baseline until those comparisons justify a separately reviewed integration contract.
