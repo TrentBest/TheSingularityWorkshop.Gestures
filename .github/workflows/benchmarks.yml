@@ -1,0 +1,60 @@
+name: Measure Gestures hierarchy benchmarks
+
+on:
+  workflow_dispatch:
+    inputs:
+      hierarchy:
+        description: "Hierarchy shape to measure"
+        required: true
+        default: chain
+        type: choice
+        options:
+          - chain
+          - branching
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Run hierarchy benchmarks
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "${{ inputs.hierarchy }}" in
+            chain)
+              filter='*ChainHierarchyBenchmarks*'
+              ;;
+            branching)
+              filter='*BranchingHierarchyBenchmarks*'
+              ;;
+            *)
+              echo "Unsupported hierarchy profile."
+              exit 2
+              ;;
+          esac
+          dotnet run \
+            --project benchmarks/TheSingularityWorkshop.Gestures.Benchmarks/TheSingularityWorkshop.Gestures.Benchmarks.csproj \
+            --configuration Release \
+            -- \
+            --filter "$filter"
+
+      - name: Upload BenchmarkDotNet results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gestures-benchmarks-${{ inputs.hierarchy }}
+          path: BenchmarkDotNet.Artifacts/**
+          if-no-files-found: error
+          retention-days: 30
