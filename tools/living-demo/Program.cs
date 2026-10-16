@@ -206,7 +206,7 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
     <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <style>
       text{font-family:"Segoe UI",Arial,sans-serif}.grid{stroke:#31465e;stroke-width:1;stroke-dasharray:3 7}.static{display:none}
-      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}
+      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline} }
     </style>
   </defs>
   <rect width="960" height="480" rx="18" fill="url(#bg)"/>
@@ -363,7 +363,7 @@ static string BuildTargetSvg(IReadOnlyList<Sample> samples)
     <linearGradient id="targets-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
     <style>
       text{font-family:"Segoe UI",Arial,sans-serif}.static{display:none}
-      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}
+      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline} }
     </style>
   </defs>
   <rect width="960" height="510" rx="18" fill="url(#targets-bg)"/>
@@ -422,7 +422,7 @@ static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
     <linearGradient id="channels-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
     <style>
       text{font-family:"Segoe UI",Arial,sans-serif}.grid{stroke:#31465e;stroke-width:1;stroke-dasharray:3 6}.static{display:none}
-      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}
+      @media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline} }
     </style>
   </defs>
   <rect width="900" height="480" rx="16" fill="url(#channels-bg)"/>
