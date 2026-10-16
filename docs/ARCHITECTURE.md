@@ -52,6 +52,12 @@ Floating-point GPU implementations may require explicit tolerances. Those tolera
 5. Add complexity only when a real Gesture or consumer needs it.
 
 
-## Articulated motion research
+## Articulated targets: current support and open contract
 
-The [articulated-motion contract proposal](ARTICULATED_MOTION_CONTRACT_PROPOSAL.md) and [topology SVG](assets/gesture-articulated-topologies.svg) are design references, not claims that the current evaluator composes hierarchies or solves IK. Keep those capabilities explicitly proposed until their state, constraint, contact, and test contracts are implemented.
+![Conceptual articulated-target topology and data-flow overview](assets/gesture-articulated-topologies.svg)
+
+The current keyframe model maps stable transform names to local `PoseTransform` values. It does not prescribe a humanoid bone list, so the data shape can represent humanoids, quadrupeds, birds, segmented bodies, turrets, and articulated mechanisms. “Gait” is a locomotion-specific concept; Gestures covers the broader space of physical procedures. That flexibility is not the same as automatic target compatibility: this repository has not yet frozen a hierarchy descriptor, naming/semantic-tag rules, target mapping, or retargeting contract.
+
+The illustrated topologies are examples, not standardized schemas. A consumer or future articulated-target adapter must define how names map to its actual hierarchy. Evaluated local transforms do not imply inverse kinematics, collision solving, world-space reachability, or authoritative locomotion. Missing-transform behavior is described in the current data model and should not be interpreted as deleting a target joint.
+
+The [articulated-motion contract proposal](ARTICULATED_MOTION_CONTRACT_PROPOSAL.md) remains a design reference, not a claim that the current evaluator composes hierarchies or solves IK. Keep future hierarchy composition, constraint solving, and physical contact capabilities explicitly bounded by their state, constraint, contact, and test contracts.
