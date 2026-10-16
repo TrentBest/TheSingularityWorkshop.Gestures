@@ -50,3 +50,8 @@ Floating-point GPU implementations may require explicit tolerances. Those tolera
 3. Make data contracts explicit and versionable before freezing binary/GPU layouts.
 4. Benchmark populations and memory access before selecting packed textures or structure buffers.
 5. Add complexity only when a real Gesture or consumer needs it.
+
+
+## Articulated motion research
+
+The [articulated-motion contract proposal](ARTICULATED_MOTION_CONTRACT_PROPOSAL.md) and [topology SVG](assets/gesture-articulated-topologies.svg) are design references, not claims that the current evaluator composes hierarchies or solves IK. Keep those capabilities explicitly proposed until their state, constraint, contact, and test contracts are implemented.
