@@ -108,3 +108,36 @@ The [VR Magic Spellcasting Scenario](MAGIC_SPELLCASTING_SCENARIO.md) now has an 
 Before publishing: CI build, tests, and package artifact must pass; public API and warning review must complete; dependencies and package contents must be audited; version increment must be reviewed; README and XML API documentation must be accurate; and the maintainer must explicitly authorize publication.
 
 A green build alone does not mean the Gesture schema is frozen or that GPU parity has been demonstrated.
+
+
+---
+
+## Scalar motion-law and crowd-flow snapshot — `work/crowd-flow-reference`
+
+> Historical preservation excerpt. These entries record that branch's research intent and status, not a claim that each item remains open today. The current roadmap and the motion-response/crowd-flow reference documents are authoritative for current status.
+
+### Motion-law research track — scalar response prototype
+
+- [x] Add a one-dimensional stateful spring-damper reference with validated effective mass, stiffness, and damping.
+- [x] Specify semi-implicit Euler stepping and preserve retained state on invalid input or non-finite computed output.
+- [x] Test deterministic replay, fixed-step convergence for a declared parameter set, zero-duration behavior, and validation failures.
+- [x] Add an executable target-response comparison: direct target following versus spring-damper tracking of the same linear ramp-and-hold target.
+- [x] Report tracking error, peak overshoot, and observed settling time separately; `null` settling time means the experiment window did not demonstrate settling.
+- [x] Document that these are scalar numerical experiments, not a physical solver and not yet integrated into GestureEvaluator.
+- [x] Add deterministic, bounded experience-profile sampling for the evaluator's existing speed and lateral-offset channels.
+- [ ] Compare additional target trajectories, timesteps, parameter ranges, and integration methods.
+- [ ] Add a side-by-side population visualization once the profile sampler's ranges and comparison metrics are explicit.
+- [ ] Decide whether the eventual motion-law contract should be stateful, absolute-time evaluable, or expose both as separate capabilities.
+
+### Crowd-flow reference track
+
+- [x] Add experience-authored gates/routes with validated IDs and host-local waypoints.
+- [x] Define individual/group × unhurried/hurried intent profiles and lifecycle state vocabulary.
+- [x] Document the ownership boundary and explicitly mark crowd solving as future work.
+- [ ] Implement a deterministic CPU reference stepper with per-agent state, yielding/local avoidance, and group cohesion.
+- [ ] Test route following, crowded bottlenecks, group arrival, and deterministic replay before any population-scale claims.
+
+### Domain example backlog
+
+- [ ] Add a controlled martial-arts practice/choreography example for Singularity City: forms, footwork, balance, partner drills, and clear practice/recovery states before any contact-oriented scenario. Coordinate the consumer experience with the [WebPage hidden-dojos handoff PR #117](https://github.com/TrentBest/WebPage/pull/117); WebPage owns discovery/presentation, while Gestures owns reusable movement descriptions and deterministic variation.
+- [ ] Decide whether timing curves belong in the definition or remain a caller policy.
