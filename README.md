@@ -30,6 +30,8 @@ Baked animation clips can be useful, but they often encode a finished performanc
 
 The ideal Gesture establishes the intended action. Each entity's stable seed and experience/context profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise.
 
+Crowd-flow contracts describe experience-authored entrances/exits and four common traversal intents; see [Crowd Flow Reference](docs/CROWD_FLOW_REFERENCE.md). This is a validated configuration contract, not yet a crowd solver.
+
 ## 🩵 03 How
 
 ![](docs/assets/dividers/teal.svg)

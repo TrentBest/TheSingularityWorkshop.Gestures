@@ -1,5 +1,7 @@
 # Roadmap
 
+See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit gates required before claiming the Gestures domain is complete.
+
 ## Milestone 0 — Reference contract (current)
 
 - [x] Engine-neutral .NET 8 library.
@@ -10,6 +12,14 @@
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
 - [ ] Confirm CI is green on the initial pull request.
 - [ ] Review public API names and package metadata before alpha publication.
+
+## Crowd-flow reference track
+
+- [x] Add experience-authored gates/routes with validated IDs and host-local waypoints.
+- [x] Define individual/group × unhurried/hurried intent profiles and lifecycle state vocabulary.
+- [x] Document the ownership boundary and explicitly mark crowd solving as future work.
+- [ ] Implement a deterministic CPU reference stepper with per-agent state, yielding/local avoidance, and group cohesion.
+- [ ] Test route following, crowded bottlenecks, group arrival, and deterministic replay before any population-scale claims.
 
 ## Milestone 1 — Real domain examples
 
