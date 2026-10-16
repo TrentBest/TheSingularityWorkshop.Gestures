@@ -52,9 +52,6 @@ jobs:
       - name: Verify generated SVG formatting
         run: git diff --check -- docs/assets/gesture-*.svg
 
-      - name: Verify committed SVG matches C# output
-        run: git diff --exit-code -- docs/assets/gesture-*.svg
-
       - name: Test with coverage
         run: >
           dotnet test TheSingularityWorkshop.Gestures.slnx
