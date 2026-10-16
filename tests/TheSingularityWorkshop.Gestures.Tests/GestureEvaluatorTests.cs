@@ -71,6 +71,69 @@ public sealed class GestureEvaluatorTests
     }
 
     [Fact]
+    public void RejectsNonFinitePositionRotationAndScaleComponents()
+    {
+        Assert.Throws<ArgumentException>(() => new GestureKeyframe(0,
+            new Dictionary<string, PoseTransform>
+            {
+                ["position"] = new PoseTransform(new Vector3(float.NaN, 0f, 0f), Quaternion.Identity, Vector3.One)
+            }));
+        Assert.Throws<ArgumentException>(() => new GestureKeyframe(0,
+            new Dictionary<string, PoseTransform>
+            {
+                ["rotation"] = new PoseTransform(Vector3.Zero, new Quaternion(0f, float.PositiveInfinity, 0f, 1f), Vector3.One)
+            }));
+        Assert.Throws<ArgumentException>(() => new GestureKeyframe(0,
+            new Dictionary<string, PoseTransform>
+            {
+                ["scale"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, new Vector3(1f, float.NegativeInfinity, 1f))
+            }));
+    }
+
+    [Fact]
+    public void RejectsNonFiniteAnchorTransformComponents()
+    {
+        var anchor = new GestureAnchor("grip", "hand",
+            new PoseTransform(new Vector3(0f, 0f, float.NaN), Quaternion.Identity, Vector3.One));
+        Assert.Throws<ArgumentException>(() => anchor.Validate());
+    }
+
+    [Fact]
+    public void NormalizesVeryLargeFiniteQuaternionComponentsWithoutOverflow()
+    {
+        var largeRotation = new Quaternion(float.MaxValue, float.MaxValue, float.MaxValue, float.MaxValue);
+        var transform = new PoseTransform(Vector3.Zero, largeRotation, Vector3.One);
+
+        var result = PoseTransform.Interpolate(transform, transform, 0.5f);
+
+        Assert.True(float.IsFinite(result.Rotation.X));
+        Assert.True(float.IsFinite(result.Rotation.Y));
+        Assert.True(float.IsFinite(result.Rotation.Z));
+        Assert.True(float.IsFinite(result.Rotation.W));
+        Assert.InRange(result.Rotation.Length(), 0.9999f, 1.0001f);
+    }
+
+    [Theory]
+    [InlineData(0f)]
+    [InlineData(0.0000001f)]
+    public void InterpolationUsesIdentityForZeroAndNearZeroQuaternions(float component)
+    {
+        var degenerate = new PoseTransform(
+            Vector3.Zero,
+            new Quaternion(component, 0f, 0f, 0f),
+            Vector3.One);
+
+        var target = new PoseTransform(
+            Vector3.Zero,
+            Quaternion.CreateFromAxisAngle(Vector3.UnitY, 1f),
+            Vector3.One);
+
+        var result = PoseTransform.Interpolate(degenerate, target, 0f);
+
+        Assert.Equal(Quaternion.Identity, result.Rotation);
+    }
+
+    [Fact]
     public void DefensiveCopyProtectsKeyframeTransforms()
     {
         var transforms = new Dictionary<string, PoseTransform> { ["root"] = PoseTransform.Identity };
