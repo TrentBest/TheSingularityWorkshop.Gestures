@@ -14,6 +14,14 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Confirm CI is green on the initial pull request.
 - [ ] Review public API names and package metadata before alpha publication.
 
+## Motion response reference track
+
+- [x] Define a bounded scalar spring-damper tracking reference with explicit units, stable inputs, and deterministic fixed-step semantics.
+- [x] Compare direct kinematic interpolation with spring-damper response as distinct behavior models.
+- [x] Define experience-profile ranges as stable per-entity parameters rather than per-frame randomization.
+- [ ] Validate response envelopes and stability across declared timestep/parameter ranges before considering broader integration.
+- [ ] Connect any future articulated response to Physics-owned achieved state and contact evidence; do not claim a general physics solver in Gestures.
+
 ## Crowd-flow reference track
 
 - [x] Add experience-authored gates/routes with validated IDs and host-local waypoints.

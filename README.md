@@ -94,6 +94,9 @@ This is a source-repository verification path, not a claim that the package has 
 - [Motion Equation Exploration](docs/MOTION_EQUATION_EXPLORATION.md) — explore the candidate force, inertia, spring, damping, easing, and training-variance model. This is exploratory mathematics, not a frozen package contract.
 - [Motion Model Experiment Plan](docs/MOTION_MODEL_EXPERIMENT_PLAN.md) — compare candidate models, analytic damping-response curves, interpretable parameter ranges, and measurable experiments before choosing an implementation.
 - [Motion Contribution Catalogue](docs/MOTION_CONTRIBUTION_CATALOGUE.md) — contract proposed motion terms by state, units, reference frame, activation, numerical behavior, and tests.
+- [Scalar Spring-Damper Reference](docs/SCALAR_SPRING_DAMPER_REFERENCE.md) — a bounded scalar tracking model with explicit state, units, timestep, and output semantics.
+- [Motion Response Comparison](docs/MOTION_RESPONSE_COMPARISON.md) — compare direct kinematic tracking and spring-damper response without conflating them.
+- [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — express stable skill/context parameter ranges without per-frame random noise.
 - [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — keep SVGs grounded in real evaluator output and label conceptual overlays separately.
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 - [Starport Departure Experience](docs/STARPORT_DEPARTURE_EXPERIENCE.md) — inspect the first multi-role departure choreography, explicit readiness gates, failure paths, and WebPageLLM handoff.
