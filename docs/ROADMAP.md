@@ -14,10 +14,21 @@
 ## Milestone 1 — Real domain examples
 
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
-- [ ] Add a provider-owned interaction example, such as boarding a vehicle through named anchors.
+- [x] Add a first provider-owned starport departure task graph with role branching, ground-crew return, access sealing, manifest verification, and explicit clearance/departure gates.
+- [ ] Turn the starport task graph into actual provider-owned Gesture procedures using resolved boarding, hose, cover, landing-gear, and station anchors.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
 - [ ] Add deterministic golden test vectors and numerical tolerance policy.
+
+## Starport vertical slice
+
+- [x] Validate the departure task DAG and reject duplicate IDs, unknown dependencies, and cycles.
+- [x] Evaluate ready/blocked tasks from host-supplied outcomes and gate clearance on explicit crew/equipment/access/manifest evidence.
+- [x] Test role branching, failed-ground-task blocking, missing readiness evidence, and ATC clearance ordering.
+- [ ] Implement the deterministic fixed-step crowd solver needed for approach routes, queues, bottlenecks, yielding, and replay.
+- [ ] Add executable boarding and ground-service Gestures with provider-owned anchors and failure recovery.
+- [ ] Connect host/Physics observations for contact, connector release, cover security, obstruction, and door sealing.
+- [ ] Demonstrate success plus injected failure/recovery in a consumer; keep the WebPage experience a clearly labeled reference until it consumes authoritative evidence.
 
 ## Milestone 2 — Rig and constraints
 
