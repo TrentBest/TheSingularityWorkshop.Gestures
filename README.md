@@ -12,7 +12,7 @@
 
 TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluator for physical procedures: pose keyframes, interpolation, progression, stable individual variation, and evaluated pose output. It lets a capability describe how an interaction physically happens without requiring every consumer to author a conventional baked animation clip.
 
-> **Status: early alpha foundation.** This first milestone establishes a small, testable CPU contract. It is not a physics solver, authoring tool, complete animation system, or GPU evaluator. This repository does not publish to NuGet.
+> **Status: early alpha foundation with research prototypes.** The deterministic CPU evaluator remains the small reference contract; it is not a complete animation system, physics solver, or GPU evaluator. Additional research prototypes now cover planar kinematics, speed-limited hinges, stateful joint hierarchies, contact observations and recovery policy, movement-course evaluation, and a generated skill-distribution SVG demo. These are test-backed experiments, not a claim of a production-ready IK or physical contact solver. This repository does not publish to NuGet.
 
 ## 🟦 01 What
 
@@ -32,9 +32,9 @@ The ideal Gesture establishes the intended action. Each entity's stable seed and
 
 Crowd-flow contracts describe experience-authored entrances/exits and four common traversal intents; see [Crowd Flow Reference](docs/CROWD_FLOW_REFERENCE.md). This is a validated configuration contract, not yet a crowd solver.
 
-## 🩵 03 How
+## 🔺 03 How
 
-![](docs/assets/dividers/teal.svg)
+![](docs/assets/dividers/triangle-red.svg)
 
 ```text
 Capability / Gesture Provider
