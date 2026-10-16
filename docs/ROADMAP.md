@@ -9,6 +9,7 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [x] CPU interpolation for position, rotation, and scale.
 - [x] Deterministic bounded speed and root-offset variation.
 - [x] Unit tests for core invariants and repeatability.
+- [x] Fixed-input deterministic reference vectors and documented numerical tolerances.
 - [x] CI build/test/pack artifact; NuGet publishing disabled.
 - [ ] Confirm CI is green on the initial pull request.
 - [ ] Review public API names and package metadata before alpha publication.
@@ -29,7 +30,6 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Turn those initial pose fixtures into provider-validated procedures using resolved boarding, hose, cover, landing-gear, and station anchors; add articulated/contact-aware outcomes.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
-- [ ] Add deterministic golden test vectors and numerical tolerance policy.
 
 ## Starport vertical slice
 
