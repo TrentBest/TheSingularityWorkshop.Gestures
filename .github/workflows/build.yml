@@ -49,6 +49,9 @@ jobs:
           name: gesture-motion-svg
           path: docs/assets/gesture-*.svg
 
+      - name: Verify generated SVG snapshots are current
+        run: git diff --exit-code -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg
+
       - name: Verify generated SVG formatting
         run: git diff --check -- docs/assets/gesture-*.svg
 
