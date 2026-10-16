@@ -28,7 +28,7 @@ Examples include a soldier entering a vehicle cockpit using anchors supplied by 
 
 Baked animation clips can be useful, but they often encode a finished performance rather than a reusable procedure that can adapt to identity, context, and a desired level of variation. Gestures aims to make the procedure and its transition rules reusable data.
 
-The ideal Gesture establishes the intended action. Each entity's stable seed and experience/context profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise.
+The ideal Gesture establishes the intended action. Each entity's stable seed and experience/context profile influence bounded parameters of the motion itself. Green soldiers can have broader variation ranges; veterans can have tighter ranges while remaining individually distinct. The goal is coherent variation, not per-frame random noise. The current experience-profile sampler only bounds the evaluator's speed and root lateral-offset channels; it does not yet model joint-level competence or per-joint skill. The scalar spring-damper is a separate, timestep-sensitive research primitive and is not integrated into `GestureEvaluator`.
 
 Crowd-flow contracts describe experience-authored entrances/exits and four common traversal intents; see [Crowd Flow Reference](docs/CROWD_FLOW_REFERENCE.md). This is a validated configuration contract, not yet a crowd solver.
 
