@@ -161,6 +161,45 @@ public sealed class StarportDepartureScenarioTests
             (StarportDepartureEvidence)(1 << 20)));
     }
 
+    [Fact]
+    public void StarportGestureCatalogProvidesProviderAnchorsAndEvaluablePoseTracks()
+    {
+        var gestures = new[]
+        {
+            StarportGestureCatalog.CreateBoardingRampGesture(),
+            StarportGestureCatalog.CreateServiceUmbilicalGesture(),
+            StarportGestureCatalog.CreateServiceCoverGesture()
+        };
+
+        Assert.Equal(3, gestures.Length);
+        Assert.All(gestures, gesture =>
+        {
+            Assert.Equal(3, gesture.Keyframes.Count);
+            Assert.Equal(0d, gesture.Keyframes[0].Time);
+            Assert.Equal(1d, gesture.Keyframes[^1].Time);
+            Assert.NotEmpty(gesture.Anchors);
+        });
+
+        var boarding = gestures[0];
+        var pose = GestureEvaluator.Evaluate(boarding, 0.5d, 2d);
+        Assert.Equal(0.25d, pose.Progress, precision: 6);
+        Assert.Contains("root", pose.LocalTransforms.Keys);
+        Assert.Contains("left-hand", pose.LocalTransforms.Keys);
+    }
+
+    [Fact]
+    public void StarportGestureCatalogUsesStableDistinctIds()
+    {
+        var ids = new[]
+        {
+            StarportGestureCatalog.CreateBoardingRampGesture().Id,
+            StarportGestureCatalog.CreateServiceUmbilicalGesture().Id,
+            StarportGestureCatalog.CreateServiceCoverGesture().Id
+        };
+
+        Assert.Equal(ids.Length, ids.Distinct(StringComparer.Ordinal).Count());
+    }
+
     private static Dictionary<string, StarportTaskStatus> CompleteAllButClearanceAndDeparture(
         StarportDepartureScenario scenario)
     {
