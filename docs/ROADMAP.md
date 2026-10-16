@@ -15,7 +15,8 @@
 
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
 - [x] Add a first provider-owned starport departure task graph with role branching, ground-crew return, access sealing, manifest verification, and explicit clearance/departure gates.
-- [ ] Turn the starport task graph into actual provider-owned Gesture procedures using resolved boarding, hose, cover, landing-gear, and station anchors.
+- [x] Add three CPU-evaluable starport pose-sequence fixtures for ramp boarding, service-umbilical handling, and cover handling, with provider-owned semantic anchors.
+- [ ] Turn those initial pose fixtures into provider-validated procedures using resolved boarding, hose, cover, landing-gear, and station anchors; add articulated/contact-aware outcomes.
 - [ ] Specify interruption, reversal, pause/resume, and re-entry semantics without owning the FSM.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
 - [ ] Add deterministic golden test vectors and numerical tolerance policy.
