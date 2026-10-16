@@ -182,7 +182,7 @@ public sealed class StarportDepartureScenarioTests
 
         var boarding = gestures[0];
         var pose = GestureEvaluator.Evaluate(boarding, 0.5d, 2d);
-        Assert.Equal(0.25d, pose.Progress, precision: 6);
+        Assert.Equal(0.25d, pose.NormalizedProgress, precision: 6);
         Assert.Contains("root", pose.LocalTransforms.Keys);
         Assert.Contains("left-hand", pose.LocalTransforms.Keys);
     }
