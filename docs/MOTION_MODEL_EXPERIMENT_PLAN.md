@@ -1,0 +1,267 @@
+# Motion Model Experiment Plan
+
+> **Status: derivation and experiment plan. Not an implementation contract.** This document narrows the mathematical questions for the Gesture motion equation. It does not claim to recover the exact historical equation; that original derivation should be preserved if found.
+>
+> For explicit per-contribution contracts, gate/mode vocabulary, and a proposed validation matrix, see the [Motion Contribution Catalogue](MOTION_CONTRIBUTION_CATALOGUE.md).
+
+## The question we are actually solving
+
+A Gesture supplies an ideal procedure: a time-varying target pose path \(r(t)\), usually derived from keyframes and a normalized phase. The motion law determines how an individual responds to that path. The individual receives a stable parameter vector, sampled once from declared ranges using identity and context. Those parameters must not be re-randomized each frame.
+
+This separates four things that should not be conflated:
+
+1. **Procedure** — what action is intended and how its target changes over time.
+2. **Dynamics** — how a moving part responds to the target, inertia, drive, and damping.
+3. **Individual profile** — stable, bounded parameters for this performer and context.
+4. **Evaluation policy** — how the state is evaluated over time and at a chosen fidelity.
+
+The initial CPU evaluator implements keyframe interpolation and bounded deterministic speed/lateral variation. It does **not** currently implement a force solver, spring-damper integration, per-joint dynamics, or skill-based parameter ranges.
+
+## Candidate A — direct kinematic easing
+
+Given normalized phase \(u\in[0,1]\), choose an easing function \(E(u)\), then interpolate between poses:
+
+\[
+x(t)=x_0+(x_1-x_0)E(u)
+\]
+
+This is cheap, directly addressable at any time, and easy to test. It can express ease-in/ease-out, but the curve is authored rather than emerging from inertia and force. It is an important baseline, not a failed approach.
+
+**Use when:** timing and shape matter more than dynamic response, or when deterministic absolute-time evaluation is the primary requirement.
+
+## Candidate B — spring-damper tracking of a moving target
+
+For one scalar coordinate, let \(x(t)\) be the actual coordinate and \(r(t)\) the desired coordinate from the Gesture path. Define the tracking error \(e=x-r\). A practical tracking force is proportional to position error and relative velocity:
+
+\[
+m\ddot{x}=k(r-x)+c(\dot r-\dot x)+F_{\mathrm{external}}
+\]
+
+Equivalently:
+
+\[
+m\ddot{x}= -ke-c\dot e+F_{\mathrm{external}}
+\]
+
+The second form describes the restoring and damping terms in terms of error. For a stationary target and no external force, this becomes the familiar free response:
+
+\[
+m\ddot e+c\dot e+ke=0
+\]
+
+The target can move, so the system may lag or overshoot while following a changing pose path. This is a feature to measure and tune, not an automatic guarantee of lifelike motion. A separate feed-forward term such as \(m\ddot r\) can compensate for target acceleration, but that changes the behavior and should be treated as another explicit model variant—not silently included.
+
+**Use when:** the desired pose is a target the performer responds to, and lag, overshoot, and settling are useful characteristics.
+
+## Make the parameters understandable
+
+Sampling raw mass, damping, and stiffness independently can produce wildly different responses. Instead, explore a semantic parameterization using:
+
+- \(m>0\): effective inertia;
+- \(\omega_n>0\): undamped natural angular frequency, controlling response timescale;
+- \(\zeta\ge0\): dimensionless damping ratio, controlling overshoot versus settling.
+
+For the linear spring-damper model, derive stiffness and damping from those values:
+
+\[
+k=m\omega_n^2
+\qquad
+c=2\zeta m\omega_n
+\]
+
+This keeps the parameter ranges tied to recognizable behavior. For a constant target in the ideal linear model:
+
+- \(0\le\zeta<1\): underdamped; oscillation/overshoot is possible;
+- \(\zeta=1\): critically damped; the fastest non-oscillatory ideal response;
+- \(\zeta>1\): overdamped; non-oscillatory but slower settling is possible.
+
+These labels describe the ideal continuous-time linear system, not a guarantee about a discretely integrated, constrained, articulated body. Numerical step size, target discontinuities, joint limits, and coupling can change observed behavior.
+
+A third useful semantic control may be **response scale** or **strength**, but it must have a defined mathematical meaning. Avoid exposing sliders named “springiness” or “weight” until their mapping to the model is documented and tested.
+
+## Candidate C — driven dynamics
+
+A more general Newtonian form is:
+
+\[
+m\ddot{x}=F_{\mathrm{drive}}(t,x,\dot{x})-c\dot{x}-k(x-r(t))
+\]
+
+This makes the intentional drive explicit. However, damping against absolute velocity and damping against target-relative velocity are different models. The implementation must choose deliberately:
+
+- absolute-velocity damping can make the system settle relative to a world/rest frame;
+- relative-velocity damping resists motion relative to the changing target;
+- drive can represent active control, but its units and role must be specified.
+
+For articulated movement, this is still only a one-coordinate teaching model. Rotations need angular quantities and a rotation-safe error representation; linked joints need coordination and constraints. Applying the scalar formula independently to every transform would not automatically produce a coherent body.
+
+## How to define the individual's ranges
+
+Let the ideal motion parameters be \(\theta_0\). A stable identity seed \(s\) and explicit profile/context \(p\) select a fixed parameter vector:
+
+\[
+\theta_i=\operatorname{Sample}(\theta_0,\text{bounds}(p),s)
+\]
+
+Sampling should happen at a declared boundary (for example, when an entity begins a Gesture), not on every frame. A replay record should be able to identify the definition version, seed, profile, sampled parameters, and time/evaluation policy.
+
+**Prefer ranges on meaningful parameters.** For example, vary \(\omega_n\) and \(\zeta\), then derive \(k\) and \(c\), rather than independently varying all three. Use positive-preserving ranges for positive values. Related parameters may need correlated sampling so cadence, stride amplitude, and recovery remain plausible together.
+
+**Skill is a policy, not a law of nature.** The design hypothesis is that inexperienced performers can have broader ranges and experienced performers tighter ranges around an ideal. That does not mean every parameter must shrink with skill. A profile should define which dimensions change and by how much; the hypothesis must be evaluated visually and quantitatively. “Veteran” should mean a narrower distribution where intended, not identical output.
+
+![Living illustration: an articulated figure progressing through a Gesture pose path](assets/gesture-motion.svg)\n\n*The figure and limb cycle are explanatory SVG animation, not runtime output. Use this scene to understand procedure progression; use the analytic plot below to study the separate spring-damper hypothesis.*\n\n![Analytic step responses for underdamped, critically damped, and overdamped scalar spring-damper systems](assets/motion-model-step-response.svg)
+
+*This plot is an analytic reference for a normalized scalar second-order system, not output from the current Gesture evaluator. It makes the damping trade-off visible before any runtime implementation is proposed.*
+
+## The minimum experiment
+
+Before adding a public runtime API, implement a small offline/reference experiment for a single scalar coordinate. Use the same target trajectory and compare:
+
+1. linear interpolation;
+2. eased interpolation;
+3. spring-damper tracking with low damping;
+4. spring-damper tracking near critical damping;
+5. spring-damper tracking with stronger damping;
+6. optionally, target-acceleration feed-forward as a separately labelled variant.
+
+For each run, record model variant, target curve, initial position and velocity, mass, \(\omega_n\), \(\zeta\), integration method, timestep, duration, and output samples. Then run a seeded population with narrow and wide parameter distributions.
+
+Measure more than whether the curve “looks nice”:
+
+- maximum tracking error;
+- overshoot after a target change;
+- settling time under a defined tolerance;
+- peak acceleration and velocity;
+- sensitivity to timestep;
+- repeatability for the same recorded inputs;
+- distribution width across identities;
+- invalid or implausible parameter combinations.
+
+Use the same seeds across profile comparisons to see how the distribution changes, while remembering that sampling the same seed under different bounds need not produce the same physical parameter values.
+
+## Numerical evaluation is a first-class design decision
+
+A stateful differential equation is not generally evaluated by asking for an arbitrary timestamp unless the solver reconstructs the state or uses a suitable closed-form solution. Incremental integration can depend on step size, ordering, and prior state. Therefore, do not promise identical results for arbitrary call order until the evaluation strategy supports it.
+
+The experiment should compare fixed-step numerical integration against a reference solution for simple cases where one is available. Start with a known, stable test matrix before choosing an integrator. If CPU/GPU parity is a goal, define tolerances and compare outputs; matching source equations alone does not guarantee bitwise-identical results.
+
+## Decisions deliberately left open
+
+- Recover and preserve the original equation and derivation, if available, before calling a candidate the recreation.
+- Decide whether a Gesture selects kinematic, dynamic, or hybrid motion.
+- Decide whether the spring target is a pose path, a rest pose, or an intermediate trajectory.
+- Define rotation and articulated-joint handling separately from the scalar derivation.
+- Define how skill, load, fatigue, equipment, and terrain affect ranges.
+- Choose a stateful, absolute-time, or hybrid evaluation contract only after the experiment.
+- Keep engine, renderer, IK, and GPU integration out of the core mathematical experiment.
+
+The success criterion is not “we have an equation.” It is: **we can explain each parameter, bound it safely, predict its qualitative effect, reproduce its output, and demonstrate that its variation creates coherent individual motion.**
+
+---
+
+*The Singularity Workshop — edify, not mystify.*
+
+
+## Derivation ledger: what follows from physics, and what must be chosen
+
+The historical recollection is that the original model was *derived* by rearranging and combining terms from Newton's second law, with factors and constants introduced along the way. The exact derivation is not currently available. Preserve that distinction explicitly: a plausible equation is not a recovered equation.
+
+Start with the vector law:
+
+\[
+\mathbf F_{\mathrm{net}}=m\mathbf a
+\]
+
+For constant mass in one translational coordinate:
+
+\[
+F_{\mathrm{net}}=m\ddot{x}
+\qquad\Longrightarrow\qquad
+\ddot{x}=\frac{F_{\mathrm{net}}}{m}
+\]
+
+This rearrangement is algebraically equivalent to Newton's law. It does not, by itself, specify what forces act on the moving part. Each additional term needs a stated physical interpretation or must be labelled as a chosen control law.
+
+| Term or choice | Status | What must be justified |
+|---|---|---|
+| \(m\ddot{x}\) | Newtonian inertial term for constant mass | What coordinate and effective mass/inertia are represented? |
+| \(-k(x-r)\) | Assumed linear restoring-force model | Why does displacement error produce a force proportional to error, and over what range? |
+| \(-c\dot{x}\) | Assumed viscous damping against a fixed frame | What medium, mechanism, or effective dissipation does this approximate? |
+| \(-c(\dot{x}-\dot r)\) | Assumed damping relative to a moving target | Why should damping act on relative rather than absolute velocity? |
+| \(F_{\mathrm{drive}}\) | Additional applied/control force | Is this an external force, active actuation, or a procedural controller? Define units and behavior. |
+| \(m\ddot r\) or target feed-forward | Optional control term | Is it a real applied force in the model, a cancellation term, or a controller convenience? Derive its sign and role. |
+| Seeded profile variation | Parameter-selection policy, not a force law | Which physical/control parameters vary, how are they bounded, and when are they sampled? |
+| Experience-dependent range | Behavioral hypothesis, not a law of mechanics | What evidence supports narrowing each selected range with experience? |
+
+For every proposed term, keep a derivation record with: (1) the starting law, (2) the modelling assumption, (3) algebraic steps, (4) units/dimensional check, (5) valid operating range, (6) limiting cases, and (7) a test that could falsify the intended behavior.
+
+### Dimensional checks
+
+For a translational scalar model, if position is measured in metres and time in seconds, then force has units of kg·m/s². In the linear spring-damper model:
+
+- \(m\): kg;
+- \(\ddot{x}\): m/s²;
+- \(k\): N/m = kg/s²;
+- \(c\): N·s/m = kg/s;
+- \(F_{\mathrm{drive}}\): N.
+
+The equation is dimensionally consistent only if all terms on its force side have force units. Dimensionless factors—such as a bounded seed sample or a damping ratio—may scale a parameter, but must not silently repair incompatible units. Rotational coordinates require the corresponding torque and moment-of-inertia units.
+
+### Rearrangement is not derivation of a force law
+
+Moving terms across an equals sign or dividing by mass preserves an equation already specified. Introducing stiffness, damping, response factors, constants, or experience profiles adds modelling choices unless those terms can be derived from an explicitly stated physical system. The historical work may have made those choices through a longer chain of reasoning; we should reconstruct that chain if source material or notes resurface, not retrofit certainty onto the current candidate.
+
+Until then, retain candidate models side by side and label each added assumption. The goal is not merely to keep the final expression compatible with units: it is to explain where every term comes from and which claims are Newtonian mechanics versus useful procedural approximations.
+
+
+## Composable motion terms and environment-driven contact
+
+The author's further architectural hypothesis is that a motion law can be understood as a composition of distinct contributions—not as one opaque formula or a collection of bespoke animations. Spring-like response is one possible contribution; contact friction, damping, drive/actuation, impact, and other effects can be represented separately when the model actually supports them.
+
+For a generalized coordinate vector \(\mathbf q\), a useful *organizational sketch* is:
+
+\[
+\mathbf M(\mathbf q)\ddot{\mathbf q}
+= \sum_i g_i\,\mathbf Q_i(\mathbf q,\dot{\mathbf q},\mathbf z,\mathbf e)
+\]
+
+Here \(\mathbf M\) represents the chosen inertia model; each \(\mathbf Q_i\) is a separately defined generalized-force contribution; \(g_i\) is an explicit dimensionless gate/scale; \(\mathbf z\) is material/contact state; and \(\mathbf e\) is environmental state. This is an architectural template, **not a solved equation or an implementation claim**. Constraints, contact impulses, nonlinear effects, and configuration-dependent inertia may require a more complete formulation than a simple sum.
+
+A gate can express several different intentions, which should not be conflated:
+
+- **Excluded:** \(g_i=0\), so that contribution is absent from this model evaluation.
+- **Fully included:** \(g_i=1\), so its defined contribution is applied as specified.
+- **Scaled:** \(0<g_i<1\), if scaling that particular contribution has a meaningful interpretation.
+- **Condition-selected:** a declared rule chooses a gate from contact, material, or other state.
+
+A gate does not make an invalid force law physical, and not every term should be blended continuously. Contact creation/loss, static-to-kinetic friction, impacts, and phase transitions may need explicit mode changes or complementarity/constraint handling. In particular, scaling a constraint force is not generally equivalent to scaling an ordinary applied force. Document the semantics per term rather than expose universal sliders that imply every effect can be blended safely.
+
+### Example: ice should emerge from coupled state, not an ice animation
+
+The intended causal chain is:
+
+1. An environmental/thermal model updates the local temperature and relevant conditions.
+2. A material/phase model determines whether the water is liquid, freezing, or solid under its modeled pressure and other assumptions.
+3. The resulting material state supplies contact properties to the contact model.
+4. The contact model computes normal and tangential forces/impulses subject to its friction and contact rules.
+5. Those forces change the body's motion; the same rules apply to any eligible body that contacts that surface.
+
+This only works if the simulation actually represents those links. A temperature threshold alone is a simplified phase rule, not a complete heat-transfer/freezing simulation; at ordinary atmospheric pressure pure water freezes near 0 °C (32 °F), but pressure, dissolved substances, supercooling, and model scope can matter. Likewise, ice does not have one universal friction coefficient or literally zero friction: effective friction depends on conditions such as temperature, speed, surface state, and lubrication/contamination.
+
+For a simple dry-contact approximation, kinetic friction magnitude is often modelled as \(\mu_k N\), opposing relative tangential motion; static friction instead adjusts up to a limit \(|F_t|\leq\mu_s N\). These are modelling approximations with defined operating assumptions, not a universal law that can be inserted unchanged into every contact solver. The material/phase model provides or selects \(\mu_s\), \(\mu_k\), and other contact parameters; the contact solver remains responsible for applying them consistently.
+
+The architectural payoff is generality: a character can slip because the computed contact mechanics changed, rather than because someone authored an “ice-slip” animation for that character. The same surface rule can affect different bodies, provided their contact geometry, mass/inertia, constraints, and motion are represented by the simulation.
+
+### Research boundaries and validation
+
+Keep this compositional hypothesis separate from the current scalar spring-damper experiment. Before claiming a unified motion/material simulation, a future experiment would need to specify:
+
+- the state variables and units for each contribution;
+- which terms are forces, torques, constraints, impulses, or procedural controls;
+- each gate's meaning, range, and mode-transition behavior;
+- how material state is derived from environmental state, including simplifications;
+- contact normal, relative tangential velocity, friction regime, and solver assumptions;
+- energy/force consistency, numerical stability, and behavior at transitions;
+- tests showing that changing temperature changes phase/material properties and that those properties—not a hard-coded character animation—change contact motion.
+
+For now, this section records the architecture the model should investigate. It does **not** imply that Gestures currently simulates temperature, freezing, material friction, contact mechanics, or generalized multi-body dynamics.
