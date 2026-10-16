@@ -1,5 +1,7 @@
 # Roadmap
 
+Historical research detail from the planar IK reference branch is preserved in the [research roadmap archive](ROADMAP_RESEARCH_ARCHIVE.md); this file remains the current status summary.
+
 See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit gates required before claiming the Gestures domain is complete.
 
 ## Milestone 0 — Reference contract (current)
