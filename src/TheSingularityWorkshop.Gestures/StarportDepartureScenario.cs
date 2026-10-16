@@ -239,6 +239,8 @@ public static class StarportDepartureEvaluator
                                    StarportDepartureEvidence.ManifestVerified;
         var requiredBeforeClearance = new[]
         {
+            "crew.rally",
+            "crew.route-to-door",
             "flight.board",
             "ground.disconnect-services",
             "ground.clear-covers",
