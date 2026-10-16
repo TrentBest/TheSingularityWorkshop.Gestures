@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Stateful IK: a hierarchy of joint state machines</title>
+  <desc id="desc">An illustrative articulated hierarchy has a parent joint and two child branches. Each joint tracks a motion class, and arrows show requested motion flowing downward while measured physical outcomes feed back into the next state update. This is a conceptual diagram, not a runtime capture.</desc>
+  <defs>
+    <style>
+      text{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#172033}
+      .heading{font-size:22px;font-weight:700}
+      .label{font-size:16px;font-weight:650}
+      .small{font-size:13px}
+      .node{fill:#fff;stroke:#45556f;stroke-width:2}
+      .parent{fill:#e9f2ff;stroke:#2865b0;stroke-width:2.5}
+      .child{fill:#effaf4;stroke:#287b55;stroke-width:2}
+      .link{fill:none;stroke:#53647d;stroke-width:3;stroke-linecap:round}
+      .flow{fill:none;stroke:#2865b0;stroke-width:3;stroke-dasharray:8 9;animation:travel 2.5s linear infinite}
+      .feedback{fill:none;stroke:#9b4d16;stroke-width:3;stroke-dasharray:6 8;animation:travel 3s linear infinite reverse}
+      .dot{fill:#d97706;animation:pulse 1.8s ease-in-out infinite}
+      @keyframes travel{to{stroke-dashoffset:-68}}
+      @keyframes pulse{0%,100%{r:5;opacity:.6}50%{r:9;opacity:1}}
+      @media(prefers-reduced-motion:reduce){.flow,.feedback,.dot{animation:none}}
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2865b0"/></marker>
+    <marker id="arrowOrange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9b4d16"/></marker>
+  </defs>
+  <rect x="12" y="12" width="936" height="536" rx="22" fill="#f7f9fc" stroke="#d4dce8"/>
+  <text x="40" y="52" class="heading">Stateful IK is a loop, not just a pose answer</text>
+  <text x="40" y="78" class="small">Conceptual architecture • illustrative state, not measured solver output</text>
+
+  <rect x="360" y="102" width="240" height="56" rx="12" class="node"/>
+  <text x="480" y="126" text-anchor="middle" class="label">Action intent / target</text>
+  <text x="480" y="145" text-anchor="middle" class="small">a request, not a guarantee</text>
+
+  <path d="M480 158 V192" class="flow" marker-end="url(#arrow)"/>
+  <rect x="335" y="194" width="290" height="62" rx="13" class="parent"/>
+  <text x="480" y="219" text-anchor="middle" class="label">Parent joint FSM</text>
+  <text x="480" y="240" text-anchor="middle" class="small">motion class + local constraints</text>
+  <circle cx="605" cy="211" r="5" class="dot"/>
+
+  <path d="M480 256 V280 H245 V306 M480 280 H715 V306" class="link"/>
+  <path d="M480 256 V280 H245 V306 M480 280 H715 V306" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="100" y="308" width="290" height="94" rx="13" class="child"/>
+  <text x="245" y="334" text-anchor="middle" class="label">Child joint FSM A</text>
+  <text x="245" y="357" text-anchor="middle" class="small">MovingPositive</text>
+  <text x="245" y="380" text-anchor="middle" class="small">local range • velocity • history</text>
+
+  <rect x="570" y="308" width="290" height="94" rx="13" class="child"/>
+  <text x="715" y="334" text-anchor="middle" class="label">Child joint FSM B</text>
+  <text x="715" y="357" text-anchor="middle" class="small">Stationary</text>
+  <text x="715" y="380" text-anchor="middle" class="small">local range • velocity • history</text>
+
+  <rect x="100" y="427" width="760" height="55" rx="12" fill="#fff4e8" stroke="#c66b25" stroke-width="2"/>
+  <text x="480" y="450" text-anchor="middle" class="label">Physics / collision / contact owner</text>
+  <text x="480" y="469" text-anchor="middle" class="small">measures what actually happened, including blocked or limited motion</text>
+  <path d="M245 402 V425 M715 402 V425" class="link"/>
+  <path d="M245 402 V425 M715 402 V425" class="flow" marker-end="url(#arrow)"/>
+  <path d="M860 455 H910 V130 H605" class="feedback" marker-end="url(#arrowOrange)"/>
+  <text x="898" y="292" class="small" text-anchor="middle" transform="rotate(-90 898 292)">measured outcome informs next step</text>
+  <text x="40" y="520" class="small">Three motion classes are a compact abstraction—not the joint's entire physical state and not proof of a speedup.</text>
+</svg>
