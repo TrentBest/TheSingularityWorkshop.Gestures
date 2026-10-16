@@ -98,8 +98,33 @@ This is a source-repository verification path, not a claim that the package has 
 - [Motion Response Comparison](docs/MOTION_RESPONSE_COMPARISON.md) — compare direct kinematic tracking and spring-damper response without conflating them.
 - [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — express stable skill/context parameter ranges without per-frame random noise.
 - [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — keep SVGs grounded in real evaluator output and label conceptual overlays separately.
+- [Gesture Playback Semantics](docs/GESTURE_PLAYBACK_SEMANTICS.md) — define deterministic seeking, stepping, interruption, and replay boundaries.
+- [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — distinguish reachable targets, constraints, and solver responsibilities.
+- [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — establish a bounded 2D kinematics vocabulary.
+- [Stateful IK Theory](docs/STATEFUL_IK_THEORY.md) — explain stateful joint/contact response as a prototype direction.
+- [Starport Crew Routing](docs/STARPORT_CREW_ROUTING_SCENARIO.md) — document role-based departure choreography and readiness gates.
+- [Vehicle Boarding Gesture](docs/VEHICLE_BOARDING_GESTURE.md) and [Soldier Movement Gesture](docs/SOLDIER_MOVEMENT_GESTURE.md) — domain-specific examples and their current limitations.
+- [Renderer Pose Handoff Proposal](docs/RENDERER_POSE_HANDOFF_PROPOSAL.md) — define the proposed boundary between evaluated poses and presentation.
+- [Golden Vectors](docs/GESTURE_GOLDEN_VECTORS.md) — record fixed-input expectations for independent evaluators.
+- [Skill Distribution Demo](docs/SKILL_DISTRIBUTION_DEMO.md) — read the model and [open the standalone demonstration](docs/skill-distribution-demo.html).
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
 - [Starport Departure Experience](docs/STARPORT_DEPARTURE_EXPERIENCE.md) — inspect the first multi-role departure choreography, explicit readiness gates, failure paths, and WebPageLLM handoff.
+
+## 🟨 Visual theory gallery
+
+![](docs/assets/dividers/gold.svg)
+
+These illustrations are design references. They do not imply that the current CPU evaluator implements hierarchy composition, inverse kinematics, or a physical contact solver.
+
+![Animation model comparison](docs/assets/animation-models.svg)
+
+![Inverse kinematics intuition](docs/assets/ik-intuition.svg)
+
+![Inverse kinematics reachability](docs/assets/ik-reachability.svg)
+
+![Stateful joint hierarchy concept](docs/assets/stateful-ik-hierarchy.svg)
+
+![Stable skill-distribution concept](docs/assets/skill-distribution-concept.svg)
 
 ## 🩵 Design guarantees and boundaries
 
