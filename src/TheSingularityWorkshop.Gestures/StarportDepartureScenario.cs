@@ -232,19 +232,6 @@ public static class StarportDepartureEvaluator
 
         bool Completed(string id) => outcomes.TryGetValue(id, out var status) && status == StarportTaskStatus.Completed;
 
-        var ready = new List<string>();
-        var blocked = new List<string>();
-        foreach (var task in scenario.Tasks)
-        {
-            var status = outcomes.TryGetValue(task.Id, out var observed)
-                ? observed
-                : StarportTaskStatus.NotStarted;
-            if (status == StarportTaskStatus.NotStarted && task.Dependencies.All(Completed))
-                ready.Add(task.Id);
-            else if (status != StarportTaskStatus.Completed)
-                blocked.Add(task.Id);
-        }
-
         var preClearanceEvidence = StarportDepartureEvidence.FlightCrewAccountedFor |
                                    StarportDepartureEvidence.GroundEquipmentClear |
                                    StarportDepartureEvidence.GroundCrewReturned |
@@ -266,6 +253,28 @@ public static class StarportDepartureEvaluator
         var mayDepart = mayRequest &&
                         (evidence & StarportDepartureEvidence.AtcClearanceGranted) != 0 &&
                         Completed("control.request-atc");
+
+        bool TaskGateSatisfied(string id) => id switch
+        {
+            "control.request-atc" => mayRequest,
+            "control.depart" => mayDepart,
+            _ => true
+        };
+
+        var ready = new List<string>();
+        var blocked = new List<string>();
+        foreach (var task in scenario.Tasks)
+        {
+            var status = outcomes.TryGetValue(task.Id, out var observed)
+                ? observed
+                : StarportTaskStatus.NotStarted;
+            if (status == StarportTaskStatus.NotStarted &&
+                task.Dependencies.All(Completed) &&
+                TaskGateSatisfied(task.Id))
+                ready.Add(task.Id);
+            else if (status != StarportTaskStatus.Completed)
+                blocked.Add(task.Id);
+        }
 
         return new StarportDepartureEvaluation(
             Array.AsReadOnly(ready.ToArray()),
