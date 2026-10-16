@@ -17,6 +17,18 @@ A consuming application should choose seed inputs deliberately. Entity identity 
 
 Variation settings are validated before evaluation. They are bounds, not guarantees of a statistically uniform population distribution.
 
+## Fixed reference vectors
+
+These vectors lock down the current integer mixer and conversion contract. They use elapsed time 0.4, duration 1.0, MaximumSpeedDeviation = 0.1, and MaximumLateralOffset = 0.25. The test gesture has two keyframes at normalized times 0 and 1, with identity rotation and unit scale.
+
+| Identity seed | Normalized progress | Root offset X |
+|---:|---:|---:|
+| 0 | 0.43066486465709142 | -0.034236001475745015 |
+| 1 | 0.40532492601378256 | 0.20629860179722659 |
+| 1234 | 0.41845332196324991 | 0.24507822290086051 |
+
+The unit-test assertions use numeric tolerances rather than requiring identical decimal formatting across runtimes. These vectors are regression anchors for the CPU reference; any intentional change to the mixer or conversion contract must update the implementation, tests, and documentation together.
+
 ## Important limitations
 
 - Stable seed variation is not a substitute for state-dependent behavior.
