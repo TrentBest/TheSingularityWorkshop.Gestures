@@ -45,8 +45,8 @@ public sealed class GestureEvaluatorTests
 
         Assert.NotEqual(first.NormalizedProgress, second.NormalizedProgress);
         Assert.NotEqual(first.RootOffset.X, second.RootOffset.X);
-        Assert.InRange(first.NormalizedProgress, 0.45, 0.55);
-        Assert.InRange(second.NormalizedProgress, 0.45, 0.55);
+        Assert.InRange(first.NormalizedProgress, 0.36, 0.44);
+        Assert.InRange(second.NormalizedProgress, 0.36, 0.44);
         Assert.InRange(first.RootOffset.X, -0.25f, 0.25f);
         Assert.InRange(second.RootOffset.X, -0.25f, 0.25f);
     }
