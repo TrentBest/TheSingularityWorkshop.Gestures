@@ -36,6 +36,33 @@ public sealed class GestureEvaluatorTests
     }
 
     [Fact]
+    public void DifferentIdentitySeedsCanProduceDifferentMotionWithinTheSameDeclaredBounds()
+    {
+        var variation = new GestureVariation { MaximumSpeedDeviation = 0.1, MaximumLateralOffset = 0.25f };
+
+        var first = GestureEvaluator.Evaluate(CreateGesture(), 0.4, 1.0, variation, 0UL);
+        var second = GestureEvaluator.Evaluate(CreateGesture(), 0.4, 1.0, variation, 1UL);
+
+        Assert.NotEqual(first.NormalizedProgress, second.NormalizedProgress);
+        Assert.NotEqual(first.RootOffset.X, second.RootOffset.X);
+        Assert.InRange(first.NormalizedProgress, 0.45, 0.55);
+        Assert.InRange(second.NormalizedProgress, 0.45, 0.55);
+        Assert.InRange(first.RootOffset.X, -0.25f, 0.25f);
+        Assert.InRange(second.RootOffset.X, -0.25f, 0.25f);
+    }
+
+    [Fact]
+    public void ZeroVariationIsIndependentOfIdentitySeed()
+    {
+        var first = GestureEvaluator.Evaluate(CreateGesture(), 0.4, 1.0, GestureVariation.None, 0UL);
+        var second = GestureEvaluator.Evaluate(CreateGesture(), 0.4, 1.0, GestureVariation.None, 987654321UL);
+
+        Assert.Equal(first.NormalizedProgress, second.NormalizedProgress);
+        Assert.Equal(first.RootOffset, second.RootOffset);
+        Assert.Equal(first.LocalTransforms["root"], second.LocalTransforms["root"]);
+    }
+
+    [Fact]
     public void FixedInputsMatchDeterministicReferenceVectors()
     {
         var variation = new GestureVariation { MaximumSpeedDeviation = 0.1, MaximumLateralOffset = 0.25f };
