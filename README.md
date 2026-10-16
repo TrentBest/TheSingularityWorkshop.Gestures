@@ -108,6 +108,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Golden Vectors](docs/GESTURE_GOLDEN_VECTORS.md) — record fixed-input expectations for independent evaluators.
 - [Skill Distribution Demo](docs/SKILL_DISTRIBUTION_DEMO.md) — read the model and [open the standalone demonstration](docs/skill-distribution-demo.html).
 - [Roadmap](docs/ROADMAP.md) — see what is implemented, proposed, and still open.
+- [Research Roadmap Archive](docs/ROADMAP_RESEARCH_ARCHIVE.md) — preserve the planar IK, movement-course, skill-distribution, concert, and VR magic research checklist as a dated historical snapshot.
 - [Starport Departure Experience](docs/STARPORT_DEPARTURE_EXPERIENCE.md) — inspect the first multi-role departure choreography, explicit readiness gates, failure paths, and WebPageLLM handoff.
 
 ## 🟨 Visual theory gallery
