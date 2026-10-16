@@ -36,6 +36,19 @@ The humanoid and tracked-vehicle glyphs illustrate the evaluated root transform.
 
 **What this does not demonstrate:** joint values emitted by `GestureEvaluator`, a solved forward/inverse-kinematics chain, measured link geometry, collision/contact, or a physical solver. The articulated angles are presentation-only derivations, not runtime outputs. A future physically meaningful scene must use actual target joint definitions and a tested kinematics contract.
 
+## Deterministic variation: tested contract, scene still pending
+
+`GestureEvaluator.Evaluate` accepts a `GestureVariation` and a stable `identitySeed`. The current variation contract has two bounded channels:
+
+| Channel | Current behavior | Boundary |
+|---|---|---|
+| Speed | Multiplies elapsed-time progression by a seed-derived factor around 1 | Fractional deviation is finite and in `[0, 1)` |
+| Lateral offset | Returns a seed-derived X offset separately in `EvaluatedPose.RootOffset` | Maximum absolute offset is finite and non-negative |
+
+The seed is mixed deterministically; it is not a source of fresh per-frame randomness. Repeating the same definition, elapsed time, duration, variation bounds, and seed yields the same result. Different seeds can yield different speed and offset values. With `GestureVariation.None`, changing the seed does not change the evaluated pose. These guarantees are covered by `SameIdentityAndInputsProduceSameVariation`, `FixedInputsMatchDeterministicReferenceVectors`, `VariationStaysWithinConfiguredBounds`, `DifferentIdentitySeedsCanProduceDifferentMotionWithinTheSameDeclaredBounds`, and `ZeroVariationIsIndependentOfIdentitySeed` tests.
+
+The offset is returned as separate presentation/root-offset data; the evaluator does not silently bake it into every named transform. This is not yet joint-level skill, an experience-profile system, or physical response. A future variation scene should visualize the actual evaluator outputs for a small fixed set of seeds, show the declared bounds, and distinguish seed-driven results from the ideal baseline. Until that generated scene exists, the contract is test-backed but not yet demonstrated by a dedicated living SVG.
+
 ## The teaching loop: concept → action → evidence
 
 Every topic should let a reader move from an explanation to observable behavior and then back to the implementation. The SVG is the demonstration surface, not an ornamental summary.
