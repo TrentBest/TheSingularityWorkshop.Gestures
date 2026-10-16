@@ -102,6 +102,10 @@ This is a source-repository verification path, not a claim that the package has 
 - [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — distinguish reachable targets, constraints, and solver responsibilities.
 - [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — establish a bounded 2D kinematics vocabulary.
 - [Stateful IK Theory](docs/STATEFUL_IK_THEORY.md) — explain stateful joint/contact response as a prototype direction.
+- [Stateful IK Prototype](docs/STATEFUL_IK_PROTOTYPE.md) — inspect retained hinges, incremental planar hierarchy updates, contact-observation handoff, tests, and the explicit non-physics boundary.
+- [Environment-Defined Gesture Vocabulary](docs/ENVIRONMENT_DEFINED_GESTURE_VOCABULARY.md) — describe environment-acceptable procedures without assuming every actor shares one movement style.
+- [Singularity Arena Performance Scenario](docs/SINGULARITY_ARENA_PERFORMANCE_SCENARIO.md) — preserve the concert/karaoke scenario and its event, audience, and ownership boundaries.
+- [VR Magic Spellcasting Scenario](docs/MAGIC_SPELLCASTING_SCENARIO.md) — document evaluator-backed reach, channel, arc, and weave acceptance fixtures without claiming live VR integration.
 - [Starport Crew Routing](docs/STARPORT_CREW_ROUTING_SCENARIO.md) — document role-based departure choreography and readiness gates.
 - [Vehicle Boarding Gesture](docs/VEHICLE_BOARDING_GESTURE.md) and [Soldier Movement Gesture](docs/SOLDIER_MOVEMENT_GESTURE.md) — domain-specific examples and their current limitations.
 - [Renderer Pose Handoff Proposal](docs/RENDERER_POSE_HANDOFF_PROPOSAL.md) — define the proposed boundary between evaluated poses and presentation.
@@ -126,6 +130,8 @@ These illustrations are design references. They do not imply that the current CP
 ![Stateful joint hierarchy concept](docs/assets/stateful-ik-hierarchy.svg)
 
 ![Stable skill-distribution concept](docs/assets/skill-distribution-concept.svg)
+
+Skill is more than a scalar rating: the deterministic sample model separates ideal-pose error, movement variance, and outcome spread. The [interactive browser demo](docs/skill-distribution-demo.html) exposes the seeded comparison; it is illustrative data, not physical validation.
 
 ## 🩵 Design guarantees and boundaries
 
