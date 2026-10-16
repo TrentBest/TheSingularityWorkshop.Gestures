@@ -141,3 +141,17 @@ A green build alone does not mean the Gesture schema is frozen or that GPU parit
 
 - [ ] Add a controlled martial-arts practice/choreography example for Singularity City: forms, footwork, balance, partner drills, and clear practice/recovery states before any contact-oriented scenario. Coordinate the consumer experience with the [WebPage hidden-dojos handoff PR #117](https://github.com/TrentBest/WebPage/pull/117); WebPage owns discovery/presentation, while Gestures owns reusable movement descriptions and deterministic variation.
 - [ ] Decide whether timing curves belong in the definition or remain a caller policy.
+
+
+---
+
+## Articulated-target contract snapshot — `work/rig-neutral-svg-overview`
+
+> Historical preservation excerpt. This records the conceptual topology work and the unresolved consumer-facing contract questions as they appeared on that branch.
+
+### Articulated targets and constraints
+
+- [x] Add a conceptual SVG showing humanoid, quadruped, and articulated-mechanism topologies without prescribing a universal skeleton.
+- [x] Write a non-binding articulated-motion contract proposal and list the decisions that require consumer evidence.
+- [ ] Validate the draft contract with representative humanoid, quadruped, and mechanism examples.
+- [ ] Define the articulated-target contract: hierarchy ownership, stable transform identity, local/world-space boundary, and target mapping.
