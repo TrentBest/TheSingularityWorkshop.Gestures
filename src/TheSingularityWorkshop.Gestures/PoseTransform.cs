@@ -18,6 +18,41 @@ public readonly record struct PoseTransform(Vector3 Position, Quaternion Rotatio
             Quaternion.Normalize(rotation), Vector3.Lerp(from.Scale, to.Scale, t));
     }
 
-    private static Quaternion NormalizeOrIdentity(Quaternion value) =>
-        value.LengthSquared() < 1e-12f ? Quaternion.Identity : Quaternion.Normalize(value);
+    internal void ValidateFinite(string parameterName)
+    {
+        if (!IsFinite(Position) || !IsFinite(Rotation) || !IsFinite(Scale))
+            throw new ArgumentException("Transform position, rotation, and scale components must be finite.", parameterName);
+    }
+
+    private static bool IsFinite(Vector3 value) =>
+        float.IsFinite(value.X) && float.IsFinite(value.Y) && float.IsFinite(value.Z);
+
+    private static bool IsFinite(Quaternion value) =>
+        float.IsFinite(value.X) && float.IsFinite(value.Y) &&
+        float.IsFinite(value.Z) && float.IsFinite(value.W);
+
+    private static Quaternion NormalizeOrIdentity(Quaternion value)
+    {
+        // Scale first so LengthSquared cannot overflow for very large, finite components.
+        var maxComponent = MathF.Max(
+            MathF.Max(MathF.Abs(value.X), MathF.Abs(value.Y)),
+            MathF.Max(MathF.Abs(value.Z), MathF.Abs(value.W)));
+
+        if (maxComponent == 0f)
+            return Quaternion.Identity;
+
+        var scaled = new Quaternion(
+            value.X / maxComponent,
+            value.Y / maxComponent,
+            value.Z / maxComponent,
+            value.W / maxComponent);
+        var scaledLengthSquared = scaled.LengthSquared();
+
+        // Preserve the existing near-zero fallback without squaring a large component.
+        if (maxComponent < 1e-6f &&
+            scaledLengthSquared * maxComponent * maxComponent < 1e-12f)
+            return Quaternion.Identity;
+
+        return Quaternion.Normalize(scaled);
+    }
 }
