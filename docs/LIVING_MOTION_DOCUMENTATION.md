@@ -10,9 +10,9 @@ The documentation is part of the product experience: it should help readers *see
 
 ![Three evaluated named-transform tracks](assets/gesture-motion.svg)
 
-The C# demonstration creates one `GestureDefinition` with three named transforms and samples `GestureEvaluator.Evaluate` 49 times. These are generic transform targets chosen to make the motion principles visible; their names do not make this a vehicle, character, or tool behavior. FSM_API coordinates the demo lifecycle. The path geometry and animated marker position, rotation, and scale are serialized from those evaluated outputs.
+The C# demonstration creates one `GestureDefinition` with three named transforms and samples `GestureEvaluator.Evaluate` 49 times. These are generic transform targets chosen to make the motion principles visible; their names do not make this a vehicle, character, or tool behavior. FSM_API coordinates the demo lifecycle. The path geometry and animated marker position, rotation, and scale are serialized from those evaluated outputs. The five authored keyframe times are marked with outlined diamonds; smaller circles distinguish the evaluated samples between them. In this fixed 49-sample demonstration, indices 0, 12, 24, 36, and 48 coincide with the authored keyframes at normalized times 0, 0.25, 0.5, 0.75, and 1.
 
-**What this demonstrates:** keyframe data, normalized progress, linear position interpolation, quaternion rotation interpolation, scale interpolation, and how evaluated data can feed presentation.
+**What this demonstrates:** the distinction between authored keyframes and evaluated in-between samples, normalized progress, linear position interpolation, quaternion rotation interpolation, scale interpolation, and how evaluated data can feed presentation.
 
 **What this does not demonstrate:** parent-child composition, an articulated rig, IK, collision response, physical force integration, or a vehicle/character physics model. The transform names are dictionary keys; the current evaluator does not infer a mechanical assembly from them.
 
