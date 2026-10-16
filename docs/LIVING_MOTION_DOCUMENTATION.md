@@ -36,6 +36,21 @@ The humanoid and tracked-vehicle glyphs illustrate the evaluated root transform.
 
 **What this does not demonstrate:** joint values emitted by `GestureEvaluator`, a solved forward/inverse-kinematics chain, measured link geometry, collision/contact, or a physical solver. The articulated angles are presentation-only derivations, not runtime outputs. A future physically meaningful scene must use actual target joint definitions and a tested kinematics contract.
 
+## The teaching loop: concept → action → evidence
+
+Every topic should let a reader move from an explanation to observable behavior and then back to the implementation. The SVG is the demonstration surface, not an ornamental summary.
+
+Use this sequence for each concept:
+
+1. **Concept.** State the rule in plain language and explain why a developer should care.
+2. **Action.** Show the rule changing something visible: a pose between keyframes, a deterministic variation, a state transition, or another behavior the implementation actually produces.
+3. **Mechanism.** Label the input, state, constraint, or equation responsible for the observed result. Prefer a small companion plot or timeline when it reveals something the main scene hides.
+4. **Evidence.** Identify the generator, real implementation, relevant sample count or test, and any assumptions used to map data into the scene.
+5. **Boundary.** State what the picture does not prove. Keep conceptual overlays visibly distinct from values emitted by the runtime.
+6. **Reproduction.** Provide the command and automated checks needed to regenerate and review the result.
+
+A scene is successful when a reader can answer: *What am I seeing? Which real data caused it? Which rule explains it? What should I not infer from it?* If a picture cannot answer those questions, improve the model, the evidence, or the explanation before polishing the artwork.
+
 ## Scene contract
 
 Every living scene added here should:
