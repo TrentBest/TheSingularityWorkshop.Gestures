@@ -37,6 +37,24 @@ jobs:
       - name: Build
         run: dotnet build TheSingularityWorkshop.Gestures.slnx --configuration Release --no-restore
 
+      - name: Generate the living SVG from FSM_API and GestureEvaluator
+        run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release -- --output docs/assets/gesture-motion.svg
+
+      - name: Validate generated SVG XML
+        run: python -c "import xml.etree.ElementTree as ET; ET.parse('docs/assets/gesture-motion.svg')"
+
+      - name: Upload C#-generated living SVG
+        uses: actions/upload-artifact@v7
+        with:
+          name: gesture-motion-svg
+          path: docs/assets/gesture-motion.svg
+
+      - name: Verify generated SVG formatting
+        run: git diff --check -- docs/assets/gesture-motion.svg
+
+      - name: Verify committed SVG matches C# output
+        run: git diff --exit-code -- docs/assets/gesture-motion.svg
+
       - name: Test with coverage
         run: >
           dotnet test TheSingularityWorkshop.Gestures.slnx
