@@ -30,7 +30,7 @@ The engine-neutral Gestures library now contains:
 - `StarportDepartureEvidence`: explicit flags for all flight crew accounted for, equipment clear, ground crew returned, access sealed, manifest verified, and ATC clearance granted.
 - Unit tests for role branching, dependency cycles and references, blocked recovery after a failed ground task, missing evidence, and the final clearance gate.
 
-This is an executable choreography/readiness contract, **not** a simulation of people or equipment. The host still owns routes, collision/obstruction checks, physical contact, crew identity/counts, task observation, equipment state, access hardware, and actual ATC authorization. The evaluator deliberately does not infer those facts from a task label.
+The pose samples are deliberately authored reference sequences with illustrative local units. The current evaluator interpolates named transforms independently; it does not compose a skeleton, solve IK, establish grip/contact, or verify equipment state. They are executable inputs to the CPU evaluator, not proof that a person can perform the procedure. The task graph is an executable choreography/readiness contract, **not** a simulation of people or equipment. The host still owns routes, collision/obstruction checks, physical contact, crew identity/counts, task observation, equipment state, access hardware, and actual ATC authorization. The evaluator deliberately does not infer those facts from a task label.
 
 ## Experience topology and anchors
 
@@ -49,7 +49,7 @@ Anchor resolution and world geometry belong to the provider/host. If a required 
 
 ### A. Physical procedures
 
-Turn each role action into provider-owned Gesture definitions using named anchors and keyframes. At minimum: approach/ramp alignment, boarding, entering and seating at a station, disconnecting and stowing a service hose, removing/securing a cover, inspecting landing gear, carrying a tool, and returning to the safe zone. Add capability profiles and deterministic per-identity variation without changing the procedure's safety invariants.
+Extend the initial boarding, service-umbilical, and cover reference sequences into provider-owned procedures using resolved craft anchors and richer authored tracks. Add approach/ramp alignment, entering and seating at a station, inspecting landing gear, carrying a tool, and returning to the safe zone. Validate each procedure against a concrete provider anchor catalogue. Add capability profiles and deterministic per-identity variation without changing the procedure's safety invariants.
 
 ### B. Articulation and contact
 
