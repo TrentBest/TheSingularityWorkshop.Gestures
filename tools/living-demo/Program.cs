@@ -165,10 +165,21 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
         var rotationValues = string.Join(";", values.Select(s => N(s.RotationDegrees)));
         var scaleValues = string.Join(";", values.Select(s => $"{N(s.Scale)} {N(s.Scale)}"));
         paths.Append($"<polyline points=\"{points}\" fill=\"none\" stroke=\"{track.Color}\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\".82\"/>");
-        foreach (var sample in samples.Where((_, i) => i % 12 == 0 || i == samples.Count - 1))
+        foreach (var (sample, sampleIndex) in samples.Select((sample, index) => (sample, index)))
         {
             var value = sample.Transforms[track.Name];
-            dots.Append($"<circle cx=\"{N(X(value.X))}\" cy=\"{N(Y(value.Y))}\" r=\"3\" fill=\"{track.Color}\" opacity=\".9\"/>");
+            if (sampleIndex % 12 == 0)
+            {
+                // The five authored keyframes align with sample indices 0, 12, 24, 36, and 48.
+                // Use a diamond for authored input and a small circle for evaluated in-between samples.
+                var x = X(value.X);
+                var y = Y(value.Y);
+                dots.Append($"<path d=\"M{N(x)} {N(y - 5)} L{N(x + 5)} {N(y)} L{N(x)} {N(y + 5)} L{N(x - 5)} {N(y)} Z\" fill=\"{track.Color}\" stroke=\"#f3f6fb\" stroke-width=\"1\" opacity=\"1\"/>");
+            }
+            else
+            {
+                dots.Append($"<circle cx=\"{N(X(value.X))}\" cy=\"{N(Y(value.Y))}\" r=\"1.6\" fill=\"{track.Color}\" opacity=\".48\"/>");
+            }
         }
         markers.Append($$"""
         <g class="animated" filter="url(#glow)">
@@ -224,6 +235,12 @@ static string BuildSvg(IReadOnlyList<Sample> samples, IReadOnlyList<string> tran
   {{markers}}
   <g fill="#b9c8d9" font-size="11">
     <text x="82" y="362">START · {{N(start.Progress)}}</text><text x="480" y="362" text-anchor="middle">INDEPENDENT NAMED TRANSFORMS · NOT A RIG HIERARCHY</text><text x="878" y="362" text-anchor="end">END · {{N(end.Progress)}}</text>
+  </g>
+  <g font-size="10" fill="#b9c8d9">
+    <path d="M84 379 L89 384 L84 389 L79 384 Z" fill="#f3f6fb"/>
+    <text x="97" y="388">AUTHORED KEYFRAME</text>
+    <circle cx="247" cy="384" r="2" fill="#f3f6fb" opacity=".65"/>
+    <text x="257" y="388">EVALUATED INTERMEDIATE SAMPLE</text>
   </g>
   <path d="M82 394H878" stroke="#31465e" stroke-width="2"/>
   <circle class="animated" r="5" fill="#78dcff">
