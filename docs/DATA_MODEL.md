@@ -2,9 +2,9 @@
 
 ## Normalized keyframes
 
-Each keyframe has a time in the closed interval [0, 1]. A valid definition contains at least two frames, starts exactly at 0, ends exactly at 1, and uses strictly increasing times. This makes evaluation independent of the real duration chosen by the caller.
+Each keyframe has a time in the closed interval [0, 1]. A valid definition contains at least two frames, starts exactly at 0, ends exactly at 1, and uses strictly increasing times. This makes evaluation independent of the real duration chosen by the caller. Non-finite times are rejected when each keyframe is created.
 
-The transform map is keyed by stable rig transform names. This first version does not impose a humanoid skeleton or assume a fixed number of joints. A provider may use a soldier rig, a vehicle mechanism, a hatch, or another named transform hierarchy.
+The transform map is keyed by stable rig transform names. This first version does not impose a humanoid skeleton or assume a fixed number of joints. A provider may use a soldier rig, a vehicle mechanism, a hatch, or another named transform hierarchy. Transform position, rotation, and scale components must be finite; malformed data is rejected at the data boundary instead of propagating NaN or infinity through evaluation. The reference interpolator treats zero-length and sufficiently small quaternions as identity. Quaternion normalization scales components before computing their length, avoiding overflow for very large finite rotations.
 
 ## Transform interpolation
 
@@ -22,7 +22,7 @@ If a transform exists in only one endpoint, the current reference evaluator hold
 
 An anchor has a semantic name, a parent transform identifier, and a local transform. Examples might include cockpit-entry, left-hand-grip, ladder-rung-03, or operator-seat.
 
-Anchors express the spatial relationships needed to stage a procedure. They do not guarantee that the target is reachable or collision-free. The world/physics layer remains responsible for those questions.
+Anchor identifiers must be non-empty, and anchor transform components must be finite. Anchors express the spatial relationships needed to stage a procedure. They do not guarantee that the target is reachable or collision-free. The world/physics layer remains responsible for those questions.
 
 ## Evaluated output
 
