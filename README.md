@@ -112,7 +112,7 @@ This is a source-repository verification path, not a claim that the package has 
 
 ## 🟨 Visual theory gallery
 
-![](docs/assets/dividers/gold.svg)
+![](docs/assets/dividers/star-gold.svg)
 
 These illustrations are design references. They do not imply that the current CPU evaluator implements hierarchy composition, inverse kinematics, or a physical contact solver.
 
