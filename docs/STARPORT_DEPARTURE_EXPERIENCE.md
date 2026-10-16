@@ -6,6 +6,8 @@ Build a repeatable, inspectable starport departure that exercises Gestures as a 
 
 The experience is deliberately ambitious in scope, but each capability must be marked **Specified**, **Implemented**, **Verified**, **Demonstrated**, or **Measured** according to its evidence. A task graph is not yet a crowd simulator, and a completed choreography task is not proof of physical success unless the host supplies that evidence.
 
+The WebPage integration handoff is tracked separately in [WebPage PR #119](https://github.com/TrentBest/WebPage/pull/119); that PR is a documentation handoff, not a browser implementation.
+
 ## The departure story
 
 1. All assigned personnel gather at a named muster point.
