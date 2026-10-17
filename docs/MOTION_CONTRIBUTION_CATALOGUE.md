@@ -1,5 +1,8 @@
 # Motion contribution catalogue (research contract)
 
+![Living conceptual map showing how inertia, damping, stiffness, target intent, and individual parameters relate](assets/motion-equation-map.svg)
+
+
 This catalogue is a working contract for investigating composable motion. It is **not** a runtime API, a validated universal equation, or a claim that Gestures currently solves physical contact. Keep each contribution independently defined and testable before composing them.
 
 Related research: [Motion model experiment plan](MOTION_MODEL_EXPERIMENT_PLAN.md) and [Motion equation exploration](MOTION_EQUATION_EXPLORATION.md).
