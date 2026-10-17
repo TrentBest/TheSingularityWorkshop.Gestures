@@ -25,13 +25,16 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Validate response envelopes and stability across declared timestep/parameter ranges before considering broader integration.
 - [ ] Connect any future articulated response to Physics-owned achieved state and contact evidence; do not claim a general physics solver in Gestures.
 
-## Multi-participant activity and choreography
+## Gesture ecosystem: coordinated activities and population execution
 
-- [x] Document the distinction between per-participant crowd-response scheduling and coordinated activities such as parties, partner/group dancing, and role-based team procedures in [Multi-Participant Choreography](MULTI_PARTICIPANT_CHOREOGRAPHY.md).
+- [x] Document that crowds are both consumers of Gestures and workloads that drive reusable system capabilities in [The Gestures Ecosystem](MULTI_PARTICIPANT_CHOREOGRAPHY.md).
+- [ ] Establish scalar reference workloads and measured baselines for one performer, paired activity, party-sized population, and staged large populations.
 - [ ] Define the smallest versioned activity/session/participant/role/shared-clock contract from concrete fixtures rather than designing a universal framework in advance.
 - [ ] Implement a two-person dance reference fixture with beat alignment, partner relationships, bounded variation, interruption, and deterministic replay.
 - [ ] Demonstrate overlapping party activities and explicit waiting/blocked transitions using the same core only where semantics genuinely match.
 - [ ] Validate task dependencies and achieved-state gates separately from social/choreographic timing and physical outcomes.
+- [ ] Evaluate a population batch path for compatible work; prove per-identity determinism and scalar-reference parity before claiming a performance improvement.
+- [ ] Measure update cadence tiers, shared-input reuse, allocations, per-entity bytes, and total CPU cost; keep batching an execution capability rather than a crowd-specific behavior policy.
 
 ## Crowd-flow reference track
 
