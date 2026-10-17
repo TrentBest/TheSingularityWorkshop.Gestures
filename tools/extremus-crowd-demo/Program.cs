@@ -22,8 +22,33 @@ var output = Path.Combine("docs", "assets", "extremus-crowd-bake.svg");
 for (var i = 0; i < args.Length - 1; i++)
     if (args[i] == "--output") output = args[i + 1];
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output))!);
-File.WriteAllText(output, BuildSvg(result, request), new UTF8Encoding(false));
+File.WriteAllText(output, AddProvenanceLabel(BuildSvg(result, request), "GENERATED FROM EXTREMUSCROWDBAKER OUTPUT • GESTURES • NATIVE SVG • GUI.SVG: NOT USED"), new UTF8Encoding(false));
 Console.WriteLine($"Generated {output} from {result.Instances.Count} ExtremusCrowdBaker outputs.");
+
+
+static string AddProvenanceLabel(string svg, string label)
+{
+    const string prefix = "viewBox=\"0 0 ";
+    var viewBoxStart = svg.IndexOf(prefix, StringComparison.Ordinal);
+    if (viewBoxStart < 0) throw new InvalidOperationException("SVG provenance label requires a viewBox.");
+    var widthStart = viewBoxStart + prefix.Length;
+    var widthEnd = svg.IndexOf(' ', widthStart);
+    var heightEnd = svg.IndexOf('"', widthEnd + 1);
+    if (widthEnd < 0 || heightEnd < 0) throw new InvalidOperationException("SVG viewBox is malformed.");
+    var widthText = svg[widthStart..widthEnd];
+    var heightText = svg[(widthEnd + 1)..heightEnd];
+    var width = double.Parse(widthText, CultureInfo.InvariantCulture);
+    var height = double.Parse(heightText, CultureInfo.InvariantCulture);
+    var expandedViewBox = $"viewBox=\"0 0 {widthText} {NForLabel(height + 38)}\"";
+    svg = svg[..viewBoxStart] + expandedViewBox + svg[(heightEnd + 1)..];
+    var close = svg.LastIndexOf("</svg>", StringComparison.Ordinal);
+    if (close < 0) throw new InvalidOperationException("SVG closing element was not found.");
+    var safeLabel = label.Replace("&", "&amp;", StringComparison.Ordinal).Replace("<", "&lt;", StringComparison.Ordinal).Replace(">", "&gt;", StringComparison.Ordinal);
+    var banner = $"<g id=\"provenance-label\" role=\"group\" aria-label=\"{safeLabel}\"><rect x=\"12\" y=\"{NForLabel(height + 3)}\" width=\"{NForLabel(width - 24)}\" height=\"27\" rx=\"6\" fill=\"#172033\"/><text x=\"{NForLabel(width / 2)}\" y=\"{NForLabel(height + 21)}\" text-anchor=\"middle\" font-family=\"system-ui,-apple-system,Segoe UI,sans-serif\" font-size=\"12\" font-weight=\"700\" fill=\"#ffffff\">{safeLabel}</text></g>";
+    return svg.Insert(close, banner);
+}
+
+static string NForLabel(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
 
 static string BuildSvg(ExtremusBakeResult result, ExtremusBakeRequest request)
 {
