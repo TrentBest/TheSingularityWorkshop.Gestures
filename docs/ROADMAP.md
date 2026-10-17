@@ -67,6 +67,16 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [x] Generate and validate a living SVG from actual scheduler output in CI; keep concept art separate from runtime evidence.
 - [ ] Profile staged population sizes; record CPU cost, upload bytes, GPU time, and visible representation count before making scale claims.
 
+
+## Singularity Studios provider track
+
+- [x] Document the proposed ownership boundary and WebPageLLM handoff for reusable performer, crew, camera, and equipment procedures.
+- [ ] Inspect current WebPage and AnyApp implementations before defining a concrete consumer integration contract.
+- [ ] Define provider-owned stage/rig anchors and a reusable 30-second take fixture.
+- [ ] Add test-backed performer and camera/equipment procedure examples using existing engine-neutral contracts; do not claim physical outcomes without host/Physics observations.
+- [ ] Generate a living timeline/overhead SVG from actual procedure outputs and task schedule data.
+- [ ] Validate anchor rebinding, blocked-path reporting, deterministic replay, and task gates before expanding to large indoor battle stages.
+
 ## Milestone 2 — Rig and constraints
 
 - [ ] Define optional hierarchy metadata without requiring a universal humanoid skeleton.
