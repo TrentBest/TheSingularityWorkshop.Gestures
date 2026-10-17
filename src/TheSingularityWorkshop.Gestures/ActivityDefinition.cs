@@ -123,8 +123,7 @@ public sealed class ActivityDefinitionBuilder
     private void CompletePhase(PhaseBuilder phase, string id, IReadOnlyList<ActivityRoleSlot> roles,
         IReadOnlyList<string> gestureIds)
     {
-        if (!ReferenceEquals(_activePhase, phase))
-            throw new InvalidOperationException("This phase builder is no longer active.");
+        EnsureActivePhase(phase);
         if (roles.Count == 0 && gestureIds.Count == 0)
             throw new InvalidOperationException($"Phase '{id}' must declare at least one role or Gesture reference.");
         _phases.Add(new ActivityPhaseDefinition(id, Array.AsReadOnly(roles.ToArray()),
@@ -136,6 +135,12 @@ public sealed class ActivityDefinitionBuilder
     {
         if (_activePhase is not null)
             throw new InvalidOperationException("Complete the active phase with EndPhase before continuing.");
+    }
+
+    private void EnsureActivePhase(PhaseBuilder phase)
+    {
+        if (!ReferenceEquals(_activePhase, phase))
+            throw new InvalidOperationException("This phase builder is no longer active.");
     }
 
     private static string RequireName(string value, string parameterName)
@@ -164,6 +169,7 @@ public sealed class ActivityDefinitionBuilder
         /// <summary>Declares a role and its inclusive participant-count bounds.</summary>
         public PhaseBuilder AssignRole(string id, int min, int max)
         {
+            _owner.EnsureActivePhase(this);
             var name = RequireName(id, nameof(id));
             if (min < 0)
                 throw new ArgumentOutOfRangeException(nameof(min), "Minimum participants cannot be negative.");
@@ -178,6 +184,7 @@ public sealed class ActivityDefinitionBuilder
         /// <summary>References a reusable Gesture by stable ID without embedding provider logic.</summary>
         public PhaseBuilder OfferGesture(string gestureId)
         {
+            _owner.EnsureActivePhase(this);
             var name = RequireName(gestureId, nameof(gestureId));
             if (!_gestureIdSet.Add(name))
                 throw new ArgumentException($"Duplicate Gesture reference '{name}' in phase '{_id}'.", nameof(gestureId));
