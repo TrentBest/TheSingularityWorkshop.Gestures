@@ -9,7 +9,7 @@ const string profile = "starport-departure";
 const string catalogue = "starport-activity-catalogue-v1";
 const ulong seed = 42UL;
 const int count = 96;
-var region = new ExtremusRegion("starport-apron", new Vector3(-100f, 0f, -60f), new Vector3(100f, 0f, 60f));
+var region = new ExtremusRegion("starport-apron", new Vector3(-100f, -1f, -60f), new Vector3(100f, 1f, 60f));
 var exclusions = new[]
 {
     new ExtremusExclusion("ship-landing-footprint", new Vector3(-18f, -1f, -17f), new Vector3(18f, 1f, 17f)),
