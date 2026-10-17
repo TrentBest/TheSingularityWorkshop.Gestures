@@ -89,9 +89,13 @@ jobs:
       - name: Report Extremus SVG snapshot drift until the generated snapshot is reviewed
         shell: bash
         run: |
-          if ! git diff --quiet -- docs/assets/extremus-crowd-bake.svg; then
+          if ! git ls-files --error-unmatch docs/assets/extremus-crowd-bake.svg >/dev/null 2>&1; then
+            echo "::warning::The Extremus SVG has been generated but no checked-in snapshot exists yet. Review the uploaded artifact and commit the exact generated output before adding a blocking parity gate."
+          elif ! git diff --quiet -- docs/assets/extremus-crowd-bake.svg; then
             echo "::warning::The Extremus SVG differs from the checked-in snapshot. Review the generated artifact and synchronize the snapshot before adding a blocking parity gate."
             git diff --stat -- docs/assets/extremus-crowd-bake.svg
+          else
+            echo "The Extremus SVG matches its checked-in snapshot."
           fi
 
       - name: Verify SVG formatting
