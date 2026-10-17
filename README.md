@@ -99,7 +99,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — express stable skill/context parameter ranges without per-frame random noise.
 - [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — keep SVGs grounded in real evaluator output and label conceptual overlays separately.
 - [Speech Scene and Soldier Population](docs/SPEECH_SCENE_POPULATION.md) — organize the moniker-to-balcony speech scene, advisor choreography, responsive city-scale soldiers, distance-aware cheering, public-screen echoes, event-horizon tiers, ownership boundaries, and measurable build order.
-- [Deterministic Crowd-Response Scheduling](docs/CROWD_RESPONSE_SCHEDULING.md) — define proposed event inputs, intent versus acoustic timing, stable identity variation, replay/test requirements, and the future living-SVG evidence contract. This is a specification, not an implemented scheduler.
+- [Deterministic Crowd-Response Scheduling](docs/CROWD_RESPONSE_SCHEDULING.md) — document the first CPU intent scheduler, versioned stable variation, intent versus acoustic timing, reference tests, and the future living-SVG evidence contract. Acoustic arrival and population-scale behavior remain separate work; CI verification is pending.
 - [Gesture Playback Semantics](docs/GESTURE_PLAYBACK_SEMANTICS.md) — define deterministic seeking, stepping, interruption, and replay boundaries.
 - [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — distinguish reachable targets, constraints, and solver responsibilities.
 - [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — establish a bounded 2D kinematics vocabulary.
