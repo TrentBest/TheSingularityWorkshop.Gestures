@@ -54,10 +54,10 @@ public sealed class ExtremusCrowdBakerTests
         var second = ExtremusCrowdBaker.Bake(Request(seed: 43UL));
 
         Assert.NotEqual(first.Manifest.Seed, second.Manifest.Seed);
-        Assert.NotEqual(first.Instances.Select(x => x.StableId).ToArray(),
-            second.Instances.Select(x => x.StableId).ToArray());
-        Assert.NotEqual(first.Instances.Select(x => x.Position).ToArray(),
-            second.Instances.Select(x => x.Position).ToArray());
+        Assert.False(first.Instances.Select(x => x.StableId)
+            .SequenceEqual(second.Instances.Select(x => x.StableId)));
+        Assert.False(first.Instances.Select(x => x.Position)
+            .SequenceEqual(second.Instances.Select(x => x.Position)));
     }
 
     [Fact]
