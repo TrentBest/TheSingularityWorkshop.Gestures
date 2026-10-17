@@ -76,7 +76,7 @@ jobs:
                   failures.append(f"{path}: provenance must explicitly say GUI.SVG: USED or GUI.SVG: NOT USED")
 
           if failures:
-              raise SystemExit("\\n".join(failures))
+              raise SystemExit("\n".join(failures))
           print(f"Validated XML and explicit GUI.SVG provenance for {len(files)} SVG files under docs/assets.")
 
       - name: Upload generated living SVGs
