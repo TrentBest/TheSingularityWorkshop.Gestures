@@ -70,7 +70,8 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 
 ## Singularity Studios provider track
 
-- [x] Document the proposed ownership boundary and WebPageLLM handoff for reusable performer, crew, camera, and equipment procedures.
+- [x] Document the proposed ownership boundary and [Gestures procedure plan](SINGULARITY_STUDIOS_GESTURE_PLAN.md).
+- [x] Publish a matching [WebPageLLM integration handoff](https://github.com/TrentBest/WebPage/blob/development/docs/integrations/SINGULARITY_STUDIOS_WEBPAGELLM_HANDOFF.md) on WebPage development.
 - [ ] Inspect current WebPage and AnyApp implementations before defining a concrete consumer integration contract.
 - [ ] Define provider-owned stage/rig anchors and a reusable 30-second take fixture.
 - [ ] Add test-backed performer and camera/equipment procedure examples using existing engine-neutral contracts; do not claim physical outcomes without host/Physics observations.
