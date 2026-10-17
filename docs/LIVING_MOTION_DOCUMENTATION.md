@@ -17,6 +17,14 @@ The scene contract also distinguishes physical sound from an attached sound-effe
 For this scene, the documentation must fight for every soldier at the level of identity and behavior without requiring full CPU-side articulation for every distant silhouette. Close interactions can use richer gesture output; middle and far tiers can preserve stable identity and response phase through instanced representations and cluster summaries. Renderer owns observer-relative fidelity selection, Visualize owns GPU presentation, raWWar owns soldier/game state, and Physics owns physical outcomes. Those are design contracts to implement and measure—not current performance claims.
 
 
+## Extremus: deterministic extreme-distance populations
+
+[Extremus crowd-baking contract](EXTREMUS_CROWD_BAKING.md) defines the next scale-oriented workstream: compose reusable source poses and implemented activities into reproducible population instances, then bake renderer-neutral representation data with explicit provenance. Its first proposed fixture is two starport population patches generated from different stable seeds.
+
+This is a **design contract, not a current visual or performance claim**. The current crowd-response SVG demonstrates deterministic intent scheduling, not a population bake or completed motion. The Extremus slice must generate its own artifacts from executable C# inputs, show its seed/profile/source IDs, and pass replay, order-independence, bounds, exclusion, and snapshot-parity tests before the illustration is described as generated evidence.
+
+Renderer owns observer-relative LOD and transitions; Visualize owns presentation; Physics/domain owns authoritative physical outcomes and constraints. Gestures must remain engine-neutral and must not claim that a distant impostor is an individually recoverable actor unless its manifest actually preserves that mapping.
+
 ## Generated crowd-response schedule
 
 ![Eighteen stable participant intent schedules produced by CrowdResponseScheduler](assets/crowd-response-schedule.svg)
