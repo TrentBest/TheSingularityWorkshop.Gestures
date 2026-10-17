@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 410" role="img" aria-labelledby="title desc">
+<title id="title">Gesture evaluation is a stateless timeline sample</title>
+<desc id="desc">The caller supplies elapsed time to the evaluator. The evaluator clamps normalized progress and interpolates a pose. The caller owns the clock, pause and resume, interruption, looping, and handoff. A completed sample stays at the final pose; it does not loop.</desc>
+<defs><style>text{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#172033}.h{font-size:22px;font-weight:750}.sub{font-size:15px}.node{fill:#fff;stroke:#8795aa;stroke-width:2}.blue{fill:#eaf2ff;stroke:#2c65ad;stroke-width:2}.green{fill:#eaf8f0;stroke:#2e8057;stroke-width:2}.orange{fill:#fff2e4;stroke:#b76424;stroke-width:2}.arrow{fill:none;stroke:#52627a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7;animation:flow 2.3s linear infinite}@keyframes flow{to{stroke-dashoffset:-56}}@media(prefers-reduced-motion:reduce){.dash{animation:none}}</style><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6Z" fill="#52627a"/></marker></defs>
+<rect x="10" y="10" width="1060" height="390" rx="22" fill="#f7f9fc" stroke="#d4dce8"/>
+<text x="32" y="48" class="h">Evaluate a time; do not confuse sampling with running a task</text>
+<text x="32" y="72" class="sub">The evaluator is a deterministic function of supplied inputs. Lifecycle ownership stays outside it.</text>
+<rect x="32" y="108" width="220" height="100" rx="14" class="blue"/><text x="142" y="138" text-anchor="middle" font-size="18" font-weight="750">Caller</text><text x="142" y="165" text-anchor="middle" class="sub">elapsed time +</text><text x="142" y="187" text-anchor="middle" class="sub">definition + variation</text>
+<path d="M253 158 H300" class="arrow dash" marker-end="url(#a)"/>
+<rect x="306" y="108" width="250" height="100" rx="14" class="green"/><text x="431" y="138" text-anchor="middle" font-size="18" font-weight="750">GestureEvaluator</text><text x="431" y="165" text-anchor="middle" class="sub">clamp progress [0,1]</text><text x="431" y="187" text-anchor="middle" class="sub">interpolate pose</text>
+<path d="M557 158 H604" class="arrow dash" marker-end="url(#a)"/>
+<rect x="610" y="108" width="210" height="100" rx="14" class="blue"/><text x="715" y="138" text-anchor="middle" font-size="18" font-weight="750">EvaluatedPose</text><text x="715" y="165" text-anchor="middle" class="sub">pose + progress</text><text x="715" y="187" text-anchor="middle" class="sub">+ completion flag</text>
+<path d="M821 158 H868" class="arrow" marker-end="url(#a)"/>
+<rect x="874" y="108" width="174" height="100" rx="14" class="node"/><text x="961" y="138" text-anchor="middle" font-size="18" font-weight="750">Consumer</text><text x="961" y="165" text-anchor="middle" class="sub">presents or</text><text x="961" y="187" text-anchor="middle" class="sub">checks outcome</text>
+<text x="32" y="250" class="h">Timeline behavior</text>
+<line x1="72" y1="291" x2="1000" y2="291" stroke="#a5b1c1" stroke-width="5" stroke-linecap="round"/>
+<line x1="72" y1="291" x2="760" y2="291" stroke="#2e8057" stroke-width="5" stroke-linecap="round"/>
+<circle cx="72" cy="291" r="9" fill="#2c65ad"/><circle cx="760" cy="291" r="9" fill="#2e8057"/><circle cx="1000" cy="291" r="9" fill="#b76424"/>
+<text x="72" y="319" class="sub" text-anchor="middle">t = 0</text><text x="760" y="319" class="sub" text-anchor="middle">progress = 1</text><text x="1000" y="319" class="sub" text-anchor="middle">later times</text>
+<text x="72" y="345" class="sub">Initial pose</text><text x="760" y="345" class="sub" text-anchor="middle">Final pose; complete</text><text x="1000" y="345" class="sub" text-anchor="end">Still final pose — no implicit loop</text>
+<rect x="32" y="362" width="1016" height="24" rx="8" fill="#fff2e4" stroke="#b76424"/><text x="540" y="379" text-anchor="middle" class="sub">Pause/resume, cancellation, reversal, blending, contact and physical success are not evaluator responsibilities.</text>
+</svg>
