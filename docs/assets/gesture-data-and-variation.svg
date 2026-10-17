@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 500" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 538" role="img" aria-labelledby="title desc">
 <title id="title">Gesture data and deterministic individual variation</title>
 <desc id="desc">A definition contains normalized keyframes and named transforms. A caller supplies elapsed time and duration to the stateless evaluator, which interpolates an evaluated pose. Separately, stable identity and an authored experience profile produce bounded variation once, then the same sampled variation is reused. Per-frame random noise is explicitly rejected.</desc>
 <defs><style>text{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#172033}.h{font-size:22px;font-weight:750}.sub{font-size:15px}.small{font-size:13px}.node{fill:#fff;stroke:#8795aa;stroke-width:2}.blue{fill:#eaf2ff;stroke:#2c65ad;stroke-width:2}.green{fill:#eaf8f0;stroke:#2e8057;stroke-width:2}.orange{fill:#fff2e4;stroke:#b76424;stroke-width:2}.purple{fill:#f3edff;stroke:#7652a5;stroke-width:2}.arrow{fill:none;stroke:#52627a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.flow{stroke-dasharray:8 7;animation:flow 2.4s linear infinite}.pulse{animation:pulse 1.8s ease-in-out infinite}@keyframes flow{to{stroke-dashoffset:-60}}@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}@media(prefers-reduced-motion:reduce){.flow,.pulse{animation:none}}</style><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6Z" fill="#52627a"/></marker></defs>
@@ -31,4 +31,9 @@
 <text x="52" y="426" font-size="16" font-weight="750">Variation rule</text>
 <text x="202" y="426" class="sub">Sample stable, bounded parameters once per assignment; reuse them across calls.</text>
 <text x="202" y="448" class="sub pulse">Never re-roll per frame: random jitter is not coherent individuality.</text>
+
+<g id="provenance-label" role="group" aria-label="PROVENANCE: CONCEPTUAL CONTRACT MAP • TECHNOLOGY: NATIVE SVG ONLY • GUI.SVG: NOT USED • NOT RUNTIME OUTPUT">
+  <rect x="12" y="503" width="1056" height="27" rx="6" fill="#172033"/>
+  <text x="540" y="521" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" letter-spacing=".15" fill="#ffffff">PROVENANCE: CONCEPTUAL CONTRACT MAP • TECHNOLOGY: NATIVE SVG ONLY • GUI.SVG: NOT USED • NOT RUNTIME OUTPUT</text>
+</g>
 </svg>
