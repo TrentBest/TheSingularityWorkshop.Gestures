@@ -65,6 +65,10 @@ jobs:
           failures = []
           for path in files:
               root = ET.parse(path).getroot()
+              # Decorative divider assets are intentionally not instructional SVGs.
+              # Validate their XML, but reserve technology provenance labels for diagrams.
+              if "dividers" in path.parts:
+                  continue
               labels = [node for node in root.iter() if node.attrib.get("id") == "provenance-label"]
               if not labels:
                   failures.append(f"{path}: missing visible provenance label")
