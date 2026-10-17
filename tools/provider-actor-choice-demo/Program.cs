@@ -47,7 +47,7 @@ var outcomes = new[]
 };
 if (!decisions.Any(x => x.ActorId == "digiten-mira" && x.CapabilityId == "buy-puppy" && x.Selected) ||
     decisions.Any(x => x.ActorId == "digiten-kellan" && x.Selected) ||
-    decisions.Any(x => x.CapabilityId is "buy-dog-food" or "visit-dog-park" && x.Eligible))
+    decisions.Any(x => (x.CapabilityId is "buy-dog-food" or "visit-dog-park") && x.Eligible))
     throw new InvalidOperationException("Actor-choice fixture violated its expected filters or selection.");
 var replay = actors.Select(a => Select(provider, a)).ToArray();
 if (!replay.SequenceEqual(actors.Select(a => Select(provider, a))))
