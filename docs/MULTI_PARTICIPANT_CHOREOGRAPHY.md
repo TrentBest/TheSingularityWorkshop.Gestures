@@ -1,10 +1,16 @@
-# Multi-participant choreography: from crowds to coordinated activities
+# The Gestures ecosystem: motion, coordination, and population execution
 
-> **Status: architecture contract and implementation plan.** This document generalizes the existing per-participant crowd-response scheduler. It does not claim that party simulation, partner dancing, group formation control, or a general crowd solver is implemented.
+> **Status: architecture contract and implementation plan.** This document places the existing crowd-response scheduler in the larger Gestures ecosystem. It does not claim that party simulation, partner dancing, group formation control, a general crowd solver, or optimized population-scale execution is implemented.
 
-## The missing distinction
+## The system is larger than any one application
 
-A crowd response answers: **when should each participant begin responding to a shared event?**
+A crowd is both a **consumer of Gestures capabilities** and a **workload that drives Gestures ecosystem design**. Treating it only as an application misses the shared machinery needed to make large populations affordable; treating Gestures as only a crowd engine would make every other user inherit crowd-specific assumptions.
+
+Think of a rollercoaster system: the vehicle, track, tunnel, supports, scenery, control system, and operating procedures are different parts of one experience. A crowd is one use of the motion ecosystem, just as a party, dance, starport crew, film set, or individual character is another. Population-scale work can expose common needs—batching, shared inputs, stable identity, scheduling, update-rate tiers, and compact output—that should become reusable capabilities where evidence shows they generalize.
+
+The goal is therefore not merely to add a party or dance example. It is to identify and build the reusable system beneath them, then demonstrate that system through real applications.
+
+A crowd response answers: **when should each participant begin responding to a shared event?** Efficiently evaluating a large population also asks **which work can be shared or batched, at what cadence, and how can each participant retain stable independent results?**
 
 A coordinated activity answers a larger set of questions:
 
@@ -20,7 +26,17 @@ A coordinated activity answers a larger set of questions:
 
 The scheduler is a useful primitive inside this system, not the whole system.
 
-## A reusable coordination model
+## Separate capabilities that cooperate
+
+The architecture should be understood as cooperating layers, not one overloaded `Crowd` feature:
+
+1. **Motion definitions and evaluation:** reusable procedures, keyframes/anchors, deterministic evaluation, and bounded stable variation.
+2. **Coordination and scheduling:** shared clocks, events, roles, relationships, dependencies, interruption, and re-entry.
+3. **Population execution:** batching compatible work, reusing shared inputs, separating per-entity data from cohort data, scheduling update cadence, and producing stable per-identity outputs. This is an ecosystem capability to investigate and measure—not a claim that a population batch engine already exists.
+4. **Domain applications:** crowd response/flow, party, dance, starport crew, film production, and other consumers that compose the capabilities they need.
+5. **Presentation and physical realization:** consumers resolve world anchors, physical outcomes, observer-relative fidelity, GPU presentation, and sound according to their own contracts.
+
+Batching is an execution optimization, not a behavioral policy. A batch must not make participants interchangeable, change outcomes when input order changes, or force unrelated activities onto the same clock. Conversely, the domain application should not need to hand-roll a separate evaluator for every participant if the work can safely share a common path.
 
 A future coordinator should describe an activity using versioned, data-driven records. These are conceptual names, not public API commitments.
 
@@ -78,7 +94,9 @@ The existing starport departure task graph is a nearby reference for this distin
 
 Keep `CrowdResponseScheduler` small and pure. It already answers a useful question: given one event, a policy, and one stable participant identity, what bounded intent time and variation parameters should that participant receive?
 
-A future activity coordinator can call or compose this primitive for independent participant responses. It must not silently retrofit pair relationships, music clocks, formations, or task dependencies into the crowd policy. Those are separate semantics and should have their own contracts and tests.
+That implementation is a first reusable brick, not the end state for crowd support. The crowd workload should help drive shared population-execution capabilities: batch evaluation where inputs and semantics are compatible, shared event/policy data, stable per-ID variation, cadence tiers, and measurable CPU/allocation costs. Those capabilities should serve other workloads too, rather than being buried in a crowd-only application.
+
+A future activity coordinator can call or compose the scheduler for independent participant responses. It must not silently retrofit pair relationships, music clocks, formations, or task dependencies into the crowd policy. Those are separate semantics and should have their own contracts and tests. Likewise, do not assume that batching means all agents share the same behavior or update rate.
 
 Generalization should preserve the following distinctions:
 
@@ -93,6 +111,7 @@ Generalization should preserve the following distinctions:
 
 - **Activity/scene coordinator:** session lifecycle, participant assignment, role/pair/group relations, shared clocks, action dependencies, retries and explicit cancellation/re-entry policy.
 - **CrowdResponseScheduler:** deterministic per-identity timing/variation for a single shared response event.
+- **Population execution (future capability):** measured batching, shared-input reuse, per-entity output preservation, cadence/update tiers, and population profiling. Keep it separate from the semantics of any one application.
 - **Gestures:** reusable procedure definitions, semantic anchors, CPU reference evaluation, bounded stable motion variation, evaluated pose.
 - **Domain provider:** party rules, dance vocabulary/choreography, starport task semantics, participant capability/experience and anchor data.
 - **FSM/API or host:** optional lifecycle orchestration and authoritative session integration; not a dependency required by Gestures.
@@ -105,13 +124,15 @@ Do not put a universal social simulation, a complete choreography language, path
 
 ## Implementation sequence
 
-1. [ ] Specify a minimal versioned activity/session/participant/role/clock/output contract; avoid implementing a generic framework before two concrete fixtures expose the common core.
-2. [ ] Add a two-person dance fixture with explicit beat times, pair identity, three phrases, interruption, and deterministic replay.
-3. [ ] Add tests for input-order independence, stable resampling, missed cues, participant removal, pause/resume, and re-entry.
-4. [ ] Add a small party fixture with overlapping activity groups and explicit waiting/blocked transitions.
-5. [ ] Reuse the same activity vocabulary for a team task only where its dependency/evidence semantics match; do not force physical tasks into social activity rules.
-6. [ ] Generate living SVGs from actual schedule and evaluator outputs, and label conceptual art separately.
-7. [ ] Integrate in a consumer and profile only after the semantics and replay tests are accepted.
+1. [ ] Establish representative workloads and a baseline: one procedure, a paired activity, a party-sized population, and staged large populations. Record elapsed CPU time, allocations, per-entity bytes, cadence, and output count; do not claim scale without measurements.
+2. [ ] Specify the smallest versioned activity/session/participant/role/clock/output contract from concrete fixtures.
+3. [ ] Add a two-person dance fixture with explicit beat times, pair identity, three phrases, interruption, and deterministic replay.
+4. [ ] Add tests for input-order independence, stable resampling, missed cues, participant removal, pause/resume, and re-entry.
+5. [ ] Add a small party fixture with overlapping activity groups and explicit waiting/blocked transitions.
+6. [ ] Identify common evaluator work and design a batch path only where measurements and semantic equivalence justify it; compare scalar and batched outputs for parity and deterministic per-ID results.
+7. [ ] Reuse the same activity vocabulary for a team task only where its dependency/evidence semantics match; do not force physical tasks into social activity rules.
+8. [ ] Generate living SVGs from actual schedule and evaluator outputs, and label conceptual art separately.
+9. [ ] Integrate in a consumer and profile staged population sizes before making optimization or scalability claims.
 
 ## Acceptance criteria before calling it general
 
@@ -122,6 +143,8 @@ Do not put a universal social simulation, a complete choreography language, path
 - Interruption, unavailability, and failed physical outcomes do not silently advance the plan.
 - Replay from the same versioned inputs reproduces the same schedule; numerical pose tolerances are documented separately.
 - Crowd response, social activity, partner choreography, and physical team tasks remain distinct policies over shared primitives, not one overloaded mode flag.
+- Any batch path preserves per-identity semantics and matches the reference evaluator within documented tolerances; results do not depend on collection order.
+- Optimization claims report workload, population size, hardware/runtime context, elapsed time, allocations/bytes, and correctness parity.
 - Demonstrations and SVGs state whether they show specified, implemented, tested, measured, or merely conceptual behavior.
 
 The goal is **coordinated individuality**: people participate in the same activity without becoming synchronized clones, and the system can explain both what it intended and what actually happened.
