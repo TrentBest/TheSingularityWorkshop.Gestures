@@ -57,14 +57,24 @@ jobs:
             docs/assets/gesture-*.svg
             docs/assets/crowd-response-schedule.svg
 
-      - name: Report generated SVG snapshot drift
+      - name: Require crowd-response SVG snapshot parity
         shell: bash
         run: |
-          if ! git diff --quiet -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg docs/assets/crowd-response-schedule.svg; then
-            echo "::warning::Generated living SVGs differ from checked-in snapshots. Review the uploaded gesture-living-svgs artifact and synchronize the snapshots before re-enabling the drift gate."
-            git diff --stat -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg docs/assets/crowd-response-schedule.svg
+          if ! git diff --quiet -- docs/assets/crowd-response-schedule.svg; then
+            echo "::error::The crowd-response SVG snapshot differs from actual scheduler output. Review and synchronize docs/assets/crowd-response-schedule.svg."
+            git diff --stat -- docs/assets/crowd-response-schedule.svg
+            exit 1
+          fi
+          echo "The crowd-response SVG snapshot matches actual scheduler output."
+
+      - name: Report remaining generated SVG snapshot drift
+        shell: bash
+        run: |
+          if ! git diff --quiet -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg; then
+            echo "::warning::Other generated living SVGs differ from checked-in snapshots. Review the uploaded gesture-living-svgs artifact and synchronize the snapshots before re-enabling their drift gate."
+            git diff --stat -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg
           else
-            echo "All generated living SVG snapshots are current."
+            echo "All other generated living SVG snapshots are current."
           fi
 
       - name: Verify SVG formatting
