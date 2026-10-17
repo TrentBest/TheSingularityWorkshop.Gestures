@@ -47,7 +47,9 @@ public sealed class CrowdResponseSchedulerTests
         var forward = requests.ToDictionary(x => x.ParticipantId, x => CrowdResponseScheduler.Schedule(x, Policy));
         var reverse = requests.Reverse().ToDictionary(x => x.ParticipantId, x => CrowdResponseScheduler.Schedule(x, Policy));
 
-        Assert.Equal(forward, reverse);
+        Assert.Equal(forward.Keys.OrderBy(x => x), reverse.Keys.OrderBy(x => x));
+        foreach (var participantId in forward.Keys)
+            Assert.Equal(forward[participantId], reverse[participantId]);
     }
 
     [Fact]
