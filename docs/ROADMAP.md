@@ -62,6 +62,8 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 
 ## Milestone 1 — Real domain examples
 
+- [ ] Add a CPU-testable vehicle intent-versus-achieved-state reference fixture for flight-simulation consumers; keep vehicle dynamics and authoritative state outside Gestures. Scope: [Vehicle Intent vs. Achieved State](VEHICLE_INTENT_VS_ACHIEVED_STATE.md).
+
 - [ ] Add an illustrative soldier movement Gesture with a rig-independent sample rig.
 - [x] Add a first provider-owned starport departure task graph with role branching, ground-crew return, access sealing, manifest verification, and explicit clearance/departure gates.
 - [x] Add three CPU-evaluable starport pose-sequence fixtures for ramp boarding, service-umbilical handling, and cover handling, with provider-owned semantic anchors.
