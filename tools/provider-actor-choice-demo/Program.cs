@@ -51,8 +51,10 @@ if (!decisions.Any(x => x.ActorId == "digiten-mira" && x.CapabilityId == "buy-pu
     decisions.Any(x => (x.CapabilityId is "buy-dog-food" or "visit-dog-park") && x.Eligible))
     throw new InvalidOperationException("Actor-choice fixture violated its expected filters or selection.");
 var replay = actors.Select(a => Select(provider, a)).ToArray();
-if (!replay.SequenceEqual(actors.Select(a => Select(provider, a))))
-    throw new InvalidOperationException("Selection was not deterministic.");
+var reversedProvider = provider with { Capabilities = provider.Capabilities.Reverse().ToArray() };
+var reversedReplay = actors.Select(a => Select(reversedProvider, a)).ToArray();
+if (!replay.SequenceEqual(reversedReplay))
+    throw new InvalidOperationException("Selection changed when provider capability enumeration order changed.");
 foreach (var actor in actors)
 {
     var recorded = decisions.FirstOrDefault(x => x.ActorId == actor.Id && x.Selected)?.CapabilityId ?? "none";
