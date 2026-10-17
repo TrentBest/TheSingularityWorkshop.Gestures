@@ -4,6 +4,15 @@ Gestures teaches reusable animation principles. A gesture describes motion over 
 
 The documentation is part of the product experience: it should help readers *see* what the current implementation does, understand why the behavior matters, and follow the evidence back to real code.
 
+## Concept scene: the speech and city-wide audience
+
+![Animated conceptual storyboard for the advisor, balcony reveal, responsive crowd, and event-horizon representation tiers](assets/speech-scene-population.svg)
+
+The [Speech Scene and Soldier Population plan](SPEECH_SCENE_POPULATION.md) turns the moniker-to-balcony experience into explicit phases, ownership boundaries, gesture vocabulary, crowd-event timing, screen echo rules, and a staged validation plan. It is intentionally marked as a **conceptual design map**, not an evaluator-generated scene: the current SVG explains the target experience and the event-horizon idea; it does not prove that a crowd renderer, audio propagation model, articulated soldier, or city-scale simulation already exists.
+
+For this scene, the documentation must fight for every soldier at the level of identity and behavior without requiring full CPU-side articulation for every distant silhouette. Close interactions can use richer gesture output; middle and far tiers can preserve stable identity and response phase through instanced representations and cluster summaries. Renderer owns observer-relative fidelity selection, Visualize owns GPU presentation, raWWar owns soldier/game state, and Physics owns physical outcomes. Those are design contracts to implement and measure—not current performance claims.
+
+
 ## Current generated scenes
 
 ### 1. Named transform tracks
