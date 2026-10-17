@@ -17,7 +17,7 @@ var definition = new GestureDefinition("living-docs.seeded-variation",
 [
     new GestureKeyframe(0d, new Dictionary<string, PoseTransform>
     {
-        ["root"] = PoseTransform.Identity
+        ["root"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, Vector3.One)
     }),
     new GestureKeyframe(1d, new Dictionary<string, PoseTransform>
     {
@@ -60,7 +60,7 @@ static string BuildSvg(IReadOnlyList<Scene> scenes)
         var positions = string.Join(";", scene.Samples.Select(s => $"{N(left + s.Progress * (right-left))} {N(y + s.Offset * 36)}"));
         var times = string.Join(";", scene.Samples.Select(s => N(s.Time)));
         var progress = string.Join(";", scene.Samples.Select(s => N(s.Progress)));
-        var speed = 1d + ((ToUnit(scene.Profile.Seed, 0xA0761D6478BD642FUL) * 2d - 1d) * scene.Variation.MaximumSpeedDeviation);
+        var speed = 1d + ((ToUnit(scene.Profile.Seed, 0UL) * 2d - 1d) * scene.Variation.MaximumSpeedDeviation);
         b.Append($"<text x=\"38\" y=\"{N(y-10)}\" fill=\"{color}\" font-family=\"Segoe UI, sans-serif\" font-size=\"15\" font-weight=\"700\">{E(scene.Profile.Name)}</text>");
         b.Append($"<text x=\"38\" y=\"{N(y+12)}\" fill=\"#c4d0df\" font-family=\"Segoe UI, sans-serif\" font-size=\"12\">seed {scene.Profile.Seed} · speed ×{N(speed)}</text>");
         b.Append($"<line x1=\"{left}\" y1=\"{y}\" x2=\"{right}\" y2=\"{y}\" stroke=\"#63748b\" stroke-width=\"2\" stroke-dasharray=\"5 7\"/>");
