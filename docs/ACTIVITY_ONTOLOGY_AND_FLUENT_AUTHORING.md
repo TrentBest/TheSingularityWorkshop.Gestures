@@ -8,7 +8,7 @@ A character should not need bespoke animation logic for every game or social eve
 
 A flash mob, a pickup game of tag, hide-and-seek, a practical joke, a starport boarding procedure, and a coordinated film shoot are different activity ontologies. They can reuse the same lower-level gesture definitions, role assignments, spatial constraints, timing, lifecycle, and observation contracts without pretending they are the same activity.
 
-**Gesture = reusable physical procedure. Activity definition = an organized, versioned plan of roles and phases that uses procedures. Activity session = one live occurrence of that plan. Workshop Workshop Experience = the composed environment of MicroBundles in which the activity may run.** Keep these concepts distinct.
+**Gesture = reusable physical procedure. Activity definition = an organized, versioned plan of roles and phases that uses procedures. Activity session = one live occurrence of that plan. Workshop Experience = the composed environment of MicroBundles in which the activity may run.** Keep these concepts distinct.
 
 ## Ontology layers
 
@@ -23,7 +23,7 @@ A flash mob, a pickup game of tag, hide-and-seek, a practical joke, a starport b
 | Observation | Facts supplied by authoritative owners | Participant entered a zone; collision blocked a step; player accepted a cue |
 | Presentation | Guidance, avatar pose, observer-specific fidelity and rendering | Show the player's dance cue; replicate the evaluated avatar motion |
 
-Activity classification belongs to the activity ontology, not a pile of character-specific conditionals. Ontology terms should have stable IDs, explicit versions, and documented relationships. Labels are for people; stable identifiers and declared semantics are for tools and runtime systems.
+Activity classification belongs to the activity model, not a pile of character-specific conditionals. The current `ClassifyAs` values are plain activity-level classification terms; they are **not** the Workshop's nine-layer `OntologySignature` coordinates and do not implement ontology-token resolution. Ontology terms should have stable IDs, explicit versions, and documented relationships. Labels are for people; stable identifiers and declared semantics are for tools and runtime systems.
 
 ## Fluent authoring: edit the model, not the character
 
@@ -141,9 +141,9 @@ Do not draw a populated shopping district and label it implemented before the se
 
 ## Suggested implementation order
 
-1. Formalize immutable ActivityDefinition, phase, role-slot, action-reference, ontology-term, and version records.
-2. Add a fluent builder that produces the immutable model and gives path-specific validation diagnostics.
-3. Add deterministic validation for graph references, role bounds, and dependency cycles.
+1. **Implemented foundation:** immutable `ActivityDefinition`, phase and role-slot records, classification terms, and a fluent builder with structural validation.
+2. Add serialization and round-trip tests for the same immutable model.
+3. Add deterministic validation for cross-definition Gesture references, dependency cycles, and path-specific diagnostics.
 4. Extend the implemented optimistic definition replacement proposal into a versioned session patch model and atomic application against a session revision.
 5. Add deterministic role assignment and participant eligibility as independent policies.
 6. Add a minimal prerequisite-aware session coordinator with waiting, blocked, interrupted, and completed states.
