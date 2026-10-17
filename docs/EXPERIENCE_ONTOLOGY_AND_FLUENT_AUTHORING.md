@@ -1,6 +1,6 @@
 # Experience ontology and fluent runtime authoring
 
-> **Status: architecture contract and implementation plan.** This document records the intended reusable model. The fluent API below is illustrative, not a claim that these types already exist.
+> **Status: initial definition builder and optimistic definition-patch contract implemented; session coordination remains planned.** The fluent sketch below is illustrative where explicitly labeled.
 
 ## The core idea
 
@@ -72,7 +72,7 @@ var definition = ExperienceDefinitionBuilder.Define("public-space.flash-mob")
     .Build();
 ~~~
 
-The builder validates IDs, positive version, duplicate classifications/phases/roles/references, participant bounds, and nonempty phases. Synchronization cues, participation policy, runtime session patches, and atomic live mutation are still planned rather than implemented.
+The builder validates IDs, positive version, duplicate classifications/phases/roles/references, participant bounds, and nonempty phases. `ExperienceDefinitionPatch` is also implemented: it represents a complete replacement definition, requires the same experience ID and a strictly newer version, and checks whether the currently observed definition still matches the expected version. It is an optimistic-concurrency proposal only; it does not mutate a session, apply atomically, or resolve active participant playback.
 
 A good runtime API should support:
 - **Composition:** add/remove phases, role slots, actions, dependencies, timing cues, and spatial constraints.
@@ -86,7 +86,7 @@ A good runtime API should support:
 
 ## Runtime patch contract
 
-Runtime modification must not mean mutating arbitrary collections while a coordinator is iterating them. A patch should be a declarative change set with a target definition/session ID, expected version or revision, operations, and validation results.
+Runtime modification must not mean mutating arbitrary collections while a coordinator is iterating them. The implemented `ExperienceDefinitionPatch` is the first narrow piece of this contract: a replacement definition plus target ID and expected version. A full session patch still needs a revisioned operation set, validation results, and a coordinator-owned apply boundary.
 
 1. Build the proposed change without altering the live session.
 2. Validate references, ontology terms, role bounds, action/provider compatibility, dependency cycles, timebase compatibility, and required anchors.
@@ -133,7 +133,7 @@ The proof sequence should be:
 1. A serialized experience definition with stable IDs and version.
 2. A validator with tests for dangling references, invalid role bounds, dependency cycles, and incompatible timebases.
 3. A fluent builder that creates that same model and round-trips through serialization.
-4. A patch engine with atomic apply/reject tests and a defined boundary for active participants.
+4. A session patch engine with atomic apply/reject tests and a defined boundary for active participants. The current definition patch is only a validated proposal with an optimistic version check.
 5. A small executable tag or dance session whose visual output is generated from real assignment and schedule records.
 6. An editor that reads and writes the same ontology model, rather than maintaining a separate visual-only representation.
 
@@ -144,10 +144,10 @@ Do not draw a populated shopping district and label it implemented before the se
 1. Formalize immutable ExperienceDefinition, phase, role-slot, action-reference, ontology-term, and version records.
 2. Add a fluent builder that produces the immutable model and gives path-specific validation diagnostics.
 3. Add deterministic validation for graph references, role bounds, and dependency cycles.
-4. Add a versioned runtime patch model and atomic patch application against a session revision.
+4. Extend the implemented optimistic definition replacement proposal into a versioned session patch model and atomic application against a session revision.
 5. Add deterministic role assignment and participant eligibility as independent policies.
 6. Add a minimal prerequisite-aware session coordinator with waiting, blocked, interrupted, and completed states.
 7. Build a small tag/hide-and-seek or flash-mob fixture and generate living documentation from its real output.
 8. Build editor surfaces on top of the same model.
 
-The first executable ontology slice now exists: ExperienceDefinitionBuilder creates immutable, versioned definitions with classifications, ordered phases, role bounds, and Gesture references, with tests for structural invariants. It does not yet serialize the model, resolve Gesture references against providers, coordinate a live session, apply runtime patches, assign participants, or implement the full fluent sketch above. The GestureOfferSelector is the executable piece of actor-relative eligibility; fixed sequence playback and starport task dependencies remain narrower foundations, not a general experience coordinator.
+The first executable ontology slice now exists: ExperienceDefinitionBuilder creates immutable, versioned definitions with classifications, ordered phases, role bounds, and Gesture references, with tests for structural invariants. It does not yet serialize the model, resolve Gesture references against providers, coordinate a live session, apply session patches atomically, assign participants, or implement the full fluent sketch above. `ExperienceDefinitionPatch` validates replacement identity/version and detects stale expected versions, but deliberately does not apply changes. The GestureOfferSelector is the executable piece of actor-relative eligibility; fixed sequence playback and starport task dependencies remain narrower foundations, not a general experience coordinator.
