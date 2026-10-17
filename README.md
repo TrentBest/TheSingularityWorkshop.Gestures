@@ -61,7 +61,7 @@ Each part has a clear owner:
 - **Visualize** performs GPU-facing presentation.
 - **raWWar** supplies domain capabilities and authoritative game state.
 
-The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, or game-specific types. The initial evaluator linearly interpolates translation and scale and uses quaternion spherical interpolation for rotation. This is a reference baseline, not a final high-fidelity motion solver.
+The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, or game-specific types. The initial evaluator linearly interpolates translation and scale and uses quaternion spherical interpolation for rotation. This is a reference baseline, not a final high-fidelity motion solver. Its implemented timing boundaries and explicit non-goals for looping, pause/resume, interruption, reversal, and blending are recorded in the [Gesture Evaluation Lifecycle contract](docs/GESTURE_EVALUATION_LIFECYCLE.md).
 
 ## 🟢 04 See it in a minute
 
