@@ -57,7 +57,6 @@ static string BuildSvg(IReadOnlyList<Scene> scenes)
         var scene = scenes[i];
         var y = top + i * laneGap;
         var color = scene.Profile.Color;
-        var positions = string.Join(";", scene.Samples.Select(s => $"{N(left + s.Progress * (right-left))} {N(y + s.Offset * 36)}"));
         var times = string.Join(";", scene.Samples.Select(s => N(s.Time)));
         var speed = 1d + ((ToUnit(scene.Profile.Seed, 0UL) * 2d - 1d) * scene.Variation.MaximumSpeedDeviation);
         b.Append($"<text x=\"38\" y=\"{N(y-10)}\" fill=\"{color}\" font-family=\"Segoe UI, sans-serif\" font-size=\"15\" font-weight=\"700\">{E(scene.Profile.Name)}</text>");
