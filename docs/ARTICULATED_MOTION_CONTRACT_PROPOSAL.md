@@ -48,6 +48,10 @@ This split is a working hypothesis to test, not a new runtime API.
 6. **Optional capabilities stay optional.** IK, constraints, physics, retargeting, serialization, and GPU packing must not become hidden prerequisites of the base model.
 7. **Examples must exercise different topologies.** At minimum, validate one humanoid and one non-humanoid rig; include a mechanism example to test the boundary between biological animation and general articulated procedures.
 
+## Discovery and registration are separate from action evaluation
+
+For the proposed non-humanoid workflow—querying a provider for a dog/bird/butterfly profile, receiving a query-local result index plus a stable versioned offer reference, requesting a registration pose, validating a concrete rig, and only then joining compatible batch work—see [Non-Humanoid Gesture Discovery and Batch Registration](NON_HUMANOID_GESTURE_DISCOVERY_AND_BATCH_REGISTRATION.md). That workflow is not yet a public API. In particular, the current evaluator's named transforms do not supply a complete rig-registration contract, and a registration pose must not be treated as an action Gesture or as proof of physical arrival.
+
 ## Questions to settle with real consumers
 
 - Is hierarchy metadata supplied by the target rig, declared alongside a Gesture, or split between both?
