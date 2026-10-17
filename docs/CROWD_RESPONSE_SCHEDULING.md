@@ -1,6 +1,6 @@
 # Deterministic Crowd-Response Scheduling
 
-> **Status: implementation contract proposal.** This document defines the next testable slice for the speech-scene crowd response. It does not claim that a crowd-event scheduler, sound propagation system, or city-scale population solver already exists.
+> **Status: first CPU reference implementation added; verification pending.** `CrowdResponseScheduler` now schedules deterministic per-participant intent with bounded delay, variant, and intensity. The acoustic-arrival model, crowd solver, LOD continuity adapter, and generated scheduler SVG remain unimplemented. The authored test suite and CI still need verification.
 
 ## The observable result
 
@@ -60,7 +60,7 @@ Here \(c\) is an explicitly declared speed-of-sound approximation for the scene 
 - If positions or intent change authoritatively, represent that as a new input/versioned observation; do not hide mutable state inside the random seed.
 - Cluster aggregation must preserve a stable representative identity and phase. Changing representation tier must not restart or globally resynchronize the event.
 
-A hash/mixer is an implementation choice, not a contract until its integer width, overflow behavior, conversion, versioning, and fixed test vectors are specified. Cross-language bit-for-bit parity is a separate acceptance gate.
+The v1 implementation uses UTF-8 FNV-1a over the policy ID/version, event ID, participant ID, and caller-supplied stable seed; separate fixed salts feed a SplitMix64-style finalizer for delay, variant, and intensity. Integer arithmetic is 64-bit unsigned with wraparound, and the upper 53 bits map to a reproducible unit interval. The test suite pins one reference vector. Changing any of these details requires an explicit algorithm version or policy compatibility decision. Cross-language bit-for-bit parity remains a separate acceptance gate.
 
 ## Output contract
 
@@ -93,7 +93,7 @@ Tests should assert semantics and tolerances, not a visually attractive outcome.
 
 ## Living visualization: evidence before illustration
 
-Once a real scheduler and tests exist, generate an SVG from its actual output records. The first living scene should show:
+After the scheduler's test suite passes in CI, generate an SVG from its actual output records. The first living scene should show:
 
 - One event-origin marker and a shared time axis.
 - Several clusters with deterministic but non-identical intent starts.
@@ -105,10 +105,10 @@ The SVG generator must call the real scheduler, serialize its outputs, and label
 
 ## Implementation order
 
-1. Freeze a minimal input/output record and validation rules.
-2. Implement a pure CPU scheduler with no rendering or audio dependency.
-3. Add fixed reference vectors plus replay, order-independence, bounds, and acoustic approximation tests.
-4. Generate a living SVG directly from scheduler outputs and compare repeated generated files.
+1. [x] Freeze a minimal input/output record and validation rules.
+2. [x] Add the first pure CPU scheduler with no rendering or audio dependency.
+3. [x] Author fixed reference-vector, replay, order-independence, bounds, invalid-input, and overflow tests; verify them in CI before treating the reference as accepted.
+4. Generate a living SVG directly from scheduler outputs after verification, then compare repeated generated files.
 5. Integrate one small crowd in a consumer; distinguish scheduled intent from completed gesture and from audible arrival.
 6. Profile staged population sizes and only then decide whether cluster aggregation, lower update rates, or packed/GPU representations are warranted.
 
