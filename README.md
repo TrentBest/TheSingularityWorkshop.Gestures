@@ -126,6 +126,8 @@ This is a source-repository verification path, not a claim that the package has 
 
 ## 🟨 Visual theory gallery
 
+Each instructional SVG carries an in-artwork provenance label. See the [SVG provenance and technology-label standard](docs/SVG_PROVENANCE_STANDARD.md) for how we distinguish conceptual maps, research models, and generated evidence—and how we explicitly identify whether GUI.SVG and other Workshop technologies were actually used.
+
 ![Living conceptual map of the candidate motion equation, its terms, target tracking, and stable individual parameter ranges](docs/assets/motion-equation-map.svg)
 
 ![Living timeline diagram of the stateless evaluator input, sampled pose output, completion boundary, and caller-owned lifecycle](docs/assets/gesture-evaluation-lifecycle.svg)
