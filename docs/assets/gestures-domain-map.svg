@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1400" height="1040" viewBox="0 0 1400 1040" role="img" aria-labelledby="title desc">
+  <title id="title">The domain Gestures solves</title>
+  <desc id="desc">A conceptual map separating reusable physical procedure data, deterministic evaluation, stable variation, kinematics research, coordination and population work, and the consumer-owned physical and visual realization boundary. Status labels distinguish implemented, research, contract, and external ownership.</desc>
+  <defs>
+    <style>
+      text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#18212f}
+      .headline{font-size:31px;font-weight:750;letter-spacing:.2px}
+      .subhead{font-size:17px;fill:#46556a}
+      .section{font-size:18px;font-weight:750}
+      .body{font-size:15px}
+      .small{font-size:13px}
+      .status{font-size:12px;font-weight:800;letter-spacing:.7px}
+      .node{fill:#fff;stroke:#8b9aab;stroke-width:1.6}
+      .implemented{fill:#e6f5ed;stroke:#28845c;stroke-width:2}
+      .research{fill:#fff2d8;stroke:#b87912;stroke-width:2;stroke-dasharray:7 4}
+      .contract{fill:#e9efff;stroke:#526fca;stroke-width:2}
+      .external{fill:#f0edf7;stroke:#78649e;stroke-width:2}
+      .arrow{fill:none;stroke:#53657b;stroke-width:2.3;marker-end:url(#arrow)}
+      .dashed{fill:none;stroke:#b87912;stroke-width:2;stroke-dasharray:7 5;marker-end:url(#arrowGold)}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#53657b"/></marker>
+    <marker id="arrowGold" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#b87912"/></marker>
+  </defs>
+  <rect width="1400" height="1040" fill="#f7f9fc"/>
+  <path d="M0 0H1400V12H0Z" fill="#e2ad35"/>
+  <text x="54" y="63" class="headline">The domain Gestures solves</text>
+  <text x="56" y="92" class="subhead">Reusable physical procedures → deterministic data → coordinated action → honest evidence</text>
+  <g transform="translate(54 119)">
+    <rect width="1292" height="62" rx="12" fill="#fff" stroke="#d4dce7"/>
+    <text x="18" y="25" class="status" fill="#53657b">CENTRAL CONTRACT</text>
+    <text x="18" y="47" class="body">Describe how an action progresses without owning the actor, world, physics, renderer, or GPU.</text>
+  </g>
+  <text x="54" y="224" class="section">1 · Define and evaluate a procedure</text>
+  <rect x="54" y="244" width="280" height="150" rx="13" class="node"/>
+  <text x="72" y="272" class="status" fill="#53657b">INPUT / CAPABILITY</text><text x="72" y="300" class="section">Gesture definition</text><text x="72" y="326" class="body">Keyframes · named transforms</text><text x="72" y="348" class="body">Anchors · timing · constraints</text><text x="72" y="375" class="small">Reusable procedure data</text>
+  <path d="M334 319H378" class="arrow"/>
+  <rect x="382" y="244" width="280" height="150" rx="13" class="implemented"/>
+  <text x="400" y="272" class="status" fill="#1d714c">IMPLEMENTED BASELINE</text><text x="400" y="300" class="section">Reference evaluation</text><text x="400" y="326" class="body">Time → evaluated transform</text><text x="400" y="348" class="body">Linear T/S · quaternion Slerp</text><text x="400" y="375" class="small">Inspectable CPU output</text>
+  <path d="M662 319H706" class="arrow"/>
+  <rect x="710" y="244" width="280" height="150" rx="13" class="implemented"/>
+  <text x="728" y="272" class="status" fill="#1d714c">PARTLY IMPLEMENTED</text><text x="728" y="300" class="section">Stable variation</text><text x="728" y="326" class="body">Identity + bounded profile</text><text x="728" y="348" class="body">Repeatable, not frame-random</text><text x="728" y="375" class="small">Current scope: speed + root offset</text>
+  <path d="M990 319H1034" class="arrow"/>
+  <rect x="1038" y="244" width="308" height="150" rx="13" class="contract"/>
+  <text x="1056" y="272" class="status" fill="#4059b4">CONSUMER CONTRACT</text><text x="1056" y="300" class="section">Evaluated pose data</text><text x="1056" y="326" class="body">Output is data, not a rendered frame</text><text x="1056" y="348" class="body">Caller owns lifecycle and context</text><text x="1056" y="375" class="small">Intent / evaluation ≠ physical outcome</text>
+  <text x="54" y="438" class="section">2 · Add capabilities only where the domain needs them</text>
+  <rect x="54" y="458" width="390" height="146" rx="13" class="research"/>
+  <text x="74" y="485" class="status" fill="#8a5a09">RESEARCH PROTOTYPES</text><text x="74" y="513" class="section">Kinematics &amp; articulation</text><text x="74" y="539" class="body">Planar kinematics · speed-limited hinges</text><text x="74" y="561" class="body">Joint hierarchy · contact observations</text><text x="74" y="585" class="small">Not a production-ready general IK solver</text>
+  <rect x="466" y="458" width="390" height="146" rx="13" class="contract"/>
+  <text x="486" y="485" class="status" fill="#4059b4">ECOSYSTEM CONTRACT</text><text x="486" y="513" class="section">Coordination &amp; choreography</text><text x="486" y="539" class="body">Roles · shared events/clocks · dependencies</text><text x="486" y="561" class="body">Waiting · interruption · re-entry</text><text x="486" y="585" class="small">Scheduler currently emits intent records</text>
+  <rect x="878" y="458" width="468" height="146" rx="13" class="implemented"/>
+  <text x="898" y="485" class="status" fill="#1d714c">PARTIAL EXECUTABLE FOUNDATION</text><text x="898" y="513" class="section">Population work &amp; deterministic baking</text><text x="898" y="539" class="body">Stable identities · scheduling · compatible work</text><text x="898" y="561" class="body">CPU placement/assignment baker</text><text x="898" y="585" class="small">Not pose baking, collision solving, or LOD</text>
+  <path d="M600 394V421H249V454" class="dashed"/><path d="M600 421H661V454" class="arrow"/><path d="M600 421H1112V454" class="arrow"/>
+  <text x="54" y="650" class="section">3 · Domain providers compose the reusable parts</text>
+  <rect x="54" y="672" width="220" height="76" rx="12" class="node"/><text x="164" y="702" text-anchor="middle" class="section">Actor / tool</text><text x="164" y="726" text-anchor="middle" class="body">Identity + capability</text>
+  <rect x="294" y="672" width="220" height="76" rx="12" class="node"/><text x="404" y="702" text-anchor="middle" class="section">Vehicle / mechanism</text><text x="404" y="726" text-anchor="middle" class="body">Anchors + constraints</text>
+  <rect x="534" y="672" width="220" height="76" rx="12" class="node"/><text x="644" y="702" text-anchor="middle" class="section">Crew / team</text><text x="644" y="726" text-anchor="middle" class="body">Roles + procedure phases</text>
+  <rect x="774" y="672" width="220" height="76" rx="12" class="node"/><text x="884" y="702" text-anchor="middle" class="section">Crowd / activity</text><text x="884" y="726" text-anchor="middle" class="body">Event + schedule</text>
+  <rect x="1014" y="672" width="332" height="76" rx="12" class="node"/><text x="1180" y="702" text-anchor="middle" class="section">Other domains</text><text x="1180" y="726" text-anchor="middle" class="body">Film set · dance · social activity</text>
+  <path d="M164 748V774H1180V748" class="arrow"/><text x="672" y="796" text-anchor="middle" class="small">Providers describe procedures; consumers bind them to real actors, context, and anchors.</text>
+  <text x="54" y="836" class="section">4 · Preserve the ownership boundary</text>
+  <rect x="54" y="856" width="392" height="92" rx="12" class="external"/><text x="74" y="884" class="status" fill="#65518b">PHYSICS / WORLD</text><text x="74" y="911" class="section">Authoritative physical outcomes</text><text x="74" y="934" class="small">Forces · collisions · achieved contact</text>
+  <rect x="466" y="856" width="392" height="92" rx="12" class="external"/><text x="486" y="884" class="status" fill="#65518b">RENDERER</text><text x="486" y="911" class="section">Observer-relative fidelity</text><text x="486" y="934" class="small">Representation · LOD · transitions</text>
+  <rect x="878" y="856" width="468" height="92" rx="12" class="external"/><text x="898" y="884" class="status" fill="#65518b">VISUALIZE</text><text x="898" y="911" class="section">GPU-facing presentation</text><text x="898" y="934" class="small">Draw evaluated data; do not redefine its meaning</text>
+  <rect x="54" y="966" width="1292" height="45" rx="10" fill="#18212f"/>
+  <text x="74" y="994" style="fill:#fff;font-size:15px;font-weight:700">Evidence key:</text><text x="184" y="994" style="fill:#bce9d1;font-size:14px;font-weight:700">IMPLEMENTED</text><text x="326" y="994" style="fill:#ffd98b;font-size:14px;font-weight:700">RESEARCH</text><text x="438" y="994" style="fill:#c7d4ff;font-size:14px;font-weight:700">CONTRACT / PLAN</text><text x="614" y="994" style="fill:#e0d5f5;font-size:14px;font-weight:700">EXTERNAL OWNER</text><text x="1325" y="994" text-anchor="end" style="fill:#fff;font-size:12px">CONCEPTUAL MAP</text>
+  <g id="provenance-label"><rect x="54" y="1018" width="1292" height="18" rx="4" fill="#e4e9f1"/><text x="64" y="1031" style="font-size:10px;font-weight:700;letter-spacing:.15px">ARTIFACT: GESTURES DOMAIN MAP • EVIDENCE: CONCEPTUAL MAP • TECHNOLOGY: HAND-AUTHORED NATIVE SVG • WORKSHOP TECHNOLOGY: NONE — NATIVE SVG • GUI.SVG: NOT USED</text></g>
+</svg>
