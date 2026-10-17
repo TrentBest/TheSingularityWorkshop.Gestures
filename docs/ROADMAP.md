@@ -35,7 +35,8 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Validate task dependencies and achieved-state gates separately from social/choreographic timing and physical outcomes.
 - [ ] Evaluate a population batch path for compatible work; prove per-identity determinism and scalar-reference parity before claiming a performance improvement.
 - [x] Capture the non-humanoid capability-query, registration-pose, rig-validation, and compatible-cohort design in [Non-Humanoid Gesture Discovery and Batch Registration](NON_HUMANOID_GESTURE_DISCOVERY_AND_BATCH_REGISTRATION.md); this is a design document, not an implemented registration API.
-- [ ] Prototype provider query results with query-local indices plus stable offer ID/version, and request a registration pose independently of any action Gesture.
+- [x] Add deterministic target-profile discovery with query-local result indices, stable provider/offer/version identity, capability filtering, and tests; this is discovery metadata, not concrete rig registration.
+- [ ] Request a registration-pose contract independently of any action Gesture, then validate and register concrete target instances through host-owned adapters.
 - [ ] Validate and register concrete quadruped and bird/segmented rigs through host-owned adapters; report incompatible or ambiguous mappings explicitly.
 - [ ] Measure update cadence tiers, shared-input reuse, allocations, per-entity bytes, and total CPU cost; keep batching an execution capability rather than a crowd-specific behavior policy.
 - [ ] Build a small end-to-end place/attention/continuity proof: stimulus-aware passersby, a gated building-to-sidewalk transition, a persistent purchase/carry outcome, and a later care-related decision. Keep agent goals/economy/persistence outside Gestures core and generate evidence from actual records.
