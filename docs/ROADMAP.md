@@ -41,7 +41,8 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 ## Forge-baked providers and actor choice
 
 - [x] Specify the ownership boundary between environment-provided capabilities, actor-owned intent/selection, Forge compilation, procedure execution, and authoritative outcomes in [Forge-Baked Gesture Providers and Actor Choice](FORGE_BAKED_PROVIDER_AND_ACTOR_CHOICE.md).
-- [ ] Define the smallest provider/capability/procedure authoring fixture from the pet-store vertical slice; version references, target/anchor binding, preconditions, outcomes, and failure/interruption semantics.
+- [x] Add a tool-local deterministic pet-store provider/actor-choice prototype that emits inspectable decision records, rejection reasons, nested-step trace, SVG, and JSON; see [Provider and Actor-Choice Executable Fixture](PROVIDER_ACTOR_CHOICE_DEMO.md). This validates the demonstration shape, not the final provider schema or a real world simulation.
+- [ ] Define the smallest versioned provider/capability/procedure authoring contract from the pet-store vertical slice, including target/anchor binding, preconditions, authoritative outcomes, failure, and interruption semantics.
 - [ ] Prototype Forge validation/baking for reference resolution, nested procedure graphs, cycles, typed parameters, and runtime lookup indexes.
 - [ ] Implement deterministic actor-perspective candidate filtering with explainable exclusion reasons; keep needs, goals, memory, and selection policy outside provider definitions.
 - [ ] Produce an execution trace and living SVG from actual baked plans, actor decisions, and authoritative outcome records.
