@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 540" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 578" role="img" aria-labelledby="title desc">
   <title id="title">Three ways to produce motion</title>
   <desc id="desc">Three panels compare a sampled baked animation clip, procedural pose calculation, and Stateful IK as a proposed feedback loop. The first follows authored poses over time, the second computes a pose from parameters and a target, and the third carries joint state forward while checking physical outcomes. This comparison is conceptual, not a performance benchmark.</desc>
   <defs>
@@ -64,4 +64,9 @@
   <rect x="750" y="374" width="280" height="44" rx="10" class="node"/>
   <text x="890" y="401" text-anchor="middle" font-size="15" font-weight="650">Update state for next step</text>
   <text x="750" y="449" class="sub pulse">Research hypothesis — not yet implemented</text>
+
+<g id="provenance-label" role="group" aria-label="CONCEPTUAL COMPARISON MAP • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED">
+  <rect x="12" y="543" width="1056" height="27" rx="6" fill="#172033"/>
+  <text x="540" y="561" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#ffffff">CONCEPTUAL COMPARISON MAP • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED</text>
+</g>
 </svg>
