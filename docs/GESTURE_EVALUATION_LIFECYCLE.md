@@ -7,7 +7,7 @@
 
 `GestureEvaluator.Evaluate` is a deterministic, stateless pose sampler. It evaluates a definition at a supplied elapsed time; it is not a running procedure, task scheduler, or owner of an entity's lifecycle.
 
-This page records the behavior implemented by the current CPU reference evaluator. It deliberately does not freeze a future orchestration API.
+This page records the stateless evaluator contract and the now-implemented `GesturePlayback` coordinator. The coordinator owns one caller-driven playback lifecycle; it does not turn Gestures into a scheduler or simulation loop.
 
 ## Inputs and timeline
 
@@ -22,16 +22,16 @@ This page records the behavior implemented by the current CPU reference evaluato
 
 ## Lifecycle ownership
 
-The evaluator does not retain state between calls. The caller owns:
+`GestureEvaluator.Evaluate` remains stateless. `GesturePlayback` adds an optional, explicit single-session lifecycle on top: the host supplies delta time, and the coordinator retains elapsed time, current pose, and lifecycle state. Consumers that need direct sampling can continue using the evaluator alone.
 
 | Concern | Current contract |
 | --- | --- |
-| Start | Supply elapsed time zero to sample the initial pose. |
-| Pause / resume | Preserve and resume the caller's elapsed-time clock. No pause state is stored by the evaluator. |
-| Completion | Observe `EvaluatedPose.IsComplete`; it is true when normalized progress reaches one. |
+| Start | `GesturePlayback.Start()` samples the initial pose and transitions `Ready → Playing`. A session is single-use. |
+| Pause / resume | `Pause()` retains elapsed time and pose; `Resume()` returns to `Playing`. The host owns the clock and supplies deltas to `Advance(deltaSeconds)`. |
+| Completion | `Advance` observes `EvaluatedPose.IsComplete` and transitions to `Completed` when normalized progress reaches one. |
 | Looping | Not provided. A completed sample stays at the final pose. |
 | Reverse playback | Not provided as a named operation. A caller may sample another timeline only if its own contract defines that meaning. |
-| Interrupt / cancel | Not represented by the evaluator. The caller or procedure coordinator owns the handoff. |
+| Cancel | `Cancel()` transitions a playing or paused session to terminal `Cancelled` and preserves the last pose. Higher-level interruption/handoff policy remains host-owned. |
 | Blend / compose | Not provided. There is no implicit blending between definitions. |
 | Physics outcome | Not inferred from a sampled pose. Contact, obstruction, grip, force, breakage, and world-state changes require authoritative host/physics observations. |
 
@@ -47,4 +47,4 @@ This does **not** yet promise bit-identical floating-point results across every 
 
 The unit tests exercise the evaluator directly. The living SVG demos serialize sampled output into documentation; the SVG is evidence of those generated samples, not evidence that the browser runs the C# evaluator or that a physical rig follows the samples.
 
-Before treating this as a full procedure lifecycle, the project still needs explicit coordinator semantics and tests for interruption, pause/resume integration, reversal policy, blending/ownership handoff, and provider-anchor resolution. These should be added as independently testable layers rather than making the evaluator stateful.
+The new coordinator has tests for start, advancement, pause/resume, cancellation, completion, invalid deltas, invalid construction settings, and seeded speed variation. Remaining lifecycle gaps are explicit reversal policy, blending/ownership handoff, provider-anchor resolution, multi-gesture sequencing, and interruption policy across a procedure graph. These remain separate layers rather than making the evaluator stateful.
