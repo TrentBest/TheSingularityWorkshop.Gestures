@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+<title id="title">How a motion equation shapes a gesture</title>
+<desc id="desc">An animated conceptual map links a desired pose path to a driven mass-spring-damper model. Inertia resists acceleration changes, stiffness pulls toward the target, damping opposes velocity, and stable profile parameters alter response. Schematic traces illustrate possibilities, not measured evaluator output.</desc>
+<defs><style>
+text{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#172033}.h{font-size:23px;font-weight:750}.sub{font-size:15px}.small{font-size:13px}.node{fill:#fff;stroke:#8795aa;stroke-width:2}.blue{fill:#eaf2ff;stroke:#2c65ad;stroke-width:2}.green{fill:#eaf8f0;stroke:#2e8057;stroke-width:2}.orange{fill:#fff2e4;stroke:#b76424;stroke-width:2}.purple{fill:#f3edff;stroke:#7652a5;stroke-width:2}.arrow{fill:none;stroke:#52627a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.flow{stroke-dasharray:8 7;animation:flow 2.4s linear infinite}.trace{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 5s ease-in-out infinite}.target{stroke:#2c65ad}.response{stroke:#b76424}.soft{stroke:#2e8057}.pulse{animation:pulse 2s ease-in-out infinite}@keyframes flow{to{stroke-dashoffset:-60}}@keyframes draw{0%{stroke-dashoffset:600}65%,100%{stroke-dashoffset:0}}@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}@media(prefers-reduced-motion:reduce){.flow,.trace,.pulse{animation:none}.trace{stroke-dashoffset:0}}
+</style><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6Z" fill="#52627a"/></marker></defs>
+<rect x="10" y="10" width="1080" height="600" rx="22" fill="#f7f9fc" stroke="#d4dce8"/>
+<text x="34" y="48" class="h">A gesture is the intent; the motion law is one possible response</text>
+<text x="34" y="73" class="sub">Conceptual map of the exploratory model — curves are schematic, not measured output from GestureEvaluator.</text>
+<rect x="34" y="100" width="300" height="112" rx="14" class="blue"/>
+<text x="184" y="129" text-anchor="middle" class="h">1 · Desired procedure</text>
+<text x="184" y="156" text-anchor="middle" class="sub">Pose path / target xₜ(t)</text>
+<text x="184" y="181" text-anchor="middle" class="small">What the action intends</text>
+<path d="M335 156 H385" class="arrow flow" marker-end="url(#arrow)"/>
+<rect x="390" y="100" width="320" height="112" rx="14" class="purple"/>
+<text x="550" y="129" text-anchor="middle" class="h">2 · Motion response</text>
+<text x="550" y="158" text-anchor="middle" font-size="19" font-weight="700">m ẍ = Fdrive − c ẋ − k(x − xₜ)</text>
+<text x="550" y="184" text-anchor="middle" class="small">Candidate mass–spring–damper law</text>
+<path d="M711 156 H761" class="arrow flow" marker-end="url(#arrow)"/>
+<rect x="766" y="100" width="300" height="112" rx="14" class="green"/>
+<text x="916" y="129" text-anchor="middle" class="h">3 · Resulting motion</text>
+<text x="916" y="156" text-anchor="middle" class="sub">Position + velocity over time</text>
+<text x="916" y="181" text-anchor="middle" class="small">Can overshoot, settle, or lag</text>
+<text x="36" y="253" class="h">The three terms do different jobs</text>
+<rect x="34" y="270" width="330" height="82" rx="12" class="node"/>
+<text x="52" y="297" font-size="17" font-weight="750">m · inertia</text><text x="52" y="320" class="sub">Mass resists abrupt velocity change.</text><text x="52" y="340" class="small">More m: slower response, all else equal.</text>
+<rect x="385" y="270" width="330" height="82" rx="12" class="orange"/>
+<text x="403" y="297" font-size="17" font-weight="750">c · damping</text><text x="403" y="320" class="sub">Opposes velocity and dissipates motion.</text><text x="403" y="340" class="small">Too little may allow prolonged oscillation.</text>
+<rect x="736" y="270" width="330" height="82" rx="12" class="blue"/>
+<text x="754" y="297" font-size="17" font-weight="750">k · stiffness</text><text x="754" y="320" class="sub">Pulls the coordinate toward its target.</text><text x="754" y="340" class="small">Higher k can feel more forceful or sharp.</text>
+<text x="36" y="389" class="h">Target tracking: direct path versus dynamic response</text>
+<rect x="34" y="405" width="660" height="162" rx="12" fill="#fff" stroke="#d4dce8"/>
+<path d="M70 430 V536 H660" fill="none" stroke="#9aa7b8" stroke-width="1.5"/>
+<path d="M70 522 H660 M70 493 H660 M70 464 H660" stroke="#e1e7ef" stroke-width="1"/>
+<path d="M80 520 L150 520 L150 445 L650 445" class="trace target"/>
+<path d="M80 520 C115 520 125 493 150 445 S205 414 245 443 S310 452 350 445 S430 443 480 445 S580 445 650 445" class="trace response"/>
+<text x="82" y="552" class="small">start</text><text x="608" y="552" class="small">time →</text>
+<line x1="470" y1="424" x2="495" y2="424" stroke="#2c65ad" stroke-width="4"/><text x="502" y="429" class="small">target</text>
+<line x1="570" y1="424" x2="595" y2="424" stroke="#b76424" stroke-width="4"/><text x="602" y="429" class="small">response</text>
+<rect x="718" y="405" width="348" height="162" rx="12" class="green"/>
+<text x="740" y="435" font-size="17" font-weight="750">Stable individuality</text>
+<text x="740" y="462" class="sub">A seed + experience profile selects</text><text x="740" y="484" class="sub">bounded parameters once per procedure.</text>
+<text x="740" y="514" class="sub">Green: wider safe ranges</text><text x="740" y="536" class="sub">Veteran: tighter ranges</text>
+<text x="36" y="590" class="small pulse">Research boundary: this equation is exploratory; the current CPU evaluator remains deterministic keyframe interpolation.</text>
+</svg>
