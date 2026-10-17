@@ -84,6 +84,8 @@ dotnet pack src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.
 
 This is a source-repository verification path, not a claim that the package has been published or that the early evaluator is a complete motion solver. Evaluation is deterministic for the same definition, elapsed time, and variation seed; the tests are the place to verify the guarantees of the current implementation.
 
+- [Forge-Baked Gesture Providers and Actor Choice](docs/FORGE_BAKED_PROVIDER_AND_ACTOR_CHOICE.md) — define provider discovery, actor-perspective filtering, decision ownership, nested procedure baking, and diegetic Forge tooling.
+
 ## 🟪 05 Available documentation and theory
 
 ![](docs/assets/dividers/purple.svg)
