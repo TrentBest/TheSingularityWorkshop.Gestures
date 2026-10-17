@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="channels-title channels-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 518" role="img" aria-labelledby="channels-title channels-desc">
   <title id="channels-title">Live data channels from the evaluated root transform</title>
   <desc id="channels-desc">Generated from the same 49 C# GestureEvaluator samples as the motion scene. Four plots show root X position, root Y position, rotation in degrees, and scale against normalized time. A cursor moves across the plots. These are evaluated keyframe interpolation values, not physics telemetry.</desc>
   <defs>
@@ -33,4 +33,4 @@
   <text x="480" y="447" text-anchor="middle" font-size="11" fill="#b9c8d9">NORMALIZED PROGRESS</text>
   <text x="840" y="447" text-anchor="end" font-size="11" fill="#b9c8d9">100% · COMPLETE</text>
   <text x="30" y="468" font-size="10" fill="#8da7c5">Linear position/scale interpolation · quaternion rotation interpolation · not a physics solver</text>
-</svg>
+<g id="provenance-label" role="group" aria-label="GENERATED FROM GESTUREEVALUATOR SAMPLES • NATIVE SVG • GUI.SVG: NOT USED"><rect x="12" y="483" width="876" height="27" rx="6" fill="#172033"/><text x="450" y="501" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#ffffff">GENERATED FROM GESTUREEVALUATOR SAMPLES • NATIVE SVG • GUI.SVG: NOT USED</text></g></svg>
