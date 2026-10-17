@@ -6,7 +6,7 @@
 
 A character should not need bespoke animation logic for every game or social event. An activity definition describes what can happen, how participants may take part, which reusable procedures are appropriate, what coordination is required, and which observations allow the activity to advance. Runtime systems compose that data with the current world and participants.
 
-A flash mob, a pickup game of tag, hide-and-seek, a practical joke, a starport boarding procedure, and a coordinated film shoot are different activity ontologies. They can reuse the same lower-level gesture definitions, role assignments, spatial constraints, timing, lifecycle, and observation contracts without pretending they are the same activity.
+A flash mob, a pickup game of tag, hide-and-seek, a practical joke, a starport boarding procedure, and a coordinated film shoot are distinct activity models, not separate Workshop ontologies. They can reuse the same lower-level gesture definitions, role assignments, spatial constraints, timing, lifecycle, and observation contracts without pretending they are the same activity.
 
 **Gesture = reusable physical procedure. Activity definition = an organized, versioned plan of roles and phases that uses procedures. Activity session = one live occurrence of that plan. Workshop Experience = the composed environment of MicroBundles in which the activity may run.** Keep these concepts distinct.
 
@@ -112,7 +112,7 @@ Children can behave playfully, make mistakes, interrupt adults, or attempt prank
 
 ### Starport crew choreography
 
-Ground crew and flight crew are role families within a task-oriented activity. The ontology organizes procedures for doors, hoses, covers, landing gear, mass-driver covers, and boarding, while dependency gates express what must be ready before the next phase. Physics remains authoritative for contact and obstruction; the task coordinator requires evidence for critical transitions.
+Ground crew and flight crew are role families within a task-oriented activity. The activity definition organizes procedures for doors, hoses, covers, landing gear, mass-driver covers, and boarding, while dependency gates express what must be ready before the next phase. Physics remains authoritative for contact and obstruction; the task coordinator requires evidence for critical transitions.
 
 ## Ownership boundaries
 
