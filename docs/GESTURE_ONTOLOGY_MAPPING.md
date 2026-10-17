@@ -18,7 +18,7 @@ An address is not a dependency list, a provider registry, an execution schedule,
 
 ## Ontology boundary and constraints
 
-The Workshop Ontology package intentionally supports scalar or N-dimensional OntologyIndex values and does not impose five or nine dimensions on every ontology. A nine-position OntologySignature is a consumer's selected scheme, not a global rule for every MicroBundle.
+The Workshop Ontology package intentionally supports scalar or N-dimensional OntologyIndex values and does not impose five or nine dimensions on every ontology. See the canonical [Ontology README](https://github.com/TrentBest/TheSingularityWorkshop.Ontology/blob/master/README.md) and [Ontology Theory](https://github.com/TrentBest/TheSingularityWorkshop.Ontology/blob/master/docs/THEORY.md) for that boundary. A nine-position OntologySignature is a consumer's selected scheme, not a global rule for every MicroBundle.
 
 This proposal preserves the known anchors used in Workshop discussions:
 
