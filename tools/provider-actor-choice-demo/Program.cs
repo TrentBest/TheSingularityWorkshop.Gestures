@@ -42,7 +42,7 @@ var outcomes = new[]
 {
     new Outcome("digiten-mira", "enter-store", "attempted", "front-door gate evaluated"),
     new Outcome("digiten-mira", "approach-counter", "attempted", "puppy-counter anchor resolved"),
-    new Outcome("digiten-mira", "purchase-puppy", "succeeded", "payment accepted; ownership persisted"),
+    new Outcome("digiten-mira", "purchase-puppy", "succeeded", "fixture outcome: payment accepted; ownership event emitted"),
     new Outcome("digiten-kellan", "provider-choice", "no-purchase", "work goal did not select puppy purchase")
 };
 if (!decisions.Any(x => x.ActorId == "digiten-mira" && x.CapabilityId == "buy-puppy" && x.Selected) ||
