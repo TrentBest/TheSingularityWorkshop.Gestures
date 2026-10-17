@@ -126,6 +126,25 @@ A practical decision chain is:
 
 This distinction makes the world legible. A high attention score can increase the chance that a passerby pauses, approaches the window, or enters the shop; it should not teleport the agent or guarantee a purchase. Different agents can ignore the same stimulus, notice it late, approach but be blocked, browse without buying, or choose to buy for different reasons. Deterministic seeded variation is useful for reproducible tests, while any genuinely stochastic policy must define its random stream and replay guarantees explicitly.
 
+### A Gesture can become a spectacle
+
+A Gesture does not stop mattering when the performer finishes evaluating its motion. A single person, a pair, or a coordinated group can become a **spectacle**: something other agents notice, interpret, and react to. A street performance may attract curiosity and imitation; a threatening display may provoke anger or make passersby avoid the area; a strange or confusing action may be ignored by some observers and draw others closer. These are different responses to one observed event, not different animation clips baked into the performers.
+
+Keep the causal chain explicit:
+
+1. **Performance intent:** an actor or activity requests a reusable Gesture or coordinated sequence.
+2. **Evaluated procedure:** Gestures evaluates motion for the participating actors.
+3. **Observed event:** the host publishes what is observable, with stable event identity and relevant context such as participants, location/extent, timing, and semantic event kind. It reports an event; it does not declare how every observer must interpret it.
+4. **Observer interpretation:** each observer's perception, attention, goals, relationships, knowledge, and current commitments determine whether and how the event matters to them.
+5. **Chosen reaction:** an observer may watch, approach, join, imitate, become curious, become angry, feel threatened, avoid the area, or continue without responding. If it chooses to act, its own activity policy requests appropriate Gestures.
+6. **World outcome:** the host and Physics report actual movement, obstruction, contact, or other achieved state. A reaction request does not prove that the observer reached the spectacle or completed the response.
+
+This makes a group Gesture more than the sum of its individual poses: it can have a shared event identity and a collective spatial/temporal footprint, while each observer remains an independent decision-maker. A spectator is not automatically a participant, and proximity is not consent to join. One observer may be captivated while another walks away.
+
+The reusable core should expose enough stable semantic information for a consumer to publish and query observed events, but it should not own universal emotion, personality, moral judgement, or social policy. Gesture providers describe physical procedures and their semantics; activity/scene systems decide what is happening; observer/agent systems interpret it; Physics and the host determine physical truth; Renderer presents the result. A performer does not need to know every possible audience reaction, and an observer does not need a bespoke branch in the performer's animation.
+
+**Avoid reaction loops becoming accidental event storms.** An observer's reaction may itself become a new spectacle, but it should publish a distinct event with provenance and causal linkage to the event that prompted it. Policies can limit duplicate perception, repeated self-triggering, and reaction depth without suppressing legitimate chains such as one person stopping, a friend noticing, and both approaching. These limits belong to the observing activity/host policy, not to hidden global state in the Gesture evaluator.
+
 ### Persistent consequences make the world feel alive
 
 The puppy example is a vertical slice across multiple systems, not a single animation:
