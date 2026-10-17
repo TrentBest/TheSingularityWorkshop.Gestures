@@ -10,6 +10,8 @@ The documentation is part of the product experience: it should help readers *see
 
 The [Speech Scene and Soldier Population plan](SPEECH_SCENE_POPULATION.md) turns the moniker-to-balcony experience into explicit phases, ownership boundaries, gesture vocabulary, crowd-event timing, screen echo rules, and a staged validation plan. It is intentionally marked as a **conceptual design map**, not an evaluator-generated scene: the current SVG explains the target experience and the event-horizon idea; it does not prove that a crowd renderer, audio propagation model, articulated soldier, or city-scale simulation already exists.
 
+The build workflow now parses this conceptual SVG as XML and includes it in the SVG whitespace check alongside the generated assets. This verifies document well-formedness and whitespace hygiene only; it does not validate the illustration's visual composition, execute its animation, or turn it into runtime evidence.
+
 For this scene, the documentation must fight for every soldier at the level of identity and behavior without requiring full CPU-side articulation for every distant silhouette. Close interactions can use richer gesture output; middle and far tiers can preserve stable identity and response phase through instanced representations and cluster summaries. Renderer owns observer-relative fidelity selection, Visualize owns GPU presentation, raWWar owns soldier/game state, and Physics owns physical outcomes. Those are design contracts to implement and measure—not current performance claims.
 
 
