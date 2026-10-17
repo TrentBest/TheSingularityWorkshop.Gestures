@@ -273,6 +273,33 @@ public sealed class GestureEvaluatorTests
         Assert.Equal(atEnd.LocalTransforms["root"], afterEnd.LocalTransforms["root"]);
     }
 
+    [Theory]
+    [InlineData(0.3d, 3f)]
+    [InlineData(0.65d, 6.5f)]
+    public void SelectsTheCorrectSegmentAcrossNonUniformKeyframeIntervals(double elapsedSeconds, float expectedX)
+    {
+        var definition = new GestureDefinition("test.nonuniform-intervals", new[]
+        {
+            new GestureKeyframe(0d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, Vector3.One)
+            }),
+            new GestureKeyframe(0.3d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(new Vector3(3f, 0f, 0f), Quaternion.Identity, Vector3.One)
+            }),
+            new GestureKeyframe(1d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(new Vector3(10f, 0f, 0f), Quaternion.Identity, Vector3.One)
+            })
+        });
+
+        var pose = GestureEvaluator.Evaluate(definition, elapsedSeconds, 1d);
+
+        Assert.Equal(elapsedSeconds, pose.NormalizedProgress, 12);
+        Assert.Equal(expectedX, pose.LocalTransforms["root"].Position.X, 5);
+    }
+
     private static GestureDefinition CreateGesture()
     {
         var start = new Dictionary<string, PoseTransform>
