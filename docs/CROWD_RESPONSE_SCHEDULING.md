@@ -108,7 +108,7 @@ The generator calls the real scheduler and serializes its output records. Partic
 1. [x] Freeze a minimal input/output record and validation rules.
 2. [x] Add the first pure CPU scheduler with no rendering or audio dependency.
 3. [x] Author fixed reference-vector, replay, order-independence, bounds, invalid-input, and overflow tests; verify them in CI before treating the reference as accepted.
-4. [x] Generate a living SVG directly from scheduler outputs after verification; CI regenerates and validates it. Snapshot drift is reported for review rather than failing the workflow.
+4. [x] Generate a living SVG directly from scheduler outputs after verification; CI regenerates and validates it. CI fails if the checked-in crowd-response SVG drifts from the actual generated scheduler output; other legacy SVG snapshots still report drift as a warning.
 5. Integrate one small crowd in a consumer; distinguish scheduled intent from completed gesture and from audible arrival.
 6. Profile staged population sizes and only then decide whether cluster aggregation, lower update rates, or packed/GPU representations are warranted.
 
