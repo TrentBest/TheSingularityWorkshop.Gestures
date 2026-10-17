@@ -73,7 +73,13 @@ File.WriteAllText(channelsOutput, AddProvenanceLabel(BuildChannelsSvg(samples), 
 var targetsOutput = Path.Combine("docs", "assets", "gesture-target-agnostic.svg");
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(targetsOutput))!);
 File.WriteAllText(targetsOutput, AddProvenanceLabel(BuildTargetSvg(samples), "EVALUATOR SAMPLES + PRESENTATION-ONLY JOINT ILLUSTRATION • NATIVE SVG • GUI.SVG: NOT USED"), new UTF8Encoding(false));
-Console.WriteLine($"Generated {output}, {channelsOutput}, and {targetsOutput}");
+var sequenceOutput = Path.Combine("docs", "assets", "gesture-sequence.svg");
+var sequenceSamples = BuildSequenceSamples();
+File.WriteAllText(sequenceOutput,
+    AddProvenanceLabel(BuildSequenceSvg(sequenceSamples),
+        "GENERATED FROM GestureSequencePlayback OUTPUT • NATIVE SVG • GUI.SVG: NOT USED"),
+    new UTF8Encoding(false));
+Console.WriteLine($"Generated {output}, {channelsOutput}, and {targetsOutput}, and {sequenceOutput}");
 Console.WriteLine($"Lifecycle: {string.Join(" -> ", transitions)}");
 Console.WriteLine($"Samples: {samples.Count}; named transforms: {string.Join(", ", samples[0].Transforms.Keys.Order())}; source: GestureEvaluator.Evaluate; coordinator: FSM_API");
 
@@ -138,6 +144,118 @@ static string GetOutputPath(string[] args)
     return Path.Combine("docs", "assets", "gesture-motion.svg");
 }
 
+
+static List<SequenceSample> BuildSequenceSamples()
+{
+    static GestureDefinition Definition(string id, float from, float to) => new(id, new[]
+    {
+        new GestureKeyframe(0d, new Dictionary<string, PoseTransform>
+        {
+            ["root"] = new PoseTransform(new Vector3(from, 0f, 0f), Quaternion.Identity, Vector3.One)
+        }),
+        new GestureKeyframe(1d, new Dictionary<string, PoseTransform>
+        {
+            ["root"] = new PoseTransform(new Vector3(to, 0f, 0f), Quaternion.Identity, Vector3.One)
+        })
+    });
+
+    var sequence = new GestureSequencePlayback(new[]
+    {
+        new GesturePlayback(Definition("sequence.approach", 0f, 1f), 1d),
+        new GesturePlayback(Definition("sequence.interact", 1f, 2f), 1d),
+        new GesturePlayback(Definition("sequence.withdraw", 2f, 3f), 1d)
+    });
+
+    var samples = new List<SequenceSample>();
+    var elapsed = 0d;
+    var pose = sequence.Start();
+    samples.Add(Capture());
+    for (var i = 0; i < 100 && sequence.State == GesturePlaybackState.Playing; i++)
+    {
+        pose = sequence.Advance(0.05d);
+        elapsed += 0.05d;
+        samples.Add(Capture());
+    }
+
+    if (sequence.State != GesturePlaybackState.Completed || samples[^1].Progress != 1d)
+        throw new InvalidOperationException("The sequence demonstration did not complete.");
+
+    return samples;
+
+    SequenceSample Capture() => new(
+        elapsed,
+        sequence.CurrentStepIndex,
+        pose.NormalizedProgress,
+        pose.LocalTransforms["root"].Position.X,
+        sequence.State.ToString());
+}
+
+static string BuildSequenceSvg(IReadOnlyList<SequenceSample> samples)
+{
+    const double left = 112, width = 780;
+    static string N(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
+    static string Esc(string value) => System.Security.SecurityElement.Escape(value) ?? string.Empty;
+    var total = samples[^1].ElapsedSeconds;
+    double X(double time) => left + Math.Clamp(time / total, 0d, 1d) * width;
+    var keyTimes = string.Join(";", samples.Select(s => N(s.ElapsedSeconds / total)));
+    var cursorValues = string.Join(";", samples.Select(s => N(X(s.ElapsedSeconds))));
+    var labels = new[] { "APPROACH", "INTERACT", "WITHDRAW" };
+    var colors = new[] { "#78dcff", "#e8b84b", "#f5a7ff" };
+    var starts = new double[3];
+    for (var step = 1; step < 3; step++)
+        starts[step] = samples.First(s => s.StepIndex == step).ElapsedSeconds;
+    var bars = new StringBuilder();
+    for (var step = 0; step < 3; step++)
+    {
+        var start = starts[step];
+        var end = step == 2 ? total : starts[step + 1];
+        var y = 166 + step * 72;
+        var duration = end - start;
+        bars.Append($"""
+          <text x="34" y="{{N(y + 5)}}" font-size="12" font-weight="700" letter-spacing="1.3" fill="{{colors[step]}}">{{labels[step]}}</text>
+          <rect x="{{N(X(start))}}" y="{{N(y - 14)}}" width="{{N(Math.Max(1, X(end) - X(start)))}}" height="28" rx="7" fill="{{colors[step]}}" opacity=".19"/>
+          <rect x="{{N(X(start))}}" y="{{N(y - 14)}}" width="{{N(Math.Max(1, X(end) - X(start)))}}" height="28" rx="7" fill="none" stroke="{{colors[step]}}" stroke-width="1.5"/>
+          <text x="{{N((X(start) + X(end)) / 2)}}" y="{{N(y + 4)}}" text-anchor="middle" font-size="11" font-weight="700" fill="#f3f6fb">{{N(duration)}} s · {{Esc(labels[step].ToLowerInvariant())}}</text>
+        """);
+    }
+
+    return $"""
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="sequence-title sequence-desc">
+  <title id="sequence-title">Ordered gesture sequence generated from real GestureSequencePlayback samples</title>
+  <desc id="sequence-desc">The C# generator runs three distinct GesturePlayback sessions through GestureSequencePlayback, samples the current step and normalized progress every 0.05 seconds, and serializes those observed values. The sequence advances through approach, interact, and withdraw. This proves fixed ordered sequencing and observed step transitions, not physical success, anchor resolution, or pose blending.</desc>
+  <defs>
+    <linearGradient id="sequence-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
+    <style>text{font-family:"Segoe UI",Arial,sans-serif}.static{display:none}@media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}</style>
+  </defs>
+  <rect width="960" height="420" rx="18" fill="url(#sequence-bg)"/>
+  <text x="34" y="36" font-size="11" letter-spacing="2" fill="#8da7c5">THE SINGULARITY WORKSHOP / OBSERVED C# SEQUENCE</text>
+  <text x="34" y="72" font-size="25" font-weight="700" fill="#f3f6fb">One action becomes a procedure.</text>
+  <text x="34" y="98" font-size="13" fill="#b9c8d9">Three distinct playback sessions · caller-supplied time · leftover time crosses step boundaries</text>
+  <g stroke="#31465e" stroke-width="1" stroke-dasharray="3 7">
+    <path d="M112 128V338 M242 128V338 M372 128V338 M502 128V338 M632 128V338 M762 128V338 M892 128V338"/>
+  </g>
+  {{bars}}
+  <path d="M112 338H892" stroke="#51657b" stroke-width="2"/>
+  <g class="animated">
+    <line x1="112" x2="112" y1="124" y2="340" stroke="#f3f6fb" stroke-width="1.5" stroke-dasharray="4 4">
+      <animate attributeName="x1" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="{{N(total)}}s" fill="freeze"/>
+      <animate attributeName="x2" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="{{N(total)}}s" fill="freeze"/>
+    </line>
+    <circle cy="338" r="5" fill="#f3f6fb" stroke="#17283b" stroke-width="2">
+      <animate attributeName="cx" values="{{cursorValues}}" keyTimes="{{keyTimes}}" dur="{{N(total)}}s" fill="freeze"/>
+    </circle>
+  </g>
+  <g class="static">
+    <line x1="{{N(X(total))}}" x2="{{N(X(total))}}" y1="124" y2="340" stroke="#f3f6fb" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <circle cx="{{N(X(total))}}" cy="338" r="5" fill="#f3f6fb" stroke="#17283b" stroke-width="2"/>
+  </g>
+  <text x="112" y="365" font-size="11" fill="#b9c8d9">START · 0.00 s</text>
+  <text x="892" y="365" text-anchor="end" font-size="11" fill="#b9c8d9">COMPLETED · {{N(total)}} s</text>
+  <text x="34" y="395" font-size="11" letter-spacing="1.3" fill="#78dcff">MEASURED SEQUENCE OUTPUT</text>
+  <text x="926" y="395" text-anchor="end" font-size="11" fill="#e8b84b">3 STEPS · {{samples.Count}} SAMPLES · 0.05 s DELTA</text>
+</svg>
+""";
+}
 
 static string AddProvenanceLabel(string svg, string label)
 {
@@ -496,7 +614,7 @@ static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
 """;
 }
 
-internal sealed record ChannelPanel(string Title, string Unit, string Color, double[] Values, double Min, double Max);
+internal sealed record SequenceSample(double ElapsedSeconds, int StepIndex, double Progress, float RootX, string State);\n\ninternal sealed record ChannelPanel(string Title, string Unit, string Color, double[] Values, double Min, double Max);
 internal sealed record TargetTrack(string Label, double CenterY, string Color, string Kind);
 
 internal sealed class MotionContext : IStateContext
