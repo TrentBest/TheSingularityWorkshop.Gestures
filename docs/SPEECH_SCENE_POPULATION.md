@@ -14,7 +14,7 @@ The advisor salutes over the already audible roar of the audience:
 
 The player chooses a response. The advisor places one hand on the player's shoulder and guides the player toward the opening behind them. The player steps onto the balcony. At first, the scale is discovered in layers: nearby formations, dense architectural surfaces, distant silhouettes, and public screens. Some screens show the player's own viewpoint with a small enough delay and a clear enough view that the player can raise a hand and recognize the same gesture on a screen. Then the crowd recognizes the arrival and the cheer blooms across the city—not as one synchronized sound, but as a spatially and temporally distributed event.
 
-The emotional target is not simply “render a lot of soldiers.” It is **let the player discover that a city-sized population is present, responsive, and addressing them**.
+The emotional target is not simply “render a lot of soldiers.” It is **let the player discover that a city-sized population is present, responsive, and addressing them**. This scenario complements [Singularity Arena](SINGULARITY_ARENA_PERFORMANCE_SCENARIO.md), which already documents event-driven audience intention and performance cues; reuse that conceptual vocabulary where it fits, but do not assume the arena's current fixtures implement this city-scale scene.
 
 ## Sequence as an explicit state machine
 
