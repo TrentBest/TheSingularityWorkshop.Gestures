@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 690" role="img" aria-labelledby="title desc">
+  <title id="title">Living crowd-response schedule generated from CrowdResponseScheduler</title>
+  <desc id="desc">Eighteen stable soldier identities scheduled by the actual CPU scheduler for event speech-01 and policy balcony-reveal version 1. Each row plots its returned intent time. The colored bar indicates the returned intensity and the number is the returned gesture variant. This is intent data, not a simulation of physical movement or acoustic arrival.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
+    <style>text{font-family:"Segoe UI",Arial,sans-serif}.mono{font-family:Consolas,monospace}</style>
+  </defs>
+  <rect width="1040" height="690" rx="18" fill="url(#bg)"/>
+  <text x="34" y="34" font-size="11" letter-spacing="2" fill="#8da7c5">THE SINGULARITY WORKSHOP / GENERATED FROM C# OUTPUT</text>
+  <text x="34" y="68" font-size="25" font-weight="700" fill="#f3f6fb">One balcony reveal. Eighteen individual response times.</text>
+  <text x="34" y="94" font-size="13" fill="#b9c8d9">Real CrowdResponseScheduler results · sorted for display only · deterministic input fixture</text>
+  <g font-size="11" fill="#d9e7f5">
+    <text x="34" y="119">STABLE PARTICIPANT</text>
+    <text x="184" y="119">INTENT TIME (EVENT ORIGIN = 12.0 s)</text>
+    <text x="888" y="119">INTENSITY</text>
+    <text x="974" y="119">VAR.</text>
+  </g>
+  <path d="M184 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="184" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">12.0s</text><path d="M297.667 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="297.667" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">13.0s</text><path d="M411.333 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="411.333" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">14.0s</text><path d="M525 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="525" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">15.0s</text><path d="M638.667 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="638.667" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">16.0s</text><path d="M752.333 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="752.333" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">17.0s</text><path d="M866 142V550" stroke="#31465e" stroke-dasharray="3 6"/><text x="866" y="132" text-anchor="middle" fill="#b9c8d9" font-size="11">18.0s</text>
+  <g>
+  <text x="34" y="158" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-006</text>
+  <path d="M184 154H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 154H228.157" stroke="#f5a7ff" stroke-width="2" opacity=".62"/>
+  <circle cx="228.157" cy="154" r="5" fill="#f5a7ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="149" width="34.646" height="10" rx="3" fill="#f5a7ff" opacity=".9"/>
+  <text x="974" y="158" fill="#d9e7f5" font-size="10">4</text>
+  <title>soldier-006: intent 12.388 s; delay 0.388 s; variant 4; intensity 0.252</title>
+</g><g>
+  <text x="34" y="180" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-012</text>
+  <path d="M184 176H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 176H229.807" stroke="#a9b8ff" stroke-width="2" opacity=".62"/>
+  <circle cx="229.807" cy="176" r="5" fill="#a9b8ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="171" width="60.115" height="10" rx="3" fill="#a9b8ff" opacity=".9"/>
+  <text x="974" y="180" fill="#d9e7f5" font-size="10">6</text>
+  <title>soldier-012: intent 12.403 s; delay 0.403 s; variant 6; intensity 0.596</title>
+</g><g>
+  <text x="34" y="202" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-001</text>
+  <path d="M184 198H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 198H249.788" stroke="#78dcff" stroke-width="2" opacity=".62"/>
+  <circle cx="249.788" cy="198" r="5" fill="#78dcff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="193" width="43.705" height="10" rx="3" fill="#78dcff" opacity=".9"/>
+  <text x="974" y="202" fill="#d9e7f5" font-size="10">1</text>
+  <title>soldier-001: intent 12.579 s; delay 0.579 s; variant 1; intensity 0.374</title>
+</g><g>
+  <text x="34" y="224" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-005</text>
+  <path d="M184 220H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 220H257.122" stroke="#78dcff" stroke-width="2" opacity=".62"/>
+  <circle cx="257.122" cy="220" r="5" fill="#78dcff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="215" width="60.275" height="10" rx="3" fill="#78dcff" opacity=".9"/>
+  <text x="974" y="224" fill="#d9e7f5" font-size="10">1</text>
+  <title>soldier-005: intent 12.643 s; delay 0.643 s; variant 1; intensity 0.598</title>
+</g><g>
+  <text x="34" y="246" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-014</text>
+  <path d="M184 242H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 242H297.589" stroke="#f5a7ff" stroke-width="2" opacity=".62"/>
+  <circle cx="297.589" cy="242" r="5" fill="#f5a7ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="237" width="45.817" height="10" rx="3" fill="#f5a7ff" opacity=".9"/>
+  <text x="974" y="246" fill="#d9e7f5" font-size="10">4</text>
+  <title>soldier-014: intent 12.999 s; delay 0.999 s; variant 4; intensity 0.403</title>
+</g><g>
+  <text x="34" y="268" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-018</text>
+  <path d="M184 264H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 264H311.917" stroke="#f5a7ff" stroke-width="2" opacity=".62"/>
+  <circle cx="311.917" cy="264" r="5" fill="#f5a7ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="259" width="53.109" height="10" rx="3" fill="#f5a7ff" opacity=".9"/>
+  <text x="974" y="268" fill="#d9e7f5" font-size="10">4</text>
+  <title>soldier-018: intent 13.125 s; delay 1.125 s; variant 4; intensity 0.501</title>
+</g><g>
+  <text x="34" y="290" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-010</text>
+  <path d="M184 286H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 286H316.258" stroke="#f5a7ff" stroke-width="2" opacity=".62"/>
+  <circle cx="316.258" cy="286" r="5" fill="#f5a7ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="281" width="51.991" height="10" rx="3" fill="#f5a7ff" opacity=".9"/>
+  <text x="974" y="290" fill="#d9e7f5" font-size="10">4</text>
+  <title>soldier-010: intent 13.164 s; delay 1.164 s; variant 4; intensity 0.486</title>
+</g><g>
+  <text x="34" y="312" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-008</text>
+  <path d="M184 308H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 308H323.773" stroke="#a9b8ff" stroke-width="2" opacity=".62"/>
+  <circle cx="323.773" cy="308" r="5" fill="#a9b8ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="303" width="50.155" height="10" rx="3" fill="#a9b8ff" opacity=".9"/>
+  <text x="974" y="312" fill="#d9e7f5" font-size="10">6</text>
+  <title>soldier-008: intent 13.23 s; delay 1.23 s; variant 6; intensity 0.462</title>
+</g><g>
+  <text x="34" y="334" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-017</text>
+  <path d="M184 330H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 330H326.313" stroke="#78dcff" stroke-width="2" opacity=".62"/>
+  <circle cx="326.313" cy="330" r="5" fill="#78dcff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="325" width="51.715" height="10" rx="3" fill="#78dcff" opacity=".9"/>
+  <text x="974" y="334" fill="#d9e7f5" font-size="10">1</text>
+  <title>soldier-017: intent 13.252 s; delay 1.252 s; variant 1; intensity 0.483</title>
+</g><g>
+  <text x="34" y="356" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-002</text>
+  <path d="M184 352H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 352H357.859" stroke="#78dcff" stroke-width="2" opacity=".62"/>
+  <circle cx="357.859" cy="352" r="5" fill="#78dcff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="347" width="76.329" height="10" rx="3" fill="#78dcff" opacity=".9"/>
+  <text x="974" y="356" fill="#d9e7f5" font-size="10">1</text>
+  <title>soldier-002: intent 13.53 s; delay 1.53 s; variant 1; intensity 0.815</title>
+</g><g>
+  <text x="34" y="378" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-013</text>
+  <path d="M184 374H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 374H423.98" stroke="#78dcff" stroke-width="2" opacity=".62"/>
+  <circle cx="423.98" cy="374" r="5" fill="#78dcff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="369" width="73.168" height="10" rx="3" fill="#78dcff" opacity=".9"/>
+  <text x="974" y="378" fill="#d9e7f5" font-size="10">1</text>
+  <title>soldier-013: intent 14.111 s; delay 2.111 s; variant 1; intensity 0.773</title>
+</g><g>
+  <text x="34" y="400" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-003</text>
+  <path d="M184 396H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 396H500.085" stroke="#78dcff" stroke-width="2" opacity=".62"/>
+  <circle cx="500.085" cy="396" r="5" fill="#78dcff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="391" width="33.824" height="10" rx="3" fill="#78dcff" opacity=".9"/>
+  <text x="974" y="400" fill="#d9e7f5" font-size="10">1</text>
+  <title>soldier-003: intent 14.781 s; delay 2.781 s; variant 1; intensity 0.241</title>
+</g><g>
+  <text x="34" y="422" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-011</text>
+  <path d="M184 418H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 418H506.191" stroke="#f5a7ff" stroke-width="2" opacity=".62"/>
+  <circle cx="506.191" cy="418" r="5" fill="#f5a7ff" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="413" width="44.715" height="10" rx="3" fill="#f5a7ff" opacity=".9"/>
+  <text x="974" y="422" fill="#d9e7f5" font-size="10">4</text>
+  <title>soldier-011: intent 14.835 s; delay 2.835 s; variant 4; intensity 0.388</title>
+</g><g>
+  <text x="34" y="444" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-009</text>
+  <path d="M184 440H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 440H556.49" stroke="#8fe3b0" stroke-width="2" opacity=".62"/>
+  <circle cx="556.49" cy="440" r="5" fill="#8fe3b0" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="435" width="36.504" height="10" rx="3" fill="#8fe3b0" opacity=".9"/>
+  <text x="974" y="444" fill="#d9e7f5" font-size="10">2</text>
+  <title>soldier-009: intent 15.277 s; delay 3.277 s; variant 2; intensity 0.277</title>
+</g><g>
+  <text x="34" y="466" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-004</text>
+  <path d="M184 462H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 462H569.935" stroke="#8fe3b0" stroke-width="2" opacity=".62"/>
+  <circle cx="569.935" cy="462" r="5" fill="#8fe3b0" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="457" width="78.62" height="10" rx="3" fill="#8fe3b0" opacity=".9"/>
+  <text x="974" y="466" fill="#d9e7f5" font-size="10">2</text>
+  <title>soldier-004: intent 15.395 s; delay 3.395 s; variant 2; intensity 0.846</title>
+</g><g>
+  <text x="34" y="488" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-015</text>
+  <path d="M184 484H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 484H591.002" stroke="#ff9878" stroke-width="2" opacity=".62"/>
+  <circle cx="591.002" cy="484" r="5" fill="#ff9878" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="479" width="41.583" height="10" rx="3" fill="#ff9878" opacity=".9"/>
+  <text x="974" y="488" fill="#d9e7f5" font-size="10">5</text>
+  <title>soldier-015: intent 15.581 s; delay 3.581 s; variant 5; intensity 0.346</title>
+</g><g>
+  <text x="34" y="510" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-016</text>
+  <path d="M184 506H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 506H617.781" stroke="#8fe3b0" stroke-width="2" opacity=".62"/>
+  <circle cx="617.781" cy="506" r="5" fill="#8fe3b0" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="501" width="33.234" height="10" rx="3" fill="#8fe3b0" opacity=".9"/>
+  <text x="974" y="510" fill="#d9e7f5" font-size="10">2</text>
+  <title>soldier-016: intent 15.816 s; delay 3.816 s; variant 2; intensity 0.233</title>
+</g><g>
+  <text x="34" y="532" fill="#d9e7f5" font-size="11" font-family="Consolas,monospace">soldier-007</text>
+  <path d="M184 528H866" stroke="#25384d" stroke-width="1"/>
+  <path d="M184 528H745.387" stroke="#8fe3b0" stroke-width="2" opacity=".62"/>
+  <circle cx="745.387" cy="528" r="5" fill="#8fe3b0" stroke="#f3f6fb" stroke-width="1"/>
+  <rect x="888" y="523" width="42.094" height="10" rx="3" fill="#8fe3b0" opacity=".9"/>
+  <text x="974" y="532" fill="#d9e7f5" font-size="10">2</text>
+  <title>soldier-007: intent 16.939 s; delay 4.939 s; variant 2; intensity 0.353</title>
+</g>
+  <path d="M34 570H1006" stroke="#31465e" stroke-width="2"/>
+  <text x="34" y="597" font-size="12" fill="#78dcff" letter-spacing="1.5">POLICY / REPRODUCTION INPUTS</text>
+  <text x="34" y="620" font-size="12" fill="#f3f6fb">event=speech-01 · policy=balcony-reveal/v1 · stable seed=42 per participant request</text>
+  <text x="34" y="642" font-size="12" fill="#b9c8d9">Delay bounds: 0.25–5.5 s · variants: 1–6 · intensity: 0.2–0.9 · participants: 18</text>
+  <text x="34" y="665" font-size="11" fill="#e8b84b">INTENT ONLY — no completed gesture, physical outcome, or acoustic arrival is implied.</text>
+</svg>
