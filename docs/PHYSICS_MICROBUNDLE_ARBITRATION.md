@@ -98,3 +98,30 @@ A living example should be generated from actual Physics source records and Gest
 | How is the result shown and explained? | Renderer / Visualize / learning experience |
 
 The goal is not to hide the physics. It is to let people understand the physical world through its atomic constructs first, then learn the math because the explanation is attached to the thing they can see and test.
+
+## Manifests, bundle configuration, and compatibility arbitration
+
+The manifest is the assembly declaration for an experience: it names the MicroBundles to include and pins the requested versions. Each bundle's own configuration supplies the values that configure that bundle. Arbitration is the higher-level process that resolves and composes those declared capabilities and configurations for the current experience. These are related artifacts, but they are not interchangeable:
+
+- **Manifest:** which bundles and versions are requested for this composition.
+- **MicroBundle configuration:** how an individual selected bundle is configured.
+- **Provider/capability contracts:** what each selected bundle actually offers, including requirements and limits that are explicitly declared.
+- **Arbitration/composition:** whether the selected offers can be connected together for this use case, and what to do when they cannot.
+- **Runtime/host:** whether a chosen operation can be attempted now, and what its authoritative outcome is.
+
+A manifest that lists two bundles is not proof that their operations are mutually compatible. Nor should a bundle silently broaden its claims merely because another bundle uses a similarly named capability. Presence, semantic compatibility, current feasibility, and successful outcome are four different checks.
+
+### Example: two bundles both advertise docking
+
+Imagine a flight-simulation experience with a tanker provider and a space-station provider. Both may advertise a general "docking" capability, but the higher-level experience must not infer that a tanker can dock with that station simply because the names match.
+
+The arbitration path should evaluate the contracts the providers actually declare: compatible operation/procedure identifiers and versions, target/interface class, required anchors and geometry, scale or unit conventions where relevant, environmental constraints, and any required supporting capabilities. This list is an illustrative compatibility checklist, not a claim that the current MicroBundleDescriptor already encodes these fields. Missing or ambiguous compatibility evidence should yield an explicit incompatibility or unresolved result—not a guessed connection.
+
+The experience may then choose another station, load an adapter or capability MicroBundle, change configuration, or decline the operation. If the operation is selected, the simulation/Physics and host still determine approach feasibility, contact, and whether docking actually succeeded. Gestures can describe and evaluate the vehicle's intended procedure or a representation of the ideal operation versus the player's current control; it does not grant permission, force a connection, or certify the physical result.
+
+### General rule
+
+This is not specific to vehicles. The same rule applies to a toy set in which some pieces interlock and others do not, a tool and a workpiece, a character and a vehicle, or two distributed services. **The higher-level experience owns the intended composition; arbitration decides which declared capabilities/configurations can be composed; each bundle remains authoritative about its own contract; the relevant runtime remains authoritative about execution and outcome.**
+
+Keep this boundary explicit while the contracts evolve. Do not add an independent manifest schema to Gestures, duplicate the Workshop's composition model, or move arbitration into GestureEvaluator. If the current descriptor/provider model cannot express a compatibility requirement that a real vertical slice needs, document that gap and propose a minimal extension at the MicroBundle contract boundary first.
+
