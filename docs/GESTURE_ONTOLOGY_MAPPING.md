@@ -1,6 +1,8 @@
 # Gesture ontology mapping: canonical layers and runtime ownership
 
-> **Status: design mapping, not a published Gesture ontology.** The canonical nine layer *names* are now confirmed against the Workshop's Experience Theory and the runtime `OntologySignature`. The concrete integer vocabularies and the correct classification of each Gesture still need to be agreed and resolved by the ontology authoring system.
+> **Status: design mapping, not a published Gesture ontology.**
+>
+> Coordination worksheet: [Gesture Ontology Fixtures](GESTURE_ONTOLOGY_FIXTURES.md) defines three vocabulary-pending examples and the questions that must be resolved before ontology-aware lookup is implemented. The canonical nine layer *names* are now confirmed against the Workshop's Experience Theory and the runtime `OntologySignature`. The concrete integer vocabularies and the correct classification of each Gesture still need to be agreed and resolved by the ontology authoring system.
 
 ## The answer: where do Gestures land?
 
