@@ -40,6 +40,9 @@ jobs:
       - name: Generate the living SVG from FSM_API and GestureEvaluator
         run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release -- --output docs/assets/gesture-motion.svg
 
+      - name: Generate deterministic provider and actor-choice living SVG
+        run: dotnet run --project tools/provider-actor-choice-demo/provider-actor-choice-demo.csproj --configuration Release -- --output docs/assets/provider-actor-choice.svg
+
       - name: Generate deterministic variation scene
         run: dotnet run --project tools/variation-demo/variation-demo.csproj --configuration Release -- --output docs/assets/gesture-variation.svg
 
@@ -47,7 +50,7 @@ jobs:
         run: dotnet run --project tools/crowd-response-demo/crowd-response-demo.csproj --configuration Release --no-build -- --output docs/assets/crowd-response-schedule.svg
 
       - name: Validate documentation and generated SVG XML
-        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg', 'docs/assets/speech-scene-population.svg', 'docs/assets/crowd-response-schedule.svg']]"
+        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg', 'docs/assets/speech-scene-population.svg', 'docs/assets/crowd-response-schedule.svg', 'docs/assets/provider-actor-choice.svg']]"
 
       - name: Upload generated living SVGs
         uses: actions/upload-artifact@v7
@@ -56,6 +59,8 @@ jobs:
           path: |
             docs/assets/gesture-*.svg
             docs/assets/crowd-response-schedule.svg
+            docs/assets/provider-actor-choice.svg
+            docs/assets/provider-actor-choice.json
 
       - name: Require crowd-response SVG snapshot parity
         shell: bash
@@ -78,7 +83,7 @@ jobs:
           fi
 
       - name: Verify SVG formatting
-        run: git diff --check -- docs/assets/gesture-*.svg docs/assets/speech-scene-population.svg docs/assets/crowd-response-schedule.svg
+        run: git diff --check -- docs/assets/gesture-*.svg docs/assets/speech-scene-population.svg docs/assets/crowd-response-schedule.svg docs/assets/provider-actor-choice.svg docs/assets/provider-actor-choice.json
 
       - name: Test with coverage
         run: >
