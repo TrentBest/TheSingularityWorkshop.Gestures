@@ -101,6 +101,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — express stable skill/context parameter ranges without per-frame random noise.
 - [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — keep SVGs grounded in real evaluator output and label conceptual overlays separately.
 - [Speech Scene and Soldier Population](docs/SPEECH_SCENE_POPULATION.md) — organize the moniker-to-balcony speech scene, advisor choreography, responsive city-scale soldiers, distance-aware cheering, public-screen echoes, event-horizon tiers, ownership boundaries, and measurable build order.
+- [Singularity Studios Gesture Plan](docs/SINGULARITY_STUDIOS_GESTURE_PLAN.md) — define reusable performer, crew, camera, and equipment procedures for a data-driven filming studio, with a WebPageLLM handoff and a testable first-take vertical slice.
 - [Deterministic Crowd-Response Scheduling](docs/CROWD_RESPONSE_SCHEDULING.md) — the CPU intent scheduler, versioned stable variation, intent versus acoustic timing, passing CI reference tests, and generated living-SVG evidence. Acoustic arrival and population-scale behavior remain separate work.
 - [Gesture Playback Semantics](docs/GESTURE_PLAYBACK_SEMANTICS.md) — define deterministic seeking, stepping, interruption, and replay boundaries.
 - [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — distinguish reachable targets, constraints, and solver responsibilities.
