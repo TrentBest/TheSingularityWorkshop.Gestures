@@ -36,7 +36,7 @@ The humanoid and tracked-vehicle glyphs illustrate the evaluated root transform.
 
 **What this does not demonstrate:** joint values emitted by `GestureEvaluator`, a solved forward/inverse-kinematics chain, measured link geometry, collision/contact, or a physical solver. The articulated angles are presentation-only derivations, not runtime outputs. A future physically meaningful scene must use actual target joint definitions and a tested kinematics contract.
 
-## Deterministic variation: tested contract, scene still pending
+## Deterministic variation: living scene generator added
 
 `GestureEvaluator.Evaluate` accepts a `GestureVariation` and a stable `identitySeed`. The current variation contract has two bounded channels:
 
@@ -47,7 +47,7 @@ The humanoid and tracked-vehicle glyphs illustrate the evaluated root transform.
 
 The seed is mixed deterministically; it is not a source of fresh per-frame randomness. Repeating the same definition, elapsed time, duration, variation bounds, and seed yields the same result. Different seeds can yield different speed and offset values. With `GestureVariation.None`, changing the seed does not change the evaluated pose. These guarantees are covered by `SameIdentityAndInputsProduceSameVariation`, `FixedInputsMatchDeterministicReferenceVectors`, `VariationStaysWithinConfiguredBounds`, `DifferentIdentitySeedsCanProduceDifferentMotionWithinTheSameDeclaredBounds`, and `ZeroVariationIsIndependentOfIdentitySeed` tests.
 
-The offset is returned as separate presentation/root-offset data; the evaluator does not silently bake it into every named transform. This is not yet joint-level skill, an experience-profile system, or physical response. A future variation scene should visualize the actual evaluator outputs for a small fixed set of seeds, show the declared bounds, and distinguish seed-driven results from the ideal baseline. Until that generated scene exists, the contract is test-backed but not yet demonstrated by a dedicated living SVG.
+The offset is returned as separate presentation/root-offset data; the evaluator does not silently bake it into every named transform. This is not yet joint-level skill, an experience-profile system, or physical response. A future variation scene should visualize the actual evaluator outputs for a small fixed set of seeds, show the declared bounds, and distinguish seed-driven results from the ideal baseline. The dedicated generator now lives in [tools/variation-demo](../tools/variation-demo/README.md). It samples two explicitly authored demonstration profiles with fixed identity seeds, calls the real `GestureExperienceProfile.Sample` and `GestureEvaluator.Evaluate` methods at 81 time samples per profile, and serializes normalized progress plus the separate returned root offset into `docs/assets/gesture-variation.svg`. The profile values are illustrative—not calibrated skill data—and the scene does not imply joint-level competence. The generated file is uploaded as a CI artifact and XML-validated. Until the generated snapshot is committed and the workflow has passed, treat the generator as added but the checked-in visual as pending.
 
 ## The teaching loop: concept → action → evidence
 
@@ -83,7 +83,7 @@ These are priorities for future iterations, not claims about current functionali
 | Priority | Scene | Evidence required before drawing |
 |---|---|---|
 | 1 | Keyframes → interpolated transform | Real keyframe definitions and evaluator samples; show keyframes separately from intermediate samples |
-| 2 | Deterministic individual variation | Run the actual evaluator with fixed identity seeds and declared variation bounds; show repeatable differences, not random decoration |
+| 2 | Deterministic individual variation | Generator added in `tools/variation-demo`; CI generates and XML-validates the SVG. Commit a generated snapshot and verify the workflow before treating the visual as complete. |
 | 3 | Progress and lifecycle | Real FSM_API transitions plus evaluator progress/completion values, including interruption only if the actual state model supports it |
 | 4 | Multiple transforms with actual hierarchy | A documented parent/child composition contract and a tested evaluator/adapter that resolves it; named dictionary keys alone are insufficient |
 | 5 | Dynamic response to forces/contact | A real, tested motion model producing state updates from declared forces, environment, and contact inputs; never substitute a hand-authored slip or impact animation |
