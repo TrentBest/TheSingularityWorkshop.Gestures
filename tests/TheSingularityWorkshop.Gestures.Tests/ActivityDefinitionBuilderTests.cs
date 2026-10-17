@@ -78,6 +78,25 @@ public sealed class ActivityDefinitionBuilderTests
     }
 
     [Fact]
+    public void ClosedPhaseBuilderCannotBeMutatedOrEndedAgain()
+    {
+        var builder = ActivityDefinitionBuilder.Define("activity.closed-phase");
+        var phase = builder.Phase("round");
+        phase.AssignRole("runner", 1, 4);
+        phase.OfferGesture("run");
+        phase.EndPhase();
+
+        Assert.Throws<InvalidOperationException>(() => phase.AssignRole("observer", 0, 2));
+        Assert.Throws<InvalidOperationException>(() => phase.OfferGesture("hide"));
+        Assert.Throws<InvalidOperationException>(() => phase.EndPhase());
+
+        var definition = builder.Build();
+        Assert.Single(definition.Phases);
+        Assert.Equal(new[] { "runner" }, definition.Phases[0].Roles.Select(role => role.Id));
+        Assert.Equal(new[] { "run" }, definition.Phases[0].GestureIds);
+    }
+
+    [Fact]
     public void RejectsDuplicatePhaseIdsAndGestureReferences()
     {
         var builder = ActivityDefinitionBuilder.Define("activity.duplicate-phase");
