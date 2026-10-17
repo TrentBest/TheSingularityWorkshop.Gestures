@@ -52,8 +52,32 @@ jobs:
       - name: Generate Extremus population SVG from the CPU baker
         run: dotnet run --project tools/extremus-crowd-demo/extremus-crowd-demo.csproj --configuration Release --no-build -- --output docs/assets/extremus-crowd-bake.svg
 
-      - name: Validate every documentation SVG as XML
-        run: python -c "from pathlib import Path; import xml.etree.ElementTree as ET; files=sorted(Path('docs/assets').rglob('*.svg')); [ET.parse(p) for p in files]; print('Validated', len(files), 'SVG files under docs/assets')"
+      - name: Validate documentation SVG XML and visible provenance
+        shell: python
+        run: |
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          files = sorted(Path("docs/assets").rglob("*.svg"))
+          if not files:
+              raise SystemExit("No documentation SVG assets found.")
+
+          failures = []
+          for path in files:
+              root = ET.parse(path).getroot()
+              labels = [node for node in root.iter() if node.attrib.get("id") == "provenance-label"]
+              if not labels:
+                  failures.append(f"{path}: missing visible provenance label")
+                  continue
+              label = " ".join("".join(node.itertext()) for node in labels)
+              aria = " ".join(node.attrib.get("aria-label", "") for node in labels)
+              combined = f"{label} {aria}"
+              if "GUI.SVG: USED" not in combined and "GUI.SVG: NOT USED" not in combined:
+                  failures.append(f"{path}: provenance must explicitly say GUI.SVG: USED or GUI.SVG: NOT USED")
+
+          if failures:
+              raise SystemExit("\\n".join(failures))
+          print(f"Validated XML and explicit GUI.SVG provenance for {len(files)} SVG files under docs/assets.")
 
       - name: Upload generated living SVGs
         uses: actions/upload-artifact@v7
