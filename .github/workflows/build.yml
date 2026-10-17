@@ -43,8 +43,8 @@ jobs:
       - name: Generate deterministic variation scene
         run: dotnet run --project tools/variation-demo/variation-demo.csproj --configuration Release -- --output docs/assets/gesture-variation.svg
 
-      - name: Validate generated SVG XML
-        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg']]"
+      - name: Validate documentation and generated SVG XML
+        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg', 'docs/assets/speech-scene-population.svg']]"
 
       - name: Upload C#-generated living SVG
         uses: actions/upload-artifact@v7
@@ -62,8 +62,8 @@ jobs:
             echo "All generated living SVG snapshots are current."
           fi
 
-      - name: Verify generated SVG formatting
-        run: git diff --check -- docs/assets/gesture-*.svg
+      - name: Verify SVG formatting
+        run: git diff --check -- docs/assets/gesture-*.svg docs/assets/speech-scene-population.svg
 
       - name: Test with coverage
         run: >
