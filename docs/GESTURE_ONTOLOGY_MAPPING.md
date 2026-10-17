@@ -40,7 +40,7 @@ The names resemble a taxonomy, but the ontology system also supports explicit re
 
 1. **Semantic coordinate** — the nine integer values classifying a concept in one ontology/version.
 2. **Relationship graph** — explicit links among concepts, providers, procedures, actor capabilities, contexts, and manifestations, potentially across ontologies.
-3. **Runtime composition graph** — the actual providers, offers, actors, experience definitions, physics capabilities, and presentation capabilities assembled for one run.
+3. **Runtime composition graph** — the actual providers, offers, actors, activity definitions, physics capabilities, and presentation capabilities assembled for one run.
 
 The [Ontology Theory](https://github.com/TrentBest/TheSingularityWorkshop.Ontology/blob/master/docs/THEORY.md) states that ontology is optional semantic structure, not a mandatory constraint on every MicroBundle. The separate [Ontology package](https://github.com/TrentBest/TheSingularityWorkshop.Ontology) supports variable-rank indexing; the fixed nine-slot signature is the Workshop Experience/Hub contract, not a universal requirement imposed on all consumers.
 
@@ -53,7 +53,7 @@ The [Ontology Theory](https://github.com/TrentBest/TheSingularityWorkshop.Ontolo
 | Provider offering a procedure | Links between provider, procedure, and eligibility concepts | Provider registry and `GestureOfferSelector` |
 | Actor suitability | Capability concepts and semantic relationships where useful | Actor/gameplay system supplies current capabilities and policy |
 | Semantic anchor kind, e.g. vehicle hatch | Stable concept and compatibility relationships | Consumer/world supplies current anchor instances and transforms |
-| Flash mob, tag, hide-and-seek, starport departure | Activity concepts and links to reusable procedures | Versioned `ExperienceDefinition`, roles and phases |
+| Flash mob, tag, hide-and-seek, starport departure | Activity concepts and links to reusable procedures | Versioned `ActivityDefinition`, roles and phases |
 | One live instance of an activity | Optional semantic links for inspection/discovery | Session coordinator and live session identity/state |
 | Current playback progress | Usually runtime state, not taxonomy | `GesturePlayback` / `GestureSequencePlayback` |
 | Collision, reachability, force, physical success | Concepts may be classified and related | Physics/world authority |
@@ -124,7 +124,7 @@ Keep these identities distinct:
 - **Semantic concept ID/token:** identity of the concept in the vocabulary, if separately assigned.
 - **Gesture definition ID/version:** authored physical procedure and its revisions.
 - **Provider ID/version:** implementation or bundle offering the procedure.
-- **Experience ID/version:** organized activity definition.
+- **Activity ID/version:** organized activity definition.
 - **Session ID/revision:** one live occurrence.
 - **Playback handle:** one execution lifecycle.
 
