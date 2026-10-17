@@ -4,6 +4,8 @@ Gestures teaches reusable animation principles. A gesture describes motion over 
 
 The documentation is part of the product experience: it should help readers *see* what the current implementation does, understand why the behavior matters, and follow the evidence back to real code.
 
+Every instructional SVG now needs an **in-artwork provenance label**, not just a Markdown caption. Follow the [SVG provenance and technology-label standard](SVG_PROVENANCE_STANDARD.md): identify whether the image is generated evidence or a conceptual/research map, name the actual producing technology and Workshop package, and explicitly say whether GUI.SVG was used. Native SVG markup is not itself evidence of GUI.SVG usage. The three diagrams immediately below have been labelled honestly as conceptual/native-SVG artifacts, not runtime output.
+
 ## Living diagrams added to the theory
 
 ![Gesture data flow and deterministic variation](assets/gesture-data-and-variation.svg)
