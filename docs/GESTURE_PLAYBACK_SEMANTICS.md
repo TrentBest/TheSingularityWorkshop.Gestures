@@ -1,20 +1,20 @@
-# Gesture playback semantics — consumer contract proposal
+# Gesture playback semantics — implemented lifecycle and consumer contract
 
-This document proposes playback rules for consumers of the current Gesture evaluator. It does not add a playback controller, take ownership of an FSM, or claim that the proposal is a frozen public API.
+This document describes the implemented single-session and ordered-sequence playback coordinators, then records consumer policies that remain outside those coordinators. The coordinators do not take ownership of an FSM or claim that a pose proves physical success.
 
 ## What the evaluator currently guarantees
 
 `GestureEvaluator.Evaluate` is a stateless evaluation of a definition at a supplied elapsed time and duration. Negative elapsed time is clamped to the beginning, progression is clamped to `[0, 1]`, and `EvaluatedPose.IsComplete` becomes true at normalized progression 1. A caller can evaluate any time point again; the evaluator does not retain a playback cursor.
 
-That makes pause, resume, reversal, and interruption orchestration responsibilities of the caller today.
+`GesturePlayback` now implements single-session start, pause, resume, completion, and cancellation. `GestureSequencePlayback` composes a fixed ordered list and carries unused delta time across completion boundaries. Reversal, blending, branching, prerequisite checks, and physical-outcome policy remain caller-owned.
 
 ## Recommended consumer policy
 
-- **Pause:** retain the playback clock/progression externally. While paused, evaluate at the retained elapsed time rather than advancing it.
-- **Resume:** continue from the retained elapsed time with the same definition, duration, variation settings, and identity seed. This avoids an implicit jump caused by restarting at zero.
+- **Pause:** `GesturePlayback` and `GestureSequencePlayback` retain the active step, elapsed time, and last pose. While paused, the host must not advance the sequence.
+- **Resume:** resume the same session from its retained elapsed time with the same definition, duration, variation settings, and identity seed. This avoids an implicit jump caused by restarting at zero.
 - **Reverse:** evaluate the same authored definition at decreasing elapsed time. This retraces the interpolation path; it is not a physically validated reverse action and does not guarantee safe reverse contact.
 - **Interrupt:** stop advancing the interrupted procedure and let the owning state machine choose the next procedure or recovery. Do not infer that contacts, constraints, or physical actions were undone.
-- **Re-enter:** make the restart policy explicit at the call site. A fresh entry may reset elapsed time to zero; a continuation may restore saved elapsed time. Do not silently mix the two.
+- **Sequence time carryover:** `GestureSequencePlayback.Advance` transfers unused delta time to the next step when a step completes, including multiple boundaries in one call. Each step is a distinct, ready-to-start `GesturePlayback` session; reusing one session twice is rejected.
 - **Change target/provider:** re-resolve anchors and validate the next pose against current domain observations. A previously reachable target or contact must not be treated as still valid after the world changes.
 
 ## Determinism checklist
