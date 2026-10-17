@@ -90,6 +90,86 @@ The coordinator owns the plan and readiness gates, not the physics. Gestures sup
 
 The existing starport departure task graph is a nearby reference for this distinction: task readiness and clearance gates are not the same as multi-agent pathfinding or physical contact resolution.
 
+## Places, attention, and continuity across the world
+
+The same ecosystem must work at several nested scales. A building is not merely a static container in which an unrelated crowd happens to run. It can host its own local activity, props, sound, attention sources, entrances/exits, and participant roles while remaining connected to the surrounding street and wider world. The world is composed from these places and transitions; the crowd is one population moving through them.
+
+### A place is a local activity environment
+
+A bar might contain a piano or music source, a counter, tables, a door, and several kinds of guest behavior. Some guests are playful and sociable; others may become angry quickly. These are not all “Gestures” themselves: the place/provider supplies the semantic affordances, guest profiles, activity rules, and environmental events. Gestures supplies reusable physical procedures for actions such as playing, sitting, turning toward a sound, greeting, arguing, standing, walking to a door, opening it, and carrying an object. A coordinator chooses and sequences actions; the host and Physics determine whether they can actually happen.
+
+A building can be loaded, simulated, represented, and retired at a different fidelity from the world outside it. A player interacting with an exit may request a transition to an outside scene. That transition is not complete merely because the interaction fired: it may have an approach/arrival gate, a doorway crossing, and a handoff of the player's position to the sidewalk. The presentation can then scale the building back and reveal the exterior, but this visual transition must not change the authoritative position or identity of the player. The sidewalk connects to other places and is a natural boundary for grouping nearby agents into shared processing cohorts.
+
+This yields a useful composition:
+
+- **Place** — a building, shop, bar, park, airport terminal, street segment, or room, with identity and connections.
+- **Affordance** — an available interaction or opportunity: seat, piano, exit, shop counter, puppy window, moving sidewalk, gate, or service desk.
+- **Activity** — a specific local process, such as playing music, ordering food, entering, browsing, buying, waiting, or boarding.
+- **Agent intent and state** — what an individual wants, knows, carries, can afford, and has actually completed.
+- **Transition** — a validated handoff between places, preserving identity and relevant state.
+- **Execution cohort** — a temporary set of compatible work items that can share scheduling, input data, or evaluator dispatch without becoming one behavior.
+
+These are conceptual responsibilities, not frozen public API names.
+
+### Attention is an opportunity, not a command
+
+Attention points are authored sources or events that can attract notice: a piano performance, a sudden noise, a street performer, a sale, or puppies playing in a pet-store window. An attention-grabbing score can combine source salience, distance, visibility, novelty, current agent interests, competing stimuli, and the agent's present activity. It should be a score or ranked opportunity—not a universal rule that forces every observer to look.
+
+A practical decision chain is:
+
+1. The environment publishes a discoverable stimulus with position, extent, type, and a versioned salience profile.
+2. An agent perceives or receives candidate stimuli according to its own location, senses, attention budget, and current commitments.
+3. The agent's decision policy weighs those candidates against goals, time, resources, relationships, and willingness to interrupt.
+4. If the agent chooses to respond, a local activity coordinator requests the relevant Gesture or activity and schedules its start.
+5. The host reports observations: whether the agent could reach the window, entered the shop, completed a purchase, or continued walking.
+6. Only authoritative completed outcomes update persistent state and downstream decisions.
+
+This distinction makes the world legible. A high attention score can increase the chance that a passerby pauses, approaches the window, or enters the shop; it should not teleport the agent or guarantee a purchase. Different agents can ignore the same stimulus, notice it late, approach but be blocked, browse without buying, or choose to buy for different reasons. Deterministic seeded variation is useful for reproducible tests, while any genuinely stochastic policy must define its random stream and replay guarantees explicitly.
+
+### Persistent consequences make the world feel alive
+
+The puppy example is a vertical slice across multiple systems, not a single animation:
+
+- A Digiten notices puppies in a pet-store window and chooses to investigate.
+- The agent enters the store, approaches an available animal, and completes a purchase through the store/economy rules.
+- The purchase creates persistent ownership or care responsibility; it is not merely a prop attached for presentation.
+- The Digiten exits to the sidewalk with the puppy, retaining identity and ownership across the place transition.
+- Later shopping decisions account for dog food and other relevant needs.
+- A visit to a dog park becomes a new activity opportunity, creating interactions with other owners and animals.
+- The observing player can see the Digiten walking away with the puppy, then later recognize the same agent and its changed circumstances.
+
+Gestures provides the physical procedures for relevant actions, not the entire economic or citizen simulation. The world/agent systems own needs, goals, affordability, inventory, ownership, memory, and decision policy. The store owns stock and purchase rules. Place/scene coordination owns entry, exit, and handoff. Physics owns reachability and physical outcomes. Renderer/Visualize presents the current view. Persistent state links these episodes so that an action in one place can alter behavior somewhere else later.
+
+The important acceptance test is not “did the purchase animation play?” It is “did the same stable agent leave with the purchased animal, retain that ownership after a transition, and subsequently make consistent care-related choices?”
+
+### One world, many execution cadences
+
+A bar, pet store, airport, and dog park share the same underlying population concerns even though their activity policies differ. A nearby agent crossing a doorway may need frequent updates; a distant pedestrian may need only coarse route progress; an off-screen citizen may still need occasional decision/state updates without full pose evaluation. A moving sidewalk in an airport is a clear example: the local traversal policy differs from an ordinary walking area, but both are connected segments in the same route graph. The transport mode or area changes the movement request; it should not require a separate identity or world simulation.
+
+Use independent cadence tiers for distinct kinds of work:
+
+- **Decision cadence:** reconsider goals and stimuli when relevant events or thresholds occur, rather than rerunning every decision every frame.
+- **Activity cadence:** advance local schedules, music/beat clocks, shop queues, and task gates at the cadence each domain requires.
+- **Motion cadence:** evaluate poses or movement controls only as frequently as the required fidelity and physical stability demand.
+- **Presentation cadence:** interpolate or select representations for the observer without making rendering frequency authoritative for agent decisions.
+- **Persistence cadence:** commit durable changes at explicit transaction/outcome boundaries, not because a render frame happened.
+
+Cohorts should be formed by compatible work and locality, not treated as permanent social groups. Members can share a street segment, route calculation, stimulus index, activity clock, or evaluator dispatch while retaining separate goals, possessions, personality/context parameters, motion seeds, and results. An agent moving from sidewalk to shop changes place and possibly cohort; it does not become a different agent. Cohorting must also tolerate entry, exit, interruption, and changing fidelity without order-dependent outcomes.
+
+### A vertical slice that proves the ecosystem
+
+A high-value demonstrator should show the complete causal chain rather than a crowd of decorative figures:
+
+1. A small street connects a bar, a pet store, and a sidewalk/park route.
+2. The bar has a music source and several distinct guest profiles; the music creates a measurable attention stimulus.
+3. A puppy-window stimulus attracts a subset of passing agents according to per-agent policy, not a forced global reaction.
+4. One agent enters the pet store, completes a valid purchase, and exits with the puppy through a gated place transition.
+5. The same identity is visible later carrying the puppy, buys dog food on a subsequent shopping trip, and visits a dog park.
+6. Distant and nearby agents use different measured update cadences; shared work is batched only where parity tests prove that per-agent decisions and outcomes are preserved.
+7. A living SVG/timeline is generated from actual world, schedule, transaction, and transition records. Conceptual overlays are labelled; no artwork is presented as evidence of unimplemented simulation.
+
+Keep the first proof deliberately small but end-to-end. A real causal chain with three places and one persistent agent teaches more about the architecture than a thousand anonymous agents moving in a loop. Once the chain is observable and replayable, scale the population and measure where execution cost actually resides.
+
 ## Relationship to the existing crowd scheduler
 
 Keep `CrowdResponseScheduler` small and pure. It already answers a useful question: given one event, a policy, and one stable participant identity, what bounded intent time and variation parameters should that participant receive?
