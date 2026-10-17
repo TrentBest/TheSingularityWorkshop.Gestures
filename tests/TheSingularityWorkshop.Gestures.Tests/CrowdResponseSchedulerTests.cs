@@ -99,6 +99,33 @@ public sealed class CrowdResponseSchedulerTests
     }
 
     [Fact]
+    public void ObservationEventCanSeedAnIndependentObserverSchedule()
+    {
+        var observed = new GestureObservationEvent(
+            "street-performance-17",
+            "street-performance",
+            42.5d,
+            new[] { "performer-1", "performer-2" });
+        var request = new CrowdResponseRequest(observed, "spectator-9", 42UL);
+        var schedule = CrowdResponseScheduler.Schedule(request, Policy);
+
+        Assert.Equal(observed.EventId, request.EventId);
+        Assert.Equal(observed.OccurredAtSeconds, request.EventTimeSeconds);
+        Assert.Equal("spectator-9", request.ParticipantId);
+        Assert.DoesNotContain("spectator-9", observed.ParticipantIds);
+        Assert.Equal("street-performance-17", schedule.EventId);
+        Assert.Equal("spectator-9", schedule.ParticipantId);
+        Assert.Equal(request.EventTimeSeconds + schedule.DelaySeconds, schedule.IntentTimeSeconds, 12);
+    }
+
+    [Fact]
+    public void ObservationEventConstructorRejectsNullOccurrence()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            new CrowdResponseRequest((GestureObservationEvent)null!, "spectator-9", 42UL));
+    }
+
+    [Fact]
     public void ScheduleContainsIntentOnlyAndDoesNotInventAcousticArrival()
     {
         var result = CrowdResponseScheduler.Schedule(
