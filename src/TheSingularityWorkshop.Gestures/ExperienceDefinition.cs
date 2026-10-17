@@ -39,7 +39,7 @@ public sealed class ActivityPhaseDefinition
         GestureIds = gestureIds;
     }
 
-    /// <summary>Stable identifier unique within the experience.</summary>
+    /// <summary>Stable identifier unique within the activity.</summary>
     public string Id { get; }
 
     /// <summary>Role slots declared for this phase.</summary>
@@ -53,7 +53,7 @@ public sealed class ActivityPhaseDefinition
 public sealed record ActivityRoleSlot(string Id, int MinimumParticipants, int MaximumParticipants);
 
 /// <summary>
-/// Fluent authoring entry point for immutable experience definitions.
+/// Fluent authoring entry point for immutable activity definitions.
 /// Build validates structural invariants before returning the data model.
 /// </summary>
 public sealed class ActivityDefinitionBuilder
