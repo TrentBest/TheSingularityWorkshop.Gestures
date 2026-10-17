@@ -78,6 +78,15 @@ Each important concept should have the most truthful visual proof available:
 
 These are a proof backlog, not claims that all five surfaces already exist. Prefer extending a real generator and testing its output over hand-drawing a picture that looks more complete than the implementation.
 
+
+## Capabilities are not compatibility, and representation is not authority
+
+Gestures' scope includes more than an actor moving from one pose to another. A provider may describe reusable procedures and the intended behavior of a component inside a larger system: a vehicle subsystem, a toy mechanism, a crew operation, or an articulated object. A flight simulator may need to represent a vehicle's intended/nominal behavior alongside its current player-driven state, so the experience can explain the difference between what the vehicle should be doing and what the player is currently making it do. That representation is a consumer-facing use of capability and procedure data; it does not make Gestures the flight model or the authority over the vehicle's state.
+
+Likewise, two providers advertising the same operation name does not make them compatible. A tanker and a station may both advertise docking, while their interfaces, geometry, scale, constraints, and supported procedure versions make a particular pairing invalid. The higher-level experience declares the desired composition, and MicroBundle arbitration evaluates which declared bundles, versions, configurations, and capabilities can be composed. Gestures may describe and evaluate the selected procedure; it must not silently authorize an incompatible operation or claim the physical result succeeded.
+
+The manifest/configuration/arbitration boundary and a worked docking example are documented in [Physics and Gestures: MicroBundle Arbitration Without Package Coupling](PHYSICS_MICROBUNDLE_ARBITRATION.md). The current descriptor model's limits remain explicit there; this conceptual scope statement does not imply that a full semantic compatibility checker or flight-dynamics model exists in Gestures.
+
 ---
 
 **Domain summary:** Gestures owns reusable physical procedures and deterministic motion evaluation. It can grow coordination and population-execution capabilities where reusable primitives are justified. It does not own the world, physical truth, actor/game state, observer-relative rendering, or GPU presentation.
