@@ -180,7 +180,7 @@ public static class ExtremusCrowdBaker
         ArgumentNullException.ThrowIfNull(request);
         var instances = new ExtremusPopulationInstance[request.PopulationCount];
         var totalWeight = request.Activities.Sum(x => x.Weight);
-        if (!double.IsFinite(totalWeight) || totalWeight <= 0d)
+        if (request.PopulationCount > 0 && (!double.IsFinite(totalWeight) || totalWeight <= 0d))
             throw new ArgumentOutOfRangeException(nameof(request), "Activity weights must have a finite positive sum.");
 
         for (var index = 0; index < instances.Length; index++)
