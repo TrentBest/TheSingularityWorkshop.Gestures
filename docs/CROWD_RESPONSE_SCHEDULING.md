@@ -101,7 +101,7 @@ The [crowd-response demo](../tools/crowd-response-demo/Program.cs) now runs the 
 - Stable IDs and bounds, so replay can be compared across runs.
 - A small table or annotation stating sample count, policy version, generator command, and test coverage.
 
-The SVG generator must call the real scheduler, serialize its outputs, and label any scene positions or policy values that are illustrative. Do not hand-draw a wave and describe it as scheduler output. Until then, the existing speech-scene SVG remains conceptual and this contract remains proposed.
+The generator calls the real scheduler and serializes its output records. Participant IDs, event time, stable seed, and policy bounds are explicit fixture inputs; the plotted intent times, variants, and intensities come from scheduler results. The SVG is evidence for scheduling only. The speech-scene SVG remains conceptual, and this is not evidence of crowd movement or acoustic arrival.
 
 ## Implementation order
 
