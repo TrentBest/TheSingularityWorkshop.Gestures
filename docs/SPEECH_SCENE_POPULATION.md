@@ -43,6 +43,8 @@ Player input must not be hidden inside a Gesture. The scene controller owns choi
 - **Physics** owns physical outcomes: contact, collisions, blocked movement, body/environment interaction, and any actual acoustic propagation model if that belongs to the simulation. Gestures can request an action; it must not fabricate the resulting physics.
 - **Audio / scene presentation** schedules speech, crowd beds, localized reactions, propagation delay, and screen/audio mix. Do not pretend a simple time offset is a full acoustic simulation.
 
+**Sound is not a per-object SFX attachment system.** For physical sounds—an impact, a boot striking a surface, a coupling releasing, or a door closing—the Physics-owned sound model should derive the source event from the actual interaction, material, and relevant physical state. The object or Gesture should not need a manually attached sound cue to make a real interaction audible. Gestures describes the action; it neither invents the physical outcome nor owns sound generation. Intentional vocal performance is a different source: the crowd's decision to cheer creates vocal events, and the sound model/presentation path then handles their propagation, occlusion, mix, and arrival at the listener. Dialogue timing remains scene-authored. This distinction is an architectural contract to implement, not a claim that the current Gestures repository already contains a physical sound system.
+
 No Unity, WPF, Blazor, renderer, GPU, or game-specific types belong in the Gestures core. Keep domain-specific scene choreography in a consumer or provider bundle.
 
 ## The event horizon: spend detail where it changes the experience
