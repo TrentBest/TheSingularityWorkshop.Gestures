@@ -44,9 +44,10 @@ public sealed class GesturePlayback
     public EvaluatedPose Start()
     {
         RequireState(GesturePlaybackState.Ready, "Only a ready playback can start.");
-        CurrentPose = EvaluateCurrentTime();
-        State = CurrentPose.IsComplete ? GesturePlaybackState.Completed : GesturePlaybackState.Playing;
-        return CurrentPose;
+        var pose = EvaluateCurrentTime();
+        CurrentPose = pose;
+        State = pose.IsComplete ? GesturePlaybackState.Completed : GesturePlaybackState.Playing;
+        return pose;
     }
 
     /// <summary>
@@ -64,10 +65,11 @@ public sealed class GesturePlayback
             throw new ArgumentOutOfRangeException(nameof(deltaSeconds), "Accumulated elapsed time must remain finite.");
 
         _elapsedSeconds = nextElapsed;
-        CurrentPose = EvaluateCurrentTime();
-        if (CurrentPose.IsComplete)
+        var pose = EvaluateCurrentTime();
+        CurrentPose = pose;
+        if (pose.IsComplete)
             State = GesturePlaybackState.Completed;
-        return CurrentPose;
+        return pose;
     }
 
     /// <summary>Pauses a playing session without discarding accumulated time or the current pose.</summary>
