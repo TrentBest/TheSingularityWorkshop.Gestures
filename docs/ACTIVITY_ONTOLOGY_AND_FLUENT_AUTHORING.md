@@ -4,11 +4,11 @@
 
 ## The core idea
 
-A character should not need bespoke animation logic for every game or social event. An activity describes what can happen, how participants may take part, which reusable procedures are appropriate, what coordination is required, and which observations allow the activity to advance. Runtime systems compose that data with the current world and participants.
+A character should not need bespoke animation logic for every game or social event. An activity definition describes what can happen, how participants may take part, which reusable procedures are appropriate, what coordination is required, and which observations allow the activity to advance. Runtime systems compose that data with the current world and participants.
 
 A flash mob, a pickup game of tag, hide-and-seek, a practical joke, a starport boarding procedure, and a coordinated film shoot are different activity ontologies. They can reuse the same lower-level gesture definitions, role assignments, spatial constraints, timing, lifecycle, and observation contracts without pretending they are the same activity.
 
-**Gesture = reusable physical procedure. Activity definition = an organized, versioned plan of roles and phases that uses procedures. Activity session = one live occurrence of that plan. Workshop Experience = the composed environment of MicroBundles in which the activity may run.** Keep these concepts distinct.
+**Gesture = reusable physical procedure. Activity definition = an organized, versioned plan of roles and phases that uses procedures. Activity session = one live occurrence of that plan. Workshop Workshop Experience = the composed environment of MicroBundles in which the activity may run.** Keep these concepts distinct.
 
 ## Ontology layers
 
@@ -23,7 +23,7 @@ A flash mob, a pickup game of tag, hide-and-seek, a practical joke, a starport b
 | Observation | Facts supplied by authoritative owners | Participant entered a zone; collision blocked a step; player accepted a cue |
 | Presentation | Guidance, avatar pose, observer-specific fidelity and rendering | Show the player's dance cue; replicate the evaluated avatar motion |
 
-Classification belongs to the activity ontology, not a pile of character-specific conditionals. Ontology terms should have stable IDs, explicit versions, and documented relationships. Labels are for people; stable identifiers and declared semantics are for tools and runtime systems.
+Activity classification belongs to the activity ontology, not a pile of character-specific conditionals. Ontology terms should have stable IDs, explicit versions, and documented relationships. Labels are for people; stable identifiers and declared semantics are for tools and runtime systems.
 
 ## Fluent authoring: edit the model, not the character
 
@@ -32,7 +32,7 @@ A fluent API should make composition readable in code and usable by an editor. T
 Illustrative API only:
 
 ~~~csharp
-var flashMob = Experience.Define("public-space.flash-mob")
+var flashMob = Activity.Define("public-space.flash-mob")
     .Version(1)
     .ClassifyAs("social", "performance", "group-activity")
     .Phase("gather")
@@ -74,9 +74,9 @@ var definition = ActivityDefinitionBuilder.Define("public-space.flash-mob")
 
 The builder validates IDs, positive version, duplicate classifications/phases/roles/references, participant bounds, and nonempty phases. `ActivityDefinitionPatch` is also implemented: it represents a complete replacement definition, requires the same activity ID and a strictly newer version, and checks whether the currently observed definition still matches the expected version. It is an optimistic-concurrency proposal only; it does not mutate a session, apply atomically, or resolve active participant playback.
 
-A good runtime API should support:
+A good activity-authoring/runtime API should support:
 - **Composition:** add/remove phases, role slots, actions, dependencies, timing cues, and spatial constraints.
-- **Classification:** attach stable ontology terms and relationships; query activitys by capability, setting, participant count, or interaction pattern.
+- **Classification:** attach stable ontology terms and relationships; query activities by capability, setting, participant count, or interaction pattern.
 - **Actor-relative filtering:** discover provider offers, then filter against actor capabilities and available semantic anchors.
 - **Runtime changes:** submit a patch against a known session/version, validate it, and apply it at a declared safe boundary.
 - **Inspection and undo:** show what changed, why it is valid, and what is affected; support undo or replay where the host can preserve state.
@@ -94,9 +94,9 @@ Runtime modification must not mean mutating arbitrary collections while a coordi
 4. Apply atomically at a defined session boundary, or reject the patch with no partial mutation.
 5. Record the accepted revision and change summary so tools can inspect or replay it.
 
-The host decides the safe application boundary. A live patch must define what happens to participants already executing an action: finish current phrase, transition at the next cue, cancel, or explicitly reassign. Never silently invalidate an active playback handle.
+The Workshop Experience host decides the safe application boundary. A live patch must define what happens to participants already executing an action: finish current phrase, transition at the next cue, cancel, or explicitly reassign. Never silently invalidate an active playback handle.
 
-## Three example activitys
+## Three example activities
 
 ### Flash mob in a shopping district
 
@@ -117,13 +117,13 @@ Ground crew and flight crew are role families within a task-oriented activity. T
 ## Ownership boundaries
 
 - **Gestures:** reusable physical procedure data, deterministic evaluation, offer eligibility, and motion-lifecycle primitives.
-- **Experience/activity coordinator:** phase graph, participant assignment, shared clocks, dependencies, interruption and re-entry, and session revisions.
+- **Activity coordinator:** phase graph, participant assignment, shared clocks, dependencies, interruption and re-entry, and session revisions.
 - **Actor/gameplay system:** intent, permissions, personality, social policy, and authoritative game state.
 - **Physics:** forces, contact, collision, reachability evidence, and achieved physical outcomes.
 - **Renderer / Visualize:** observer-relative fidelity and presentation. They do not define the activity's ontology.
 - **Editor/tooling:** authoring, graph inspection, validation, preview, classification, patch review, and documentation generation. It edits data; it should not become the only place the rules exist.
 
-The coordinator should be optional. A one-person Gesture must remain inexpensive and useful without a crowd, social system, or activity graph.
+The activity coordinator should be optional. A one-person Gesture must remain inexpensive and useful without a crowd, social system, or activity graph.
 
 ## Editor and living-documentation proof
 
