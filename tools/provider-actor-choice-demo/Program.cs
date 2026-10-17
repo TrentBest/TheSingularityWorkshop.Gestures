@@ -46,12 +46,18 @@ var outcomes = new[]
     new Outcome("digiten-kellan", "provider-choice", "no-purchase", "work goal did not select puppy purchase")
 };
 if (!decisions.Any(x => x.ActorId == "digiten-mira" && x.CapabilityId == "buy-puppy" && x.Selected) ||
-    decisions.Any(x => x.ActorId == "digiten-kellan" && x.CapabilityId == "buy-puppy" && x.Selected) ||
+    decisions.Any(x => x.ActorId == "digiten-kellan" && x.Selected) ||
     decisions.Any(x => x.CapabilityId is "buy-dog-food" or "visit-dog-park" && x.Eligible))
     throw new InvalidOperationException("Actor-choice fixture violated its expected filters or selection.");
 var replay = actors.Select(a => Select(provider, a)).ToArray();
 if (!replay.SequenceEqual(actors.Select(a => Select(provider, a))))
     throw new InvalidOperationException("Selection was not deterministic.");
+foreach (var actor in actors)
+{
+    var recorded = decisions.FirstOrDefault(x => x.ActorId == actor.Id && x.Selected)?.CapabilityId ?? "none";
+    if (recorded != Select(provider, actor))
+        throw new InvalidOperationException($"Decision trace disagrees with replay for {actor.Id}.");
+}
 var output = GetOutputPath(args);
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output))!);
 File.WriteAllText(output, Svg(provider, actors, decisions, outcomes), new UTF8Encoding(false));
