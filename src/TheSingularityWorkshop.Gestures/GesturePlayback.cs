@@ -12,6 +12,7 @@ public sealed class GesturePlayback
     private readonly GestureVariation _variation;
     private readonly ulong _identitySeed;
     private double _elapsedSeconds;
+    private readonly double _completionTimeSeconds;
 
     /// <summary>Creates a single-use playback session for a validated Gesture definition.</summary>
     public GesturePlayback(
@@ -29,6 +30,10 @@ public sealed class GesturePlayback
         _variation = variation ?? GestureVariation.None;
         _variation.Validate();
         _identitySeed = identitySeed;
+        // Sampling at half of a unit duration exposes the constant seeded speed factor
+        // without reaching the evaluator's progress clamp (speed is strictly below 2).
+        var halfProgress = GestureEvaluator.Evaluate(_definition, 0.5d, 1d, _variation, _identitySeed).NormalizedProgress;
+        _completionTimeSeconds = _durationSeconds / (halfProgress * 2d);
     }
 
     /// <summary>Current lifecycle state. A session can be started once and then paused, resumed, completed, or cancelled.</summary>
@@ -36,6 +41,9 @@ public sealed class GesturePlayback
 
     /// <summary>Unscaled elapsed seconds accumulated from host-supplied deltas.</summary>
     public double ElapsedSeconds => _elapsedSeconds;
+
+    /// <summary>Elapsed-time boundary at which this seeded playback reaches normalized progress one.</summary>
+    public double CompletionTimeSeconds => _completionTimeSeconds;
 
     /// <summary>Most recently evaluated pose, or null before Start.</summary>
     public EvaluatedPose? CurrentPose { get; private set; }
@@ -64,7 +72,9 @@ public sealed class GesturePlayback
         if (!double.IsFinite(nextElapsed))
             throw new ArgumentOutOfRangeException(nameof(deltaSeconds), "Accumulated elapsed time must remain finite.");
 
-        _elapsedSeconds = nextElapsed;
+        // Clamp at the actual seeded completion boundary so sequence orchestration can
+        // transfer unused host time to the next step without reporting an overshot clock.
+        _elapsedSeconds = Math.Min(nextElapsed, _completionTimeSeconds);
         var pose = EvaluateCurrentTime();
         CurrentPose = pose;
         if (pose.IsComplete)
