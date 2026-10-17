@@ -99,7 +99,7 @@ Discover providers and Gesture offers
 Filter actor capabilities + available anchor kinds
           |
           v
-Actor / experience policy chooses intent and offer
+Actor / activity policy chooses intent and offer
           |
           v
 Resolve actual anchors and evaluate the procedure
@@ -108,7 +108,7 @@ Resolve actual anchors and evaluate the procedure
 Physics / world observes the achieved outcome
           |
           v
-Experience coordinator advances from valid evidence
+Activity coordinator advances from valid evidence
           |
           v
 Renderer presents the evaluated result at observer-appropriate fidelity
@@ -128,7 +128,7 @@ Keep these identities distinct:
 - **Session ID/revision:** one live occurrence.
 - **Playback handle:** one execution lifecycle.
 
-A concept can be reused by multiple providers and experiences. A provider can change without changing the concept. An experience can reuse a procedure without owning it. A definition can evolve while its broader meaning remains stable. Semantic-breaking changes should be versioned or explicitly related to a replacement concept rather than silently repurposing a token.
+A concept can be reused by multiple providers and activities. A provider can change without changing the concept. An activity can reuse a procedure without owning it. A definition can evolve while its broader meaning remains stable. Semantic-breaking changes should be versioned or explicitly related to a replacement concept rather than silently repurposing a token.
 
 ## Questions for ontology coordination
 
@@ -143,4 +143,4 @@ A concept can be reused by multiple providers and experiences. A provider can ch
 
 Treat the nine layer names as canonical and the actual Gesture coordinates as unresolved. Ask the master-ontology owner to supply the approved token vocabulary and definitions, then validate `board-through-hatch`, `step-to-beat`, and `close-cover` against it. Only after that review should we add ontology-aware lookup or expose ontology tokens in runtime APIs.
 
-**Ontology makes meaning addressable. Gesture providers make procedures available. Actor and experience policy choose. Physics/world determines what actually happened. Renderer presents the result.**
+**Ontology makes meaning addressable. Gesture providers make procedures available. Actor and activity policy choose. Physics/world determines what actually happened. Renderer presents the result.**
