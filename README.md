@@ -61,7 +61,7 @@ Each part has a clear owner:
 - **Visualize** performs GPU-facing presentation.
 - **raWWar** supplies domain capabilities and authoritative game state.
 
-The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, or game-specific types. The evaluator linearly interpolates translation and scale and uses quaternion spherical interpolation for rotation. `GesturePlayback` now provides a tested, caller-driven single-gesture lifecycle (`Ready`, `Playing`, `Paused`, `Completed`, `Cancelled`) without making the evaluator stateful. Looping, reversal, blending, provider-anchor resolution, and multi-gesture orchestration remain separate gaps. See the [Gesture Evaluation Lifecycle contract](docs/GESTURE_EVALUATION_LIFECYCLE.md).
+The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, or game-specific types. The evaluator linearly interpolates translation and scale and uses quaternion spherical interpolation for rotation. `GesturePlayback` provides a caller-driven single-gesture lifecycle (`Ready`, `Playing`, `Paused`, `Completed`, `Cancelled`); `GestureSequencePlayback` composes a fixed ordered list and transfers leftover time across step boundaries. Neither makes the evaluator stateful. Looping, reversal, blending, branching, provider-anchor resolution, and prerequisite orchestration remain separate gaps. See the [Gesture Evaluation Lifecycle contract](docs/GESTURE_EVALUATION_LIFECYCLE.md).
 
 ## 🟢 04 See it in a minute
 
