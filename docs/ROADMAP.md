@@ -57,13 +57,14 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [x] Add an explicitly conceptual animated SVG to explain the intended scene and event-horizon representation tiers; do not mislabel it as runtime evidence.
 - [x] Include the conceptual speech-scene SVG in CI XML parsing and whitespace checks; this validates file hygiene, not runtime behavior.
 - [x] Specify deterministic crowd-response inputs, timing separation, stable identity variation, replay semantics, test gates, and living-SVG evidence requirements in [Deterministic Crowd-Response Scheduling](CROWD_RESPONSE_SCHEDULING.md). This is a proposed contract, not an implemented scheduler.
-- [ ] Implement and test a pure deterministic crowd-response scheduler with per-cluster/per-agent schedule output and fixed reference vectors.
+- [x] Add the first pure deterministic CPU crowd-response scheduler with per-participant intent output, stable bounded variation, and a version-pinned hash/mapping contract.
+- [ ] Verify scheduler reference-vector, replay, order-independence, bounds, invalid-input, and overflow tests in CI before accepting the implementation.
 - [ ] Implement and test the advisor salute/address procedure with explicit progress, interruption, and completion semantics.
 - [ ] Implement and test shoulder-contact / guided-threshold choreography against provider-supplied anchors; keep physical contact outcomes with the host/Physics.
 - [ ] Prototype distance-aware cheer arrival using source/listener distance and a documented sound-speed approximation or authoritative acoustic result.
 - [ ] Demonstrate a public-screen echo driven by the same player action/timebase with explicit display latency.
 - [ ] Prototype observer-relative representation tiers with hysteresis and no identity/gesture reset on tier transitions.
-- [ ] Generate a living SVG from actual scheduler output after the scheduler and tests exist; keep concept art separate from runtime evidence.
+- [ ] Generate a living SVG from actual scheduler output after the scheduler tests pass in CI; keep concept art separate from runtime evidence.
 - [ ] Profile staged population sizes; record CPU cost, upload bytes, GPU time, and visible representation count before making scale claims.
 
 ## Milestone 2 — Rig and constraints
