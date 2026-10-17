@@ -75,9 +75,12 @@ public sealed class GesturePlayback
         // Clamp at the actual seeded completion boundary so sequence orchestration can
         // transfer unused host time to the next step without reporting an overshot clock.
         _elapsedSeconds = Math.Min(nextElapsed, _completionTimeSeconds);
-        var pose = EvaluateCurrentTime();
+        var reachedCompletion = _elapsedSeconds >= _completionTimeSeconds;
+        var pose = reachedCompletion
+            ? GestureEvaluator.Evaluate(_definition, _durationSeconds, _durationSeconds, _variation, _identitySeed)
+            : EvaluateCurrentTime();
         CurrentPose = pose;
-        if (pose.IsComplete)
+        if (reachedCompletion || pose.IsComplete)
             State = GesturePlaybackState.Completed;
         return pose;
     }
