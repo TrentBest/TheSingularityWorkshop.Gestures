@@ -12,6 +12,8 @@ The [Speech Scene and Soldier Population plan](SPEECH_SCENE_POPULATION.md) turns
 
 The build workflow now parses this conceptual SVG as XML and includes it in the SVG whitespace check alongside the generated assets. This verifies document well-formedness and whitespace hygiene only; it does not validate the illustration's visual composition, execute its animation, or turn it into runtime evidence.
 
+The scene contract also distinguishes physical sound from an attached sound-effect cue: Physics should derive impact/contact sounds from actual interactions and material state, while intentional crowd cheering is a vocal event whose sound is then propagated and mixed. Gestures describes the motion procedure; it must not fabricate physical contact or become a sound-effects system. See the [scene's sound ownership contract](SPEECH_SCENE_POPULATION.md#ownership-who-is-responsible-for-what).
+
 For this scene, the documentation must fight for every soldier at the level of identity and behavior without requiring full CPU-side articulation for every distant silhouette. Close interactions can use richer gesture output; middle and far tiers can preserve stable identity and response phase through instanced representations and cluster summaries. Renderer owns observer-relative fidelity selection, Visualize owns GPU presentation, raWWar owns soldier/game state, and Physics owns physical outcomes. Those are design contracts to implement and measure—not current performance claims.
 
 
