@@ -55,6 +55,7 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 
 - [x] Record the moniker-to-balcony narrative, advisor beats, public-screen echo, crowd recognition wave, and ownership boundaries in [Speech Scene and Soldier Population](SPEECH_SCENE_POPULATION.md).
 - [x] Add an explicitly conceptual animated SVG to explain the intended scene and event-horizon representation tiers; do not mislabel it as runtime evidence.
+- [x] Include the conceptual speech-scene SVG in CI XML parsing and whitespace checks; this validates file hygiene, not runtime behavior.
 - [ ] Implement and test the advisor salute/address procedure with explicit progress, interruption, and completion semantics.
 - [ ] Implement and test shoulder-contact / guided-threshold choreography against provider-supplied anchors; keep physical contact outcomes with the host/Physics.
 - [ ] Define a deterministic crowd-response event and per-cluster/per-agent schedule with stable identity variation and replay tests.
