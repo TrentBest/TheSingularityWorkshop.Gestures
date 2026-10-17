@@ -1,6 +1,6 @@
 # Deterministic Crowd-Response Scheduling
 
-> **Status: first CPU reference implementation added; verification pending.** `CrowdResponseScheduler` now schedules deterministic per-participant intent with bounded delay, variant, and intensity. The acoustic-arrival model, crowd solver, LOD continuity adapter, and generated scheduler SVG remain unimplemented. The authored test suite and CI still need verification.
+> **Status: CPU reference implementation and generated living schedule verified in CI.** `CrowdResponseScheduler` schedules deterministic per-participant intent with bounded delay, variant, and intensity. The generated [crowd-response schedule SVG](assets/crowd-response-schedule.svg) is produced by running the actual scheduler and serializing its returned records. Acoustic arrival, crowd solving, and LOD continuity remain unimplemented.
 
 ## The observable result
 
@@ -93,7 +93,7 @@ Tests should assert semantics and tolerances, not a visually attractive outcome.
 
 ## Living visualization: evidence before illustration
 
-After the scheduler's test suite passes in CI, generate an SVG from its actual output records. The first living scene should show:
+The [crowd-response demo](../tools/crowd-response-demo/Program.cs) now runs the actual scheduler and serializes its returned output records into the checked-in [living SVG](assets/crowd-response-schedule.svg). CI regenerates it and uploads the generated SVG artifact. The first living scene shows:
 
 - One event-origin marker and a shared time axis.
 - Several clusters with deterministic but non-identical intent starts.
@@ -108,7 +108,7 @@ The SVG generator must call the real scheduler, serialize its outputs, and label
 1. [x] Freeze a minimal input/output record and validation rules.
 2. [x] Add the first pure CPU scheduler with no rendering or audio dependency.
 3. [x] Author fixed reference-vector, replay, order-independence, bounds, invalid-input, and overflow tests; verify them in CI before treating the reference as accepted.
-4. Generate a living SVG directly from scheduler outputs after verification, then compare repeated generated files.
+4. [x] Generate a living SVG directly from scheduler outputs after verification; CI regenerates and validates it. Snapshot drift is reported for review rather than failing the workflow.
 5. Integrate one small crowd in a consumer; distinguish scheduled intent from completed gesture and from audible arrival.
 6. Profile staged population sizes and only then decide whether cluster aggregation, lower update rates, or packed/GPU representations are warranted.
 
