@@ -18,11 +18,11 @@ public sealed class GestureOfferSelectorTests
             ["reach", "upper-body-control"],
             ["target"]);
 
-        Assert.Equal(["reach", "wave"], result.Eligible.Select(item => item.Definition.Id));
+        Assert.Equal(new[] { "reach", "wave" }, result.Eligible.Select(item => item.Definition.Id));
         var rejected = Assert.Single(result.Rejected);
         Assert.Equal("board", rejected.Offer.Definition.Id);
-        Assert.Equal(["balance", "climb"], rejected.MissingActorCapabilities);
-        Assert.Equal(["hatch"], rejected.MissingAnchorNames);
+        Assert.Equal(new[] { "balance", "climb" }, rejected.MissingActorCapabilities);
+        Assert.Equal(new[] { "hatch" }, rejected.MissingAnchorNames);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public sealed class GestureOfferSelectorTests
         var reverse = GestureOfferSelector.Evaluate(offers.Reverse(), [], []).Eligible
             .Select(item => item.Definition.Id).ToArray();
 
-        Assert.Equal(["alpha", "middle", "zeta"], forward);
+        Assert.Equal(new[] { "alpha", "middle", "zeta" }, forward);
         Assert.Equal(forward, reverse);
     }
 
