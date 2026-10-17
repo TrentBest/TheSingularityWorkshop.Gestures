@@ -61,7 +61,7 @@ foreach (var actor in actors)
 }
 var output = GetOutputPath(args);
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output))!);
-File.WriteAllText(output, AddProvenanceLabel(Svg(provider, actors, decisions, outcomes), "GENERATED FROM PROVIDER FILTER + ACTOR CHOICE FIXTURE • NATIVE SVG • GUI.SVG: NOT USED"), new UTF8Encoding(false));
+File.WriteAllText(output, AddProvenanceLabel(Svg(provider, actors, decisions, outcomes), "GENERATED FROM STANDALONE PROVIDER/ACTOR FIXTURE • GESTURES RUNTIME: NOT USED • NATIVE SVG • GUI.SVG: NOT USED"), new UTF8Encoding(false));
 File.WriteAllText(Path.ChangeExtension(output, ".json"), JsonSerializer.Serialize(new
 {
     fixture = "pet-store-actor-choice", status = "prototype, not public API",
