@@ -4,7 +4,7 @@
 
 ## The answer: where do Gestures land?
 
-**Gestures is a domain that contributes reusable physical procedures and their semantic relationships. It is not itself one of the nine layers.** A Gesture definition may receive an address in a selected ontology; the provider, actor, experience, live session, playback, and physical outcome remain separate identities and responsibilities.
+**Gestures is a domain that contributes reusable physical procedures and their semantic relationships. It is not itself one of the nine layers.** A Gesture definition may receive an address in a selected ontology; the provider, actor, activity, live session, playback, and physical outcome remain separate identities and responsibilities.
 
 The nine ordered layers in the current Workshop Experience Theory are:
 
