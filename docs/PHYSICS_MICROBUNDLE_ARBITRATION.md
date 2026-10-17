@@ -125,3 +125,5 @@ This is not specific to vehicles. The same rule applies to a toy set in which so
 
 Keep this boundary explicit while the contracts evolve. Do not add an independent manifest schema to Gestures, duplicate the Workshop's composition model, or move arbitration into GestureEvaluator. If the current descriptor/provider model cannot express a compatibility requirement that a real vertical slice needs, document that gap and propose a minimal extension at the MicroBundle contract boundary first.
 
+For the current composition contract, see [FSM_COS Runtime Manifest](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/development/docs/RUNTIME_MANIFEST.md) and [FSM_COS Arbitration and Convergence](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/development/docs/ARBITRATION.md). Those documents are authoritative for what the kernel currently guarantees; this Gestures document describes the domain integration requirements, not a second implementation of that contract.
+
