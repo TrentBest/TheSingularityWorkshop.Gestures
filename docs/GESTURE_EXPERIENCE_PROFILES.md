@@ -1,5 +1,8 @@
 # Seeded experience-profile sampling
 
+![Living diagram showing how stable identity and an authored experience profile affect a reusable Gesture sample](assets/gesture-data-and-variation.svg)
+
+
 ## Purpose
 
 `GestureExperienceProfile` maps authored parameter ranges to one reproducible `GestureVariation` for an entity. It bridges experience ranges to the evaluator's existing variation inputs without changing the ideal Gesture.
