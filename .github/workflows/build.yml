@@ -38,10 +38,10 @@ jobs:
         run: dotnet build TheSingularityWorkshop.Gestures.slnx --configuration Release --no-restore
 
       - name: Generate the living SVG from FSM_API and GestureEvaluator
-        run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release --no-restore -- --output docs/assets/gesture-motion.svg
+        run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release -- --output docs/assets/gesture-motion.svg
 
       - name: Generate deterministic variation scene
-        run: dotnet run --project tools/variation-demo/variation-demo.csproj --configuration Release --no-restore -- --output docs/assets/gesture-variation.svg
+        run: dotnet run --project tools/variation-demo/variation-demo.csproj --configuration Release -- --output docs/assets/gesture-variation.svg
 
       - name: Generate living crowd-response schedule from the CPU scheduler
         run: dotnet run --project tools/crowd-response-demo/crowd-response-demo.csproj --configuration Release --no-build -- --output docs/assets/crowd-response-schedule.svg
