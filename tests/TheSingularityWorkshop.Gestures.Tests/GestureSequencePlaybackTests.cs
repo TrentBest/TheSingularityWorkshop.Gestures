@@ -98,6 +98,25 @@ public sealed class GestureSequencePlaybackTests
     }
 
     [Fact]
+    public void RepeatedSmallDeltasCrossFloatingPointCompletionBoundaries()
+    {
+        var sequence = new GestureSequencePlayback(new[]
+        {
+            CreatePlayback("first", 0f, 1f),
+            CreatePlayback("second", 1f, 2f),
+            CreatePlayback("third", 2f, 3f)
+        });
+        sequence.Start();
+
+        for (var i = 0; i < 100 && sequence.State == GesturePlaybackState.Playing; i++)
+            sequence.Advance(0.05d);
+
+        Assert.Equal(GesturePlaybackState.Completed, sequence.State);
+        Assert.Equal(2, sequence.CurrentStepIndex);
+        Assert.True(sequence.CurrentPose!.IsComplete);
+    }
+
+    [Fact]
     public void SeededSpeedVariationTransfersTimeAtItsActualCompletionBoundary()
     {
         var first = new GesturePlayback(
