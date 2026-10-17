@@ -22,9 +22,10 @@ A feature is not complete merely because its type, roadmap entry, diagram, or ex
 
 - [x] Normalized keyframes and named anchors exist.
 - [x] CPU interpolation exists for translation, rotation, and scale.
-- [ ] Define stable semantics for duration, time outside the interval, looping, pause/resume, interruption, reversal, cancellation, and completion.
+- [x] Document evaluator duration/time-boundary semantics and explicitly state that looping, pause/resume state, interruption, reversal, cancellation, and completion orchestration are caller/coordinator responsibilities.
+- [ ] Define and test procedure-coordinator semantics for pause/resume, interruption, reversal, cancellation, re-entry, and completion handoff.
 - [ ] Define blending/composition rules when a gesture is interrupted or another procedure takes control.
-- [ ] Establish golden reference vectors and numerical tolerance policy for evaluation.
+- [x] Establish fixed-input seeded reference vectors and numerical tolerances for current evaluator outputs.
 - [ ] Verify malformed data, boundary times, and deterministic replay across supported runtimes.
 
 **Exit evidence:** a documented lifecycle contract, executable tests for every transition, and stable expected pose outputs.
