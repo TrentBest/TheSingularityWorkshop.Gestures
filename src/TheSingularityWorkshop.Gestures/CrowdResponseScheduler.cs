@@ -66,6 +66,21 @@ public sealed record CrowdResponseRequest
         StableSeed = stableSeed;
     }
 
+    /// <summary>
+    /// Creates an observer's scheduling request from a host-reported occurrence. The participant
+    /// is the observer whose response intent is being scheduled; they need not be an event participant.
+    /// This does not assert that the observer perceived the event or selected a particular reaction.
+    /// </summary>
+    public CrowdResponseRequest(GestureObservationEvent observedEvent, string participantId,
+        ulong stableSeed)
+        : this(
+            observedEvent?.EventId ?? throw new ArgumentNullException(nameof(observedEvent)),
+            observedEvent.OccurredAtSeconds,
+            participantId,
+            stableSeed)
+    {
+    }
+
     public string EventId { get; }
     public double EventTimeSeconds { get; }
     public string ParticipantId { get; }
