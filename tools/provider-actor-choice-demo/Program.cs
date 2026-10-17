@@ -8,7 +8,7 @@ using System.Text.Json;
 var provider = new Provider("pet-store-window", 1, new[]
 {
     new Capability("look-at-puppies", "curious", 2),
-    new Capability("enter-store", "store-open", 3),
+    new Capability("enter-store", "store-interest", 3),
     new Capability("buy-puppy", "companion-goal", 10),
     new Capability("buy-dog-food", "owns-dog", 5),
     new Capability("visit-dog-park", "owns-dog", 4)
@@ -67,6 +67,8 @@ static string Reject(Actor a, Capability c) => c.Requirement switch
 {
     "curious" when !a.Goals.Contains("companion") && !a.Goals.Contains("care") => "filtered: no relevant goal",
     "store-open" when !a.StoreOpen => "blocked: store closed",
+    "store-interest" when !a.Goals.Contains("companion") && !a.Goals.Contains("care") => "filtered: no relevant store goal",
+    "store-interest" when !a.StoreOpen => "blocked: store closed",
     "companion-goal" when !a.Goals.Contains("companion") => "filtered: no companion goal",
     "companion-goal" when a.Cash < 50 => "blocked: insufficient cash",
     "owns-dog" when !a.OwnsDog => "blocked: actor does not own a dog",
