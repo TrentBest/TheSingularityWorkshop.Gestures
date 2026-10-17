@@ -35,6 +35,8 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Validate task dependencies and achieved-state gates separately from social/choreographic timing and physical outcomes.
 - [ ] Evaluate a population batch path for compatible work; prove per-identity determinism and scalar-reference parity before claiming a performance improvement.
 - [ ] Measure update cadence tiers, shared-input reuse, allocations, per-entity bytes, and total CPU cost; keep batching an execution capability rather than a crowd-specific behavior policy.
+- [ ] Build a small end-to-end place/attention/continuity proof: stimulus-aware passersby, a gated building-to-sidewalk transition, a persistent purchase/carry outcome, and a later care-related decision. Keep agent goals/economy/persistence outside Gestures core and generate evidence from actual records.
+- [ ] Compare local, street, and distant-agent cadence tiers; treat execution cohorts as temporary compatible-work batches, not permanent social groups, and verify identity/outcome parity as agents change places.
 
 ## Crowd-flow reference track
 
