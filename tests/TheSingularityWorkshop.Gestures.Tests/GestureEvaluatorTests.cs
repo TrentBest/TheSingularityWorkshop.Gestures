@@ -225,6 +225,54 @@ public sealed class GestureEvaluatorTests
         Assert.Equal(new Vector3(0f, 2f, 0f), pose.LocalTransforms[endpointTransformName].Position);
     }
 
+    [Fact]
+    public void NegativeElapsedTimeEvaluatesTheStartPose()
+    {
+        var pose = GestureEvaluator.Evaluate(CreateGesture(), -5d, 1d);
+
+        Assert.Equal(0d, pose.NormalizedProgress);
+        Assert.False(pose.IsComplete);
+        Assert.Equal(Vector3.Zero, pose.LocalTransforms["root"].Position);
+    }
+
+    [Theory]
+    [InlineData(double.NaN)]
+    [InlineData(double.PositiveInfinity)]
+    [InlineData(double.NegativeInfinity)]
+    public void RejectsNonFiniteElapsedTime(double elapsedSeconds)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            GestureEvaluator.Evaluate(CreateGesture(), elapsedSeconds, 1d));
+    }
+
+    [Theory]
+    [InlineData(0d)]
+    [InlineData(-1d)]
+    [InlineData(double.NaN)]
+    [InlineData(double.PositiveInfinity)]
+    [InlineData(double.NegativeInfinity)]
+    public void RejectsNonPositiveOrNonFiniteDuration(double durationSeconds)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            GestureEvaluator.Evaluate(CreateGesture(), 0.5d, durationSeconds));
+    }
+
+    [Fact]
+    public void CompletionIsReportedOnlyWhenEvaluatedProgressReachesOne()
+    {
+        var beforeEnd = GestureEvaluator.Evaluate(CreateGesture(), 0.999d, 1d);
+        var atEnd = GestureEvaluator.Evaluate(CreateGesture(), 1d, 1d);
+        var afterEnd = GestureEvaluator.Evaluate(CreateGesture(), 2d, 1d);
+
+        Assert.False(beforeEnd.IsComplete);
+        Assert.Equal(0.999d, beforeEnd.NormalizedProgress, 6);
+        Assert.True(atEnd.IsComplete);
+        Assert.Equal(1d, atEnd.NormalizedProgress);
+        Assert.True(afterEnd.IsComplete);
+        Assert.Equal(1d, afterEnd.NormalizedProgress);
+        Assert.Equal(atEnd.LocalTransforms["root"], afterEnd.LocalTransforms["root"]);
+    }
+
     private static GestureDefinition CreateGesture()
     {
         var start = new Dictionary<string, PoseTransform>
