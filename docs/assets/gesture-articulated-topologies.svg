@@ -4,7 +4,7 @@
   This is a conceptual data-model diagram, not a runtime screenshot or a
   claim that retargeting, IK, collision solving, or animal-specific solvers exist.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 758" role="img" aria-labelledby="title desc">
   <title id="title">One Gesture model, many articulated worlds</title>
   <desc id="desc">Three example articulated systems—a humanoid, a quadruped, and an industrial arm—are represented as named local transforms. A generic Gesture definition and CPU reference evaluator produce evaluated transform data for a consumer-specific rig adapter and renderer. The diagram does not imply automatic retargeting or inverse kinematics.</desc>
   <defs>
@@ -114,4 +114,9 @@
   <text x="600" y="594" text-anchor="middle" fill="#f4f6fb" font-size="17" font-weight="700">EvaluatedPose → consumer-owned target adapter → renderer</text>
   <text x="600" y="615" text-anchor="middle" fill="#c1d0df" font-size="12">Mapping / retargeting is not implied; collision, IK, and authoritative motion remain external.</text>
   <text x="40" y="672" fill="#a8bbcf" font-size="12">Conceptual architecture diagram. Examples illustrate possible articulated targets, not a frozen schema or captured runtime output.</text>
+
+<g id="provenance-label" role="group" aria-label="CONCEPTUAL DATA-MODEL MAP • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED">
+  <rect x="12" y="723" width="1176" height="27" rx="6" fill="#172033"/>
+  <text x="600" y="741" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#ffffff">CONCEPTUAL DATA-MODEL MAP • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED</text>
+</g>
 </svg>
