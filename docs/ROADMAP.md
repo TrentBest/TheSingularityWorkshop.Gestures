@@ -25,6 +25,14 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Validate response envelopes and stability across declared timestep/parameter ranges before considering broader integration.
 - [ ] Connect any future articulated response to Physics-owned achieved state and contact evidence; do not claim a general physics solver in Gestures.
 
+## Multi-participant activity and choreography
+
+- [x] Document the distinction between per-participant crowd-response scheduling and coordinated activities such as parties, partner/group dancing, and role-based team procedures in [Multi-Participant Choreography](MULTI_PARTICIPANT_CHOREOGRAPHY.md).
+- [ ] Define the smallest versioned activity/session/participant/role/shared-clock contract from concrete fixtures rather than designing a universal framework in advance.
+- [ ] Implement a two-person dance reference fixture with beat alignment, partner relationships, bounded variation, interruption, and deterministic replay.
+- [ ] Demonstrate overlapping party activities and explicit waiting/blocked transitions using the same core only where semantics genuinely match.
+- [ ] Validate task dependencies and achieved-state gates separately from social/choreographic timing and physical outcomes.
+
 ## Crowd-flow reference track
 
 - [x] Add experience-authored gates/routes with validated IDs and host-local waypoints.
