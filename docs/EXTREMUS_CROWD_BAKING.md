@@ -1,12 +1,26 @@
 # Extremus: Deterministic Extreme-Distance Crowd Representation
 
-> **Status: architecture contract and implementation plan; not yet a crowd-baking implementation.** This document turns the Extremus discussion into a reviewable boundary for future code. It does not claim that billboard atlases, impostor rendering, GPU instancing, crowd LOD transitions, or population-scale performance already exist.
+> **Status: architecture contract plus first CPU reference baker.** The first implementation now creates deterministic, engine-neutral population-instance records and a provenance manifest. It is not yet a pose/animation bake, billboard atlas, impostor renderer, GPU-instancing path, crowd-LOD transition system, or demonstrated population-scale performance result.
 
 ## The goal
 
 At extreme distance, the world should still look populated and purposeful without requiring every visible person to run a full articulated performer simulation. Extremus is the strategy for composing and baking distant population representations from reusable source motion and deterministic placement data.
 
 The key idea is not to stamp the same billboard hundreds of times. It is to **distribute a large source pose/activity vocabulary into a stable, varied population**, then bake that population into one or more renderer-consumable representations. Each bake should be reproducible from versioned inputs. Two different seeds should produce different crowds; the same inputs and seed should reproduce the same crowd.
+
+## Implemented first slice: CPU population instances
+
+The Gestures core now contains `ExtremusCrowdBaker` and immutable input/output records:
+
+- `ExtremusBakeRequest` carries profile/catalogue versions, a region, seed, requested count, weighted semantic activities, optional exclusion envelopes, and a bounded placement-attempt limit.
+- `ExtremusCrowdBaker.Bake` deterministically assigns a stable ID, position, heading, scale variation, activity, and phase to each generated instance.
+- `ExtremusBakeManifest` records algorithm version, source/profile identifiers, region, seed, and requested/baked counts.
+- Activity and exclusion inputs are canonicalized by stable ID; generated instances are emitted in stable ordinal order.
+- Placement is rejected against domain-supplied axis-aligned exclusion envelopes. If a member cannot be placed within the configured deterministic attempt limit, the bake fails explicitly rather than silently reducing population count.
+- The CPU test suite covers repeatability, input-order independence, seed diversity, region bounds, exclusion envelopes, empty populations, and invalid inputs.
+
+This is a **population layout reference**, not yet a motion or geometry bake. It does not resolve gesture providers, evaluate pose sequences, solve paths or inter-person spacing, perform collision/clearance physics, create a render resource, or promise that an instance can be promoted back to a live actor. The algorithm version and canonical mapping must be pinned by golden vectors before the format is treated as a cross-language interchange contract. GitHub Actions is the verification source; consult the run linked from the relevant commit before claiming build/test success.
+
 
 Extremus is not a second Gesture evaluator, not a world simulator, and not the authority for what a person is doing. It is a representation/baking path for detail that an observer cannot resolve individually.
 
