@@ -211,7 +211,7 @@ static string BuildSequenceSvg(IReadOnlyList<SequenceSample> samples)
         var end = step == 2 ? total : starts[step + 1];
         var y = 166 + step * 72;
         var duration = end - start;
-        bars.Append($"""
+        bars.Append($$"""
           <text x="34" y="{{N(y + 5)}}" font-size="12" font-weight="700" letter-spacing="1.3" fill="{{colors[step]}}">{{labels[step]}}</text>
           <rect x="{{N(X(start))}}" y="{{N(y - 14)}}" width="{{N(Math.Max(1, X(end) - X(start)))}}" height="28" rx="7" fill="{{colors[step]}}" opacity=".19"/>
           <rect x="{{N(X(start))}}" y="{{N(y - 14)}}" width="{{N(Math.Max(1, X(end) - X(start)))}}" height="28" rx="7" fill="none" stroke="{{colors[step]}}" stroke-width="1.5"/>
@@ -219,7 +219,7 @@ static string BuildSequenceSvg(IReadOnlyList<SequenceSample> samples)
         """);
     }
 
-    return $"""
+    return $$"""
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="sequence-title sequence-desc">
   <title id="sequence-title">Ordered gesture sequence generated from real GestureSequencePlayback samples</title>
   <desc id="sequence-desc">The C# generator runs three distinct GesturePlayback sessions through GestureSequencePlayback, samples the current step and normalized progress every 0.05 seconds, and serializes those observed values. The sequence advances through approach, interact, and withdraw. This proves fixed ordered sequencing and observed step transitions, not physical success, anchor resolution, or pose blending.</desc>
