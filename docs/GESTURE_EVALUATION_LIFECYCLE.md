@@ -1,5 +1,8 @@
 # Gesture Evaluation Lifecycle
 
+![Living timeline diagram of the stateless evaluator input, sampled pose output, completion boundary, and caller-owned lifecycle](assets/gesture-evaluation-lifecycle.svg)
+
+
 ## Scope
 
 `GestureEvaluator.Evaluate` is a deterministic, stateless pose sampler. It evaluates a definition at a supplied elapsed time; it is not a running procedure, task scheduler, or owner of an entity's lifecycle.
