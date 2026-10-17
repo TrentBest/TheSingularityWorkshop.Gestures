@@ -1,5 +1,8 @@
 # Gesture Data Model
 
+![Living data-flow diagram showing normalized Gesture keyframes, supplied sampling inputs, stateless evaluation, and disposable pose output](assets/gesture-data-and-variation.svg)
+
+
 ## Normalized keyframes
 
 Each keyframe has a time in the closed interval [0, 1]. A valid definition contains at least two frames, starts exactly at 0, ends exactly at 1, and uses strictly increasing times. This makes evaluation independent of the real duration chosen by the caller. Non-finite times are rejected when each keyframe is created.
