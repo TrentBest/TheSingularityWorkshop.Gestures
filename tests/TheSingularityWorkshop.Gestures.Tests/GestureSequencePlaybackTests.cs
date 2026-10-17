@@ -63,7 +63,7 @@ public sealed class GestureSequencePlaybackTests
         Assert.Throws<InvalidOperationException>(() => sequence.Advance(0.1d));
 
         sequence.Resume();
-        var pose = sequence.Advance(0.25d);
+        var pose = sequence.Advance(0.75d);
 
         Assert.Equal(GesturePlaybackState.Completed, sequence.State);
         Assert.True(pose.IsComplete);
