@@ -4,7 +4,7 @@
 
 ## The central idea
 
-The browser-facing integration brief lives in [WebPage's Singularity Studios WebPageLLM handoff](https://github.com/TrentBest/WebPage/blob/development/docs/integrations/SINGULARITY_STUDIOS_WEBPAGELLM_HANDOFF.md). The two documents have deliberately separate responsibilities: this one defines the reusable procedure domain; the WebPage brief defines the intended browser/desktop workbench and integration gates.
+The consumer briefs are [WebPage's Singularity Studios WebPageLLM handoff](https://github.com/TrentBest/WebPage/blob/development/docs/integrations/SINGULARITY_STUDIOS_WEBPAGELLM_HANDOFF.md) and [AnyApp's native desktop handoff](https://github.com/TrentBest/AnyApp/blob/development/docs/integrations/SINGULARITY_STUDIOS_ANYAPP_HANDOFF.md). These documents have deliberately separate responsibilities: this one defines the reusable procedure domain; the host briefs define the intended browser/desktop workbench and integration gates. They are coordination documents, not a finalized shared API.
 
 Singularity Studios should not be a giant hand-authored scene. It should be a reusable production environment in which a production is assembled from data: a stage, sets, performers, crew roles, cameras, motion-control rigs, lighting and grip equipment, props, cues, safety constraints, and a shot plan. The same stage and procedures can be reset, re-blocked, filmed from new angles, and reused for a different production.
 
