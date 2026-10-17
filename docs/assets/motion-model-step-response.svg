@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="540" viewBox="0 0 1000 540" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="578" viewBox="0 0 1000 578" role="img" aria-labelledby="title desc">
 <title id="title">Spring-damper step response under different damping ratios</title>
 <desc id="desc">Analytic response of a normalized second-order linear system to a unit step target, with natural angular frequency 5 radians per second. The underdamped case overshoots and oscillates, the critically damped case approaches the target without overshoot, and the overdamped case approaches more slowly without overshoot. This is a scalar teaching model, not captured Gesture runtime output.</desc>
 <rect width="100%" height="100%" fill="#ffffff"/>
@@ -21,4 +21,9 @@
 <line x1="16" y1="75" x2="52" y2="75" stroke="#356ac3" stroke-width="3.5"/><text x="62" y="80" font-size="14" fill="#273449">Overdamped (ζ = 2)</text>
 </g>
 <text x="44" y="532" font-size="12" fill="#64748b">Analytic scalar reference only; not a humanoid, articulated body, or current evaluator output.</text>
+
+<g id="provenance-label" role="group" aria-label="ANALYTIC RESEARCH MODEL — NOT GESTURES RUNTIME OUTPUT • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED">
+  <rect x="12" y="543" width="976" height="27" rx="6" fill="#172033"/>
+  <text x="500" y="561" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#ffffff">ANALYTIC RESEARCH MODEL — NOT GESTURES RUNTIME OUTPUT • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED</text>
+</g>
 </svg>
