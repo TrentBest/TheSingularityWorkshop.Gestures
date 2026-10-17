@@ -7,7 +7,7 @@
 
 `GestureEvaluator.Evaluate` is a deterministic, stateless pose sampler. It evaluates a definition at a supplied elapsed time; it is not a running procedure, task scheduler, or owner of an entity's lifecycle.
 
-This page records the stateless evaluator contract and the now-implemented `GesturePlayback` coordinator. The coordinator owns one caller-driven playback lifecycle; it does not turn Gestures into a scheduler or simulation loop.
+This page records the stateless evaluator contract and two implemented coordinators: `GesturePlayback` for one procedure and `GestureSequencePlayback` for an ordered list. They are caller-driven and do not turn Gestures into a scheduler or simulation loop.
 
 ## Inputs and timeline
 
@@ -22,7 +22,7 @@ This page records the stateless evaluator contract and the now-implemented `Gest
 
 ## Lifecycle ownership
 
-`GestureEvaluator.Evaluate` remains stateless. `GesturePlayback` adds an optional, explicit single-session lifecycle on top: the host supplies delta time, and the coordinator retains elapsed time, current pose, and lifecycle state. Consumers that need direct sampling can continue using the evaluator alone.
+`GestureEvaluator.Evaluate` remains stateless. `GesturePlayback` owns one explicit session; `GestureSequencePlayback` coordinates a fixed ordered list of those sessions. Both receive host-supplied delta time and retain explicit lifecycle state. Consumers that need direct sampling can continue using the evaluator alone.
 
 | Concern | Current contract |
 | --- | --- |
@@ -32,7 +32,7 @@ This page records the stateless evaluator contract and the now-implemented `Gest
 | Looping | Not provided. A completed sample stays at the final pose. |
 | Reverse playback | Not provided as a named operation. A caller may sample another timeline only if its own contract defines that meaning. |
 | Cancel | `Cancel()` transitions a playing or paused session to terminal `Cancelled` and preserves the last pose. Higher-level interruption/handoff policy remains host-owned. |
-| Blend / compose | Not provided. There is no implicit blending between definitions. |
+| Sequence | `GestureSequencePlayback` runs distinct, ready sessions in order and carries unused delta time across boundaries, including multiple steps in one call. |\n| Blend / compose | Pose blending, parallel branches, synchronization barriers, and ownership handoff are not provided. |
 | Physics outcome | Not inferred from a sampled pose. Contact, obstruction, grip, force, breakage, and world-state changes require authoritative host/physics observations. |
 
 ## Determinism and validation
@@ -47,4 +47,4 @@ This does **not** yet promise bit-identical floating-point results across every 
 
 The unit tests exercise the evaluator directly. The living SVG demos serialize sampled output into documentation; the SVG is evidence of those generated samples, not evidence that the browser runs the C# evaluator or that a physical rig follows the samples.
 
-The new coordinator has tests for start, advancement, pause/resume, cancellation, completion, invalid deltas, invalid construction settings, and seeded speed variation. Remaining lifecycle gaps are explicit reversal policy, blending/ownership handoff, provider-anchor resolution, multi-gesture sequencing, and interruption policy across a procedure graph. These remain separate layers rather than making the evaluator stateful.
+The single-session coordinator has tests for start, advancement, pause/resume, cancellation, completion, invalid deltas, invalid construction settings, and seeded speed variation. Sequence tests cover time carryover, multiple boundaries in one call, pause/resume, cancellation, validation, and seeded completion boundaries. Remaining gaps include reversal policy, pose blending/ownership handoff, provider-anchor resolution, branching/parallel choreography, prerequisite evaluation, and interruption/recovery policy across a procedure graph.
