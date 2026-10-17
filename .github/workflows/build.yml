@@ -38,26 +38,29 @@ jobs:
         run: dotnet build TheSingularityWorkshop.Gestures.slnx --configuration Release --no-restore
 
       - name: Generate the living SVG from FSM_API and GestureEvaluator
-        run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release -- --output docs/assets/gesture-motion.svg
+        run: dotnet run --project tools/living-demo/living-demo.csproj --configuration Release --no-restore -- --output docs/assets/gesture-motion.svg
 
       - name: Generate deterministic variation scene
-        run: dotnet run --project tools/variation-demo/variation-demo.csproj --configuration Release -- --output docs/assets/gesture-variation.svg
+        run: dotnet run --project tools/variation-demo/variation-demo.csproj --configuration Release --no-restore -- --output docs/assets/gesture-variation.svg
+
+      - name: Generate living crowd-response schedule from the CPU scheduler
+        run: dotnet run --project tools/crowd-response-demo/crowd-response-demo.csproj --configuration Release --no-build -- --output docs/assets/crowd-response-schedule.svg
 
       - name: Validate documentation and generated SVG XML
-        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg', 'docs/assets/speech-scene-population.svg']]"
+        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg', 'docs/assets/speech-scene-population.svg', 'docs/assets/crowd-response-schedule.svg']]"
 
-      - name: Upload C#-generated living SVG
+      - name: Upload generated living SVGs
         uses: actions/upload-artifact@v7
         with:
-          name: gesture-motion-svg
+          name: gesture-living-svgs
           path: docs/assets/gesture-*.svg
 
       - name: Report generated SVG snapshot drift
         shell: bash
         run: |
-          if ! git diff --quiet -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg; then
-            echo "::warning::Generated living SVGs differ from checked-in snapshots. Review the uploaded gesture-motion-svg artifact and synchronize the snapshots before re-enabling the drift gate."
-            git diff --stat -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg
+          if ! git diff --quiet -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg docs/assets/crowd-response-schedule.svg; then
+            echo "::warning::Generated living SVGs differ from checked-in snapshots. Review the uploaded gesture-living-svgs artifact and synchronize the snapshots before re-enabling the drift gate."
+            git diff --stat -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg docs/assets/crowd-response-schedule.svg
           else
             echo "All generated living SVG snapshots are current."
           fi
