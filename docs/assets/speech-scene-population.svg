@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">Speech scene and event-horizon soldier population</title>
+  <desc id="desc">Conceptual animated storyboard: the advisor and player move from a decorated room onto a balcony overlooking soldiers across a city. Crowd response propagates by cluster, and distant soldiers use aggregated representations rather than full individual rigs.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#111b35"/><stop offset="1" stop-color="#283d56"/></linearGradient>
+    <linearGradient id="room" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#584b42"/><stop offset="1" stop-color="#242e3d"/></linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#58d7c9" stop-opacity=".9"/><stop offset="1" stop-color="#f8d26a" stop-opacity=".15"/></linearGradient>
+    <pattern id="windows" width="24" height="26" patternUnits="userSpaceOnUse"><rect x="4" y="5" width="9" height="13" rx="1" fill="#ffd78b" opacity=".72"/></pattern>
+    <g id="soldier"><circle cx="0" cy="-10" r="4" fill="#d5e3e7"/><path d="M-5 -5 L5 -5 L7 8 L-7 8 Z" fill="#6c9eaa" stroke="#d5e3e7" stroke-width="1"/><path d="M-4 8 L-5 15 M4 8 L5 15 M-5 -2 L-10 4 M5 -2 L10 4" stroke="#d5e3e7" stroke-width="2" stroke-linecap="round"/></g>
+    <g id="tiny"><circle cy="-3" r="1.5" fill="#c8e5e8"/><path d="M-2 -1 L2 -1 L3 5 L-3 5 Z" fill="#5fa7b1"/></g>
+  </defs>
+  <rect width="1200" height="680" rx="18" fill="#0b1221"/>
+  <text x="34" y="40" fill="#f4f4ef" font-family="Arial,sans-serif" font-size="23" font-weight="700">THE SPEECH SCENE</text>
+  <text x="34" y="64" fill="#9db3c8" font-family="Arial,sans-serif" font-size="13">CONCEPTUAL DESIGN MAP · NOT YET RUNTIME-GENERATED EVIDENCE</text>
+  <rect x="28" y="88" width="1144" height="365" rx="12" fill="url(#sky)" stroke="#43556e"/>
+  <path d="M28 344 L1172 344 L1172 453 L28 453 Z" fill="#111b2c"/>
+  <g opacity=".9">
+    <path d="M425 344 V214 H478 V172 H518 V344 Z" fill="#354b60"/>
+    <path d="M512 344 V146 H590 V344 Z" fill="#263e54"/>
+    <path d="M594 344 V205 H650 V164 H691 V344 Z" fill="#344d61"/>
+    <path d="M700 344 V130 H778 V344 Z" fill="#25384f"/>
+    <path d="M785 344 V190 H837 V154 H877 V344 Z" fill="#354a60"/>
+    <path d="M888 344 V220 H947 V175 H1002 V344 Z" fill="#25394d"/>
+    <path d="M1012 344 V155 H1090 V344 Z" fill="#30465a"/>
+    <path d="M425 214 H478 V172 H518 V344 H425 Z" fill="url(#windows)" opacity=".85"/>
+    <path d="M512 146 H590 V344 H512 Z" fill="url(#windows)"/>
+    <path d="M594 205 H650 V164 H691 V344 H594 Z" fill="url(#windows)"/>
+    <path d="M700 130 H778 V344 H700 Z" fill="url(#windows)"/>
+    <path d="M785 190 H837 V154 H877 V344 H785 Z" fill="url(#windows)"/>
+    <path d="M888 220 H947 V175 H1002 V344 H888 Z" fill="url(#windows)"/>
+    <path d="M1012 155 H1090 V344 H1012 Z" fill="url(#windows)"/>
+  </g>
+  <g fill="#a7c4d0" opacity=".75">
+    <use href="#tiny" x="445" y="333"/><use href="#tiny" x="463" y="333"/><use href="#tiny" x="481" y="333"/><use href="#tiny" x="499" y="333"/>
+    <use href="#tiny" x="530" y="333"/><use href="#tiny" x="548" y="333"/><use href="#tiny" x="566" y="333"/><use href="#tiny" x="584" y="333"/>
+    <use href="#tiny" x="612" y="333"/><use href="#tiny" x="630" y="333"/><use href="#tiny" x="648" y="333"/><use href="#tiny" x="666" y="333"/>
+    <use href="#tiny" x="716" y="333"/><use href="#tiny" x="734" y="333"/><use href="#tiny" x="752" y="333"/><use href="#tiny" x="770" y="333"/>
+    <use href="#tiny" x="803" y="333"/><use href="#tiny" x="821" y="333"/><use href="#tiny" x="839" y="333"/><use href="#tiny" x="857" y="333"/>
+    <use href="#tiny" x="906" y="333"/><use href="#tiny" x="924" y="333"/><use href="#tiny" x="942" y="333"/><use href="#tiny" x="960" y="333"/>
+    <use href="#tiny" x="1030" y="333"/><use href="#tiny" x="1048" y="333"/><use href="#tiny" x="1066" y="333"/><use href="#tiny" x="1084" y="333"/>
+  </g>
+  <g id="room-panel">
+    <path d="M48 112 H385 V386 H48 Z" fill="url(#room)" stroke="#b7a17b" stroke-width="2"/>
+    <path d="M72 137 H360 V358 H72 Z" fill="none" stroke="#c3aa7a" stroke-width="2"/>
+    <path d="M91 154 H340 V341 H91 Z" fill="#1c2635" stroke="#8b795f"/>
+    <path d="M110 166 H321 V329 H110 Z" fill="#30404d"/>
+    <path d="M122 178 H309 V317 H122 Z" fill="#3d4b55"/>
+    <path d="M135 191 H296 V304 H135 Z" fill="#202c3b"/>
+    <path d="M48 386 H385" stroke="#d4b67a" stroke-width="5"/>
+    <path d="M58 113 L85 89 H348 L374 113" fill="#7d6b56" stroke="#c7b18a" stroke-width="2"/>
+    <rect x="64" y="127" width="30" height="239" fill="#a58b65" opacity=".5"/>
+    <rect x="340" y="127" width="30" height="239" fill="#a58b65" opacity=".5"/>
+    <g transform="translate(246 275) scale(1.45)"><use href="#soldier"/></g>
+    <path d="M239 267 L225 248 L211 250" fill="none" stroke="#f8d26a" stroke-width="4" stroke-linecap="round"/>
+    <text x="64" y="413" fill="#f3d99b" font-family="Arial,sans-serif" font-size="13" font-weight="700">01 · PRIVATE ROOM</text>
+    <text x="64" y="432" fill="#d2dce7" font-family="Arial,sans-serif" font-size="11">Advisor salutes; audience already audible</text>
+  </g>
+  <g id="balcony-panel">
+    <path d="M392 112 H1160 V386 H392 Z" fill="none" stroke="#80b8c6" stroke-width="2"/>
+    <path d="M394 344 H1160 M394 365 H1160" stroke="#9ab6c7" stroke-width="3"/>
+    <path d="M400 344 V385 M470 344 V385 M540 344 V385 M610 344 V385 M680 344 V385 M750 344 V385 M820 344 V385 M890 344 V385 M960 344 V385 M1030 344 V385 M1100 344 V385 M1160 344 V385" stroke="#9ab6c7" stroke-width="3"/>
+    <g transform="translate(405 305) scale(1.8)"><use href="#soldier"/></g>
+    <g transform="translate(440 309) scale(1.5)"><use href="#soldier"/></g>
+    <g transform="translate(405 263) scale(1.2)"><use href="#soldier"/></g>
+    <g transform="translate(432 266) scale(1.2)"><use href="#soldier"/></g>
+    <rect x="1000" y="241" width="94" height="57" rx="3" fill="#172536" stroke="#d7e9ef" stroke-width="2"/>
+    <rect x="1006" y="247" width="82" height="45" fill="#4b9eaa"/>
+    <g transform="translate(1048 274) scale(.9)"><use href="#soldier"/></g>
+    <path d="M1048 267 L1060 254" stroke="#f8d26a" stroke-width="3" stroke-linecap="round"/>
+    <text x="410" y="413" fill="#9be5dc" font-family="Arial,sans-serif" font-size="13" font-weight="700">02 · BALCONY REVEAL</text>
+    <text x="410" y="432" fill="#d2dce7" font-family="Arial,sans-serif" font-size="11">Crowd occupies architecture; screens echo the player</text>
+  </g>
+  <g id="recognition-wave" fill="none" stroke="url(#wave)" stroke-width="3">
+    <path d="M444 290 Q500 235 556 290"><animate attributeName="opacity" values=".15;.95;.15" dur="3.6s" repeatCount="indefinite"/></path>
+    <path d="M590 282 Q665 195 740 282"><animate attributeName="opacity" values=".1;.85;.1" dur="3.6s" begin=".7s" repeatCount="indefinite"/></path>
+    <path d="M770 280 Q862 165 954 280"><animate attributeName="opacity" values=".1;.8;.1" dur="3.6s" begin="1.4s" repeatCount="indefinite"/></path>
+    <path d="M940 282 Q1032 184 1124 282"><animate attributeName="opacity" values=".1;.9;.1" dur="3.6s" begin="2.1s" repeatCount="indefinite"/></path>
+  </g>
+  <g transform="translate(40 477)">
+    <rect width="1120" height="164" rx="10" fill="#111d30" stroke="#344c67"/>
+    <text x="22" y="28" fill="#f4f4ef" font-family="Arial,sans-serif" font-size="15" font-weight="700">EVENT-HORIZON REPRESENTATION · SAME SOLDIER IDENTITY, DIFFERENT DETAIL BUDGET</text>
+    <g transform="translate(65 86)"><use href="#soldier" transform="scale(1.6)"/><text x="-28" y="38" fill="#dbe6ee" font-family="Arial,sans-serif" font-size="12">Interaction</text><text x="-28" y="54" fill="#91b7c8" font-family="Arial,sans-serif" font-size="10">full pose / contact</text></g>
+    <path d="M135 86 H225" stroke="#607f99" stroke-width="2" stroke-dasharray="4 5"/><path d="M215 79 L226 86 L215 93" fill="none" stroke="#607f99" stroke-width="2"/>
+    <g transform="translate(270 86)"><use href="#soldier" transform="scale(1.25)"/><use href="#soldier" x="22" transform="scale(1.25)"/><use href="#soldier" x="44" transform="scale(1.25)"/><text x="-25" y="38" fill="#dbe6ee" font-family="Arial,sans-serif" font-size="12">Near crowd</text><text x="-25" y="54" fill="#91b7c8" font-family="Arial,sans-serif" font-size="10">stable variations</text></g>
+    <path d="M370 86 H450" stroke="#607f99" stroke-width="2" stroke-dasharray="4 5"/><path d="M440 79 L451 86 L440 93" fill="none" stroke="#607f99" stroke-width="2"/>
+    <g transform="translate(495 86)"><use href="#tiny" x="0"/><use href="#tiny" x="14"/><use href="#tiny" x="28"/><use href="#tiny" x="42"/><use href="#tiny" x="56"/><use href="#tiny" x="70"/><use href="#tiny" x="84"/><use href="#tiny" x="98"/><use href="#tiny" x="112"/><use href="#tiny" x="126"/><text x="-24" y="38" fill="#dbe6ee" font-family="Arial,sans-serif" font-size="12">Middle distance</text><text x="-24" y="54" fill="#91b7c8" font-family="Arial,sans-serif" font-size="10">instances / fewer channels</text></g>
+    <path d="M665 86 H745" stroke="#607f99" stroke-width="2" stroke-dasharray="4 5"/><path d="M735 79 L746 86 L735 93" fill="none" stroke="#607f99" stroke-width="2"/>
+    <g transform="translate(790 86)"><rect x="0" y="-20" width="105" height="38" rx="4" fill="#29445b" stroke="#7194ad"/><path d="M8 -12 H97 M8 -4 H97 M8 4 H97 M8 12 H97" stroke="#a9d7dd" stroke-width="2" stroke-dasharray="3 5"/><text x="-4" y="38" fill="#dbe6ee" font-family="Arial,sans-serif" font-size="12">Far city</text><text x="-4" y="54" fill="#91b7c8" font-family="Arial,sans-serif" font-size="10">cluster phase / density</text></g>
+    <g transform="translate(1010 84)">
+      <circle cx="0" cy="0" r="24" fill="none" stroke="#f8d26a" stroke-width="2" stroke-dasharray="4 4"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="18s" repeatCount="indefinite"/></circle>
+      <path d="M-17 0 H17 M0 -17 V17" stroke="#f8d26a" stroke-width="2"/>
+      <text x="-39" y="40" fill="#dbe6ee" font-family="Arial,sans-serif" font-size="12">Beyond detail</text><text x="-39" y="56" fill="#91b7c8" font-family="Arial,sans-serif" font-size="10">city-scale summary</text>
+    </g>
+    <text x="22" y="147" fill="#f8d26a" font-family="Arial,sans-serif" font-size="11">Design intent only: tiers and crowd wave are conceptual, not a measured runtime implementation.</text>
+  </g>
+</svg>
