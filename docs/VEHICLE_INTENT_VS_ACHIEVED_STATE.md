@@ -1,6 +1,6 @@
 # Vehicle intent versus achieved state
 
-> **Status: proposed reference fixture, not an implemented flight model.** This document scopes a concrete consumer example for Gestures. It does not add vehicle dynamics, control laws, or authoritative state to the Gestures core.
+> **Status: test-only comparison slice implemented; flight integration remains proposed.** `VehicleIntentComparisonFixture` in the test project exercises the real `GestureEvaluator` against a separate achieved-state sample. It is consumer-owned test code, not a production API or flight model. It adds no vehicle dynamics, control laws, or authoritative state to Gestures.
 
 ## The flight-simulator problem
 
@@ -36,6 +36,18 @@ The first fixture should be intentionally small and CPU-testable:
 5. Include a missing-transform or incompatible-unit case and return an explicit unresolved/rejected result instead of silently comparing unlike values.
 6. If the maneuver requires another MicroBundle (for example, docking hardware or station services), exercise composition separately: matching capability names alone must not pass compatibility validation.
 7. Test deterministic output for identical inputs and verify the reference evaluator never writes to authoritative achieved state.
+
+## Current implementation evidence
+
+The test project now contains `VehicleIntentComparisonFixture` and focused tests. The fixture:
+
+- evaluates a real `GestureDefinition` with `GestureEvaluator` to obtain the intended reference;
+- compares the reference root position with a separate achieved sample and reports achieved-minus-intended position delta;
+- requires exact timestamp and timebase agreement plus matching coordinate-frame and length-unit identifiers;
+- returns an explicit unresolved result when metadata is incompatible, the reference root is missing, or the achieved position is non-finite;
+- leaves both inputs unchanged and returns deterministic results for identical inputs.
+
+This is deliberately a narrow test-owned adapter. It does not convert units or coordinate frames, predict vehicle motion, validate MicroBundle composition, or prove docking/landing feasibility. Those remain follow-on work for a real consumer contract and simulation integration.
 
 ## What this fixture must not imply
 
