@@ -225,7 +225,7 @@ static string BuildSequenceSvg(IReadOnlyList<SequenceSample> samples)
   <desc id="sequence-desc">The C# generator runs three distinct GesturePlayback sessions through GestureSequencePlayback, samples the current step and normalized progress every 0.05 seconds, and serializes those observed values. The sequence advances through approach, interact, and withdraw. This proves fixed ordered sequencing and observed step transitions, not physical success, anchor resolution, or pose blending.</desc>
   <defs>
     <linearGradient id="sequence-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#17283b"/></linearGradient>
-    <style>text{font-family:"Segoe UI",Arial,sans-serif}.static{display:none}@media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline}}</style>
+    <style>text{font-family:"Segoe UI",Arial,sans-serif}.static{display:none}@media(prefers-reduced-motion:reduce){.animated{display:none}.static{display:inline} }</style>
   </defs>
   <rect width="960" height="420" rx="18" fill="url(#sequence-bg)"/>
   <text x="34" y="36" font-size="11" letter-spacing="2" fill="#8da7c5">THE SINGULARITY WORKSHOP / OBSERVED C# SEQUENCE</text>
