@@ -72,7 +72,9 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 
 - [x] Document the proposed ownership boundary and [Gestures procedure plan](SINGULARITY_STUDIOS_GESTURE_PLAN.md).
 - [x] Publish a matching [WebPageLLM integration handoff](https://github.com/TrentBest/WebPage/blob/development/docs/integrations/SINGULARITY_STUDIOS_WEBPAGELLM_HANDOFF.md) on WebPage development.
-- [ ] Inspect current WebPage and AnyApp implementations before defining a concrete consumer integration contract.
+- [x] Publish the [AnyApp desktop consumer handoff](https://github.com/TrentBest/AnyApp/blob/development/docs/integrations/SINGULARITY_STUDIOS_ANYAPP_HANDOFF.md) and cross-link the host briefs.
+- [x] Inspect the current WebPage host page/project dependencies and AnyApp manifest, runtime composition, catalog, and desktop proof boundaries before proposing a shared contract.
+- [ ] Agree on a versioned provider-owned stage/take fixture and consumer boundary; the host briefs are coordination proposals, not a finalized API.
 - [ ] Define provider-owned stage/rig anchors and a reusable 30-second take fixture.
 - [ ] Add test-backed performer and camera/equipment procedure examples using existing engine-neutral contracts; do not claim physical outcomes without host/Physics observations.
 - [ ] Generate a living timeline/overhead SVG from actual procedure outputs and task schedule data.
