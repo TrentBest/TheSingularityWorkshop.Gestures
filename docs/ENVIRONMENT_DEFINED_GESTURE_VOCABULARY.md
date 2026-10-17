@@ -1,5 +1,10 @@
 # Environment-Defined Gesture Vocabulary
 
+![Generated provider and actor-choice decision flow from the deterministic executable fixture](assets/provider-actor-choice.svg)
+
+*This living diagram serializes the provider-filtering and actor-choice fixture. It illustrates the selection boundary; it does not claim that the illustrative soccer catalogue below is implemented.*
+
+
 **Status: architecture example, not an implemented soccer simulation.** This document explains a reusable design pattern for the Workshop. The soccer actions below are illustrative; they are not claims that this repository currently contains a complete soccer gesture catalog, match rules, player AI, ball physics, or a Renderer integration.
 
 ## The idea
