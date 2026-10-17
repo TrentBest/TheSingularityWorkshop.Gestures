@@ -64,12 +64,23 @@ public sealed class GestureSequencePlayback
             var step = _steps[_currentStepIndex];
             var untilCompletion = Math.Max(0d, step.CompletionTimeSeconds - step.ElapsedSeconds);
             if (remaining < untilCompletion)
-                return step.Advance(remaining);
+            {
+                var pose = step.Advance(remaining);
+                if (step.State != GesturePlaybackState.Completed)
+                    return pose;
 
-            step.Advance(untilCompletion);
-            remaining -= untilCompletion;
-            if (step.State != GesturePlaybackState.Completed)
-                return step.CurrentPose!;
+                // Floating-point addition can round elapsed + delta to the completion
+                // boundary even when delta compares slightly below (boundary - elapsed).
+                // In that case this delta was fully consumed; continue at the next step.
+                remaining = 0d;
+            }
+            else
+            {
+                step.Advance(untilCompletion);
+                remaining -= untilCompletion;
+                if (step.State != GesturePlaybackState.Completed)
+                    return step.CurrentPose!;
+            }
 
             if (_currentStepIndex == _steps.Count - 1)
             {
