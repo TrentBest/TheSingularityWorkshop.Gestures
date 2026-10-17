@@ -4,6 +4,16 @@ Gestures teaches reusable animation principles. A gesture describes motion over 
 
 The documentation is part of the product experience: it should help readers *see* what the current implementation does, understand why the behavior matters, and follow the evidence back to real code.
 
+## Living diagrams added to the theory
+
+![Gesture data flow and deterministic variation](assets/gesture-data-and-variation.svg)
+
+![Exploratory motion equation and the roles of inertia, damping, stiffness, and target tracking](assets/motion-equation-map.svg)
+
+![Stateless evaluation timeline and caller-owned lifecycle](assets/gesture-evaluation-lifecycle.svg)
+
+These three diagrams are **conceptual teaching maps**: they expose relationships and contracts, not a live capture of the C# evaluator. The motion-equation map explicitly labels the spring-damper curves as schematic because that dynamics model remains exploratory. The data-flow and lifecycle diagrams describe the current sampling contract and keep unsupported lifecycle and physics behavior outside it.
+
 ## Concept scene: the speech and city-wide audience
 
 ![Animated conceptual storyboard for the advisor, balcony reveal, responsive crowd, and event-horizon representation tiers](assets/speech-scene-population.svg)
