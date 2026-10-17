@@ -20,7 +20,7 @@ TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluato
 
 A Gesture is more than a list of poses. It describes a physical procedure whose progress can be evaluated at a given time, with optional deterministic variation bounded around ideal motion.
 
-Examples include a soldier entering a vehicle cockpit using anchors supplied by the vehicle, climbing through a hatch, operating a mechanism, or coordinated marching where individuals share an ideal procedure without moving as perfect copies.
+Examples include a soldier entering a vehicle cockpit using anchors supplied by the vehicle, climbing through a hatch, operating a mechanism, or coordinated marching where individuals share an ideal procedure without moving as perfect copies. The [Speech Scene and Soldier Population plan](docs/SPEECH_SCENE_POPULATION.md) applies these principles to an advisor's salute and shoulder-guided balcony entrance, a city-wide crowd response, broadcast-screen echoes, and observer-relative event-horizon representations. Its animated [scene-population map](docs/assets/speech-scene-population.svg) is explicitly conceptual until connected to runtime evidence.
 
 ## 🟣 02 Why
 
@@ -98,6 +98,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Motion Response Comparison](docs/MOTION_RESPONSE_COMPARISON.md) — compare direct kinematic tracking and spring-damper response without conflating them.
 - [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — express stable skill/context parameter ranges without per-frame random noise.
 - [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — keep SVGs grounded in real evaluator output and label conceptual overlays separately.
+- [Speech Scene and Soldier Population](docs/SPEECH_SCENE_POPULATION.md) — organize the moniker-to-balcony speech scene, advisor choreography, responsive city-scale soldiers, distance-aware cheering, public-screen echoes, event-horizon tiers, ownership boundaries, and measurable build order.
 - [Gesture Playback Semantics](docs/GESTURE_PLAYBACK_SEMANTICS.md) — define deterministic seeking, stepping, interruption, and replay boundaries.
 - [Inverse Kinematics Theory](docs/INVERSE_KINEMATICS_THEORY.md) — distinguish reachable targets, constraints, and solver responsibilities.
 - [Planar Kinematics Reference](docs/PLANAR_KINEMATICS_REFERENCE.md) — establish a bounded 2D kinematics vocabulary.
