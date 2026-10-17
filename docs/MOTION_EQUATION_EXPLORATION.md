@@ -1,5 +1,8 @@
 # Exploring the Motion Equation
 
+![Living conceptual map of the candidate motion equation, its terms, target tracking, and stable individual parameter ranges](assets/motion-equation-map.svg)
+
+
 > **Status: exploratory mathematics, not a frozen package contract.** This document records the physical intuition and a useful family of candidate models. It does not claim to reproduce the exact historical equation from memory. Preserve the original derivation and compare it against these formulations when available.
 >
 > For a structured comparison of kinematic easing, spring-damper tracking, meaningful parameterization, and a testable experiment matrix, see [Motion Model Experiment Plan](MOTION_MODEL_EXPERIMENT_PLAN.md).
