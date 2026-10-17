@@ -15,13 +15,13 @@ public sealed class ActivityDefinition
         Phases = phases;
     }
 
-    /// <summary>Stable ontology identifier for this kind of activity.</summary>
+    /// <summary>Stable identifier for this kind of activity; it is not a nine-layer ontology coordinate.</summary>
     public string Id { get; }
 
     /// <summary>Positive schema/content version selected by the author.</summary>
     public int Version { get; }
 
-    /// <summary>Stable classification terms, ordered ordinally.</summary>
+    /// <summary>Activity-level classification terms, ordered ordinally; these are not canonical ontology coordinates.</summary>
     public IReadOnlyList<string> Classifications { get; }
 
     /// <summary>Ordered phases that describe the activity's authored progression.</summary>
@@ -69,7 +69,7 @@ public sealed class ActivityDefinitionBuilder
         _id = RequireName(id, nameof(id));
     }
 
-    /// <summary>Starts authoring an activity with a stable ontology identifier.</summary>
+    /// <summary>Starts authoring an activity with a stable activity identifier.</summary>
     public static ActivityDefinitionBuilder Define(string id) => new(id);
 
     /// <summary>Sets the positive content/schema version.</summary>
@@ -82,7 +82,7 @@ public sealed class ActivityDefinitionBuilder
         return this;
     }
 
-    /// <summary>Adds stable ontology classification terms.</summary>
+    /// <summary>Adds activity-level classification terms without assigning canonical ontology coordinates.</summary>
     public ActivityDefinitionBuilder ClassifyAs(params string[] terms)
     {
         EnsureNoActivePhase();
