@@ -93,7 +93,7 @@ public sealed class CrowdResponseSchedulerTests
     public void OverflowedScheduledTimeIsRejected()
     {
         var request = new CrowdResponseRequest("event", double.MaxValue, "agent", 1UL);
-        var policy = new CrowdResponsePolicy("policy", 1, 1d, 2d, 0, 1, 0d, 1d);
+        var policy = new CrowdResponsePolicy("policy", 1, double.MaxValue, double.MaxValue, 0, 1, 0d, 1d);
 
         Assert.Throws<ArgumentOutOfRangeException>(() => CrowdResponseScheduler.Schedule(request, policy));
     }
