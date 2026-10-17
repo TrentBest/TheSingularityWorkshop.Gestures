@@ -614,7 +614,9 @@ static string BuildChannelsSvg(IReadOnlyList<Sample> samples)
 """;
 }
 
-internal sealed record SequenceSample(double ElapsedSeconds, int StepIndex, double Progress, float RootX, string State);\n\ninternal sealed record ChannelPanel(string Title, string Unit, string Color, double[] Values, double Min, double Max);
+internal sealed record SequenceSample(double ElapsedSeconds, int StepIndex, double Progress, float RootX, string State);
+
+internal sealed record ChannelPanel(string Title, string Unit, string Color, double[] Values, double Min, double Max);
 internal sealed record TargetTrack(string Label, double CenterY, string Color, string Kind);
 
 internal sealed class MotionContext : IStateContext
