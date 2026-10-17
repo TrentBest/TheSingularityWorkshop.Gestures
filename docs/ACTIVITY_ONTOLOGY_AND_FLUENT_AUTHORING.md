@@ -32,7 +32,7 @@ A fluent API should make composition readable in code and usable by an editor. T
 Illustrative API only:
 
 ~~~csharp
-var flashMob = Activity.Define("public-space.flash-mob")
+var flashMob = ActivityDefinitionBuilder.Define("public-space.flash-mob")
     .Version(1)
     .ClassifyAs("social", "performance", "group-activity")
     .Phase("gather")
