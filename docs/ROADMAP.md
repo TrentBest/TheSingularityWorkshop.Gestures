@@ -38,6 +38,15 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 - [ ] Build a small end-to-end place/attention/continuity proof: stimulus-aware passersby, a gated building-to-sidewalk transition, a persistent purchase/carry outcome, and a later care-related decision. Keep agent goals/economy/persistence outside Gestures core and generate evidence from actual records.
 - [ ] Compare local, street, and distant-agent cadence tiers; treat execution cohorts as temporary compatible-work batches, not permanent social groups, and verify identity/outcome parity as agents change places.
 
+## Forge-baked providers and actor choice
+
+- [x] Specify the ownership boundary between environment-provided capabilities, actor-owned intent/selection, Forge compilation, procedure execution, and authoritative outcomes in [Forge-Baked Gesture Providers and Actor Choice](FORGE_BAKED_PROVIDER_AND_ACTOR_CHOICE.md).
+- [ ] Define the smallest provider/capability/procedure authoring fixture from the pet-store vertical slice; version references, target/anchor binding, preconditions, outcomes, and failure/interruption semantics.
+- [ ] Prototype Forge validation/baking for reference resolution, nested procedure graphs, cycles, typed parameters, and runtime lookup indexes.
+- [ ] Implement deterministic actor-perspective candidate filtering with explainable exclusion reasons; keep needs, goals, memory, and selection policy outside provider definitions.
+- [ ] Produce an execution trace and living SVG from actual baked plans, actor decisions, and authoritative outcome records.
+- [ ] Measure compiled artifact size, lookup/scoring cost, active actor state bytes, allocations, and scalar/batched parity before optimizing population execution.
+
 ## Crowd-flow reference track
 
 - [x] Add experience-authored gates/routes with validated IDs and host-local waypoints.
