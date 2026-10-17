@@ -4,6 +4,8 @@
 
 ## The central idea
 
+The browser-facing integration brief lives in [WebPage's Singularity Studios WebPageLLM handoff](https://github.com/TrentBest/WebPage/blob/development/docs/integrations/SINGULARITY_STUDIOS_WEBPAGELLM_HANDOFF.md). The two documents have deliberately separate responsibilities: this one defines the reusable procedure domain; the WebPage brief defines the intended browser/desktop workbench and integration gates.
+
 Singularity Studios should not be a giant hand-authored scene. It should be a reusable production environment in which a production is assembled from data: a stage, sets, performers, crew roles, cameras, motion-control rigs, lighting and grip equipment, props, cues, safety constraints, and a shot plan. The same stage and procedures can be reset, re-blocked, filmed from new angles, and reused for a different production.
 
 **Gestures supplies reusable physical procedures.** It should not become the film director, shot editor, scene graph, camera renderer, sound mixer, or studio simulator. A production provider composes Gesture definitions with studio-specific anchors and task data; the WebPage or AnyApp experience orchestrates them; Physics resolves physical consequences; Renderer/Visualize decide and present what is visible.
