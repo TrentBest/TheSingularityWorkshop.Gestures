@@ -126,6 +126,11 @@ This is a source-repository verification path, not a claim that the package has 
 
 ## 🟨 Visual theory gallery
 
+![Living conceptual map of the candidate motion equation, its terms, target tracking, and stable individual parameter ranges](docs/assets/motion-equation-map.svg)
+
+![Living timeline diagram of the stateless evaluator input, sampled pose output, completion boundary, and caller-owned lifecycle](docs/assets/gesture-evaluation-lifecycle.svg)
+
+
 ![](docs/assets/dividers/star-gold.svg)
 
 These illustrations are design references. They do not imply that the current CPU evaluator implements hierarchy composition, inverse kinematics, or a physical contact solver.
