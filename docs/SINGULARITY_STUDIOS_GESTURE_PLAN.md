@@ -117,3 +117,18 @@ The names are illustrative. The data contract and tests should come before a lar
 Build the Singularity Studios experience as a **data-driven production workbench**, not a static showcase image and not a pretend completed simulator. The first visible interaction should let a user choose a small stage, inspect reusable performer/crew/camera procedures, bind them to marks and rig anchors, arrange a short shot sequence, run or scrub the reference timeline, and inspect the resulting transforms and task states. Show which values are authored data, which outputs come from actual Gestures evaluation, and which systems are future integration points. Keep the studio's enormous indoor battle-stage vision as the long-term composition target while making the first 30-second take concrete, testable, and reusable.
 
 Before implementing, inspect the current WebPage and AnyApp repositories and their actual renderer/Visualize integration. Do not invent APIs or claim a runtime link that has not been built. Keep the Gestures core engine-neutral, preserve the master/development-only branch policy, and do not publish a package without explicit approval.
+
+## Local-first delivery assumption
+
+The first complete demonstration assumes the user can run **AnyApp locally on their own Windows machine**. AnyApp's distribution, executable signing/reputation, installation, protocol-handler registration, and Windows security prompts are a separate host-delivery problem being handled by the AnyApp workstream; they must not block the reusable production-data work here. If a polished installer or direct browser-to-app launch is not ready, the supported development path may be explicit and documented: clone the repository, build AnyApp, then open/import a chosen production manifest from the local application.
+
+The important proof is not that a browser can silently launch an executable. It is that a user can deliberately open a versioned production manifest in a running local AnyApp, resolve its declared bundle roots and versions, load the matching configuration through the host's configuration source, compose the runtime, and present the same production fixture used by the browser experience. Any browser-to-desktop handoff must remain explicit and compatible with Windows security controls; never imply arbitrary web pages can launch a local executable without a user-installed/registered mechanism.
+
+### Manifest and configuration discipline
+
+- A production manifest names the root MicroBundles and exact versions. FSM_COS discovers their dependency closure; Gestures is not a manifest root merely because the Gestures NuGet package exists.
+- Keep runtime manifest data separate from bundle configuration bytes. The host owns how configuration files are located/read and provides them through the configuration-source contract.
+- Store the production fixture and its associated configuration as versioned, reviewable data once the actual provider bundle IDs, versions, configuration schemas, and catalog resolution path are confirmed by the owning repos.
+- Do not invent bundle IDs, configuration keys, or an executable JSON schema to make a sample look runnable. Until the provider contract exists, label the fixture as a proposal rather than an executable manifest.
+- The first vertical slice should be small enough to validate end-to-end: load one declared production, evaluate a known procedure, advance a take, and compare browser/local output against the same deterministic inputs. Record separately what loaded, what evaluated, and what the host actually observed.
+
