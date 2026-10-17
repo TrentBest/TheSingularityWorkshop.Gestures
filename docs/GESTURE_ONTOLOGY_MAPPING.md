@@ -1,101 +1,105 @@
-# Gesture ontology mapping: semantic address versus runtime composition
+# Gesture ontology mapping: canonical layers and runtime ownership
 
-> **Status: design proposal.** This document maps Gestures into the Workshop's optional, versioned Ontology model. The nine semantic roles below are a candidate mapping for discussion, not a claim that the Ontology package already defines these names as a universal nine-layer schema.
+> **Status: design mapping, not a published Gesture ontology.** The canonical nine layer *names* are now confirmed against the Workshop's Experience Theory and the runtime `OntologySignature`. The concrete integer vocabularies and the correct classification of each Gesture still need to be agreed and resolved by the ontology authoring system.
 
-## The question
+## The answer: where do Gestures land?
 
-Where does Gestures sit when a MicroBundle can be located within a nine-position semantic address?
+**Gestures is a domain that contributes reusable physical procedures and their semantic relationships. It is not itself one of the nine layers.** A Gesture definition may receive an address in a selected ontology; the provider, actor, experience, live session, playback, and physical outcome remain separate identities and responsibilities.
 
-**Gestures is a domain that contributes procedures and their relationships to an ontology; it is not itself one ontology layer.** A Gesture definition can have a semantic address, while the provider that supplies it, the actor who may perform it, the experience that uses it, and the runtime session that coordinates it remain distinct objects.
+The nine ordered layers in the current Workshop Experience Theory are:
 
-Keep three structures separate:
+| Zero-based index | Canonical layer name | What is established |
+|---:|---|---|
+| 0 | **Paradigm** | Layer name and position |
+| 1 | **Domain** | Layer name and position |
+| 2 | **Kingdom** | Layer name and position |
+| 3 | **Phylum** | Layer name and position |
+| 4 | **Class** | Layer name and position |
+| 5 | **Order** | Layer name and position |
+| 6 | **Family** | Layer name and position |
+| 7 | **Genus** | Layer name and position |
+| 8 | **Species** | Layer name and position |
 
-1. **Semantic address** — where a concept is classified in a selected ontology.
-2. **Relationship graph** — how concepts are related across branches or even across coexisting ontologies.
-3. **Runtime composition graph** — which providers, gesture definitions, actors, experiences, physics capabilities, and presentation capabilities are composed for a particular run.
+Source of truth: [WebPage Experience Theory](https://github.com/TrentBest/WebPage/blob/master/EXPERIENCE_THEORY.md#rule-2--sensory-definition-and-ontology) defines the nine ordered names. The [runtime OntologySignature](https://github.com/TrentBest/The/blob/master/Architect/Workshop/Ontology/OntologySignature.cs) defines exactly nine integer slots and resolves those integers to author-facing strings through a resolver.
 
-An address is not a dependency list, a provider registry, an execution schedule, or a parent-child ownership tree.
+This corrects an earlier draft in this repository that treated **Moniker** and **TopicToken** as the names of positions 0 and 8. They are not the canonical layer names. Moniker is a Workshop concept/capability; TopicToken may be a vocabulary or leaf-identity concept. Either can be classified or related through the ontology, but neither replaces Paradigm or Species as a layer label.
 
-## Ontology boundary and constraints
+## Important distinction: layer labels are known; Gesture coordinates are not
 
-The Workshop Ontology package intentionally supports scalar or N-dimensional OntologyIndex values and does not impose five or nine dimensions on every ontology. See the canonical [Ontology README](https://github.com/TrentBest/TheSingularityWorkshop.Ontology/blob/master/README.md) and [Ontology Theory](https://github.com/TrentBest/TheSingularityWorkshop.Ontology/blob/master/docs/THEORY.md) for that boundary. A nine-position OntologySignature is a consumer's selected scheme, not a global rule for every MicroBundle.
+The canonical *shape* is established. The domain-specific value assigned at each position is not yet established by this mapping document. We should not make up integer tokens, assume the word “Gestures” is the correct value for every Domain coordinate, or infer that each Gesture must occupy a single linear taxonomy path.
 
-This proposal preserves the known anchors used in Workshop discussions:
+The names resemble a taxonomy, but the ontology system also supports explicit relationships and multiple ontologies. Therefore:
 
-- **Position 0: Moniker** — the default/root experience context, when the chosen ontology uses this convention.
-- **Position 8: TopicToken** — a possible leaf/topic coordinate, as used in the Physics ontology design example.
+- Keep the nine canonical layer labels stable.
+- Obtain actual layer values/tokens from the master ontology or the approved authoring vocabulary.
+- Keep synonyms, compatibility, aliases, multiple parents, and cross-domain links as explicit relationships where appropriate—not as invented layer meanings.
+- A semantic address is not a provider ID, package location, runtime dependency list, execution schedule, or playback handle.
+- Do not bake placeholder strings or guessed integer coordinates into the Gestures runtime API.
 
-The intermediate names below are proposed semantic roles only. Before these are treated as canonical, compare them with the actual master ontology definition and agree on shared meanings. If a different ontology uses different dimensions, the same Gesture concept may have another address there.
+## Three structures that must stay separate
 
-## Candidate nine-position mapping for a Gesture
+1. **Semantic coordinate** — the nine integer values classifying a concept in one ontology/version.
+2. **Relationship graph** — explicit links among concepts, providers, procedures, actor capabilities, contexts, and manifestations, potentially across ontologies.
+3. **Runtime composition graph** — the actual providers, offers, actors, experience definitions, physics capabilities, and presentation capabilities assembled for one run.
 
-| Position | Proposed semantic role | Gesture example | What this position must not mean |
-|---:|---|---|---|
-| 0 | **Moniker / root experience** | moniker or a selected default world context | A mandatory parent object for every gesture runtime |
-| 1 | **Domain** | gestures | A DLL, repository, or provider implementation |
-| 2 | **Family** | locomotion, manipulation, interaction, expression | A closed enum that prevents new families |
-| 3 | **Capability** | move-through-opening, operate-latch, signal-attention | A single baked animation clip |
-| 4 | **Procedure** | board-through-hatch, close-hatch, step-to-beat | A live playback instance |
-| 5 | **Intent / action class** | board, secure, dance, evade | Proof that the action succeeded |
-| 6 | **Context / target kind** | vehicle-hatch, partner, ground-plane, shared-beat | A resolved world transform or current target instance |
-| 7 | **Variant / profile** | trained, novice, low-clearance, accessible | Per-frame random variation or an actor's entire identity |
-| 8 | **Topic token / stable leaf** | stable token for the precise concept | A mutable display label or a unique ID for every playback |
+The [Ontology Theory](https://github.com/TrentBest/TheSingularityWorkshop.Ontology/blob/master/docs/THEORY.md) states that ontology is optional semantic structure, not a mandatory constraint on every MicroBundle. The separate [Ontology package](https://github.com/TrentBest/TheSingularityWorkshop.Ontology) supports variable-rank indexing; the fixed nine-slot signature is the Workshop Experience/Hub contract, not a universal requirement imposed on all consumers.
 
-This is a candidate semantic path, not a requirement that every Gesture fill all nine positions or have exactly one path. A concept can be related to multiple families, contexts, or intents. Use explicit relationships or multiple addresses where the ontology supports them; do not force multiple meanings into one arbitrary slot. A concrete Gesture definition still needs its own stable ID and version independent of its semantic address.
+## Gesture concepts and the runtime owners
 
-### Example semantic paths
-
-Illustrative paths only; token values and canonical names must come from the selected ontology, not from hard-coded strings in the Gestures runtime.
-
-~~~text
-moniker / gestures / locomotion / traverse-opening
-        / board-through-hatch / board / vehicle-hatch
-        / trained / <stable-topic-token>
-
-moniker / gestures / manipulation / operate-mechanism
-        / close-hatch / secure / hatch-handle
-        / low-clearance / <stable-topic-token>
-
-moniker / gestures / expression / rhythmic-movement
-        / step-to-beat / dance / shared-beat
-        / novice / <stable-topic-token>
-~~~
-
-The same board-through-hatch procedure might be supplied by multiple providers, adapted for different articulated mechanisms, or offered to different actors. Those facts should be expressed as provider metadata, capability requirements, relationships, and context—not by changing the meaning of its stable concept token.
-
-## What belongs in the ontology, and what belongs elsewhere?
-
-| Concept | Ontology contribution | Runtime or data owner |
+| Concept | Ontology contribution | Runtime/data owner |
 |---|---|---|
-| Gesture family and semantic purpose | Classification terms and relationships | Gesture definition/provider |
-| Reusable physical procedure | Addressable concept and relations to capabilities or target kinds | GestureDefinition, keyframes, anchors, constraints |
-| Provider offering a procedure | Relationship between provider, procedure, and eligibility concepts | Provider registry and GestureOfferSelector |
-| Actor suitability | Capability terms and semantic relationships where useful | Actor/gameplay system supplies current capabilities and policy |
-| Anchor such as vehicle-hatch | Stable anchor-kind concept and relationships | Actual anchor availability/transforms belong to the consumer/world |
-| Flash mob, tag, hide-and-seek, starport departure | Activity/experience concepts and cross-links to reusable procedures | Versioned ExperienceDefinition, phase/role/action model |
-| One live flash mob or tag round | Optional semantic links for inspection and discovery | Session coordinator and live session identity/state |
-| Current playback progress | Generally not a taxonomy coordinate | GesturePlayback / GestureSequencePlayback |
-| Collision, reachability, force, physical success | Concepts may be classified and linked | Physics/world authority |
-| Evaluated pose and observer fidelity | Concepts may be linked to presentation affordances | Evaluator, Renderer, Visualize |
-| Provider package and where to download it | Package/bundle identity may link to a concept | MicroBundleDomain and MicroBundleRepository |
+| Paradigm/Domain/Kingdom/Phylum/Class/Order/Family/Genus/Species values | Authoritative classification vocabulary and coordinates | Master ontology and authoring resolver |
+| Reusable physical procedure | Semantic identity and links to related concepts | `GestureDefinition`, keyframes, anchors, constraints |
+| Provider offering a procedure | Links between provider, procedure, and eligibility concepts | Provider registry and `GestureOfferSelector` |
+| Actor suitability | Capability concepts and semantic relationships where useful | Actor/gameplay system supplies current capabilities and policy |
+| Semantic anchor kind, e.g. vehicle hatch | Stable concept and compatibility relationships | Consumer/world supplies current anchor instances and transforms |
+| Flash mob, tag, hide-and-seek, starport departure | Activity concepts and links to reusable procedures | Versioned `ExperienceDefinition`, roles and phases |
+| One live instance of an activity | Optional semantic links for inspection/discovery | Session coordinator and live session identity/state |
+| Current playback progress | Usually runtime state, not taxonomy | `GesturePlayback` / `GestureSequencePlayback` |
+| Collision, reachability, force, physical success | Concepts may be classified and related | Physics/world authority |
+| Evaluated pose and presentation fidelity | Concepts may link to manifestation capabilities | Evaluator, Renderer, Visualize |
+| Package/bundle and download location | Optional link from semantic concept to implementation | MicroBundleDomain and repository |
 
-Ontology can classify and connect these objects; it should not absorb their runtime ownership.
+## Example procedures without invented coordinates
 
-## Gesture provider and actor flow
+These examples identify semantic concepts and reuse relationships. They intentionally do **not** assign unapproved integers or claim that the strings below are already canonical ontology tokens.
 
-The intended path from meaning to execution is:
+### Board through a hatch
 
-~~~text
-Ontology term / semantic address
+- Procedure concept: `board-through-hatch`
+- Related concepts: locomotion, traversable opening, vehicle hatch, boarding intent, actor capability, clearance requirement.
+- Multiple providers may implement the same semantic procedure for different articulated mechanisms.
+- Actual anchor transforms and physical feasibility belong to the world/Physics boundary.
+
+### Step to a beat
+
+- Procedure concept: `step-to-beat`
+- Related concepts: locomotion, rhythm synchronization, shared beat, performance participation, skill/profile.
+- A flash mob and a studio scene may reuse the procedure while applying different roles, policies, targets, and presentation.
+- The beat/synchronization relation is not itself the motion procedure.
+
+### Close a cover
+
+- Procedure concept: `close-cover`
+- Related concepts: manipulation, cover mechanism, contact, latch state, clearance and safety checks.
+- A starport workflow can reuse the procedure for different compatible covers.
+- Workflow prerequisites and departure clearance are not proof of physical closure; the world must supply outcome evidence.
+
+These concepts should be assigned actual nine-layer coordinates only after the vocabulary owner provides the approved values and intended meaning for each level.
+
+## From semantic meaning to execution
+
+```text
+Approved ontology term/address
           |
           v
 Discover providers and Gesture offers
           |
           v
-Filter against actor capabilities + available anchor kinds
+Filter actor capabilities + available anchor kinds
           |
           v
-Actor / experience policy chooses an offer and intent
+Actor / experience policy chooses intent and offer
           |
           v
 Resolve actual anchors and evaluate the procedure
@@ -104,57 +108,39 @@ Resolve actual anchors and evaluate the procedure
 Physics / world observes the achieved outcome
           |
           v
-Experience coordinator advances only from valid evidence
+Experience coordinator advances from valid evidence
           |
           v
 Renderer presents the evaluated result at observer-appropriate fidelity
-~~~
+```
 
-The current GestureOfferSelector implements only the filtering step: declared capability names and available semantic-anchor names are matched, eligible/rejected offers are returned deterministically, and missing requirements are reported. It does not interpret ontology tokens, rank intent, resolve anchor transforms, or prove physical success. The broader flow is an architecture boundary, not a claim that the full pipeline already exists.
+The current `GestureOfferSelector` implements only the filtering step using declared capability names and available semantic-anchor names. It does not interpret `OntologySignature`, resolve integer tokens, rank actor intent, resolve anchor transforms, or prove physical success. The broader flow is a design boundary, not a claim that the full pipeline exists.
 
-## Cross-domain examples
+## Identity and versioning
 
-### Flash mob
+Keep these identities distinct:
 
-The experience is classified as a social group performance. It references several gesture procedures and defines participant roles, phases, timing, and participation rules. A shared beat is a synchronization concept; it is not the motion itself. Each participant receives a role-appropriate procedure and target. The player is not automatically enrolled because they are nearby.
+- **Ontology ID/version + nine-layer coordinate:** semantic location within the selected schema.
+- **Semantic concept ID/token:** identity of the concept in the vocabulary, if separately assigned.
+- **Gesture definition ID/version:** authored physical procedure and its revisions.
+- **Provider ID/version:** implementation or bundle offering the procedure.
+- **Experience ID/version:** organized activity definition.
+- **Session ID/revision:** one live occurrence.
+- **Playback handle:** one execution lifecycle.
 
-### Tag and hide-and-seek
+A concept can be reused by multiple providers and experiences. A provider can change without changing the concept. An experience can reuse a procedure without owning it. A definition can evolve while its broader meaning remains stable. Semantic-breaking changes should be versioned or explicitly related to a replacement concept rather than silently repurposing a token.
 
-These are separate experience definitions. They may reuse locomotion, turning, stopping, reaching, looking, and social signaling procedures. Their differences belong in roles, rules, state transitions, observation gates, and policy—not in duplicating every shared Gesture under a game-specific branch.
+## Questions for ontology coordination
 
-### Starport departure
-
-The experience links ground-crew and flight-crew roles to procedures for hoses, covers, landing gear, doors, and boarding. A shared close-cover procedure can be classified once and linked to several compatible mechanisms. Task prerequisites and clearance evidence belong to the departure workflow; physical contact and obstruction belong to Physics/world authority.
-
-### Flash mob, film shoot, and raWWar
-
-A common turn, walk, or reach procedure can be reused by distinct experiences and domains. Domain-specific providers can offer specialized variants without claiming ownership of the generic procedure. raWWar, a studio simulation, and a city experience can consume the same semantic concept while applying their own intent, policy, physics, and presentation.
-
-## Stable identity, versioning, and evolution
-
-Do not overload one identifier for all of these:
-
-- **Semantic concept ID/token:** identity of the meaning in a specific ontology version.
-- **Gesture definition ID/version:** identity of the authored procedure and its revisions.
-- **Provider ID/version:** identity of the capability implementation or bundle that offers it.
-- **Experience ID/version:** identity of the organized activity definition.
-- **Session ID/revision:** identity and revision of one live occurrence.
-- **Playback/session handle:** identity of one execution lifecycle.
-
-A definition can evolve while its broad concept remains the same; a provider can change without changing the concept; an experience can reuse a procedure without owning it. Breaking semantic changes should be versioned or represented by a new concept and explicit relationship rather than silently repurposing an existing token.
-
-## Questions to settle before hardening the mapping
-
-1. What are the **canonical names and definitions** for positions 1–7 in the master nine-position ontology? The candidate roles above must not become a competing schema.
-2. Is Moniker a required coordinate for all concepts, or only a root/default convention in the ontology that uses it?
-3. Is TopicToken a leaf vocabulary ID, a terminal classification, or a compact index into a separate term table?
-4. How does a concept express multiple parents, facets, synonyms, compatibility, and replacement without forcing a single taxonomy path?
-5. Which cross-ontology relationships are first-class, and how are ontology IDs/versions included in semantic addresses?
-6. Are capability, intent, target-kind, and variant best represented as coordinate positions, relationships, or a mix? The coordinate should not become an inflexible substitute for graph edges.
-7. Which fields are author-time ontology metadata versus runtime facts such as anchor availability, actor capabilities, and physical outcome?
+1. Where is the authoritative vocabulary/resolver for the nine integer values maintained, and how are changes reviewed/versioned?
+2. What values should the master ontology assign to Gesture procedures, and are those values already defined in another repository?
+3. Which facts belong in coordinates versus relationship edges—especially intent, target kind, skill/profile, compatibility, and manifestation?
+4. How should a concept with multiple parents/facets or cross-ontology links be represented without forcing a single path?
+5. Is TopicToken an established term in the vocabulary layer? If so, is it a concept ID, a terminal classification, or a compact lookup token? It is not the canonical name of layer 8.
+6. What author-time semantic facts are stable, and what must remain runtime state such as current actor capabilities, available anchors, and observed physical outcome?
 
 ## Recommended next step
 
-First record the canonical nine-position contract from the master ontology as the shared reference. Then validate this Gesture mapping against three fixtures—board-through-hatch, step-to-beat, and close-cover—and demonstrate that each can be reused across providers and experiences without duplicating its semantic identity. Only after that should we add ontology-aware lookup or bake ontology tokens into runtime APIs.
+Treat the nine layer names as canonical and the actual Gesture coordinates as unresolved. Ask the master-ontology owner to supply the approved token vocabulary and definitions, then validate `board-through-hatch`, `step-to-beat`, and `close-cover` against it. Only after that review should we add ontology-aware lookup or expose ontology tokens in runtime APIs.
 
-The principle is simple: **ontology makes meaning addressable; Gesture providers make procedures available; actors and experiences choose what to do; Physics determines what actually happened.**
+**Ontology makes meaning addressable. Gesture providers make procedures available. Actor and experience policy choose. Physics/world determines what actually happened. Renderer presents the result.**
