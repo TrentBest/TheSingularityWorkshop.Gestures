@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 598" role="img" aria-labelledby="title desc">
   <title id="title">Stateful IK: a hierarchy of joint state machines</title>
   <desc id="desc">An illustrative articulated hierarchy has a parent joint and two child branches. Each joint tracks a motion class, and arrows show requested motion flowing downward while measured physical outcomes feed back into the next state update. This is a conceptual diagram, not a runtime capture.</desc>
   <defs>
@@ -56,4 +56,9 @@
   <path d="M860 455 H910 V130 H605" class="feedback" marker-end="url(#arrowOrange)"/>
   <text x="898" y="292" class="small" text-anchor="middle" transform="rotate(-90 898 292)">measured outcome informs next step</text>
   <text x="40" y="520" class="small">Three motion classes are a compact abstraction—not the joint's entire physical state and not proof of a speedup.</text>
+
+<g id="provenance-label" role="group" aria-label="CONCEPTUAL STATEFUL IK MAP — NOT A PRODUCTION SOLVER • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED">
+  <rect x="12" y="563" width="936" height="27" rx="6" fill="#172033"/>
+  <text x="480" y="581" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#ffffff">CONCEPTUAL STATEFUL IK MAP — NOT A PRODUCTION SOLVER • TECHNOLOGY: NATIVE SVG • WORKSHOP RUNTIME: NOT USED • GUI.SVG: NOT USED</text>
+</g>
 </svg>
