@@ -55,6 +55,25 @@ session.Apply(patch =>
 
 This sketch deliberately omits concrete type names, overloads, and implementation guarantees. The design target is a validated ontology graph with clear diagnostics, not a chain of methods that hides invalid state.
 
+The initial implemented builder currently supports a deliberately smaller slice:
+
+~~~csharp
+var definition = ExperienceDefinitionBuilder.Define("public-space.flash-mob")
+    .Version(1)
+    .ClassifyAs("social", "performance")
+    .Phase("gather")
+        .AssignRole("initiator", min: 1, max: 3)
+        .OfferGesture("notice-the-cue")
+        .EndPhase()
+    .Phase("perform")
+        .AssignRole("participant", min: 1, max: 500)
+        .OfferGesture("dance.phrase-a")
+        .EndPhase()
+    .Build();
+~~~
+
+The builder validates IDs, positive version, duplicate classifications/phases/roles/references, participant bounds, and nonempty phases. Synchronization cues, participation policy, runtime session patches, and atomic live mutation are still planned rather than implemented.
+
 A good runtime API should support:
 - **Composition:** add/remove phases, role slots, actions, dependencies, timing cues, and spatial constraints.
 - **Classification:** attach stable ontology terms and relationships; query experiences by capability, setting, participant count, or interaction pattern.
@@ -131,4 +150,4 @@ Do not draw a populated shopping district and label it implemented before the se
 7. Build a small tag/hide-and-seek or flash-mob fixture and generate living documentation from its real output.
 8. Build editor surfaces on top of the same model.
 
-This is a proposed scope and order, not a statement that these items are already implemented. The current GestureOfferSelector is the first executable piece of actor-relative eligibility; the fixed sequence playback and starport task dependency primitives remain narrower foundations, not a general experience coordinator.
+The first executable ontology slice now exists: ExperienceDefinitionBuilder creates immutable, versioned definitions with classifications, ordered phases, role bounds, and Gesture references, with tests for structural invariants. It does not yet serialize the model, resolve Gesture references against providers, coordinate a live session, apply runtime patches, assign participants, or implement the full fluent sketch above. The GestureOfferSelector is the executable piece of actor-relative eligibility; fixed sequence playback and starport task dependencies remain narrower foundations, not a general experience coordinator.
