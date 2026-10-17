@@ -52,8 +52,8 @@ jobs:
       - name: Generate Extremus population SVG from the CPU baker
         run: dotnet run --project tools/extremus-crowd-demo/extremus-crowd-demo.csproj --configuration Release --no-build -- --output docs/assets/extremus-crowd-bake.svg
 
-      - name: Validate documentation and generated SVG XML
-        run: python -c "import xml.etree.ElementTree as ET; [ET.parse(p) for p in ['docs/assets/gesture-motion.svg', 'docs/assets/gesture-channels.svg', 'docs/assets/gesture-target-agnostic.svg', 'docs/assets/gesture-variation.svg', 'docs/assets/speech-scene-population.svg', 'docs/assets/crowd-response-schedule.svg', 'docs/assets/extremus-crowd-bake.svg', 'docs/assets/provider-actor-choice.svg']]"
+      - name: Validate every documentation SVG as XML
+        run: python -c "from pathlib import Path; import xml.etree.ElementTree as ET; files=sorted(Path('docs/assets').rglob('*.svg')); [ET.parse(p) for p in files]; print('Validated', len(files), 'SVG files under docs/assets')"
 
       - name: Upload generated living SVGs
         uses: actions/upload-artifact@v7
