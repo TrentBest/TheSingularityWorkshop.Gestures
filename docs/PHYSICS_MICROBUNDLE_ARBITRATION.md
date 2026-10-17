@@ -38,15 +38,11 @@ The intended composition is a set of independently acquired capabilities, not a 
 
 The arrows mean **declared capability contracts selected and connected by the host/arbitrator**, not C# project references. This is a conceptual flow, not an existing manifest schema or a claim that an arbitrator currently wires these exact providers.
 
-At composition time, a MicroBundle may declare:
-- the stable capability contract and version it provides;
-- the input/output contract versions it consumes;
-- required model assumptions, units, and optional fields;
-- supported body/anchor identity conventions and logical-time semantics;
-- capability limitations and required companion capabilities;
-- optionality and an explicit unavailable/incompatible result.
+The current `MicroBundleDescriptor` contract has a stable bundle ID, a bundle version, dependencies expressed as bundle IDs, and provider IDs. Arbitration happens after the host has loaded the participating capabilities; the host owns the arbitration loop, and a capability reports whether it actually changed something that requires another round.
 
-The existing MicroBundle descriptor/artifact schemas must be inspected and reused before encoding these declarations in a real manifest. Do not invent a parallel bundle format or bake repository/package names into the semantic contract.
+That is a useful composition seam, but the current descriptor does **not** itself encode a rich typed semantic contract, a provider contract version range, units, optional measurement semantics, or timebase compatibility. Do not imply those are already enforced by the descriptor.
+
+For the first integration, use stable bundle/provider identities backed by versioned contract documentation and focused adapter validation. If machine-readable semantic compatibility later proves necessary, propose the smallest compatible extension to the existing MicroBundle descriptor/provider model and its tests. Do not invent a parallel manifest format or bake repository/package names into the semantic contract.
 
 If no compatible assessment or adapter is available, composition should report the missing capability and allow a caller-selected fallback, such as `AwaitObservation`. It must not fabricate a supported-contact result.
 
