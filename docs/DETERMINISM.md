@@ -1,5 +1,8 @@
 # Determinism and Individual Variation
 
+![Living diagram of deterministic gesture sampling and stable bounded variation, contrasted with per-frame noise](assets/gesture-data-and-variation.svg)
+
+
 The goal is coordinated variation, not uncontrolled noise. Thousands of entities may perform one ideal procedure while retaining stable, bounded differences.
 
 ## Seed contract
