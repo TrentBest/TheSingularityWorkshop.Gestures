@@ -1,6 +1,6 @@
 # Gesture Evaluation Lifecycle
 
-![Living timeline diagram of the stateless evaluator input, sampled pose output, completion boundary, and caller-owned lifecycle](assets/gesture-evaluation-lifecycle.svg)
+![Living timeline diagram of the stateless evaluator input, sampled pose output, completion boundary, and caller-owned lifecycle](assets/gesture-evaluation-lifecycle.svg)\n\n![Sequence timeline serialized from actual GestureSequencePlayback output](assets/gesture-sequence.svg)
 
 
 ## Scope
