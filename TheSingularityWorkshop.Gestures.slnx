@@ -3,4 +3,5 @@
   <Project Path="tests/TheSingularityWorkshop.Gestures.Tests/TheSingularityWorkshop.Gestures.Tests.csproj" />
   <Project Path="benchmarks/TheSingularityWorkshop.Gestures.Benchmarks/TheSingularityWorkshop.Gestures.Benchmarks.csproj" />
   <Project Path="tools/crowd-response-demo/crowd-response-demo.csproj" />
+  <Project Path="tools/provider-actor-choice-demo/provider-actor-choice-demo.csproj" />
 </Solution>
