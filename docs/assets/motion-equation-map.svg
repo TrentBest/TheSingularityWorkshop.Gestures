@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 658" role="img" aria-labelledby="title desc">
 <title id="title">How a motion equation shapes a gesture</title>
 <desc id="desc">An animated conceptual map links a desired pose path to a driven mass-spring-damper model. Inertia resists acceleration changes, stiffness pulls toward the target, damping opposes velocity, and stable profile parameters alter response. Schematic traces illustrate possibilities, not measured evaluator output.</desc>
 <defs><style>
@@ -42,4 +42,9 @@ text{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#172033}.h{fon
 <text x="740" y="462" class="sub">A seed + experience profile selects</text><text x="740" y="484" class="sub">bounded parameters once per procedure.</text>
 <text x="740" y="514" class="sub">Green: wider safe ranges</text><text x="740" y="536" class="sub">Veteran: tighter ranges</text>
 <text x="36" y="590" class="small pulse">Research boundary: this equation is exploratory; the current CPU evaluator remains deterministic keyframe interpolation.</text>
+
+<g id="provenance-label" role="group" aria-label="PROVENANCE: CONCEPTUAL RESEARCH MAP • TECHNOLOGY: NATIVE SVG ONLY • GUI.SVG: NOT USED • NOT RUNTIME OUTPUT">
+  <rect x="12" y="623" width="1076" height="27" rx="6" fill="#172033"/>
+  <text x="550" y="641" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,sans-serif" font-size="12" font-weight="700" letter-spacing=".15" fill="#ffffff">PROVENANCE: CONCEPTUAL RESEARCH MAP • TECHNOLOGY: NATIVE SVG ONLY • GUI.SVG: NOT USED • NOT RUNTIME OUTPUT</text>
+</g>
 </svg>
