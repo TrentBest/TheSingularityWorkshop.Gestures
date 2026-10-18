@@ -88,6 +88,29 @@ public sealed class VehicleIntentComparisonFixtureTests
         Assert.Null(result.PositionDelta);
     }
 
+    [Fact]
+    public void OverflowingPositionDeltaReturnsUnresolved()
+    {
+        var extreme = float.MaxValue;
+        var start = new Dictionary<string, PoseTransform>
+        {
+            ["root"] = new PoseTransform(new Vector3(-extreme, 0f, 0f), Quaternion.Identity, Vector3.One)
+        };
+        var gesture = new GestureDefinition("extreme-position-reference",
+        [
+            new GestureKeyframe(0d, start),
+            new GestureKeyframe(1d, start)
+        ]);
+        var intended = GestureEvaluator.Evaluate(gesture, 0.5d, 1d);
+
+        var result = VehicleIntentComparisonFixture.Compare(
+            intended, 0.5d, Timebase, Frame, Unit, Sample(new Vector3(extreme, 0f, 0f)));
+
+        Assert.Equal(ComparisonStatus.Unresolved, result.Status);
+        Assert.Null(result.PositionDelta);
+        Assert.Contains("delta", result.Reason!, StringComparison.OrdinalIgnoreCase);
+    }
+
     private static VehicleSample Sample(Vector3 position) =>
         new(0.5d, Timebase, Frame, Unit, position);
 
