@@ -35,7 +35,7 @@ See [Gesture playback semantics](GESTURE_PLAYBACK_SEMANTICS.md) for the differen
 
 ![Seeded experience-profile variation concept](assets/skill-distribution-concept.svg)
 
-![Generated seeded variation scene](assets/gesture-variation.svg)
+The variation generator also produces a seeded SVG artifact in CI; its downloadable workflow artifact is the generated output, rather than a checked-in snapshot. For a browser-side interactive companion, try the [skill distribution demo](skill-distribution-demo.html), which is illustrative data rather than physical validation.
 
 The implemented experience-profile sampler varies a limited set of channels (speed and root lateral offset) using stable seeded inputs. It does not yet represent all the ways skill changes joint-level performance.
 
