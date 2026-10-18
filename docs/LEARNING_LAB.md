@@ -76,7 +76,7 @@ These are teaching diagrams, not proof that the production evaluator includes a 
 | 6. Coordination | Describe roles, prerequisites, delays, and recovery | [Starport crew routing](STARPORT_CREW_ROUTING_SCENARIO.md) | Failure-injection scenario |
 | 7. Domain boundaries | Assign responsibility to the right system | [Domain map](GESTURES_DOMAIN_MAP.md) | Ownership diagram |
 
-Teachers can use one lesson in a class, or use the sequence as a small project. No game engine is required to read the diagrams or build the core solution; the documented generator path requires the .NET 8 SDK.
+Teachers can use one lesson in a class, or use the sequence as a small project. No game engine is required to read the diagrams or build the core solution; the documented generator path requires the .NET 8 SDK. For a ready-to-run 45-minute class plan, discussion prompts, expected reasoning, and a lightweight assessment rubric, see the [Teacher Guide](TEACHER_GUIDE.md).
 
 ## What does “living documentation” mean here?
 
