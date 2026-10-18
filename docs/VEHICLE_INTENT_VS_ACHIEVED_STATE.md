@@ -44,7 +44,7 @@ The test project now contains `VehicleIntentComparisonFixture` and focused tests
 - evaluates a real `GestureDefinition` with `GestureEvaluator` to obtain the intended reference;
 - compares the reference root position with a separate achieved sample and reports achieved-minus-intended position delta;
 - requires exact timestamp and timebase agreement plus matching coordinate-frame and length-unit identifiers;
-- returns an explicit unresolved result when metadata is incompatible, the reference root is missing, or the achieved position is non-finite;
+- returns an explicit unresolved result when metadata is incompatible, the reference root is missing, the achieved position is non-finite, or subtracting finite positions overflows to a non-finite delta;
 - leaves both inputs unchanged and returns deterministic results for identical inputs.
 
 This is deliberately a narrow test-owned adapter. It does not convert units or coordinate frames, predict vehicle motion, validate MicroBundle composition, or prove docking/landing feasibility. Those remain follow-on work for a real consumer contract and simulation integration.
