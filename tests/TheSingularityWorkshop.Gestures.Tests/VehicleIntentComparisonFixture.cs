@@ -62,10 +62,14 @@ internal static class VehicleIntentComparisonFixture
         if (!IsFinite(achieved.RootPosition))
             return Unresolved("Achieved root position is not finite.");
 
+        var positionDelta = achieved.RootPosition - intendedRoot.Position;
+        if (!IsFinite(positionDelta))
+            return Unresolved("Position delta is not finite; the samples cannot be compared safely.");
+
         return new Comparison(
             ComparisonStatus.Comparable,
             null,
-            achieved.RootPosition - intendedRoot.Position);
+            positionDelta);
     }
 
     private static Comparison Unresolved(string reason) =>
