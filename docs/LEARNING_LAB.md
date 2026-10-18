@@ -124,7 +124,7 @@ A report that says “the image looks wrong” is a useful start. A report that 
 
 ## Report a learning or correctness issue
 
-Open an issue in [TheSingularityWorkshop.Gestures](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues) with:
+Open an issue in [TheSingularityWorkshop.Gestures](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues), or use the [Learning or correctness report template](../.github/ISSUE_TEMPLATE/learning-or-correctness-report.md), with:
 
 - **What I expected**
 - **What I observed**
