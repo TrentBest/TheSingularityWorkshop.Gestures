@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
+
 # Living variation scene
 
 This generator turns the real `GestureExperienceProfile.Sample` and `GestureEvaluator.Evaluate` outputs into an animated SVG.
@@ -22,3 +24,14 @@ The scene samples two explicitly authored demonstration profiles with fixed iden
 This is not per-joint competence, a pose-quality score, a contact or balance model, or evidence that veterans are physically more capable. The profile does not change the ideal Gesture. The SVG is an illustration of the currently supported speed and lateral-offset channels only.
 
 The build workflow generates this SVG, validates its XML, and uploads it with the other living scenes. Snapshot drift is currently reported as a warning rather than enforced as a failing gate; see [Living Motion Documentation](../../docs/LIVING_MOTION_DOCUMENTATION.md).
+
+---
+
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop" aria-label="The Singularity Workshop living avatar">
+    <img src="https://raw.githubusercontent.com/TrentBest/WebPage/development/TheSingularityWorkshop/wwwroot/Images/TheSingularityWorkshopLivingAvatar.svg" alt="The Singularity Workshop living avatar — a digital vortex converging on its central eye" width="112" />
+  </a><br />
+  <strong>The Singularity Workshop</strong><br />
+  <em>If a picture is worth a thousand words, what is a living picture worth?</em><br />
+  <a href="https://github.com/TrentBest">GitHub</a> · <a href="https://www.patreon.com/TheSingularityWorkshop">Support the Workshop</a>
+</p>
