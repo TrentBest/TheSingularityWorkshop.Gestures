@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Living explanations, deterministic motion experiments, and evidence from The Singularity Workshop Gestures.">
+  <title>Gestures — The Singularity Workshop</title>
+  <style>
+    :root { color-scheme: dark; --bg:#10151d; --panel:#192331; --ink:#edf3fa; --muted:#a9b8c9; --accent:#70d6c5; --line:#344355; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.65 system-ui,sans-serif; }
+    header, main, footer { width:min(1100px, calc(100% - 36px)); margin:auto; }
+    header { padding:28px 0 18px; }
+    header img.moniker { display:block; width:min(520px,100%); max-height:130px; object-fit:contain; object-position:left center; }
+    h1,h2,h3 { line-height:1.2; }
+    h1 { font-size:clamp(2rem,5vw,3.5rem); margin:.5rem 0; }
+    h2 { margin-top:0; }
+    p,li { color:var(--muted); }
+    a { color:var(--accent); }
+    .lead { font-size:1.2rem; max-width:850px; }
+    .status { border:1px solid var(--line); border-left:4px solid var(--accent); padding:14px 18px; border-radius:8px; background:var(--panel); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin:24px 0; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px; min-width:0; }
+    .card img { width:100%; height:auto; background:#fff; border-radius:6px; }
+    .tag { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:2px 9px; color:var(--accent); font-size:.82rem; }
+    code { color:#fff; }
+    footer { margin-top:42px; padding:28px 0 36px; border-top:1px solid var(--line); text-align:center; }
+    footer img { display:block; width:min(280px,80%); height:auto; margin:12px auto 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="moniker" src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker">
+    <span class="tag">Development evidence · early alpha</span>
+    <h1>Gestures</h1>
+    <p class="lead">Reusable physical procedures, represented as data and evaluated over time. One intended movement can be shared across many actors; identity, skill, and the environment influence the result without requiring a different gesture for every actor or world.</p>
+    <div class="status"><strong>What works today:</strong> deterministic CPU reference evaluation, authored keyframe interpolation, bounded identity variation, sequence/playback foundations, and selected crowd scheduling/baking experiments. <strong>What is still research:</strong> production articulated IK, GPU-scale pose evaluation, fully coupled environmental locomotion, and the 100k marching benchmark.</div>
+  </header>
+  <main>
+    <section class="grid">
+      <article class="card">
+        <h2>One gesture, many identities</h2>
+        <p>A shared ideal procedure can produce bounded, stable individual differences. Variation should be seeded and coherent—not fresh random noise every frame.</p>
+        <img src="assets/gesture-variation.svg" alt="Generated deterministic gesture variation illustration">
+        <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/DETERMINISM.md">Determinism contract</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/ARCHITECTURE.md">Architecture</a></p>
+      </article>
+      <article class="card">
+        <h2>Time-dependent posture</h2>
+        <p>The evaluator answers: what is the desired local posture at this point in the procedure? It does not claim that the world can physically realize every requested pose.</p>
+        <img src="assets/gesture-motion.svg" alt="Generated gesture motion and evaluation diagram">
+        <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/DATA_MODEL.md">Data model</a></p>
+      </article>
+      <article class="card">
+        <h2>Crowd intent is not completed motion</h2>
+        <p>The current crowd-response schedule is generated from the CPU scheduler. It shows scheduled intent, not completed movement, collision resolution, or acoustic arrival.</p>
+        <img src="assets/crowd-response-schedule.svg" alt="Generated crowd response schedule">
+        <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/CROWD_RESPONSE_SCHEDULING.md">Crowd scheduling</a></p>
+      </article>
+    </section>
+    <section class="card">
+      <h2>Same gesture. Different environment.</h2>
+      <p>Walking through ordinary air, a dense gas, or water should not require three separately authored gestures. Gestures supplies the intended posture trajectory; Physics determines how medium density, viscosity, relative flow, buoyancy, contact, and physical constraints affect the realized movement. The environmental comparison is a planned cross-repository experiment, not yet a completed simulation.</p>
+      <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Physics/issues/46">Physics coordination: environmental-medium resistance</a></p>
+    </section>
+    <section class="card">
+      <h2>100,000 soldiers: the next scale experiment</h2>
+      <p>The target experiment gives every soldier a stable identity seed, derives bounded offsets around one shared march cycle, and tightens the allowed variation every other completed step. The formation should become more cohesive without becoming a row of identical copies.</p>
+      <p>We will report agent count, seed, model version, update time, frame-time distribution, allocations, memory, and visual diversity separately. CPU reference and GPU execution will be measured independently. No GPU performance claim is made until those measurements exist.</p>
+      <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/30">Follow the marching lab</a></p>
+    </section>
+    <section class="card">
+      <h2>Evidence levels</h2>
+      <ul>
+        <li><strong>Conceptual:</strong> illustrates an idea; not computed by the production model.</li>
+        <li><strong>Specified:</strong> contract and assumptions are documented.</li>
+        <li><strong>Implemented:</strong> executable code exists.</li>
+        <li><strong>Tested:</strong> automated checks cover stated behavior.</li>
+        <li><strong>Benchmarked:</strong> measured on a stated workload and environment.</li>
+        <li><strong>Cross-validated:</strong> compared against an independent analytical or trusted reference.</li>
+      </ul>
+      <p>See the <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures">repository</a> for source, tests, benchmarks, and the full documentation.</p>
+    </section>
+  </main>
+  <footer>
+    <p>Built incrementally. Measured honestly. Still becoming.</p>
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop">
+  </footer>
+</body>
+</html>
