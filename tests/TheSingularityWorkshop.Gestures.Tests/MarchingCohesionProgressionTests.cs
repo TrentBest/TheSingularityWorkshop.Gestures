@@ -87,4 +87,42 @@ public sealed class MarchingCohesionProgressionTests
             new GestureVariation { MaximumSpeedDeviation = 0.025d, MaximumLateralOffset = 0.05f },
             factor));
     }
+    [Fact]
+    public void PartialEvaluationsHoldVariationUntilTheNextCompletedStepBoundary()
+    {
+        var gesture = new GestureDefinition(
+            "soldier.march-step",
+            [
+                new GestureKeyframe(0d, new Dictionary<string, PoseTransform>
+                {
+                    ["root"] = PoseTransform.Identity
+                }),
+                new GestureKeyframe(1d, new Dictionary<string, PoseTransform>
+                {
+                    ["root"] = new PoseTransform(
+                        new System.Numerics.Vector3(0f, 0f, 1f),
+                        System.Numerics.Quaternion.Identity,
+                        System.Numerics.Vector3.One)
+                })
+            ]);
+        var state = CreateProgression().Start();
+        var sample = new GestureVariationSample(0.9d, 0.9d);
+
+        var firstPartial = state.Evaluate(gesture, 0.25d, 1d, sample);
+        var secondPartial = state.Evaluate(gesture, 0.75d, 1d, sample);
+
+        Assert.Equal(firstPartial.RootOffset, secondPartial.RootOffset);
+        Assert.Equal(0.32f, firstPartial.RootOffset.X, 6);
+
+        var afterOneStep = state.CompleteMarchStep();
+        var stillSameVariation = afterOneStep.Evaluate(gesture, 0.25d, 1d, sample);
+        Assert.Equal(firstPartial.RootOffset, stillSameVariation.RootOffset);
+
+        var afterTwoSteps = afterOneStep.CompleteMarchStep();
+        var nextStep = afterTwoSteps.Evaluate(gesture, 0.25d, 1d, sample);
+        Assert.Equal(0.16f, nextStep.RootOffset.X, 6);
+        Assert.NotEqual(firstPartial.RootOffset, nextStep.RootOffset);
+        Assert.Equal(0, state.CompletedMarchSteps);
+    }
+
 }
