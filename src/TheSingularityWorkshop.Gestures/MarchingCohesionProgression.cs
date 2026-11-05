@@ -77,6 +77,23 @@ public sealed record MarchingCohesionState
     public GestureVariation CurrentVariation { get; }
 
     /// <summary>
+    /// Evaluates the current step with the variation held by this immutable state.
+    /// Repeated partial-step evaluations therefore use identical variation bounds;
+    /// the caller supplies the stable per-step sample and reports completion explicitly.
+    /// </summary>
+    public EvaluatedPose Evaluate(
+        GestureDefinition definition,
+        double elapsedSeconds,
+        double durationSeconds,
+        GestureVariationSample sample) =>
+        GestureEvaluator.EvaluateWithSample(
+            definition,
+            elapsedSeconds,
+            durationSeconds,
+            sample,
+            CurrentVariation);
+
+    /// <summary>
     /// Reports one completed march step. Variation tightens after steps 2, 4, 6, and so on;
     /// no intermediate pose evaluation can change the current variation.
     /// </summary>
