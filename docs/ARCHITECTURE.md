@@ -43,6 +43,8 @@ An optimized evaluator cannot be trusted merely because it looks plausible in on
 
 Floating-point GPU implementations may require explicit tolerances. Those tolerances should be documented per backend, not hidden by changing the reference evaluator's meaning.
 
+For the proposed host-side handoff to authoritative physical movement and collision, see the [Physics motion handoff](PHYSICS_MOTION_HANDOFF.md). It distinguishes the current evaluated-pose output and scalar research harness from a future versioned trajectory/intent contract.
+
 ## Evolution rules
 
 1. Preserve semantic independence from Visualize, Renderer, WPF, Unity, and GPU APIs.
