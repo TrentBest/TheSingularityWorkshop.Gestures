@@ -1,16 +1,17 @@
-name: Measure Gestures hierarchy benchmarks
+name: Measure Gestures benchmarks
 
 on:
   workflow_dispatch:
     inputs:
       hierarchy:
-        description: "Hierarchy shape to measure"
+        description: "Benchmark profile to measure"
         required: true
         default: chain
         type: choice
         options:
           - chain
           - branching
+          - crowd
 
 permissions:
   contents: read
@@ -39,8 +40,11 @@ jobs:
             branching)
               filter='*BranchingHierarchyBenchmarks*'
               ;;
+            crowd)
+              filter='*CrowdGestureEvaluationBenchmarks*'
+              ;;
             *)
-              echo "Unsupported hierarchy profile."
+              echo "Unsupported benchmark profile."
               exit 2
               ;;
           esac
