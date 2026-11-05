@@ -304,12 +304,12 @@ public sealed class GestureEvaluatorTests
     public void EvaluatesCallerSuppliedVariationSamplesWithinDeclaredBounds()
     {
         var variation = new GestureVariation { MaximumSpeedDeviation = 0.1d, MaximumLateralOffset = 0.25f };
-        var sample = new GestureVariationSample(1d - double.Epsilon, 0.75d);
+        var sample = new GestureVariationSample(0.99d, 0.75d);
 
         var first = GestureEvaluator.EvaluateWithSample(CreateGesture(), 0.5d, 1d, sample, variation);
         var second = GestureEvaluator.EvaluateWithSample(CreateGesture(), 0.5d, 1d, sample, variation);
 
-        Assert.Equal(0.55d, first.NormalizedProgress, 12);
+        Assert.Equal(0.549d, first.NormalizedProgress, 12);
         Assert.Equal(0.125f, first.RootOffset.X, 6);
         Assert.Equal(first.NormalizedProgress, second.NormalizedProgress);
         Assert.Equal(first.RootOffset, second.RootOffset);
