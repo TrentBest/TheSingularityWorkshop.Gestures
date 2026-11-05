@@ -3,7 +3,7 @@ name: Measure Gestures benchmarks
 on:
   workflow_dispatch:
     inputs:
-      hierarchy:
+      profile:
         description: "Benchmark profile to measure"
         required: true
         default: chain
@@ -29,11 +29,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Run hierarchy benchmarks
+      - name: Run profile benchmarks
         shell: bash
         run: |
           set -euo pipefail
-          case "${{ inputs.hierarchy }}" in
+          case "${{ inputs.profile }}" in
             chain)
               filter='*ChainHierarchyBenchmarks*'
               ;;
@@ -58,7 +58,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: gestures-benchmarks-${{ inputs.hierarchy }}
+          name: gestures-benchmarks-${{ inputs.profile }}
           path: BenchmarkDotNet.Artifacts/**
           if-no-files-found: error
           retention-days: 30
