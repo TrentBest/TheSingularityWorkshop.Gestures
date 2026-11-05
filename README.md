@@ -8,6 +8,7 @@
 
 ![](docs/assets/dividers/star-gold.svg)
 
+[![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/actions/workflows/sith-policy.yml)
 **Procedural physical action, represented as data and evaluated deterministically.**
 
 TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluator for physical procedures: pose keyframes, interpolation, progression, stable individual variation, and evaluated pose output. It lets a capability describe how an interaction physically happens without requiring every consumer to author a conventional baked animation clip.
