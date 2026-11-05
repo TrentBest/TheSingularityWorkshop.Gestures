@@ -159,7 +159,24 @@ jobs:
           git add assets/sith-policy.svg assets/sith-policy.json
           if ! git diff --cached --quiet; then
             git commit -m "chore: refresh Sith policy evidence"
-            git push origin "HEAD:development"
+            pushed=false
+            for attempt in 1 2 3; do
+              git fetch origin development
+              if ! git rebase origin/development; then
+                # The generated evidence is the intended latest version of these two files.
+                git checkout --theirs -- assets/sith-policy.svg assets/sith-policy.json
+                git add assets/sith-policy.svg assets/sith-policy.json
+                GIT_EDITOR=true git rebase --continue
+              fi
+              if git push origin "HEAD:development"; then
+                pushed=true
+                break
+              fi
+            done
+            if [[ "$pushed" != "true" ]]; then
+              echo "::error::Could not update Sith evidence on development after three safe rebase attempts."
+              exit 1
+            fi
           fi
 
           {
