@@ -4,6 +4,10 @@
 >
 > Coordination worksheet: [Gesture Ontology Fixtures](GESTURE_ONTOLOGY_FIXTURES.md) defines three vocabulary-pending examples and the questions that must be resolved before ontology-aware lookup is implemented. The canonical nine layer *names* are now confirmed against the Workshop's Experience Theory and the runtime `OntologySignature`. The concrete integer vocabularies and the correct classification of each Gesture still need to be agreed and resolved by the ontology authoring system.
 
+## Entity profiles: ontology selects armature and Gesture catalog
+
+For the entity-first model—where resolving a cat, dog, bird, humanoid, or mechanism leads to its appropriate armature profile and Gesture catalog—see [Ontology-Provided Articulated Profiles](ONTOLOGY_PROVIDED_ARTICULATED_PROFILES.md). This is a separate concern from assigning a Gesture concept a nine-layer coordinate: the ontology may resolve versioned armature/catalog resources through relationships, while the canonical vocabulary owner remains responsible for actual layer values and tokens.
+
 ## The answer: where do Gestures land?
 
 **Gestures is a domain that contributes reusable physical procedures and their semantic relationships. It is not itself one of the nine layers.** A Gesture definition may receive an address in a selected ontology; the provider, actor, activity, live session, playback, and physical outcome remain separate identities and responsibilities.
