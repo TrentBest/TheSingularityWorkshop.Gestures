@@ -50,7 +50,13 @@ Physics owns the achieved physical state and confirms interactions. Gestures may
 
 The interaction result should return through stable body/feature identities and versioned observations. Gestures or the host may then use those observations to interrupt, adapt, or select a subsequent procedure. Visualize presents the physical evidence; it does not replace it.
 
-## 5. First integration experiment
+## 5. Existing offline motion research
+
+The repository already contains a dependency-free Python [motion-lab harness](../tools/motion-lab/README.md). It compares linear/eased kinematic baselines with a one-dimensional, fixed-step spring-damper tracker and records stable per-identity parameter samples as CSV. Its tests establish deterministic sampling and repeatability for that scalar experiment.
+
+That harness is useful evidence for the motion-law research, but it does **not** provide a world-space (f(t)) contract in the .NET evaluator, finite-body trajectory bounds, angular derivatives, or collision prediction. Do not duplicate its scalar spring-damper experiment as if it solved the motion-to-contact problem. The next experiment is a separate geometric/trajectory study, with the existing harness retained as the scalar response reference.
+
+## 6. First integration experiment
 
 Before adding a public API:
 
