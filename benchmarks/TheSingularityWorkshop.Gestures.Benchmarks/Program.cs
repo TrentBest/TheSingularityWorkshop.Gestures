@@ -96,3 +96,73 @@ public class BranchingHierarchyBenchmarks : HierarchyBenchmarkBase
         return nodes[0];
     }
 }
+
+
+/// <summary>
+/// Measures CPU reference pose evaluation at crowd scale with samples prepared before timing.
+/// This isolates evaluator cost; it does not measure keyed RNG sampling, physics, rigging, or rendering.
+/// </summary>
+[MemoryDiagnoser]
+public class CrowdGestureEvaluationBenchmarks
+{
+    private GestureDefinition _march = null!;
+    private GestureVariationSample[] _samples = null!;
+    private readonly GestureVariation _variation = new()
+    {
+        MaximumSpeedDeviation = 0.08d,
+        MaximumLateralOffset = 0.12f
+    };
+
+    [Params(1_000, 10_000, 100_000, 1_000_000)]
+    public int AgentCount { get; set; }
+
+    [GlobalSetup]
+    public void Setup()
+    {
+        _march = new GestureDefinition("benchmark.march.reference", new[]
+        {
+            new GestureKeyframe(0d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = PoseTransform.Identity
+            }),
+            new GestureKeyframe(0.5d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(new Vector3(0f, 0.5f, 0f), Quaternion.Identity, Vector3.One)
+            }),
+            new GestureKeyframe(1d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(new Vector3(0f, 0f, 0f), Quaternion.Identity, Vector3.One)
+            })
+        });
+
+        // Deterministic, bounded fixture samples are prepared outside the timed benchmark.
+        // They are not an RNG implementation and do not stand in for Physics.Squirrel3Keyed.
+        _samples = new GestureVariationSample[AgentCount];
+        for (var i = 0; i < _samples.Length; i++)
+        {
+            var speedUnit = ((i * 613L) % 997L) / 997d;
+            var lateralUnit = ((i * 389L + 17L) % 991L) / 991d;
+            _samples[i] = new GestureVariationSample(speedUnit, lateralUnit);
+        }
+        _variation.Validate();
+    }
+
+    [Benchmark(Baseline = true)]
+    public double SharedPoseEvaluation()
+    {
+        var checksum = 0d;
+        for (var i = 0; i < AgentCount; i++)
+            checksum += GestureEvaluator.Evaluate(_march, 0.375d, 1d).NormalizedProgress;
+        return checksum;
+    }
+
+    [Benchmark]
+    public double PerAgentVariationEvaluation()
+    {
+        var checksum = 0d;
+        for (var i = 0; i < AgentCount; i++)
+            checksum += GestureEvaluator.EvaluateWithSample(
+                _march, 0.375d, 1d, _samples[i], _variation).NormalizedProgress;
+        return checksum;
+    }
+}
