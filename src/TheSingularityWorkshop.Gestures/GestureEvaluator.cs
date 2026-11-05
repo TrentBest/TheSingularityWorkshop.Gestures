@@ -5,7 +5,11 @@ namespace TheSingularityWorkshop.Gestures;
 /// <summary>Deterministic CPU reference evaluator for optimized and future GPU implementations to match.</summary>
 public static class GestureEvaluator
 {
-    /// <summary>Evaluates a Gesture at elapsed time using optional stable per-entity variation.</summary>
+    /// <summary>Evaluates a Gesture at elapsed time using the legacy stable identity variation hash.</summary>
+    /// <remarks>
+    /// This overload preserves the original deterministic reference vectors. Hosts
+    /// that need a shared keyed random source should use <see cref="EvaluateWithSample"/>.
+    /// </remarks>
     public static EvaluatedPose Evaluate(
         GestureDefinition definition,
         double elapsedSeconds,
@@ -13,16 +17,35 @@ public static class GestureEvaluator
         GestureVariation? variation = null,
         ulong identitySeed = 0)
     {
+        var sample = new GestureVariationSample(
+            ToUnitInterval(Mix(identitySeed)),
+            ToUnitInterval(Mix(identitySeed ^ 0x9E3779B97F4A7C15UL)));
+        return EvaluateWithSample(definition, elapsedSeconds, durationSeconds, sample, variation);
+    }
+
+    /// <summary>Evaluates a Gesture using deterministic unit samples supplied by the caller.</summary>
+    /// <remarks>
+    /// Supply samples derived from stable keys such as entity identity, logical tick,
+    /// and channel purpose. This keeps random-number generation and scheduling policy
+    /// outside the Gestures domain while making evaluation reproducible.
+    /// </remarks>
+    public static EvaluatedPose EvaluateWithSample(
+        GestureDefinition definition,
+        double elapsedSeconds,
+        double durationSeconds,
+        GestureVariationSample sample,
+        GestureVariation? variation = null)
+    {
         ArgumentNullException.ThrowIfNull(definition);
         if (!double.IsFinite(elapsedSeconds))
             throw new ArgumentOutOfRangeException(nameof(elapsedSeconds), "Elapsed time must be finite.");
         if (!double.IsFinite(durationSeconds) || durationSeconds <= 0d)
             throw new ArgumentOutOfRangeException(nameof(durationSeconds), "Duration must be finite and positive.");
 
+        sample.Validate();
         variation ??= GestureVariation.None;
         variation.Validate();
-        var speedUnit = ToUnitInterval(Mix(identitySeed));
-        var speed = 1d + ((speedUnit * 2d - 1d) * variation.MaximumSpeedDeviation);
+        var speed = 1d + ((sample.SpeedUnit * 2d - 1d) * variation.MaximumSpeedDeviation);
         var progress = Math.Clamp(Math.Max(0d, elapsedSeconds) * speed / durationSeconds, 0d, 1d);
 
         var rightIndex = 1;
@@ -43,8 +66,7 @@ public static class GestureEvaluator
             transforms.Add(name, PoseTransform.Interpolate(from, to, amount));
         }
 
-        var lateralUnit = ToUnitInterval(Mix(identitySeed ^ 0x9E3779B97F4A7C15UL));
-        var lateral = (float)((lateralUnit * 2d - 1d) * variation.MaximumLateralOffset);
+        var lateral = (float)((sample.LateralUnit * 2d - 1d) * variation.MaximumLateralOffset);
         return new EvaluatedPose(progress, progress >= 1d, transforms, new Vector3(lateral, 0f, 0f));
     }
 
