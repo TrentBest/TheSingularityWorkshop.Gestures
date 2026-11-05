@@ -328,6 +328,45 @@ public sealed class GestureEvaluatorTests
             GestureEvaluator.EvaluateWithSample(CreateGesture(), 0.5d, 1d, sample));
     }
 
+    [Fact]
+    public void CallerSuppliedSamplesKeepAgentResultsStableWhenEvaluationOrderChanges()
+    {
+        var definition = CreateGesture();
+        var variation = new GestureVariation
+        {
+            MaximumSpeedDeviation = 0.1d,
+            MaximumLateralOffset = 0.25f
+        };
+
+        // These samples stand in for values supplied by a host's stateless keyed source.
+        // Their association with stable agent IDs is fixed before either evaluation pass.
+        var samplesByAgent = new Dictionary<int, GestureVariationSample>
+        {
+            [101] = new(0.12d, 0.31d),
+            [205] = new(0.73d, 0.84d),
+            [309] = new(0.48d, 0.06d),
+            [412] = new(0.91d, 0.57d)
+        };
+
+        var forward = samplesByAgent.ToDictionary(
+            pair => pair.Key,
+            pair => GestureEvaluator.EvaluateWithSample(
+                definition, 0.375d, 1d, pair.Value, variation));
+
+        var reverse = samplesByAgent.Reverse().ToDictionary(
+            pair => pair.Key,
+            pair => GestureEvaluator.EvaluateWithSample(
+                definition, 0.375d, 1d, pair.Value, variation));
+
+        Assert.Equal(samplesByAgent.Keys.OrderBy(id => id), forward.Keys.OrderBy(id => id));
+        foreach (var agentId in samplesByAgent.Keys)
+        {
+            Assert.Equal(forward[agentId].NormalizedProgress, reverse[agentId].NormalizedProgress);
+            Assert.Equal(forward[agentId].RootOffset, reverse[agentId].RootOffset);
+            Assert.Equal(forward[agentId].LocalTransforms["root"], reverse[agentId].LocalTransforms["root"]);
+        }
+    }
+
     private static GestureDefinition CreateGesture()
     {
         var start = new Dictionary<string, PoseTransform>
