@@ -367,6 +367,40 @@ public sealed class GestureEvaluatorTests
         }
     }
 
+    [Fact]
+    public void PiecewiseLinearTranslationHasDistinctOneSidedSegmentVelocitiesAtKeyframe()
+    {
+        var definition = new GestureDefinition("test.translation-discontinuity", new[]
+        {
+            new GestureKeyframe(0d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(Vector3.Zero, Quaternion.Identity, Vector3.One)
+            }),
+            new GestureKeyframe(0.3d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(new Vector3(6f, 0f, 0f), Quaternion.Identity, Vector3.One)
+            }),
+            new GestureKeyframe(1d, new Dictionary<string, PoseTransform>
+            {
+                ["root"] = new PoseTransform(new Vector3(10f, 0f, 0f), Quaternion.Identity, Vector3.One)
+            })
+        });
+
+        var beforeA = GestureEvaluator.Evaluate(definition, 0.1d, 1d).LocalTransforms["root"].Position.X;
+        var beforeB = GestureEvaluator.Evaluate(definition, 0.2d, 1d).LocalTransforms["root"].Position.X;
+        var afterA = GestureEvaluator.Evaluate(definition, 0.4d, 1d).LocalTransforms["root"].Position.X;
+        var afterB = GestureEvaluator.Evaluate(definition, 0.5d, 1d).LocalTransforms["root"].Position.X;
+
+        var incomingSegmentVelocity = (beforeB - beforeA) / 0.1f;
+        var outgoingSegmentVelocity = (afterB - afterA) / 0.1f;
+
+        Assert.Equal(20f, incomingSegmentVelocity, 4);
+        Assert.Equal(5f, outgoingSegmentVelocity, 4);
+        Assert.NotEqual(incomingSegmentVelocity, outgoingSegmentVelocity);
+        // The evaluator supplies poses only: the velocity jump is a boundary fact,
+        // not a finite classical acceleration or a derivative API.
+    }
+
     private static GestureDefinition CreateGesture()
     {
         var start = new Dictionary<string, PoseTransform>
