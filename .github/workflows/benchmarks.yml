@@ -12,6 +12,14 @@ on:
           - chain
           - branching
           - crowd
+  push:
+    branches:
+      - development
+    paths:
+      - ".github/workflows/benchmarks.yml"
+      - "benchmarks/TheSingularityWorkshop.Gestures.Benchmarks/**"
+      - "src/TheSingularityWorkshop.Gestures/**"
+      - "tests/TheSingularityWorkshop.Gestures.Tests/**"
 
 permissions:
   contents: read
@@ -29,11 +37,38 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: Capture benchmark provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p BenchmarkEvidence
+          {
+            echo "repository=$GITHUB_REPOSITORY"
+            echo "source_commit=$GITHUB_SHA"
+            echo "captured_at_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "runner_os=$(uname -a)"
+            echo
+            dotnet --info
+            echo
+            lscpu
+            echo
+            free -h
+          } > BenchmarkEvidence/manifest.txt
+
+      - name: Build source and benchmark harness
+        run: |
+          dotnet build src/TheSingularityWorkshop.Gestures/TheSingularityWorkshop.Gestures.csproj --configuration Release
+          dotnet build benchmarks/TheSingularityWorkshop.Gestures.Benchmarks/TheSingularityWorkshop.Gestures.Benchmarks.csproj --configuration Release
+
+      - name: Run correctness tests
+        run: dotnet test tests/TheSingularityWorkshop.Gestures.Tests/TheSingularityWorkshop.Gestures.Tests.csproj --configuration Release
+
       - name: Run profile benchmarks
         shell: bash
         run: |
           set -euo pipefail
-          case "${{ inputs.profile }}" in
+          profile="${{ inputs.profile || 'chain' }}"
+          case "$profile" in
             chain)
               filter='*ChainHierarchyBenchmarks*'
               ;;
@@ -51,14 +86,17 @@ jobs:
           dotnet run \
             --project benchmarks/TheSingularityWorkshop.Gestures.Benchmarks/TheSingularityWorkshop.Gestures.Benchmarks.csproj \
             --configuration Release \
+            --no-build \
             -- \
             --filter "$filter"
 
-      - name: Upload BenchmarkDotNet results
+      - name: Upload raw benchmark evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: gestures-benchmarks-${{ inputs.profile }}
-          path: BenchmarkDotNet.Artifacts/**
-          if-no-files-found: error
+          name: gestures-benchmarks-${{ inputs.profile || 'chain' }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            BenchmarkDotNet.Artifacts/**
+            BenchmarkEvidence/**
+          if-no-files-found: warn
           retention-days: 30
