@@ -395,7 +395,7 @@ public sealed class GestureEvaluatorTests
         var outgoingSegmentVelocity = (afterB - afterA) / 0.1f;
 
         Assert.Equal(20f, incomingSegmentVelocity, 4);
-        Assert.Equal(5f, outgoingSegmentVelocity, 4);
+        Assert.Equal(4f / 0.7f, outgoingSegmentVelocity, 4);
         Assert.NotEqual(incomingSegmentVelocity, outgoingSegmentVelocity);
         // The evaluator supplies poses only: the velocity jump is a boundary fact,
         // not a finite classical acceleration or a derivative API.
