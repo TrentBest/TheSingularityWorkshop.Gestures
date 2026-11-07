@@ -16,7 +16,22 @@ That output is useful motion intent, but it is not by itself:
 
 The current evaluator's pose interpolation must not be described as a general (f(t)) physics solver. The spring-damper equation and motion-contribution catalogue remain exploratory research, not a frozen runtime contract.
 
-## 2. Proposed adapter boundary
+## 2. Evaluator time semantics that the adapter must preserve
+
+The current `GestureEvaluator.EvaluateWithSample` accepts elapsed seconds and a positive duration, but its interpolation domain is normalized progress, not world time.
+
+- Deterministic speed variation scales elapsed time before division by duration.
+- Negative elapsed time is clamped to the start; progress is clamped to [0, 1].
+- Keyframe times are normalized progress values.
+- Translation and scale are interpolated between neighboring local transforms; rotation uses the pose interpolation contract.
+- The evaluator returns named local transforms and a lateral offset. It does not identify a physical body, compose a world transform, or report achieved motion.
+- Variation samples are caller-supplied and validated; the host owns their stable identity/keying policy.
+
+Therefore a host experiment must pin the exact definition/version, duration, variation sample, target mapping, frame/unit conversion, and logical-time-to-elapsed-time mapping. Re-evaluating the same elapsed time with different speed variation is not the same trajectory. A fixed elapsed-time sample sequence is deterministic only when those inputs are fixed.
+
+The evaluator's current interpolation is piecewise over normalized keyframe intervals. The one-sided finite-difference slopes can differ at a keyframe; the new regression test verifies that distinction for a fixture. It does not add derivative outputs. A host adapter may estimate segment slopes for a declared linear-translation fixture, but must mark the keyframe boundary as derivative-discontinuous rather than expose an invented acceleration there.
+
+## 3. Proposed adapter boundary
 
 Keep Gestures and Physics independently usable. A host-side adapter should map a versioned Gesture definition and target mapping into an explicit motion request for Physics. The Physics core must not reference Gestures types.
 
