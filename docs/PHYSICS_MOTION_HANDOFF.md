@@ -48,7 +48,7 @@ The adapter contract should identify:
 
 A target path and a force contribution are not interchangeable. A prescribed actuator path can move a mechanism kinematically while Physics accounts for contact reactions where supported. A controller target can be resisted or displaced by Physics. A force/torque contribution must instead declare units, frame, application point, activation, and validity.
 
-## 3. Derivatives and time evaluation
+## 4. Derivatives and time evaluation
 
 The adapter must not promise derivatives that the source evaluator does not provide.
 
@@ -59,19 +59,19 @@ The adapter must not promise derivatives that the source evaluator does not prov
 
 Physics uses these declarations to choose a safe prediction interval and conservative swept-volume bounds. If the path cannot be bounded safely, the adapter must expose that limitation rather than manufacture certainty.
 
-## 4. Physical authority and observations
+## 5. Physical authority and observations
 
 Physics owns the achieved physical state and confirms interactions. Gestures may supply intent and stable semantic anchors, but it does not decide whether contact occurred, whether a joint broke, whether a structure deformed, or whether a body completed its task.
 
 The interaction result should return through stable body/feature identities and versioned observations. Gestures or the host may then use those observations to interrupt, adapt, or select a subsequent procedure. Visualize presents the physical evidence; it does not replace it.
 
-## 5. Existing offline motion research
+## 6. Existing offline motion research
 
 The repository already contains a dependency-free Python [motion-lab harness](../tools/motion-lab/README.md). It compares linear/eased kinematic baselines with a one-dimensional, fixed-step spring-damper tracker and records stable per-identity parameter samples as CSV. Its tests establish deterministic sampling and repeatability for that scalar experiment.
 
 That harness is useful evidence for the motion-law research, but it does **not** provide a world-space (f(t)) contract in the .NET evaluator, finite-body trajectory bounds, angular derivatives, or collision prediction. Do not duplicate its scalar spring-damper experiment as if it solved the motion-to-contact problem. The next experiment is a separate geometric/trajectory study, with the existing harness retained as the scalar response reference.
 
-## 6. First integration experiment
+## 7. First integration experiment
 
 Before adding a public API:
 
