@@ -80,7 +80,7 @@ For the full scope and honest implementation boundaries, start with the [Gesture
 
 For teachers, students, and curious contributors, start with the [Visual Learning Lab](docs/LEARNING_LAB.md): a lesson path through generated motion, transform channels, deterministic variation, intent versus outcome, and reachability—plus small change-it challenges and a reproducible way for learners to report and fix mistakes. Educators can pair it with the [Teacher Guide](docs/TEACHER_GUIDE.md) for a 45-minute class plan, discussion prompts, and a lightweight rubric.
 
-You need the **.NET 8 SDK**. From the repository root:
+You need the **.NET 10 SDK**. From the repository root:
 
 ```bash
 dotnet restore TheSingularityWorkshop.Gestures.slnx
