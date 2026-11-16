@@ -70,6 +70,8 @@ The package intentionally has no dependency on WPF, Unity, Renderer, a GPU API, 
 
 ![](docs/assets/dividers/green.svg)
 
+**Live Pages experience:** [Open the Gestures interactive labs](https://trentbest.github.io/TheSingularityWorkshop.Gestures/) — including the [Marching Cohort Lab](https://trentbest.github.io/TheSingularityWorkshop.Gestures/marching-lab.html).
+
 ![C#-generated trajectory from GestureEvaluator, with lifecycle coordinated by FSM_API](docs/assets/gesture-motion.svg)
 
 ![Crowd response intent schedule serialized from actual CrowdResponseScheduler results](docs/assets/crowd-response-schedule.svg)
