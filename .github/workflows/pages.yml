@@ -1,7 +1,9 @@
 name: Publish Gestures living visuals to GitHub Pages
 
 on:
-  # Deployment is an explicit operation; documentation commits must not publish automatically.
+  # One-time authorized deployment of the current development Pages experience.
+  push:
+    branches: [development]
   workflow_dispatch:
 
 permissions:
