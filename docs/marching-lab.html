@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive deterministic marching-cohort visualization for The Singularity Workshop Gestures.">
+<title>Marching Cohort Lab — Gestures</title>
+<style>
+:root{color-scheme:dark;--bg:#10151d;--panel:#192331;--ink:#edf3fa;--muted:#a9b8c9;--accent:#70d6c5;--line:#344355}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+header,main,footer{width:min(1180px,calc(100% - 32px));margin:auto}header{padding:24px 0 12px}
+a{color:var(--accent)}h1,h2{line-height:1.2}h1{font-size:clamp(2rem,5vw,3.2rem);margin:.35rem 0}
+p{color:var(--muted)}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--accent);font-size:.82rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.control{display:grid;gap:5px;color:var(--muted);font-size:.9rem}
+select,button{font:inherit;color:var(--ink);background:#202d3d;border:1px solid #506176;border-radius:7px;padding:9px 12px}
+button{cursor:pointer}button:hover{border-color:var(--accent)}button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px}
+.metric{background:#121b26;border:1px solid var(--line);border-radius:8px;padding:10px}.metric strong{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}.metric span{color:var(--muted);font-size:.82rem}
+.canvas-wrap{height:min(62vh,620px);min-height:320px;background:#0b1119;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+canvas{width:100%;height:100%;display:block}.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.86rem}.swatch{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--accent)}
+.notice{border-left:3px solid var(--accent);padding:8px 12px;background:#121b26;border-radius:4px;color:var(--muted)}
+footer{padding:24px 0 36px;border-top:1px solid var(--line);margin-top:28px}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+<a href="./index.html">← Gestures Pages</a>
+<p><span class="tag">Interactive lab · deterministic browser visualization</span></p>
+<h1>Marching Cohort Lab</h1>
+<p>One shared marching procedure. Stable individual identities. Bounded variation that tightens only at completed-step boundaries. Watch the formation become more coherent without turning every soldier into an identical copy.</p>
+</header>
+<main>
+<section class="panel">
+<div class="controls">
+<label class="control">Cohort size
+<select id="cohort"><option value="100">100 soldiers</option><option value="1000" selected>1,000 soldiers</option><option value="10000">10,000 soldiers</option><option value="100000">100,000 soldiers</option></select>
+</label>
+<button id="toggle" type="button">Pause</button>
+<button id="step" type="button">Advance one step</button>
+<button id="reset" type="button">Reset</button>
+</div>
+<div class="metrics" aria-live="polite">
+<div class="metric"><strong id="count">1,000</strong><span>logical cohort size</span></div>
+<div class="metric"><strong id="drawn">1,000</strong><span>soldiers drawn in browser</span></div>
+<div class="metric"><strong id="steps">0</strong><span>completed march steps</span></div>
+<div class="metric"><strong id="speed">±16%</strong><span>current speed envelope</span></div>
+<div class="metric"><strong id="lateral">±0.35</strong><span>current lateral envelope</span></div>
+</div>
+</section>
+<section class="panel">
+<div class="canvas-wrap"><canvas id="field" aria-label="Top-down marching formation showing deterministic individual movement variation"></canvas></div>
+<div class="legend"><span><i class="swatch"></i>individual soldier</span><span>Dashed lines: rank guides</span><span>Arrow: direction of march</span></div>
+</section>
+<section class="panel">
+<h2>What this lab demonstrates</h2>
+<ul>
+<li>Every soldier has a stable identity-derived speed and lateral sample; no per-frame random noise is introduced.</li>
+<li>All soldiers share the same step clock, while their individual phase reflects their stable speed sample.</li>
+<li>Variation tightens by a factor of 0.8 after completed steps 2, 4, 6, and so on, down to a non-zero floor.</li>
+<li>Changing the cohort size does not change the seed or behavior of an existing soldier identity.</li>
+</ul>
+<p class="notice"><strong>Evidence boundary:</strong> this page is a self-contained browser visualization of the marching-cohesion rule. It does not load or execute the .NET Gestures assembly, Physics, ServerApp, a GPU crowd solver, or a 100,000-agent performance benchmark. For 100,000 logical soldiers, the browser draws a deterministic representative sample capped at 12,000 marks. The production C# contract remains <code>MarchingCohesionProgression</code> and <code>MarchingCohesionState</code>.</p>
+<p>Next integration boundary: a host may optionally provide authoritative world observations or persist an experiment through ServerApp. The Gestures library and this Pages lab remain independently usable without that service.</p>
+</section>
+</main>
+<footer><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures">Gestures source and tests</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/MARCHING_ORDERS_AND_COHORT_SCALE.md">Marching architecture</a></footer>
+<script>
+(() => {
+  "use strict";
+  const canvas = document.getElementById("field");
+  const ctx = canvas.getContext("2d");
+  const cohort = document.getElementById("cohort");
+  const toggle = document.getElementById("toggle");
+  const stepButton = document.getElementById("step");
+  const resetButton = document.getElementById("reset");
+  const STEP_SECONDS = 1.2;
+  const MAX_DRAWN = 12000;
+  const TIGHTENING = 0.8;
+  const MIN_SPEED = 0.025;
+  const MIN_LATERAL = 0.05;
+  const INITIAL_SPEED = 0.16;
+  const INITIAL_LATERAL = 0.35;
+  let count = Number(cohort.value), elapsed = 0, playing = true, lastFrame = 0, lastTime = 0, width = 0, height = 0, dpr = 1;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) playing = false;
+
+  function mix(x) {
+    x = (x ^ (x >>> 16)) * 0x7feb352d;
+    x = (x ^ (x >>> 15)) * 0x846ca68b;
+    return (x ^ (x >>> 16)) >>> 0;
+  }
+  function unit(seed, channel) { return mix((seed + Math.imul(channel + 1, 0x9e3779b9)) >>> 0) / 4294967296; }
+  function currentBounds(completed) {
+    const tightenings = Math.floor(completed / 2);
+    return {
+      speed: Math.max(MIN_SPEED, INITIAL_SPEED * Math.pow(TIGHTENING, tightenings)),
+      lateral: Math.max(MIN_LATERAL, INITIAL_LATERAL * Math.pow(TIGHTENING, tightenings))
+    };
+  }
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width; height = rect.height;
+    canvas.width = Math.max(1, Math.round(width * dpr));
+    canvas.height = Math.max(1, Math.round(height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  function updateMetrics(completed, bounds, drawn) {
+    document.getElementById("count").textContent = count.toLocaleString();
+    document.getElementById("drawn").textContent = drawn.toLocaleString();
+    document.getElementById("steps").textContent = completed.toLocaleString();
+    document.getElementById("speed").textContent = "±" + (bounds.speed * 100).toFixed(1) + "%";
+    document.getElementById("lateral").textContent = "±" + bounds.lateral.toFixed(3);
+  }
+  function draw() {
+    if (!width || !height) return;
+    const completed = Math.floor(elapsed / STEP_SECONDS);
+    const phase = (elapsed % STEP_SECONDS) / STEP_SECONDS;
+    const bounds = currentBounds(completed);
+    const drawn = Math.min(count, MAX_DRAWN);
+    const stride = Math.max(1, Math.floor(count / drawn));
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "#0b1119"; ctx.fillRect(0, 0, width, height);
+    const cols = Math.max(8, Math.ceil(Math.sqrt(drawn * (width / Math.max(height, 1)) * 1.8)));
+    const rows = Math.ceil(drawn / cols);
+    const cellW = width / (cols + 1), cellH = (height - 44) / (rows + 1);
+    ctx.save();
+    ctx.strokeStyle = "rgba(112,214,197,.12)"; ctx.lineWidth = 1; ctx.setLineDash([4, 7]);
+    for (let r = 1; r <= 5; r++) {
+      const y = 28 + r * (height - 58) / 6;
+      ctx.beginPath(); ctx.moveTo(8, y); ctx.lineTo(width - 8, y); ctx.stroke();
+    }
+    ctx.restore();
+    ctx.fillStyle = "#a9b8c9"; ctx.font = "12px system-ui"; ctx.textAlign = "center";
+    ctx.fillText("DIRECTION OF MARCH ↑", width / 2, 18);
+    for (let j = 0, id = 0; id < count; id += stride, j++) {
+      const seed = id + 1;
+      const speedSample = unit(seed, 0), lateralSample = unit(seed, 1);
+      const speed = 1 + (speedSample * 2 - 1) * bounds.speed;
+      const lateral = (lateralSample * 2 - 1) * bounds.lateral;
+      const col = j % cols, row = Math.floor(j / cols);
+      const x0 = (col + 1) * cellW;
+      const y0 = 30 + (row + 1) * cellH;
+      const localPhase = (phase * speed + speedSample * 0.17) % 1;
+      const sway = Math.sin(localPhase * Math.PI * 2) * Math.min(2.4, cellW * 0.18);
+      const x = x0 + sway + lateral * Math.min(9, cellW * 0.55);
+      const y = y0 + Math.cos(localPhase * Math.PI * 2) * Math.min(1.5, cellH * 0.12);
+      const radius = Math.max(1.15, Math.min(3.2, Math.min(cellW, cellH) * 0.29));
+      ctx.fillStyle = "rgba(112,214,197,.82)";
+      ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill();
+    }
+    updateMetrics(completed, bounds, drawn);
+  }
+  function frame(now) {
+    if (playing) {
+      if (lastFrame) elapsed += Math.min(0.05, (now - lastFrame) / 1000);
+      lastFrame = now;
+    } else lastFrame = 0;
+    if (Math.abs(elapsed - lastTime) > 0.025 || !lastTime) { draw(); lastTime = elapsed; }
+    requestAnimationFrame(frame);
+  }
+  toggle.addEventListener("click", () => {
+    playing = !playing; toggle.textContent = playing ? "Pause" : "Play";
+    if (playing) lastFrame = 0;
+  });
+  stepButton.addEventListener("click", () => {
+    playing = false; toggle.textContent = "Play"; elapsed = (Math.floor(elapsed / STEP_SECONDS) + 1) * STEP_SECONDS; draw();
+  });
+  resetButton.addEventListener("click", () => { elapsed = 0; lastTime = 0; draw(); });
+  cohort.addEventListener("change", () => { count = Number(cohort.value); draw(); });
+  window.addEventListener("resize", resize);
+  resize();
+  toggle.textContent = playing ? "Pause" : "Play";
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
