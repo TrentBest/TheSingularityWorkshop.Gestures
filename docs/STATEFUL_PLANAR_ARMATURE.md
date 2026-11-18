@@ -1,0 +1,33 @@
+# Stateful planar armature contract
+
+## Purpose and boundary
+
+StatefulPlanarArmature is the first versioned, deterministic CPU reference fixture for a teachable two-link arm. It composes retained hinges and the planar hierarchy behind stable joint, link, and end-effector identities.
+
+This is a **kinematic target controller**, not physical actuation. It advances local joint angles under declared angular-speed and legal-angle bounds. It does not calculate torque, force, inertia, acceleration, contact, load, energy, or physical success. No velocity is reported because this slice does not define a velocity state. No neural-network, Physics, UI, renderer, or host package is required.
+
+## Definition and topology
+
+PlanarArmatureDefinition fixes scenario identity; unique shoulder, elbow, link, and end-effector IDs; a world-space 2D root anchor; positive link lengths; finite inclusive joint ranges and initial angles; and maximum angular speed for each joint.
+
+The topology is shoulder link → elbow link → end-effector position. Each link extends along local +X at zero angle; the elbow angle is relative to the shoulder link. The root anchor is fixed by the definition.
+
+## Episode lifecycle
+
+Create the armature, then call Reset(episodeId, seed) before observing or stepping. Reset restores exact initial angles, reevaluates the hierarchy, and sets step index to zero. The seed is recorded as run metadata; this first fixture does not consume it for random variation.
+
+Each action must match the active episode, contract version, and next expected step. A rejected action leaves both joints and the step index unchanged. A successful action advances the step index once. Resetting and replaying the same ordered actions produces identical observations.
+
+## Observation, action, and result
+
+- PlanarArmatureObservation reports version, scenario/episode identity, seed, step index, root anchor, stable joint IDs, achieved angles, legal ranges, end-effector ID, and measured world-space endpoint.
+- PlanarArmatureAction declares version, episode ID, expected step, action mode, and requested shoulder/elbow target angles.
+- PlanarArmatureStepResult preserves the original request, separately reports range-clamped accepted targets, includes each bounded hinge transition, and returns the post-step observation.
+
+Version 1 supports JointAngleTargets. The original request is never overwritten. Accepted targets are clamped to legal intervals; achieved angles may still differ because per-joint speed budgets limit movement during the current time step.
+
+## Deliberate omissions
+
+This first slice does not yet provide an end-effector-target action mode, learned or baseline policy, held-out generalization suite, serialized run-record format, batch/GPU path, or Physics adapter. Those remain follow-up work. External contact or physical evidence must cross an explicit consumer-owned adapter and remain distinguishable from kinematic observations.
+
+The CPU fixture is a correctness reference, not a performance claim. Tests cover reset/replay determinism, stable identities, speed/range constraints, requested-versus-accepted-versus-achieved values, and rejection of stale, wrong-episode, wrong-version, unsupported-mode, and non-finite actions before mutation.
