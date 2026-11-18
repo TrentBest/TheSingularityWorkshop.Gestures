@@ -60,7 +60,6 @@ public sealed class PlanarArmatureBaselinePolicyTests
     [Fact]
     public void RejectsObservationFromDifferentScenarioOrTopology()
     {
-        var limits = new JointAngleLimits(-MathF.PI, MathF.PI);
         var definition = Definition("scenario-a", "shoulder-a");
         var otherDefinition = Definition("scenario-b", "shoulder-b");
         var observation = definition.CreateArmature().Reset("episode", 1);
