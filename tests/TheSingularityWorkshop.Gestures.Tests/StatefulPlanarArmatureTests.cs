@@ -28,7 +28,14 @@ public sealed class StatefulPlanarArmatureTests
         Assert.Throws<ArgumentOutOfRangeException>(()=>a.Advance(Action("ep",0,1,1),-1));
         Assert.Equal(before,a.Observe());
     }
-    [Fact] public void OverflowInEitherJointSpeedBudgetRejectsWholeStepBeforeMutation()\n    {\n        var d=new PlanarArmatureDefinition("overflow","sj","sl","ej","el","tip",Vector2.Zero,1,1,Limits,Limits,0,0,1,2);\n        var a=d.CreateArmature(); a.Reset("ep",1); var before=a.Observe();\n        Assert.Throws<ArgumentOutOfRangeException>(()=>a.Advance(Action("ep",0,1,1),float.MaxValue));\n        Assert.Equal(before,a.Observe());\n    }\n    [Fact] public void ReplaysSameActionSequenceDeterministicallyAfterReset()
+    [Fact] public void OverflowInEitherJointSpeedBudgetRejectsWholeStepBeforeMutation()
+    {
+        var d=new PlanarArmatureDefinition("overflow","sj","sl","ej","el","tip",Vector2.Zero,1,1,Limits,Limits,0,0,1,2);
+        var a=d.CreateArmature(); a.Reset("ep",1); var before=a.Observe();
+        Assert.Throws<ArgumentOutOfRangeException>(()=>a.Advance(Action("ep",0,1,1),float.MaxValue));
+        Assert.Equal(before,a.Observe());
+    }
+    [Fact] public void ReplaysSameActionSequenceDeterministicallyAfterReset()
     {
         var a=Definition().CreateArmature(); var first=Run(a); a.Reset("replay",123); var second=Run(a); Assert.Equal(first,second);
     }

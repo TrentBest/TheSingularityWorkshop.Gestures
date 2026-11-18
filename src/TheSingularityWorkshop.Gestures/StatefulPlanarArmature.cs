@@ -60,7 +60,9 @@ public sealed class StatefulPlanarArmature
         if(action.Mode!=PlanarArmatureActionMode.JointAngleTargets) throw new ArgumentException("Unsupported action mode.",nameof(action));
         if(!float.IsFinite(action.ShoulderTargetRadians)||!float.IsFinite(action.ElbowTargetRadians)) throw new ArgumentOutOfRangeException(nameof(action),"Targets must be finite.");
         if(!float.IsFinite(deltaTimeSeconds)||deltaTimeSeconds<0f) throw new ArgumentOutOfRangeException(nameof(deltaTimeSeconds));
-        // Preflight both joints before either hinge mutates; a later overflow must not leave a partial step.\n        if(!float.IsFinite(_definition.MaximumShoulderSpeedRadiansPerSecond*deltaTimeSeconds)||!float.IsFinite(_definition.MaximumElbowSpeedRadiansPerSecond*deltaTimeSeconds)) throw new ArgumentOutOfRangeException(nameof(deltaTimeSeconds),"Both angular speed budgets must be finite.");\n        var acceptedShoulder=Math.Clamp(action.ShoulderTargetRadians,_definition.ShoulderLimits.MinimumRadians,_definition.ShoulderLimits.MaximumRadians);
+        // Preflight both joints before either hinge mutates; a later overflow must not leave a partial step.
+        if(!float.IsFinite(_definition.MaximumShoulderSpeedRadiansPerSecond*deltaTimeSeconds)||!float.IsFinite(_definition.MaximumElbowSpeedRadiansPerSecond*deltaTimeSeconds)) throw new ArgumentOutOfRangeException(nameof(deltaTimeSeconds),"Both angular speed budgets must be finite.");
+        var acceptedShoulder=Math.Clamp(action.ShoulderTargetRadians,_definition.ShoulderLimits.MinimumRadians,_definition.ShoulderLimits.MaximumRadians);
         var acceptedElbow=Math.Clamp(action.ElbowTargetRadians,_definition.ElbowLimits.MinimumRadians,_definition.ElbowLimits.MaximumRadians);
         var shoulderStep=Shoulder.Hinge.Advance(action.ShoulderTargetRadians,deltaTimeSeconds,_definition.MaximumShoulderSpeedRadiansPerSecond);
         var elbowStep=Elbow.Hinge.Advance(action.ElbowTargetRadians,deltaTimeSeconds,_definition.MaximumElbowSpeedRadiansPerSecond);
