@@ -31,3 +31,10 @@ Version 1 supports JointAngleTargets. The original request is never overwritten.
 This first slice does not yet provide an end-effector-target action mode, learned or baseline policy, held-out generalization suite, serialized run-record format, batch/GPU path, or Physics adapter. Those remain follow-up work. External contact or physical evidence must cross an explicit consumer-owned adapter and remain distinguishable from kinematic observations.
 
 The CPU fixture is a correctness reference, not a performance claim. Tests cover reset/replay determinism, stable identities, speed/range constraints, requested-versus-accepted-versus-achieved values, and rejection of stale, wrong-episode, wrong-version, unsupported-mode, and non-finite actions before mutation.
+
+
+## Deterministic baseline and held-out fixtures
+
+`PlanarArmatureBaselinePolicy` is a small, non-learned reference policy. Given a versioned observation and a world-space end-effector target, it validates scenario/topology identity and uses the constrained two-link IK solver to produce the next `JointAngleTargets` action. It does not mutate the armature, execute the action, or claim physical success.
+
+The baseline policy tests vary link lengths, root anchors, initial joint angles, and target positions independently of a single training fixture. They include both reachable and unreachable geometric requests. The policy is deterministic for the same definition, observation, and target. These fixtures are an initial held-out correctness check, not a statistical generalization study or a learned-policy comparison.
