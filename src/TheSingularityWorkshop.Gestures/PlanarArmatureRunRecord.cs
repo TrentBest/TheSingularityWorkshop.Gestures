@@ -119,10 +119,12 @@ public sealed class PlanarArmatureRunRecord
         var observation = result.Observation;
         if (result.RequestedAction.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
             || result.RequestedAction.Mode != PlanarArmatureActionMode.JointAngleTargets
+            || result.DeltaTimeSeconds != DeltaTimeSeconds
             || !float.IsFinite(result.RequestedAction.ShoulderTargetRadians)
             || !float.IsFinite(result.RequestedAction.ElbowTargetRadians)
             || !StringComparer.Ordinal.Equals(result.RequestedAction.EpisodeId, EpisodeId)
             || !StringComparer.Ordinal.Equals(observation.EpisodeId, EpisodeId)
+            || observation.Seed != Seed
             || !StringComparer.Ordinal.Equals(observation.ScenarioId, ScenarioId)
             || observation.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
             || observation.StepIndex != expectedStep
@@ -146,7 +148,9 @@ public sealed class PlanarArmatureRunRecord
             || result.AcceptedShoulderTargetRadians < Definition.ShoulderLimits.MinimumRadians
             || result.AcceptedShoulderTargetRadians > Definition.ShoulderLimits.MaximumRadians
             || result.AcceptedElbowTargetRadians < Definition.ElbowLimits.MinimumRadians
-            || result.AcceptedElbowTargetRadians > Definition.ElbowLimits.MaximumRadians)
+            || result.AcceptedElbowTargetRadians > Definition.ElbowLimits.MaximumRadians
+            || result.AcceptedShoulderTargetRadians != Math.Clamp(result.RequestedAction.ShoulderTargetRadians, Definition.ShoulderLimits.MinimumRadians, Definition.ShoulderLimits.MaximumRadians)
+            || result.AcceptedElbowTargetRadians != Math.Clamp(result.RequestedAction.ElbowTargetRadians, Definition.ElbowLimits.MinimumRadians, Definition.ElbowLimits.MaximumRadians))
             throw new ArgumentOutOfRangeException(nameof(result), "Accepted joint targets must be finite.");
         var targetError = Vector2.Distance(observation.AchievedEndEffectorPosition, WorldTarget);
         if (!float.IsFinite(targetError))

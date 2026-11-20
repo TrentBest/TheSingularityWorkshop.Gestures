@@ -49,6 +49,7 @@ public sealed class PlanarArmatureRunRecordTests
         Assert.Empty(record.Steps);
         Assert.Single(updated.Steps);
         Assert.Throws<ArgumentException>(() => updated.Append(result));
+        Assert.Throws<ArgumentException>(() => record.Append(result with { DeltaTimeSeconds = 0.2f }));
     }
 
     [Fact]

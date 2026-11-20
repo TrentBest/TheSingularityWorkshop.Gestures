@@ -29,7 +29,7 @@ public readonly record struct PlanarArmatureObservation(int ContractVersion,stri
 /// <summary>Versioned per-joint target action bound to one episode and expected step.</summary>
 public readonly record struct PlanarArmatureAction(int ContractVersion,string EpisodeId,long ExpectedStepIndex,PlanarArmatureActionMode Mode,float ShoulderTargetRadians,float ElbowTargetRadians);
 /// <summary>Preserves requested action, range-accepted targets, bounded hinge transitions, and measured output.</summary>
-public readonly record struct PlanarArmatureStepResult(PlanarArmatureAction RequestedAction,float AcceptedShoulderTargetRadians,float AcceptedElbowTargetRadians,StatefulHingeStep ShoulderStep,StatefulHingeStep ElbowStep,PlanarArmatureObservation Observation);
+public readonly record struct PlanarArmatureStepResult(PlanarArmatureAction RequestedAction,float AcceptedShoulderTargetRadians,float AcceptedElbowTargetRadians,StatefulHingeStep ShoulderStep,StatefulHingeStep ElbowStep,PlanarArmatureObservation Observation,float DeltaTimeSeconds);
 /// <summary>Deterministic CPU reference for a two-link planar kinematic arm; no physical actuation is modeled.</summary>
 public sealed class StatefulPlanarArmature
 {
@@ -68,7 +68,7 @@ public sealed class StatefulPlanarArmature
         var shoulderStep=Shoulder.Hinge.Advance(action.ShoulderTargetRadians,deltaTimeSeconds,_definition.MaximumShoulderSpeedRadiansPerSecond);
         var elbowStep=Elbow.Hinge.Advance(action.ElbowTargetRadians,deltaTimeSeconds,_definition.MaximumElbowSpeedRadiansPerSecond);
         Shoulder.EvaluateIncremental(_definition.RootAnchor); _stepIndex++;
-        return new(action,acceptedShoulder,acceptedElbow,shoulderStep,elbowStep,Observe());
+        return new(action,acceptedShoulder,acceptedElbow,shoulderStep,elbowStep,Observe(),deltaTimeSeconds);
     }
     public PlanarArmatureObservation Observe()
     {
