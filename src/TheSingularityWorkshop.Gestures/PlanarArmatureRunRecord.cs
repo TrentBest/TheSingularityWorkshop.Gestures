@@ -37,7 +37,7 @@ public sealed class PlanarArmatureRunRecord
     public float TargetTolerance { get; }
     public PlanarArmatureObservation InitialObservation { get; }
     public IReadOnlyList<PlanarArmatureRunStep> Steps { get; }
-    public PlanarArmatureObservation FinalObservation => Steps.Count == 0 ? InitialObservation : Steps[^1].Result.Observation;
+    public PlanarArmatureObservation FinalObservation => Steps.Count == 0 ? InitialObservation : Steps[^1].Observation;
     public float FinalTargetError => Vector2.Distance(FinalObservation.AchievedEndEffectorPosition, WorldTarget);
     public bool TargetReached => FinalTargetError <= TargetTolerance;
 
@@ -73,7 +73,6 @@ public sealed class PlanarArmatureRunRecord
     /// <summary>Returns a new record with one validated step; the original record remains unchanged.</summary>
     public PlanarArmatureRunRecord Append(PlanarArmatureStepResult result)
     {
-        ArgumentNullException.ThrowIfNull(result);
         var expectedStep = InitialObservation.StepIndex + Steps.Count + 1;
         var observation = result.Observation;
         if (!StringComparer.Ordinal.Equals(result.RequestedAction.EpisodeId, EpisodeId)
