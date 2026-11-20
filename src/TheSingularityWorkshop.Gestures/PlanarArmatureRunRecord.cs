@@ -9,6 +9,7 @@ public sealed class PlanarArmatureRunRecord
     public const int CurrentSchemaVersion = 1;
 
     private PlanarArmatureRunRecord(
+        PlanarArmatureDefinition definition,
         string scenarioId,
         string episodeId,
         ulong seed,
@@ -18,6 +19,7 @@ public sealed class PlanarArmatureRunRecord
         PlanarArmatureObservation initialObservation,
         IReadOnlyList<PlanarArmatureRunStep> steps)
     {
+        Definition = definition;
         ScenarioId = scenarioId;
         EpisodeId = episodeId;
         Seed = seed;
@@ -29,6 +31,7 @@ public sealed class PlanarArmatureRunRecord
     }
 
     public int SchemaVersion => CurrentSchemaVersion;
+    public PlanarArmatureDefinition Definition { get; }
     public string ScenarioId { get; }
     public string EpisodeId { get; }
     public ulong Seed { get; }
@@ -43,15 +46,26 @@ public sealed class PlanarArmatureRunRecord
 
     /// <summary>Begins a run record from the exact reset observation used by the evaluator.</summary>
     public static PlanarArmatureRunRecord Start(
+        PlanarArmatureDefinition definition,
         PlanarArmatureObservation initialObservation,
         Vector2 worldTarget,
         float deltaTimeSeconds,
         float targetTolerance)
     {
+        ArgumentNullException.ThrowIfNull(definition);
         if (initialObservation.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
             || string.IsNullOrWhiteSpace(initialObservation.ScenarioId)
             || string.IsNullOrWhiteSpace(initialObservation.EpisodeId)
-            || initialObservation.StepIndex != 0)
+            || initialObservation.StepIndex != 0
+            || !StringComparer.Ordinal.Equals(initialObservation.ScenarioId, definition.ScenarioId)
+            || !StringComparer.Ordinal.Equals(initialObservation.ShoulderJointId, definition.ShoulderJointId)
+            || !StringComparer.Ordinal.Equals(initialObservation.ElbowJointId, definition.ElbowJointId)
+            || !StringComparer.Ordinal.Equals(initialObservation.EndEffectorId, definition.EndEffectorId)
+            || initialObservation.RootAnchor != definition.RootAnchor
+            || initialObservation.ShoulderLimits != definition.ShoulderLimits
+            || initialObservation.ElbowLimits != definition.ElbowLimits
+            || initialObservation.ShoulderAngleRadians != definition.InitialShoulderAngleRadians
+            || initialObservation.ElbowAngleRadians != definition.InitialElbowAngleRadians)
             throw new ArgumentException("A run must start from a valid step-zero armature observation.", nameof(initialObservation));
         Finite(worldTarget, nameof(worldTarget));
         if (!float.IsFinite(deltaTimeSeconds) || deltaTimeSeconds <= 0f)
@@ -60,6 +74,7 @@ public sealed class PlanarArmatureRunRecord
             throw new ArgumentOutOfRangeException(nameof(targetTolerance));
 
         return new PlanarArmatureRunRecord(
+            definition,
             initialObservation.ScenarioId,
             initialObservation.EpisodeId,
             initialObservation.Seed,
@@ -75,7 +90,9 @@ public sealed class PlanarArmatureRunRecord
     {
         var expectedStep = InitialObservation.StepIndex + Steps.Count + 1;
         var observation = result.Observation;
-        if (!StringComparer.Ordinal.Equals(result.RequestedAction.EpisodeId, EpisodeId)
+        if (result.RequestedAction.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
+            || result.RequestedAction.Mode != PlanarArmatureActionMode.JointAngleTargets
+            || !StringComparer.Ordinal.Equals(result.RequestedAction.EpisodeId, EpisodeId)
             || !StringComparer.Ordinal.Equals(observation.EpisodeId, EpisodeId)
             || !StringComparer.Ordinal.Equals(observation.ScenarioId, ScenarioId)
             || observation.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
@@ -83,20 +100,26 @@ public sealed class PlanarArmatureRunRecord
             || result.RequestedAction.ExpectedStepIndex != expectedStep - 1)
             throw new ArgumentException("Step result does not continue this run's episode and sequence.", nameof(result));
         Finite(observation.AchievedEndEffectorPosition, nameof(result));
+        if (!float.IsFinite(result.AcceptedShoulderTargetRadians)
+            || !float.IsFinite(result.AcceptedElbowTargetRadians))
+            throw new ArgumentOutOfRangeException(nameof(result), "Accepted joint targets must be finite.");
+        var targetError = Vector2.Distance(observation.AchievedEndEffectorPosition, WorldTarget);
+        if (!float.IsFinite(targetError))
+            throw new ArgumentOutOfRangeException(nameof(result), "Measured target error must be finite.");
 
         var step = new PlanarArmatureRunStep(
             result.RequestedAction,
             result.AcceptedShoulderTargetRadians,
             result.AcceptedElbowTargetRadians,
             observation,
-            Vector2.Distance(observation.AchievedEndEffectorPosition, WorldTarget));
+            targetError);
         var next = new PlanarArmatureRunStep[Steps.Count + 1];
         for (var i = 0; i < Steps.Count; i++)
             next[i] = Steps[i];
         next[^1] = step;
 
         return new PlanarArmatureRunRecord(
-            ScenarioId, EpisodeId, Seed, DeltaTimeSeconds, WorldTarget, TargetTolerance,
+            Definition, ScenarioId, EpisodeId, Seed, DeltaTimeSeconds, WorldTarget, TargetTolerance,
             InitialObservation, new ReadOnlyCollection<PlanarArmatureRunStep>(next));
     }
 
