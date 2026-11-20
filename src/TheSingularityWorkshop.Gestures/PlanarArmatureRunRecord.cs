@@ -179,7 +179,6 @@ public sealed class PlanarArmatureRunRecord
     }
 }
 
-/// <summary>One requested action and the corresponding accepted command and achieved observation.</summary>
 /// <summary>Measured task metrics; no velocity-derived smoothness or physical overshoot is inferred.</summary>
 public readonly record struct PlanarArmatureRunMetrics(
     int StepsExecuted,
@@ -189,6 +188,7 @@ public readonly record struct PlanarArmatureRunMetrics(
     float MeanTargetError,
     int? StepsToTarget);
 
+/// <summary>One requested action and the corresponding accepted command and achieved observation.</summary>
 public sealed record PlanarArmatureRunStep(
     PlanarArmatureAction RequestedAction,
     float AcceptedShoulderTargetRadians,
