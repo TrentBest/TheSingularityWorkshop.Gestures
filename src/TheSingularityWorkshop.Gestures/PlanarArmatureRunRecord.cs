@@ -43,6 +43,28 @@ public sealed class PlanarArmatureRunRecord
     public PlanarArmatureObservation FinalObservation => Steps.Count == 0 ? InitialObservation : Steps[^1].Observation;
     public float FinalTargetError => Vector2.Distance(FinalObservation.AchievedEndEffectorPosition, WorldTarget);
     public bool TargetReached => FinalTargetError <= TargetTolerance;
+    public PlanarArmatureRunMetrics Metrics => CalculateMetrics();
+
+    private PlanarArmatureRunMetrics CalculateMetrics()
+    {
+        var initialError = Vector2.Distance(InitialObservation.AchievedEndEffectorPosition, WorldTarget);
+        var finalError = FinalTargetError;
+        var maximumError = initialError;
+        var meanError = initialError;
+        int? stepsToTarget = initialError <= TargetTolerance ? 0 : null;
+
+        for (var i = 0; i < Steps.Count; i++)
+        {
+            var error = Steps[i].TargetError;
+            maximumError = MathF.Max(maximumError, error);
+            meanError += (error - meanError) / (i + 2);
+            if (stepsToTarget is null && error <= TargetTolerance)
+                stepsToTarget = i + 1;
+        }
+
+        return new PlanarArmatureRunMetrics(
+            Steps.Count, initialError, finalError, maximumError, meanError, stepsToTarget);
+    }
 
     /// <summary>Begins a run record from the exact reset observation used by the evaluator.</summary>
     public static PlanarArmatureRunRecord Start(
@@ -68,6 +90,8 @@ public sealed class PlanarArmatureRunRecord
             || initialObservation.ElbowAngleRadians != definition.InitialElbowAngleRadians)
             throw new ArgumentException("A run must start from a valid step-zero armature observation.", nameof(initialObservation));
         Finite(worldTarget, nameof(worldTarget));
+        if (!float.IsFinite(Vector2.Distance(initialObservation.AchievedEndEffectorPosition, worldTarget)))
+            throw new ArgumentOutOfRangeException(nameof(worldTarget), "Initial target error must be finite.");
         if (!float.IsFinite(deltaTimeSeconds) || deltaTimeSeconds <= 0f)
             throw new ArgumentOutOfRangeException(nameof(deltaTimeSeconds));
         if (!float.IsFinite(targetTolerance) || targetTolerance < 0f)
@@ -131,6 +155,15 @@ public sealed class PlanarArmatureRunRecord
 }
 
 /// <summary>One requested action and the corresponding accepted command and achieved observation.</summary>
+/// <summary>Measured task metrics; no velocity-derived smoothness or physical overshoot is inferred.</summary>
+public readonly record struct PlanarArmatureRunMetrics(
+    int StepsExecuted,
+    float InitialTargetError,
+    float FinalTargetError,
+    float MaximumTargetError,
+    float MeanTargetError,
+    int? StepsToTarget);
+
 public sealed record PlanarArmatureRunStep(
     PlanarArmatureAction RequestedAction,
     float AcceptedShoulderTargetRadians,

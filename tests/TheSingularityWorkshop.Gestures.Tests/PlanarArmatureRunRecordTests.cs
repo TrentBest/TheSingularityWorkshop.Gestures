@@ -21,12 +21,18 @@ public sealed class PlanarArmatureRunRecordTests
         Assert.Equal(first.FinalTargetError, second.FinalTargetError);
         Assert.Equal(3, first.Steps.Count);
         Assert.Equal(3, first.FinalObservation.StepIndex);
+        Assert.Equal(3, first.Metrics.StepsExecuted);
+        Assert.True(first.Metrics.InitialTargetError > 0f);
+        Assert.True(first.Metrics.MaximumTargetError >= first.Metrics.InitialTargetError);
+        Assert.True(float.IsFinite(first.Metrics.MeanTargetError));
+        Assert.Null(first.Metrics.StepsToTarget);
 
         var json = JsonSerializer.Serialize(first);
         Assert.Contains("\"SchemaVersion\":1", json);
         Assert.Contains("\"RequestedAction\"", json);
         Assert.Contains("\"AcceptedShoulderTargetRadians\"", json);
         Assert.Contains("\"TargetError\"", json);
+        Assert.Contains("\"ShoulderLinkLength\":1", json);
     }
 
     [Fact]
@@ -53,6 +59,14 @@ public sealed class PlanarArmatureRunRecordTests
             PlanarArmatureRunRecord.Start(Definition(), observation, Vector2.One, 0f, 0.01f));
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             PlanarArmatureRunRecord.Start(Definition(), observation, new Vector2(float.NaN, 0f), 0.1f, 0.01f));
+        var mismatched = new PlanarArmatureDefinition(
+            "run-record-fixture", "shoulder", "upper", "elbow", "lower", "tip",
+            Vector2.Zero, 2f, 1f,
+            new JointAngleLimits(-MathF.PI, MathF.PI),
+            new JointAngleLimits(-MathF.PI, MathF.PI),
+            0f, 0f, 2f, 2f);
+        Assert.Throws<ArgumentException>(() =>
+            PlanarArmatureRunRecord.Start(mismatched, observation, Vector2.One, 0.1f, 0.01f));
     }
 
     private static PlanarArmatureRunRecord Run()
