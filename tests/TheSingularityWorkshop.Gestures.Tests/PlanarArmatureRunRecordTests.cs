@@ -35,7 +35,7 @@ public sealed class PlanarArmatureRunRecordTests
         var definition = Definition();
         var armature = definition.CreateArmature();
         var initial = armature.Reset("record-episode", 7);
-        var record = PlanarArmatureRunRecord.Start(initial, new Vector2(1f, 1f), 0.1f, 0.01f);
+        var record = PlanarArmatureRunRecord.Start(definition, initial, new Vector2(1f, 1f), 0.1f, 0.01f);
         var action = PlanarArmatureBaselinePolicy.CreateAction(definition, initial, new Vector2(1f, 1f));
         var result = armature.Advance(action, 0.1f);
         var updated = record.Append(result);
@@ -50,9 +50,9 @@ public sealed class PlanarArmatureRunRecordTests
     {
         var observation = Definition().CreateArmature().Reset("episode", 1);
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            PlanarArmatureRunRecord.Start(observation, Vector2.One, 0f, 0.01f));
+            PlanarArmatureRunRecord.Start(Definition(), observation, Vector2.One, 0f, 0.01f));
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            PlanarArmatureRunRecord.Start(observation, new Vector2(float.NaN, 0f), 0.1f, 0.01f));
+            PlanarArmatureRunRecord.Start(Definition(), observation, new Vector2(float.NaN, 0f), 0.1f, 0.01f));
     }
 
     private static PlanarArmatureRunRecord Run()
