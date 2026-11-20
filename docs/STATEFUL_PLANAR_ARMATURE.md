@@ -28,7 +28,7 @@ Version 1 supports JointAngleTargets. The original request is never overwritten.
 
 ## Deliberate omissions
 
-This first slice does not yet provide an end-effector-target action mode, learned or baseline policy, held-out generalization suite, serialized run-record format, batch/GPU path, or Physics adapter. Those remain follow-up work. External contact or physical evidence must cross an explicit consumer-owned adapter and remain distinguishable from kinematic observations.
+This first slice does not yet provide an end-effector-target action mode, learned policy, held-out statistical generalization suite, batch/GPU path, or Physics adapter. Those remain follow-up work. External contact or physical evidence must cross an explicit consumer-owned adapter and remain distinguishable from kinematic observations.
 
 The CPU fixture is a correctness reference, not a performance claim. Tests cover reset/replay determinism, stable identities, speed/range constraints, requested-versus-accepted-versus-achieved values, and rejection of stale, wrong-episode, wrong-version, unsupported-mode, and non-finite actions before mutation.
 
@@ -42,7 +42,7 @@ The baseline policy tests vary link lengths, root anchors, initial joint angles,
 
 ## Reproducible planar-armature run records
 
-Issue #32 now has an immutable `PlanarArmatureRunRecord` contract (schema version 1). A record captures the scenario and episode identities, reset seed, fixed timestep, world-space target, target tolerance, initial observation, and an ordered sequence of requested actions, accepted joint targets, achieved observations, and measured target errors. Appending a step returns a new record and rejects mismatched episodes or step sequences.
+Issue #32 now has an immutable `PlanarArmatureRunRecord` contract (schema version 1). Start takes the actual armature instance and its current reset observation, retaining the armature's immutable definition and rejecting an observation that is not exactly current for that instance. A record captures the scenario and episode identities, reset seed, fixed timestep, world-space target, target tolerance, initial observation, and an ordered sequence of requested actions, accepted joint targets, achieved observations, and measured target errors. Appending a step returns a new record and rejects mismatched episodes or step sequences.
 
 The record also retains the immutable `PlanarArmatureDefinition` used to create the episode: stable identities, root anchor, link lengths, legal ranges, initial angles, and per-joint speed limits. `Start` requires that definition and verifies that the step-zero observation matches its scenario, topology, anchor, limits, and configured initial angles. This prevents a run from being detached from the configuration that produced it. Appends reject unsupported action modes/versions, non-finite accepted targets, and non-finite achieved target errors.
 

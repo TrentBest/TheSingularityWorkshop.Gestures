@@ -42,6 +42,7 @@ public sealed class StatefulPlanarArmature
         Elbow=new StatefulJointNode(d.ElbowLinkId,d.ElbowLinkLength,new StatefulHinge(d.InitialElbowAngleRadians,d.ElbowLimits.MinimumRadians,d.ElbowLimits.MaximumRadians));
         Shoulder.AddChild(Elbow); Shoulder.EvaluateFull(d.RootAnchor);
     }
+    public PlanarArmatureDefinition Definition => _definition;
     public StatefulJointNode Shoulder{get;} public StatefulJointNode Elbow{get;} public long StepIndex=>_stepIndex; public string? EpisodeId=>_episodeId; public ulong Seed=>_seed;
     /// <summary>Starts or restarts an episode at exact configured initial conditions.</summary>
     public PlanarArmatureObservation Reset(string episodeId,ulong seed)

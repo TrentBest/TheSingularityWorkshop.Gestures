@@ -68,13 +68,16 @@ public sealed class PlanarArmatureRunRecord
 
     /// <summary>Begins a run record from the exact reset observation used by the evaluator.</summary>
     public static PlanarArmatureRunRecord Start(
-        PlanarArmatureDefinition definition,
+        StatefulPlanarArmature armature,
         PlanarArmatureObservation initialObservation,
         Vector2 worldTarget,
         float deltaTimeSeconds,
         float targetTolerance)
     {
-        ArgumentNullException.ThrowIfNull(definition);
+        ArgumentNullException.ThrowIfNull(armature);
+        var definition = armature.Definition;
+        if (armature.Observe() != initialObservation)
+            throw new ArgumentException("Initial observation must be the current observation of the supplied armature.", nameof(initialObservation));
         if (initialObservation.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
             || string.IsNullOrWhiteSpace(initialObservation.ScenarioId)
             || string.IsNullOrWhiteSpace(initialObservation.EpisodeId)
@@ -116,16 +119,34 @@ public sealed class PlanarArmatureRunRecord
         var observation = result.Observation;
         if (result.RequestedAction.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
             || result.RequestedAction.Mode != PlanarArmatureActionMode.JointAngleTargets
+            || !float.IsFinite(result.RequestedAction.ShoulderTargetRadians)
+            || !float.IsFinite(result.RequestedAction.ElbowTargetRadians)
             || !StringComparer.Ordinal.Equals(result.RequestedAction.EpisodeId, EpisodeId)
             || !StringComparer.Ordinal.Equals(observation.EpisodeId, EpisodeId)
             || !StringComparer.Ordinal.Equals(observation.ScenarioId, ScenarioId)
             || observation.ContractVersion != StatefulPlanarArmature.CurrentContractVersion
             || observation.StepIndex != expectedStep
-            || result.RequestedAction.ExpectedStepIndex != expectedStep - 1)
+            || result.RequestedAction.ExpectedStepIndex != expectedStep - 1
+            || !StringComparer.Ordinal.Equals(observation.ShoulderJointId, Definition.ShoulderJointId)
+            || !StringComparer.Ordinal.Equals(observation.ElbowJointId, Definition.ElbowJointId)
+            || !StringComparer.Ordinal.Equals(observation.EndEffectorId, Definition.EndEffectorId)
+            || observation.RootAnchor != Definition.RootAnchor
+            || observation.ShoulderLimits != Definition.ShoulderLimits
+            || observation.ElbowLimits != Definition.ElbowLimits
+            || !float.IsFinite(observation.ShoulderAngleRadians)
+            || !float.IsFinite(observation.ElbowAngleRadians)
+            || observation.ShoulderAngleRadians < Definition.ShoulderLimits.MinimumRadians
+            || observation.ShoulderAngleRadians > Definition.ShoulderLimits.MaximumRadians
+            || observation.ElbowAngleRadians < Definition.ElbowLimits.MinimumRadians
+            || observation.ElbowAngleRadians > Definition.ElbowLimits.MaximumRadians)
             throw new ArgumentException("Step result does not continue this run's episode and sequence.", nameof(result));
         Finite(observation.AchievedEndEffectorPosition, nameof(result));
         if (!float.IsFinite(result.AcceptedShoulderTargetRadians)
-            || !float.IsFinite(result.AcceptedElbowTargetRadians))
+            || !float.IsFinite(result.AcceptedElbowTargetRadians)
+            || result.AcceptedShoulderTargetRadians < Definition.ShoulderLimits.MinimumRadians
+            || result.AcceptedShoulderTargetRadians > Definition.ShoulderLimits.MaximumRadians
+            || result.AcceptedElbowTargetRadians < Definition.ElbowLimits.MinimumRadians
+            || result.AcceptedElbowTargetRadians > Definition.ElbowLimits.MaximumRadians)
             throw new ArgumentOutOfRangeException(nameof(result), "Accepted joint targets must be finite.");
         var targetError = Vector2.Distance(observation.AchievedEndEffectorPosition, WorldTarget);
         if (!float.IsFinite(targetError))

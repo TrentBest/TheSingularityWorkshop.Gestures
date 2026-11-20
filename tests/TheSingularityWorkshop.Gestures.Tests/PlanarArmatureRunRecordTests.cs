@@ -41,7 +41,7 @@ public sealed class PlanarArmatureRunRecordTests
         var definition = Definition();
         var armature = definition.CreateArmature();
         var initial = armature.Reset("record-episode", 7);
-        var record = PlanarArmatureRunRecord.Start(definition, initial, new Vector2(1f, 1f), 0.1f, 0.01f);
+        var record = PlanarArmatureRunRecord.Start(armature, initial, new Vector2(1f, 1f), 0.1f, 0.01f);
         var action = PlanarArmatureBaselinePolicy.CreateAction(definition, initial, new Vector2(1f, 1f));
         var result = armature.Advance(action, 0.1f);
         var updated = record.Append(result);
@@ -52,21 +52,43 @@ public sealed class PlanarArmatureRunRecordTests
     }
 
     [Fact]
+    public void MetricsReportsFirstStepWithinTolerance()
+    {
+        var definition = Definition();
+        var armature = definition.CreateArmature();
+        var target = new Vector2(1f, 1f);
+        var observation = armature.Reset("metrics-episode", 11);
+        var record = PlanarArmatureRunRecord.Start(armature, observation, target, 0.1f, 0.01f);
+
+        for (var i = 0; i < 10; i++)
+        {
+            var action = PlanarArmatureBaselinePolicy.CreateAction(definition, armature.Observe(), target);
+            record = record.Append(armature.Advance(action, 0.1f));
+        }
+
+        Assert.Equal(8, record.Metrics.StepsToTarget);
+        Assert.Equal(10, record.Metrics.StepsExecuted);
+    }
+
+    [Fact]
     public void StartRejectsInvalidTimingAndNonFiniteTargets()
     {
-        var observation = Definition().CreateArmature().Reset("episode", 1);
+        var armature = Definition().CreateArmature();
+        var observation = armature.Reset("episode", 1);
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            PlanarArmatureRunRecord.Start(Definition(), observation, Vector2.One, 0f, 0.01f));
+            PlanarArmatureRunRecord.Start(armature, observation, Vector2.One, 0f, 0.01f));
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            PlanarArmatureRunRecord.Start(Definition(), observation, new Vector2(float.NaN, 0f), 0.1f, 0.01f));
+            PlanarArmatureRunRecord.Start(armature, observation, new Vector2(float.NaN, 0f), 0.1f, 0.01f));
         var mismatched = new PlanarArmatureDefinition(
             "run-record-fixture", "shoulder", "upper", "elbow", "lower", "tip",
             Vector2.Zero, 2f, 1f,
             new JointAngleLimits(-MathF.PI, MathF.PI),
             new JointAngleLimits(-MathF.PI, MathF.PI),
             0f, 0f, 2f, 2f);
+        var mismatchedArmature = mismatched.CreateArmature();
+        mismatchedArmature.Reset("episode", 1);
         Assert.Throws<ArgumentException>(() =>
-            PlanarArmatureRunRecord.Start(mismatched, observation, Vector2.One, 0.1f, 0.01f));
+            PlanarArmatureRunRecord.Start(mismatchedArmature, observation, Vector2.One, 0.1f, 0.01f));
     }
 
     private static PlanarArmatureRunRecord Run()
@@ -75,7 +97,7 @@ public sealed class PlanarArmatureRunRecordTests
         var armature = definition.CreateArmature();
         var observation = armature.Reset("record-episode", 7);
         var target = new Vector2(1f, 1f);
-        var record = PlanarArmatureRunRecord.Start(definition, observation, target, 0.1f, 0.01f);
+        var record = PlanarArmatureRunRecord.Start(armature, observation, target, 0.1f, 0.01f);
         for (var i = 0; i < 3; i++)
         {
             var action = PlanarArmatureBaselinePolicy.CreateAction(definition, armature.Observe(), target);
