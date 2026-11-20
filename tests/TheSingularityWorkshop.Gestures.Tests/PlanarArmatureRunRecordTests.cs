@@ -13,7 +13,7 @@ public sealed class PlanarArmatureRunRecordTests
         var first = Run();
         var second = Run();
 
-        Assert.Equal(first.SchemaVersion, PlanarArmatureRunRecord.CurrentSchemaVersion);
+        Assert.Equal(PlanarArmatureRunRecord.CurrentSchemaVersion, first.SchemaVersion);
         Assert.Equal(first.ScenarioId, second.ScenarioId);
         Assert.Equal(first.EpisodeId, second.EpisodeId);
         Assert.Equal(first.Seed, second.Seed);
