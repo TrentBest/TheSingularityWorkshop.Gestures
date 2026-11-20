@@ -61,7 +61,7 @@ public sealed class PlanarArmatureRunRecordTests
         var armature = definition.CreateArmature();
         var observation = armature.Reset("record-episode", 7);
         var target = new Vector2(1f, 1f);
-        var record = PlanarArmatureRunRecord.Start(observation, target, 0.1f, 0.01f);
+        var record = PlanarArmatureRunRecord.Start(definition, observation, target, 0.1f, 0.01f);
         for (var i = 0; i < 3; i++)
         {
             var action = PlanarArmatureBaselinePolicy.CreateAction(definition, armature.Observe(), target);
