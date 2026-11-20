@@ -38,3 +38,10 @@ The CPU fixture is a correctness reference, not a performance claim. Tests cover
 `PlanarArmatureBaselinePolicy` is a small, non-learned reference policy. Given a versioned observation and a world-space end-effector target, it validates scenario/topology identity and uses the constrained two-link IK solver to produce the next `JointAngleTargets` action. It does not mutate the armature, execute the action, or claim physical success.
 
 The baseline policy tests vary link lengths, root anchors, initial joint angles, and target positions independently of a single training fixture. They include both reachable and unreachable geometric requests. The policy is deterministic for the same definition, observation, and target. These fixtures are an initial held-out correctness check, not a statistical generalization study or a learned-policy comparison.
+
+
+## Reproducible planar-armature run records
+
+Issue #32 now has an immutable `PlanarArmatureRunRecord` contract (schema version 1). A record captures the scenario and episode identities, reset seed, fixed timestep, world-space target, target tolerance, initial observation, and an ordered sequence of requested actions, accepted joint targets, achieved observations, and measured target errors. Appending a step returns a new record and rejects mismatched episodes or step sequences.
+
+The record is composed of ordinary public .NET data contracts and can be serialized by a consumer with `System.Text.Json`. It deliberately records only values the kinematic reference actually produces. It does not add velocity, force, torque, contact, load, energy, or physical-success fields. A target is reached only when the measured end-effector position is within the caller-supplied tolerance; the record does not claim physical task completion.
