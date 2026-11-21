@@ -28,6 +28,7 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 ## Gesture ecosystem: coordinated activities and population execution
 
 - [x] Document that crowds are both consumers of Gestures and workloads that drive reusable system capabilities in [The Gestures Ecosystem](MULTI_PARTICIPANT_CHOREOGRAPHY.md).
+- [x] Add a deterministic, observation-only phase-concentration measurement for host-supplied participant phases in [Gesture Phase Synchronization](GESTURE_PHASE_SYNCHRONIZATION.md); this measures one snapshot and does not claim phase locking or entrainment.
 - [ ] Establish scalar reference workloads and measured baselines for one performer, paired activity, party-sized population, and staged large populations.
 - [ ] Define the smallest versioned activity/session/participant/role/shared-clock contract from concrete fixtures rather than designing a universal framework in advance.
 - [ ] Implement a two-person dance reference fixture with beat alignment, partner relationships, bounded variation, interruption, and deterministic replay.
