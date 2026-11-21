@@ -100,6 +100,8 @@ This is a source-repository verification path, not a claim that the package has 
 
 ### Formal theory and academic curriculum
 
+- [The Gestures Motion Studio](docs/GESTURES_MOTION_STUDIO.md) — the living Workshop integration plan connecting Gestures, FSM_API, Physics, Renderer, Visualize, GUI, Learning, Ontology, and MicroBundles into an interactive motion and research environment.
+
 - [General Theory of Procedural Gesture](docs/GENERAL_THEORY_OF_PROCEDURAL_GESTURE.md) — a formal domain definition separating intent, procedure, requested motion, physical realization, observation, and representation; includes temporal and configuration models, stable expression, coordination, proposed software axioms, falsifiable hypotheses, research program, and academic positioning.
 - [Gestures Course and Textbook Blueprint](docs/GESTURES_COURSE_AND_TEXTBOOK_BLUEPRINT.md) — a seven-volume textbook architecture and staged foundation, intermediate, advanced, and research curriculum, with mathematics and Physics spines, laboratory standards, assessment, and publication gates.
 
