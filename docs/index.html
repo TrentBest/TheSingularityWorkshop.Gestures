@@ -34,7 +34,12 @@
     <span class="tag">Development evidence · early alpha</span>
     <h1>Gestures</h1>
     <p class="lead">Reusable physical procedures, represented as data and evaluated over time. One intended movement can be shared across many actors; identity, skill, and the environment influence the result without requiring a different gesture for every actor or world.</p>
-    <p><a class="tag" href="motion-studio.html">Open the evaluator-backed Motion Studio →</a> <a class="tag" href="marching-lab.html">Open the interactive Marching Cohort Lab →</a></p>
+    <p>
+      <a class="tag" href="motion-studio.html">Open the evaluator-backed Motion Studio →</a>
+      <a class="tag" href="marching-lab.html">Open the interactive Marching Cohort Lab →</a>
+      <a class="tag" href="skill-distribution-demo.html">Explore skill distributions →</a>
+      <a class="tag" href="LEARNING_LAB.md">Follow the learning path →</a>
+    </p>
     <div class="status"><strong>What works today:</strong> deterministic CPU reference evaluation, authored keyframe interpolation, bounded identity variation, sequence/playback foundations, and selected crowd scheduling/baking experiments. <strong>What is still research:</strong> production articulated IK, GPU-scale pose evaluation, fully coupled environmental locomotion, and the 100k marching benchmark.</div>
   </header>
   <main>
@@ -49,7 +54,7 @@
         <h2>Time-dependent posture</h2>
         <p>The evaluator answers: what is the desired local posture at this point in the procedure? It does not claim that the world can physically realize every requested pose.</p>
         <img src="assets/gesture-motion.svg" alt="Generated gesture motion and evaluation diagram">
-        <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/DATA_MODEL.md">Data model</a></p>
+        <p><a href="motion-studio.html">Scrub the actual evaluator samples</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/DATA_MODEL.md">Data model</a></p>
       </article>
       <article class="card">
         <h2>Crowd intent is not completed motion</h2>
@@ -57,17 +62,23 @@
         <img src="assets/crowd-response-schedule.svg" alt="Generated crowd response schedule">
         <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/CROWD_RESPONSE_SCHEDULING.md">Crowd scheduling</a></p>
       </article>
-    </section>
-    <section class="card">
-      <h2>Same gesture. Different environment.</h2>
-      <p>Walking through ordinary air, a dense gas, or water should not require three separately authored gestures. Gestures supplies the intended posture trajectory; Physics determines how medium density, viscosity, relative flow, buoyancy, contact, and physical constraints affect the realized movement. The environmental comparison is a planned cross-repository experiment, not yet a completed simulation.</p>
-      <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Physics/issues/46">Physics coordination: environmental-medium resistance</a></p>
-    </section>
-    <section class="card">
-      <h2>100,000 soldiers: the next scale experiment</h2>
-      <p>The target experiment gives every soldier a stable identity seed, derives bounded offsets around one shared march cycle, and tightens the allowed variation every other completed step. The formation should become more cohesive without becoming a row of identical copies.</p>
-      <p>We will report agent count, seed, model version, update time, frame-time distribution, allocations, memory, and visual diversity separately. CPU reference and GPU execution will be measured independently. No GPU performance claim is made until those measurements exist.</p>
-      <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/30">Follow the marching lab</a></p>
+      <article class="card">
+        <h2>Skill is a distribution</h2>
+        <p>Hold the seed, sample count, and outcome noise constant while changing the movement envelope. Compare mean pose error, movement variance, and outcome spread as separate measurements.</p>
+        <a href="skill-distribution-demo.html"><img src="assets/skill-distribution-concept.svg" alt="Conceptual map of skill, movement variation, and outcome spread"></a>
+        <p><a href="skill-distribution-demo.html">Open the interactive distribution experiment</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/SKILL_DISTRIBUTION_DEMO.md">Model and limitations</a></p>
+        <p><small>This is an illustrative seeded model, not captured motion or measured real-world performance.</small></p>
+      </article>
+      <article class="card">
+        <h2>Same gesture. Different environment.</h2>
+        <p>Walking through ordinary air, a dense gas, or water should not require three separately authored gestures. Gestures supplies the intended posture trajectory; Physics determines how medium density, viscosity, relative flow, buoyancy, contact, and physical constraints affect the realized movement. The environmental comparison is a planned cross-repository experiment, not yet a completed simulation.</p>
+        <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.Physics/issues/46">Physics coordination: environmental-medium resistance</a></p>
+      </article>
+      <article class="card">
+        <h2>100,000 soldiers: a scale experiment</h2>
+        <p>Explore stable identity-derived variation and cohesion as the cohort grows. At 100,000 logical soldiers, this browser lab draws a deterministic representative sample capped at 12,000 marks; it is not a 100,000-agent performance benchmark.</p>
+        <p><a href="marching-lab.html">Open the Marching Cohort Lab</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/MARCHING_ORDERS_AND_COHORT_SCALE.md">Read the scale and command architecture</a></p>
+      </article>
     </section>
     <section class="card">
       <h2>Evidence levels</h2>
@@ -79,6 +90,7 @@
         <li><strong>Benchmarked:</strong> measured on a stated workload and environment.</li>
         <li><strong>Cross-validated:</strong> compared against an independent analytical or trusted reference.</li>
       </ul>
+      <p>For reproducible proof, inspect the <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/actions/workflows/build.yml">build, test, and artifact workflow</a>, the <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/src/TheSingularityWorkshop.Gestures/GestureEvaluator.cs">CPU evaluator</a>, and its <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/tree/development/tests/TheSingularityWorkshop.Gestures.Tests">automated tests</a>. Pages deploys from the successfully tested <code>development</code> commit; NuGet publication remains a separate, explicitly gated operation.</p>
       <p>See the <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures">repository</a> for source, tests, benchmarks, and the full documentation.</p>
     </section>
   </main>
