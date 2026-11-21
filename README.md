@@ -98,6 +98,11 @@ This is a source-repository verification path, not a claim that the package has 
 
 ## 🟪 05 Available documentation and theory
 
+### Formal theory and academic curriculum
+
+- [General Theory of Procedural Gesture](docs/GENERAL_THEORY_OF_PROCEDURAL_GESTURE.md) — a formal domain definition separating intent, procedure, requested motion, physical realization, observation, and representation; includes temporal and configuration models, stable expression, coordination, proposed software axioms, falsifiable hypotheses, research program, and academic positioning.
+- [Gestures Course and Textbook Blueprint](docs/GESTURES_COURSE_AND_TEXTBOOK_BLUEPRINT.md) — a seven-volume textbook architecture and staged foundation, intermediate, advanced, and research curriculum, with mathematics and Physics spines, laboratory standards, assessment, and publication gates.
+
 ![](docs/assets/dividers/purple.svg)
 
 - [Architecture](docs/ARCHITECTURE.md) — understand ownership boundaries and how evaluated poses reach the renderer.
