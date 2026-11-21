@@ -26,6 +26,24 @@ A coordinated activity answers a larger set of questions:
 
 The scheduler is a useful primitive inside this system, not the whole system. The new [Gesture Phase Synchronization reference](GESTURE_PHASE_SYNCHRONIZATION.md) adds an observation-only complex order-parameter measurement for host-supplied participant phases. It measures phase concentration at one logical instant; it does not claim phase locking, entrainment, coupling, or physical success.
 
+### The Physics timing service and Gestures expression model
+
+Consider a regiment that registers a need: **march at a specified cadence**. The request describes intent and population context—such as the cohort, desired cadence, start time, and shared logical timebase. Physics can provide an ideal timing reference: the mathematically regular beat/phase progression against which the activity is coordinated. This is a service-like contract between systems; it does not require Physics to be a network service or make Gestures depend on its runtime.
+
+Gestures then turns that ideal into **coordinated individuality**. It evaluates the marching procedure for each stable participant identity and applies bounded, deterministic variation to appropriate motion parameters: small differences in stride timing, posture, arm swing, and expression. The regiment shares a cadence and remains recognizably coordinated, but its members do not become synchronized mechanical copies. Variation is stable and reproducible, not fresh random noise every frame.
+
+The responsibility split is:
+
+1. **Activity/command layer:** declares that the regiment should fall in, march, halt, or change cadence.
+2. **Physics timing reference:** supplies ideal phase/timing and, where relevant, authoritative physical constraints and observations.
+3. **Gestures:** maps the shared ideal into individual procedures and bounded identity-specific expression at population scale.
+4. **Host/Physics outcome:** reports what was physically achieved—blocked movement, contact, balance, collision, or other constraints. A requested beat or evaluated pose is not proof that a soldier completed the step.
+5. **Renderer/Visualize:** presents the resulting population at the fidelity appropriate to the observer.
+
+This is not “Physics makes everyone move” and not “Gestures is a physics engine.” Physics supplies the ideal reference and owns physical truth; Gestures supplies expressive procedural motion. The host may supply timing from Physics, music, an external clock, or another authoritative source. Gestures should consume a small observation/clock contract and remain independently usable when no Physics runtime is present.
+
+The same pattern applies to dancers following a music beat, crews coordinating a repeated task, crowds responding to a shared event, or teams performing a timed maneuver. The shared reference establishes *what the group is coordinating around*; Gestures determines *how each participant expresses it*.
+
 ## Separate capabilities that cooperate
 
 The architecture should be understood as cooperating layers, not one overloaded `Crowd` feature:
