@@ -76,7 +76,7 @@ var fixture = new MotionFixture(
     "49 evenly spaced samples; identitySeed=0; GestureVariation.None",
     samples);
 File.WriteAllText(fixtureOutput,
-    JsonSerializer.Serialize(fixture, new JsonSerializerOptions { WriteIndented = true }) + Environment.NewLine,
+    JsonSerializer.Serialize(fixture, new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }) + Environment.NewLine,
     new UTF8Encoding(false));
 
 var output = GetOutputPath(args);
