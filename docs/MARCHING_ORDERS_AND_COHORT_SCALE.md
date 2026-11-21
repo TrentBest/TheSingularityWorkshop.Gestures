@@ -34,6 +34,16 @@ A command is not a Gesture. March is an order that requests an organized activit
 
 Do not add command authority, unit membership, or pathfinding to the Gestures evaluator.
 
+## One local collision must create one local story
+
+The marching procedure is shared, but physical consequences are participant-specific. The [Coordinated Individuality Theory](COORDINATED_INDIVIDUALITY_THEORY.md#6-the-fence-experiment-physical-truth-creates-individual-stories) uses a hand striking chain-link versus a rigid reinforced wall as the reference thought experiment.
+
+The host/Physics owner reports the actual contact, obstruction, deformation, impulse/force response, and achieved body state according to its declared physical model. Gestures may then evaluate an individual recovery procedure—protect the hand, interrupt the arm swing, rub or shake the hand, recover posture, and rejoin the cadence—only from evidence and policy supplied to it.
+
+This does not mean Gestures chooses the wall's stiffness or computes the contact force. A compliant fence and rigid wall require different physical response models owned by Physics. The soldier's response is local to that soldier's event history; the regiment's shared cadence continues unless the command/activity policy or additional physical events require otherwise. A nearby observer may receive detailed presentation while distant observers receive a lower-cost representation of the same authoritative outcome.
+
+The first integration fixture should use one soldier and two explicitly declared contact models before it is generalized to a population. It must compare requested versus achieved hand motion and prove that only the affected actor receives the recovery request.
+
 
 ## Formation assembly and fall-out: the first visible proof
 
