@@ -74,6 +74,10 @@ public static class GesturePhaseSynchronization
         for (var index = 0; index < ordered.Length; index++)
         {
             var observation = ordered[index];
+            if (string.IsNullOrWhiteSpace(observation.ParticipantId))
+                throw new ArgumentException("Every observation requires a stable participant ID.", nameof(observations));
+            if (!double.IsFinite(observation.PhaseRadians))
+                throw new ArgumentOutOfRangeException(nameof(observations), "Every phase must be finite.");
             if (index > 0 && string.Equals(
                 ordered[index - 1].ParticipantId,
                 observation.ParticipantId,
