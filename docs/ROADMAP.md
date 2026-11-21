@@ -27,6 +27,8 @@ See [Domain Completion Criteria](DOMAIN_COMPLETION_CRITERIA.md) for the explicit
 
 ## Gesture ecosystem: coordinated activities and population execution
 
+- [x] Publish a textbook-oriented theory of coordinated individuality, including stable expression, Physics-authoritative contact consequences, observer-relative fidelity, scale-aware workloads, falsifiable propositions, and classroom labs in [Coordinated Individuality Theory](COORDINATED_INDIVIDUALITY_THEORY.md); the equations are reference models unless explicitly identified as implemented APIs.
+- [ ] Build and benchmark the raWWar marching vertical slice: one shared cadence, stable per-soldier expression, 1k/10k/100k staged workloads, and local contact/recovery evidence. Do not claim 100k performance or full physical simulation until measured.
 - [x] Document that crowds are both consumers of Gestures and workloads that drive reusable system capabilities in [The Gestures Ecosystem](MULTI_PARTICIPANT_CHOREOGRAPHY.md).
 - [x] Add a deterministic, observation-only phase-concentration measurement for host-supplied participant phases in [Gesture Phase Synchronization](GESTURE_PHASE_SYNCHRONIZATION.md); this measures one snapshot and does not claim phase locking or entrainment.
 - [ ] Establish scalar reference workloads and measured baselines for one performer, paired activity, party-sized population, and staged large populations.
