@@ -8,7 +8,7 @@ This guide turns the [Learning Lab](LEARNING_LAB.md) into a class session. It is
 
 - Open the [Learning Lab](LEARNING_LAB.md) and the [Gestures domain map](GESTURES_DOMAIN_MAP.md).
 - Choose one visual: the evaluated motion path, transform channels, seeded variation, or crowd-response schedule.
-- For a hands-on session, install the .NET 8 SDK and verify that the documented generator command runs. If setup is unavailable, use the checked-in SVG and perform the prediction and evidence exercises without changing code.
+- For a hands-on session, install the .NET 10 SDK and verify that the documented generator command runs. If setup is unavailable, use the checked-in SVG and perform the prediction and evidence exercises without changing code.
 - Tell students which artifact is generated from implementation and which is conceptual before asking them to interpret it.
 
 ### Session plan
@@ -85,8 +85,40 @@ Use the rubric to identify the next learning step, not to penalize a learner for
 - A report can be valuable even when the learner cannot diagnose or fix the defect.
 - Do not ask students to “correct” a generated SVG by editing the output alone. Fix the source or generator, regenerate, and inspect the diff.
 - Do not present a research diagram as a production solver or a schedule as a physical outcome.
-- Do not require a game engine. The conceptual exercises work from the checked-in artifacts; code exercises use the documented .NET 8 workflow.
+- Do not require a game engine. The conceptual exercises work from the checked-in artifacts; code exercises use the documented .NET 10 workflow.
 - Keep package publication, secrets, and release operations out of classroom tasks.
+
+## Coordinated individuality: an extended lesson
+
+Pair the Learning Lab with [Coordinated Individuality Theory](COORDINATED_INDIVIDUALITY_THEORY.md). It develops a reusable classroom distinction:
+
+- the activity coordinator supplies shared intent and cadence;
+- Gestures evaluates each participant's bounded, stable procedure;
+- Physics and the authoritative world determine achieved movement and contact consequences;
+- presentation systems choose observer-relative detail without changing world truth.
+
+### Discussion experiment: the fence
+
+Ask students to predict what changes when a marching soldier's hand meets chain-link fencing versus a rigid reinforced wall.
+
+Require them to separate:
+1. the requested hand trajectory;
+2. the physical contact and deformation/obstruction model;
+3. the achieved hand and body state;
+4. the actor's subsequent recovery decision;
+5. what a nearby versus distant observer sees.
+
+A strong answer does not say “play the wall-hit animation.” It identifies which system owns each fact and explains why the local event should not globally interrupt the regiment.
+
+### Assessment extension
+
+Ask learners to convert one of the theory's ten design propositions into:
+- a falsifiable hypothesis;
+- a minimal deterministic fixture;
+- an assertion with explicit tolerance or bounds;
+- a statement of what the result does not prove.
+
+The teacher should distinguish mathematical reference models from implemented package APIs. The theory document labels its equations and examples accordingly.
 
 ## Student hand-in
 
