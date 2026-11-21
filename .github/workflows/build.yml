@@ -89,6 +89,7 @@ jobs:
           name: gesture-living-svgs
           path: |
             docs/assets/gesture-*.svg
+            docs/assets/gesture-motion-samples.json
             docs/assets/crowd-response-schedule.svg
             docs/assets/extremus-crowd-bake.svg
             docs/assets/provider-actor-choice.svg
@@ -107,7 +108,7 @@ jobs:
       - name: Report remaining generated SVG snapshot drift
         shell: bash
         run: |
-          if ! git diff --quiet -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg docs/assets/gesture-sequence.svg; then
+          if ! git diff --quiet -- docs/assets/gesture-motion.svg docs/assets/gesture-motion-samples.json docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg docs/assets/gesture-sequence.svg; then
             echo "::warning::Other generated living SVGs differ from checked-in snapshots. Review the uploaded gesture-living-svgs artifact and synchronize the snapshots before re-enabling their drift gate."
             git diff --stat -- docs/assets/gesture-motion.svg docs/assets/gesture-channels.svg docs/assets/gesture-target-agnostic.svg docs/assets/gesture-variation.svg
           else
@@ -127,7 +128,7 @@ jobs:
           fi
 
       - name: Verify SVG formatting
-        run: git diff --check -- docs/assets/gesture-*.svg docs/assets/speech-scene-population.svg docs/assets/crowd-response-schedule.svg docs/assets/extremus-crowd-bake.svg docs/assets/provider-actor-choice.svg docs/assets/provider-actor-choice.json
+        run: git diff --check -- docs/assets/gesture-*.svg docs/assets/gesture-motion-samples.json docs/assets/speech-scene-population.svg docs/assets/crowd-response-schedule.svg docs/assets/extremus-crowd-bake.svg docs/assets/provider-actor-choice.svg docs/assets/provider-actor-choice.json
 
       - name: Test with coverage
         run: >
