@@ -72,6 +72,18 @@ A feature is not complete merely because its type, roadmap entry, diagram, or ex
 
 **Exit evidence:** one complete provider-to-evaluator-to-consumer example with success, interruption, and failure paths.
 
+### 6a. raWWar coordinated marching and local physical consequence
+
+- [ ] Provide a reusable shared marching procedure and explicit cadence/phase input contract.
+- [ ] Preserve stable, bounded per-soldier expression under deterministic replay.
+- [ ] Demonstrate staged population workloads at 1k, 10k, and 100k with CPU time, allocations, memory, output count, and fidelity policy recorded.
+- [ ] Integrate a Physics-owned contact observation for one soldier interacting with compliant and rigid surfaces; keep material/contact solving outside Gestures.
+- [ ] Demonstrate actor-local recovery from achieved contact/obstruction evidence without globally interrupting unaffected soldiers.
+- [ ] Verify nearby/distant observer presentation changes fidelity without changing authoritative event identity or outcome.
+- [ ] Validate the package through a minimal raWWar consumer adapter; keep raWWar-specific command authority and world state outside Gestures.
+
+**Exit evidence:** a reproducible raWWar-facing march/contact/recovery fixture plus honest staged population measurements. No full-physics or 100k throughput claim is permitted without the corresponding cross-system and benchmark evidence.
+
 ### 6. Crowd traversal and group behavior
 
 - [x] Experience-authored gates/routes, four initial traversal intents, tuning, and lifecycle vocabulary are defined in the crowd-flow contract branch.
