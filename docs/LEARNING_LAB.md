@@ -78,6 +78,20 @@ These are teaching diagrams, not proof that the production evaluator includes a 
 
 Teachers can use one lesson in a class, or use the sequence as a small project. No game engine is required to read the diagrams or build the core solution; the documented generator path requires the .NET 8 SDK. For a ready-to-run 45-minute class plan, discussion prompts, expected reasoning, and a lightweight assessment rubric, see the [Teacher Guide](TEACHER_GUIDE.md).
 
+## Explore the Workshop Motion Studio
+
+The next step is to connect the evidence in this lab to the wider Workshop toolchain. The [Gestures Motion Studio blueprint](GESTURES_MOTION_STUDIO.md) describes the planned interactive workbench: timeline scrubbing, evaluated-channel inspection, deterministic replay, Physics outcome comparison, Renderer observer/fidelity selection, and Visualize population presentation.
+
+Use the boundaries in that blueprint when interpreting existing demonstrations:
+
+- The current evaluator SVGs are generated from real CPU reference output.
+- Renderer can select observer-relative representation; that choice is not physical authority.
+- Visualize can serialize scene/frame data to a static SVG artifact, and its separate WebGPU Soldier Field is an exploratory population-rendering surface.
+- Physics remains authoritative for constraints, contact, environmental effects, and achieved state.
+- GUI adapters should expose controls and inspectors; they should not become a second scene-rendering or motion engine.
+
+The workbench will be introduced in stages. The first browser version should replay samples produced by the .NET evaluator and prove parity against golden vectors before attempting an independent browser evaluator or GPU-side motion evaluation.
+
 ## What does “living documentation” mean here?
 
 A living image should have a traceable relationship to code or an explicitly declared conceptual purpose.
