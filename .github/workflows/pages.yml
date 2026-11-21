@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout development
         uses: actions/checkout@v7
+        with:
+          ref: development
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
