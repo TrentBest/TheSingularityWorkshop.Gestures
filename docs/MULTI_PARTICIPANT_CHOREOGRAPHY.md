@@ -24,7 +24,7 @@ A coordinated activity answers a larger set of questions:
 - What happens when a participant is late, unavailable, interrupted, blocked, or leaves?
 - What authoritative observations prove that an action succeeded?
 
-The scheduler is a useful primitive inside this system, not the whole system.
+The scheduler is a useful primitive inside this system, not the whole system. The new [Gesture Phase Synchronization reference](GESTURE_PHASE_SYNCHRONIZATION.md) adds an observation-only complex order-parameter measurement for host-supplied participant phases. It measures phase concentration at one logical instant; it does not claim phase locking, entrainment, coupling, or physical success.
 
 ## Separate capabilities that cooperate
 
