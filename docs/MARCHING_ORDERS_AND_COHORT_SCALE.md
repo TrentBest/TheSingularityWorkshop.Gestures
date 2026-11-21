@@ -27,7 +27,7 @@ The ambition is not just to display the largest number. It is to make the player
 | Versioned activity phases, reusable procedure references, safe transition boundaries | Activity/session coordination |
 | Individual marching procedure, pose evaluation, bounded variation, step-phase progression | Gestures |
 | Navigation, ground contact, collision, slope, balance, achieved movement | Physics / authoritative world |
-| Scheduling compatible work and composing runtime providers | FSM_COS / Foundry as appropriate |
+| Scheduling compatible work and composing runtime providers | FSM_COS / FSM_Execution as appropriate |
 | LOD, instancing, pixels, animation presentation, observer fidelity | Visualize / Renderer |
 
 A command is not a Gesture. March is an order that requests an organized activity; soldier.march is a reusable physical procedure used by each assigned soldier. The order coordinator decides who should do what and when. Gestures evaluates the procedure for an individual. Physics and the world decide what movement was actually achieved.
