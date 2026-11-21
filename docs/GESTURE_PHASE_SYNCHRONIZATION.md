@@ -18,19 +18,19 @@ The Gestures core has no Physics dependency.
 
 ## Measurement
 
-For participant phases \\(\\theta_i\\), the implementation first wraps each phase into \\[0, 2\\pi)\\ and computes the complex order parameter:
+For participant phases \(\theta_i\), the implementation first wraps each phase into \[0, 2\pi)\ and computes the complex order parameter:
 
-\\[
-Z = \\frac{1}{N}\\sum_{i=1}^{N} e^{\\mathrm{i}\\theta_i},
-\\qquad
+\[
+Z = \frac{1}{N}\sum_{i=1}^{N} e^{\mathrm{i}\theta_i},
+\qquad
 R = |Z|,
-\\qquad
-\\bar{\\theta}=\\arg(Z).
-\\]
+\qquad
+\bar{\theta}=\arg(Z).
+\]
 
-- \\(R\\) is the phase-concentration magnitude, bounded to [0, 1] after floating-point normalization.
-- \\(R\\) near 1 indicates that the observed phases are concentrated.
-- \\(R\\) near 0 indicates a dispersed or balanced phase distribution.
+- \(R\) is the phase-concentration magnitude, bounded to [0, 1] after floating-point normalization.
+- \(R\) near 1 indicates that the observed phases are concentrated.
+- \(R\) near 0 indicates a dispersed or balanced phase distribution.
 - The mean phase is marked undefined when the order parameter is numerically indistinguishable from zero.
 
 The result preserves every participant's unwrapped phase and wrapped phase, sorted by ordinal stable participant ID. Duplicate IDs are rejected. The input population is bounded by a caller-configurable maximum (100,000 by default).
