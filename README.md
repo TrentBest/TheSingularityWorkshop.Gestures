@@ -101,6 +101,7 @@ This is a source-repository verification path, not a claim that the package has 
 ![](docs/assets/dividers/purple.svg)
 
 - [Architecture](docs/ARCHITECTURE.md) — understand ownership boundaries and how evaluated poses reach the renderer.
+- [Coordinated Individuality Theory](docs/COORDINATED_INDIVIDUALITY_THEORY.md) — a textbook-oriented treatment of shared intent, stable individual expression, Physics-authoritative contact consequences, population scaling, observer-relative fidelity, propositions, and laboratory exercises.
 - [Data Model](docs/DATA_MODEL.md) — learn the initial keyframe, transform, anchor, and evaluated-output contracts.
 - [Articulated Motion Contract Proposal](docs/ARTICULATED_MOTION_CONTRACT_PROPOSAL.md) — separate joint, contact, breakage, and tool-constraint responsibilities before implementing them.
 - [Articulated Topologies SVG](docs/assets/gesture-articulated-topologies.svg) — visual taxonomy of rig-neutral articulated mechanisms.
