@@ -28,10 +28,10 @@ A consuming simulation owns the next steps:
 
 ## Try the fixture
 
-From the repository root with the .NET 8 SDK:
+From the repository root with the .NET 10 SDK:
 
 ```bash
 dotnet test TheSingularityWorkshop.Gestures.slnx --configuration Release --filter FullyQualifiedName~SoldierMovementGestureTests
 ```
 
-This is a small reference fixture intended to make the API tangible. It is not a complete soldier controller, a tactical AI, or a physics simulation.
+For the larger distinction between a requested procedure and a physically achieved interaction, see [Coordinated Individuality Theory](COORDINATED_INDIVIDUALITY_THEORY.md). This is a small reference fixture intended to make the API tangible. It is not a complete soldier controller, a tactical AI, or a physics simulation.
