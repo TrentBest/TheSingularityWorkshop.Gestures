@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Numerics;
 using System.Text;
+using System.Text.Json;
 using TheSingularityWorkshop.FSM_API;
 using TheSingularityWorkshop.Gestures;
 
@@ -63,6 +64,20 @@ if (context.Phase != "Complete")
     throw new InvalidOperationException($"FSM_API did not complete the demonstration. Final phase: {context.Phase}");
 if (samples.Count != sampleCount || samples[0].Progress != 0d || samples[^1].Progress != 1d)
     throw new InvalidOperationException("The evaluator output did not cover both normalized endpoints.");
+
+var fixtureOutput = Path.Combine("docs", "assets", "gesture-motion-samples.json");
+Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(fixtureOutput))!);
+var fixture = new MotionFixture(
+    1,
+    "TheSingularityWorkshop.Gestures",
+    "GestureEvaluator.Evaluate",
+    definition.Id,
+    duration,
+    "49 evenly spaced samples; identitySeed=0; GestureVariation.None",
+    samples);
+File.WriteAllText(fixtureOutput,
+    JsonSerializer.Serialize(fixture, new JsonSerializerOptions { WriteIndented = true }) + Environment.NewLine,
+    new UTF8Encoding(false));
 
 var output = GetOutputPath(args);
 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output))!);
@@ -628,6 +643,7 @@ internal sealed class MotionContext : IStateContext
     public string Phase { get; set; } = "Created";
 }
 
+internal sealed record MotionFixture(int SchemaVersion, string Producer, string Evaluator, string GestureId, double DurationSeconds, string Sampling, IReadOnlyList<Sample> Samples);
 internal sealed record TransformSample(double X, double Y, double Scale, double RotationDegrees);
 internal sealed record Sample(double ElapsedFraction, double Progress, Dictionary<string, TransformSample> Transforms, bool IsComplete, string Phase);
 internal sealed record Track(string Name, string Color, string Label, int Radius)
