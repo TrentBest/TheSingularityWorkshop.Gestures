@@ -110,6 +110,7 @@ This is a source-repository verification path, not a claim that the package has 
 - [Motion Contribution Catalogue](docs/MOTION_CONTRIBUTION_CATALOGUE.md) — contract proposed motion terms by state, units, reference frame, activation, numerical behavior, and tests.
 - [Scalar Spring-Damper Reference](docs/SCALAR_SPRING_DAMPER_REFERENCE.md) — a bounded scalar tracking model with explicit state, units, timestep, and output semantics.
 - [Motion Response Comparison](docs/MOTION_RESPONSE_COMPARISON.md) — compare direct kinematic tracking and spring-damper response without conflating them.
+- [Gesture Phase Synchronization](docs/GESTURE_PHASE_SYNCHRONIZATION.md) — measure host-supplied participant phase concentration without claiming coupling, locking, or physical success.
 - [Gesture Experience Profiles](docs/GESTURE_EXPERIENCE_PROFILES.md) — express stable skill/context parameter ranges without per-frame random noise.
 - [Living Motion Documentation](docs/LIVING_MOTION_DOCUMENTATION.md) — keep SVGs grounded in real evaluator output and label conceptual overlays separately.
 - [Speech Scene and Soldier Population](docs/SPEECH_SCENE_POPULATION.md) — organize the moniker-to-balcony speech scene, advisor choreography, responsive city-scale soldiers, distance-aware cheering, public-screen echoes, event-horizon tiers, ownership boundaries, and measurable build order.
