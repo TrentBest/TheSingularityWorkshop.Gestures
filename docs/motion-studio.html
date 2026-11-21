@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Scrub and inspect motion samples emitted by the Gestures C# reference evaluator.">
+<title>Motion Studio — Gestures</title>
+<style>
+:root{color-scheme:dark;--bg:#0c121b;--panel:#151f2d;--ink:#edf4fb;--muted:#9eafc2;--line:#304156;--cyan:#78dcff;--gold:#e8b84b;--pink:#f5a7ff;--green:#91e6a7}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1d3549,var(--bg) 55%);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+header,main,footer{width:min(1180px,calc(100% - 32px));margin:auto}header{padding:24px 0 10px}a{color:var(--cyan)}h1{font-size:clamp(2.2rem,6vw,4.2rem);line-height:1.05;margin:.35rem 0}h2{margin:0 0 12px}.lead{max-width:850px;color:var(--muted);font-size:1.15rem}.tag{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:3px 10px;color:var(--cyan);font-size:.8rem}
+.grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.8fr);gap:16px;margin:18px 0}.panel{background:linear-gradient(145deg,#192638,#121b27);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}.viewport{height:430px;background:#09111a;border:1px solid #29394c;border-radius:9px;overflow:hidden}canvas{width:100%;height:100%;display:block}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}.controls button{background:#203248;border:1px solid #52677f;color:var(--ink);border-radius:7px;padding:8px 13px;font:inherit;cursor:pointer}.controls button:hover{border-color:var(--cyan)}input[type=range]{width:100%;accent-color:var(--cyan)}.timeline{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{background:#0e1722;border:1px solid #29394c;border-radius:8px;padding:11px}.metric strong{display:block;font-size:1.25rem;font-variant-numeric:tabular-nums}.metric span{color:var(--muted);font-size:.8rem}.legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:10px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.plot{width:100%;height:230px;display:block;background:#0b131e;border:1px solid #29394c;border-radius:8px}.notice{color:var(--muted);border-left:3px solid var(--gold);padding:9px 12px;background:#111b28}.meta{color:var(--muted);font-size:.88rem;overflow-wrap:anywhere}footer{margin-top:26px;padding:20px 0 34px;border-top:1px solid var(--line)}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.viewport{height:360px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+<a href="./index.html">← Gestures Pages</a>
+<p><span class="tag">LIVE REPLAY · C# REFERENCE OUTPUT</span></p>
+<h1>Motion Studio</h1>
+<p class="lead">A gesture is a trajectory through time. Scrub the actual samples produced by the .NET <code>GestureEvaluator</code>, inspect each named transform, and watch the same sample stream become a motion picture and measurable channels.</p>
+</header>
+<main>
+<section class="grid">
+<div class="panel">
+<h2>Procedure viewport</h2>
+<div class="viewport"><canvas id="scene" aria-label="Animated named transform samples from the C sharp gesture evaluator"></canvas></div>
+<div class="legend"><span><i class="dot" style="background:var(--cyan)"></i>root</span><span><i class="dot" style="background:var(--gold)"></i>tool</span><span><i class="dot" style="background:var(--pink)"></i>load</span></div>
+<div class="controls"><button id="play" type="button">Pause</button><button id="previous" type="button">− Sample</button><button id="next" type="button">+ Sample</button><button id="restart" type="button">Restart</button></div>
+<div class="timeline"><input id="scrub" type="range" min="0" max="48" step="1" value="0" aria-label="Gesture sample index"><output id="sampleLabel">Sample 1 / 49</output></div>
+</div>
+<aside class="panel">
+<h2>Observed sample</h2>
+<div class="metrics">
+<div class="metric"><strong id="time">0.000 s</strong><span>elapsed time</span></div>
+<div class="metric"><strong id="progress">0.0%</strong><span>normalized progress</span></div>
+<div class="metric"><strong id="phase">Ready</strong><span>FSM lifecycle phase</span></div>
+<div class="metric"><strong id="complete">No</strong><span>evaluator complete</span></div>
+</div>
+<h2 style="margin-top:18px">Transform inspector</h2>
+<div id="inspector" class="meta">Waiting for fixture…</div>
+<p class="notice">The viewport is a presentation of evaluator output. It does not compose a hierarchical rig or claim IK, collision handling, contact, or physical feasibility.</p>
+</aside>
+</section>
+<section class="panel">
+<h2>Motion channels</h2>
+<p class="meta">Root position, rotation, and scale plotted directly from the same C# sample records. The highlighted cursor follows the selected sample.</p>
+<canvas id="channels" class="plot" aria-label="Root transform channels plotted over normalized gesture time"></canvas>
+</section>
+<section class="panel">
+<h2>Evidence and provenance</h2>
+<p id="source" class="meta">Loading fixture metadata…</p>
+<p class="notice"><strong>Important:</strong> this page fetches a JSON fixture generated by the repository's C# living-demo executable. It does not reimplement <code>GestureEvaluator</code> in JavaScript. Between samples, only the viewport's display position is interpolated for smooth playback; the inspector and channel cursor identify the selected authoritative fixture sample.</p>
+</section>
+</main>
+<footer><a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/tools/living-demo/Program.cs">C# fixture generator</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.Gestures/blob/development/docs/GESTURE_GOLDEN_VECTORS.md">Golden-vector policy</a></footer>
+<script>
+(() => {
+"use strict";
+const $=id=>document.getElementById(id), scene=$("scene"), ctx=scene.getContext("2d"), plot=$("channels"), pctx=plot.getContext("2d");
+const colors={root:"#78dcff",tool:"#e8b84b",load:"#f5a7ff"};
+let fixture=null,index=0,playing=!matchMedia("(prefers-reduced-motion: reduce)").matches,last=0,frame=0;
+const names=["root","tool","load"];
+function resize(canvas,context){const r=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(r.width*d));canvas.height=Math.max(1,Math.round(r.height*d));context.setTransform(d,0,0,d,0,0);return {w:r.width,h:r.height};}
+function sample(){return fixture.samples[index]}
+function drawScene(){
+ if(!fixture)return;const {w,h}=resize(scene,ctx);ctx.clearRect(0,0,w,h);ctx.fillStyle="#09111a";ctx.fillRect(0,0,w,h);
+ ctx.strokeStyle="#203247";ctx.lineWidth=1;for(let x=0;x<w;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=0;y<h;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+ ctx.strokeStyle="#30465c";ctx.setLineDash([5,7]);ctx.beginPath();ctx.moveTo(20,h*.78);ctx.lineTo(w-20,h*.78);ctx.stroke();ctx.setLineDash([]);
+ const s=sample(),t=s.Transforms||s.transforms;
+ for(const name of names){const v=t[name];if(!v)continue;const x=Number(v.X??v.x)*w,y=(1-Number(v.Y??v.y))*h;const scale=Number(v.Scale??v.scale);const rot=Number(v.RotationDegrees??v.rotationDegrees)*Math.PI/180;
+ ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(Math.max(.2,scale),Math.max(.2,scale));ctx.strokeStyle=colors[name];ctx.fillStyle=colors[name]+"22";ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0, name==="root"?19:13,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-24,0);ctx.lineTo(24,0);ctx.moveTo(0,-24);ctx.lineTo(0,24);ctx.stroke();ctx.restore();ctx.fillStyle=colors[name];ctx.font="12px system-ui";ctx.fillText(name.toUpperCase(),Math.min(w-70,Math.max(4,x+14)),Math.max(14,y-18));}
+ ctx.fillStyle="#9eafc2";ctx.font="12px system-ui";ctx.fillText("SAMPLE "+(index+1)+" / "+fixture.samples.length,14,22);
+}
+function drawPlot(){
+ if(!fixture)return;const {w,h}=resize(plot,pctx);pctx.clearRect(0,0,w,h);pctx.fillStyle="#0b131e";pctx.fillRect(0,0,w,h);
+ const pad={l:42,r:16,t:18,b:28},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ pctx.strokeStyle="#26384c";pctx.lineWidth=1;for(let i=0;i<5;i++){const y=pad.t+ph*i/4;pctx.beginPath();pctx.moveTo(pad.l,y);pctx.lineTo(w-pad.r,y);pctx.stroke()}
+ const root=fixture.samples.map(s=>(s.Transforms||s.transforms).root),series=[["X","X","#78dcff",0,1],["Y","Y","#f5a7ff",0,.5],["Rotation","RotationDegrees","#e8b84b",-20,25],["Scale","Scale","#91e6a7",.7,1.2]];
+ for(const [label,key,color,min,max] of series){pctx.strokeStyle=color;pctx.lineWidth=2;pctx.beginPath();root.forEach((v,i)=>{const n=Number(v[key]??v[key[0].toLowerCase()+key.slice(1)]),x=pad.l+pw*i/(root.length-1),y=pad.t+ph*(1-(n-min)/(max-min));i?pctx.lineTo(x,y):pctx.moveTo(x,y)});pctx.stroke();pctx.fillStyle=color;pctx.font="11px system-ui";pctx.fillText(label, pad.l+8+series.indexOf(series.find(x=>x[0]===label))*75,12)}
+ const x=pad.l+pw*index/(root.length-1);pctx.strokeStyle="#fff";pctx.setLineDash([4,4]);pctx.beginPath();pctx.moveTo(x,pad.t);pctx.lineTo(x,pad.t+ph);pctx.stroke();pctx.setLineDash([]);
+}
+function update(){if(!fixture)return;const s=sample(),t=s.Transforms||s.transforms;$("time").textContent=Number(s.ElapsedFraction??s.elapsedFraction)*fixture.durationSeconds+" s";$("time").textContent=Number(s.ElapsedFraction??s.elapsedFraction)*fixture.durationSeconds.toFixed?.(3);$("time").textContent=(Number(s.ElapsedFraction??s.elapsedFraction)*fixture.durationSeconds).toFixed(3)+" s";$("progress").textContent=(Number(s.Progress??s.progress)*100).toFixed(1)+"%";$("phase").textContent=s.Phase??s.phase;$("complete").textContent=(s.IsComplete??s.isComplete)?"Yes":"No";$("sampleLabel").textContent="Sample "+(index+1)+" / "+fixture.samples.length;$("scrub").value=index;
+ $("inspector").innerHTML=names.filter(n=>t[n]).map(n=>{const v=t[n],get=k=>Number(v[k]??v[k[0].toLowerCase()+k.slice(1)]);return "<p><strong style='color:"+colors[n]+"'>"+n+"</strong><br>Position: ("+[get("X"),get("Y")].map(x=>x.toFixed(3)).join(", ")+")<br>Rotation: "+get("RotationDegrees").toFixed(2)+"°<br>Scale: "+get("Scale").toFixed(3)+"</p>"}).join("");
+ drawScene();drawPlot();}
+function tick(ts){if(!playing||!fixture)return;if(!last)last=ts;if(ts-last>fixture.durationSeconds*1000/(fixture.samples.length-1)){index=(index+1)%fixture.samples.length;last=ts;update()}frame=requestAnimationFrame(tick)}
+function setPlaying(v){playing=v;$("play").textContent=playing?"Pause":"Play";cancelAnimationFrame(frame);last=0;if(playing)frame=requestAnimationFrame(tick)}
+$("play").addEventListener("click",()=>setPlaying(!playing));$("previous").addEventListener("click",()=>{setPlaying(false);index=Math.max(0,index-1);update()});$("next").addEventListener("click",()=>{setPlaying(false);index=Math.min(fixture.samples.length-1,index+1);update()});$("restart").addEventListener("click",()=>{index=0;update();setPlaying(true)});$("scrub").addEventListener("input",e=>{setPlaying(false);index=Number(e.target.value);update()});window.addEventListener("resize",()=>{drawScene();drawPlot()});
+fetch("./assets/gesture-motion-samples.json").then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(data=>{fixture=data;if(data.schemaVersion!==1||!Array.isArray(data.samples)||data.samples.length<2)throw new Error("Unsupported or incomplete fixture");$("source").textContent="Producer: "+data.producer+" · Evaluator: "+data.evaluator+" · Gesture: "+data.gestureId+" · Duration: "+data.durationSeconds+" s · "+data.sampling;update();setPlaying(playing)}).catch(err=>{$("source").textContent="Motion fixture unavailable: "+err.message+". Run the living-demo generator and publish its generated JSON asset.";setPlaying(false)});
+})();
+</script>
+</body></html>
