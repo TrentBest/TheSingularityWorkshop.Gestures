@@ -197,3 +197,40 @@ jobs:
 
       - name: Publish package to NuGet.org
         run: dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
+
+  deploy-pages:
+    name: Deploy GitHub Pages
+    needs: build-and-test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/development' }}
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    steps:
+      - name: Checkout the tested development commit
+        uses: actions/checkout@v7
+
+      - name: Download generated living visuals from the successful CI run
+        uses: actions/download-artifact@v8
+        with:
+          name: gesture-living-svgs
+          path: docs/assets
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload documentation and living visuals
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
