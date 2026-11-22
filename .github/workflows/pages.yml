@@ -1,7 +1,8 @@
-name: Publish Gestures living visuals to GitHub Pages
+name: Publish Gestures living visuals to GitHub Pages (manual recovery)
 
 on:
-  # Deployment is an explicit operation; documentation commits must not publish automatically.
+  # Normal development pushes deploy automatically after build-and-test succeeds in build.yml.
+  # Keep this dispatch workflow as an explicit recovery path.
   workflow_dispatch:
 
 permissions:
