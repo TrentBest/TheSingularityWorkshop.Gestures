@@ -3,7 +3,8 @@
 # Procedural Gesture and Motion Evaluation
 
 **Book ID:** gestures.domain.procedural-gesture-and-motion-evaluation  
-**Edition:** 0.1.0 · **Category:** Domain · **LOD:** 1  
+Edition: 0.1.0  
+Category: Domain · LOD: 1  
 **Status:** Draft — ownership pending independent SURPS review
 
 ## 1. Purpose and scope
