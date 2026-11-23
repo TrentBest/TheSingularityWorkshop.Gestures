@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "repository": "TrentBest/TheSingularityWorkshop.Gestures",
+  "domain": "Posture, gesture, locomotion, procedural motion evaluation, provider-owned embodied interaction, and coordination",
+  "participationStatus": "integrated-not-enrolled",
+  "contributionType": [
+    "domain-embodied-behavior",
+    "sourcebook-publication",
+    "gesture-provider-capabilities"
+  ],
+  "contributionSummary": "Owns reusable gesture and physical-procedure representations, deterministic reference evaluation, caller-driven playback semantics, provider-offer filtering, temporal progression, gesture observations, and embodied-motion research prototypes. SURPS owns actor intent, roleplaying meaning, CORE behavior rules, and cross-domain composition. Physics owns physical laws, forces, collision/contact truth, and authoritative physical consequences. Consumers own world-anchor resolution, final choice policy, and experience-specific outcomes. Renderer and Visualize own representation and presentation.",
+  "cataloguePath": "docs/books/index.md",
+  "books": [
+    {
+      "id": "gestures.domain.procedural-gesture-and-motion-evaluation",
+      "title": "Procedural Gesture and Motion Evaluation",
+      "category": "Domain",
+      "lod": 1,
+      "version": "0.1.0",
+      "status": "draft",
+      "bookPath": "docs/books/procedural-gesture-and-motion-evaluation.md",
+      "descriptorPath": "docs/books/procedural-gesture-and-motion-evaluation.book.json",
+      "coverPath": "docs/books/covers/procedural-gesture-and-motion-evaluation.svg"
+    },
+    {
+      "id": "gestures.domain.embodied-interaction-and-provider-selection",
+      "title": "Embodied Interaction and Provider Selection",
+      "category": "Domain",
+      "lod": 2,
+      "version": "0.1.0",
+      "status": "draft",
+      "bookPath": "docs/books/embodied-interaction-and-provider-selection.md",
+      "descriptorPath": "docs/books/embodied-interaction-and-provider-selection.book.json",
+      "coverPath": "docs/books/covers/embodied-interaction-and-provider-selection.svg"
+    }
+  ],
+  "rulebookCoordination": {
+    "authorityRepository": "TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem",
+    "authorityBranch": "development",
+    "masterBacklogPath": ".surps/rulebook-backlog.json",
+    "masterMapPath": "docs/rulebook-backlog/index.md",
+    "participationContractPath": "docs/repository-participation.md",
+    "canonicalParticipationStandard": "https://github.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/blob/development/docs/repository-participation.md",
+    "ownershipClaimTemplate": "https://github.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/blob/development/.github/ISSUE_TEMPLATE/rulebook-owner-sign-in.yml",
+    "repositoryEnrollmentTemplate": "https://github.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/blob/development/.github/ISSUE_TEMPLATE/surps-repository-participation.yml",
+    "coordinationIssue": "https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/36",
+    "policy": "Gestures owns procedural motion representation and evaluation and provider-facing embodied interaction capabilities. SURPS owns roleplaying semantics, actor intent, CORE procedures, LOD selection, and composition. Physics owns physical laws and authoritative physical outcomes. Provider offers do not silently choose for actors; consumers own intent and final decision policy. No runtime dependency or release is implied."
+  },
+  "admissionReadiness": {
+    "status": "blocked",
+    "blockers": [
+      "Both sourcebook ownership claims require independent SURPS review; this agent cannot approve its own claims.",
+      "SURPS must verify the final development-branch manifest and catalogue blob SHAs before admission.",
+      "The repository build/test workflow must validate the documentation additions; no CI success is claimed by this declaration.",
+      "Provider, intent, physical outcome, and presentation boundaries require independent review against SURPS and Physics contracts."
+    ]
+  }
+}
