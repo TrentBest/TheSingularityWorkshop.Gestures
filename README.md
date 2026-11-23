@@ -11,6 +11,8 @@
 [![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/actions/workflows/sith-policy.yml)
 **Procedural physical action, represented as data and evaluated deterministically.**
 
+**SURPS sourcebooks:** [Browse the Gestures domain catalogue](docs/books/index.md) — procedural evaluation and embodied provider selection.
+
 TheSingularityWorkshop.Gestures is the reusable model and CPU reference evaluator for physical procedures: pose keyframes, interpolation, progression, stable individual variation, and evaluated pose output. It lets a capability describe how an interaction physically happens without requiring every consumer to author a conventional baked animation clip.
 
 > **Status: early alpha foundation with research prototypes.** The deterministic CPU evaluator remains the small reference contract; it is not a complete animation system, physics solver, or GPU evaluator. Additional research prototypes now cover planar kinematics, speed-limited hinges, stateful joint hierarchies, contact observations and recovery policy, movement-course evaluation, and a generated skill-distribution SVG demo. These are test-backed experiments, not a claim of a production-ready IK or physical contact solver. The build workflow packages the project and exposes a manual, boolean-gated NuGet publish path from `development`; pushes alone do not publish.
