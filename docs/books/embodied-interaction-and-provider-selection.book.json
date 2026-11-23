@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "gestures.domain.embodied-interaction-and-provider-selection",
+  "category": "Domain",
+  "lod": 2,
+  "title": "Embodied Interaction and Provider Selection",
+  "version": "0.1.0",
+  "familyId": "embodied-interaction-and-provider-selection",
+  "cover": "docs/books/covers/embodied-interaction-and-provider-selection.svg",
+  "lodBadge": "https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/development/docs/assets/rulebook-lod-2.svg",
+  "publisher": "The Singularity Workshop",
+  "publisherMoniker": "https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg",
+  "source": "docs/books/embodied-interaction-and-provider-selection.md",
+  "repository": "https://github.com/TrentBest/TheSingularityWorkshop.Gestures",
+  "edition": "0.1.0",
+  "status": "draft",
+  "scope": "Provider-owned physical procedure offers, actor-relative capability and anchor filtering, temporal phases, alternate attempts, observations, and SURPS/Physics/consumer responsibility boundaries."
+}
