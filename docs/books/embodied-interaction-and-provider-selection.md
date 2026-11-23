@@ -3,7 +3,8 @@
 # Embodied Interaction and Provider Selection
 
 **Book ID:** gestures.domain.embodied-interaction-and-provider-selection  
-**Edition:** 0.1.0 · **Category:** Domain · **LOD:** 2  
+Edition: 0.1.0  
+Category: Domain · LOD: 2  
 **Status:** Draft — ownership pending independent SURPS review
 
 ## 1. Purpose and scope
