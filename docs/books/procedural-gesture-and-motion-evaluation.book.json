@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "gestures.domain.procedural-gesture-and-motion-evaluation",
+  "category": "Domain",
+  "lod": 1,
+  "title": "Procedural Gesture and Motion Evaluation",
+  "version": "0.1.0",
+  "familyId": "procedural-gesture-and-motion-evaluation",
+  "cover": "docs/books/covers/procedural-gesture-and-motion-evaluation.svg",
+  "lodBadge": "https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/development/docs/assets/rulebook-lod-1.svg",
+  "publisher": "The Singularity Workshop",
+  "publisherMoniker": "https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg",
+  "source": "docs/books/procedural-gesture-and-motion-evaluation.md",
+  "repository": "https://github.com/TrentBest/TheSingularityWorkshop.Gestures",
+  "edition": "0.1.0",
+  "status": "draft",
+  "scope": "Engine-neutral gesture procedure data, deterministic pose evaluation, bounded stable variation, caller-driven playback lifecycle, and evidence boundaries between intended motion and physical outcome."
+}
