@@ -4,6 +4,12 @@
 
 Gestures is the domain authority for reusable embodied procedures and the data used to evaluate them. This catalogue registers only work whose source and implementation belong here; it does not transfer SURPS roleplaying semantics or Physics truth into Gestures.
 
+## SURPS living rulebook and behavior-adapter standard
+
+This repository adopts the shared SURPS [Living Rulebook and Experience Standard](https://github.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/blob/development/docs/living-rulebook-standard.md) and [Behavior Model and Adapters](https://github.com/TrentBest/TheSingularityWorkshop.SingularityUniversalRoleplayingSystem/blob/development/docs/behavior-and-adapters.md). Gestures owns posture, gesture, locomotion, temporal motion, and coordination. SURPS owns intent and roleplaying semantics; Physics owns physical laws and consequences.
+
+The standard requires a big-picture-first guide, concise Player path, deep Game Master/Workshop path, living pictures for major concepts, worked demonstrations for mechanics, and honest status labels. The tabletop adapter is derived from underlying behavior during workshop calibration; the digital adapter uses compiled behavior with live state. Neither is a separate source of truth. Adoption work: [repository issue](https://github.com/TrentBest/TheSingularityWorkshop.Gestures/issues/38).
+
 | Sourcebook | LOD | Status | Descriptor | Cover |
 |---|---:|---|---|---|
 | [Procedural Gesture and Motion Evaluation](procedural-gesture-and-motion-evaluation.md) | 1 | Draft — ownership pending SURPS review | [Descriptor](procedural-gesture-and-motion-evaluation.book.json) | [Cover](covers/procedural-gesture-and-motion-evaluation.svg) |
