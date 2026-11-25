@@ -58,6 +58,38 @@ public sealed class ProviderToSurpsInteractionFixtureTests
     }
 
     [Fact]
+    public void SurpsLockPickingOfferRequiresDexterityToolUseAndLiveLockAnchors()
+    {
+        const string procedureId = "surps.core.spying.lock-picking.insert-and-turn.v1";
+        var lockPicking = new GestureOffer(
+            CreateGesture(procedureId, "lock-cylinder"),
+            requiredActorCapabilities: ["manual-dexterity", "lock-tool-use"],
+            requiredAnchorNames: ["lock-cylinder"]);
+
+        var eligible = GestureOfferSelector.Evaluate(
+            [lockPicking],
+            actorCapabilities: ["manual-dexterity", "lock-tool-use"],
+            availableAnchorNames: ["lock-cylinder", "tool-grip"]);
+
+        Assert.Equal(procedureId, Assert.Single(eligible.Eligible).Definition.Id);
+
+        var blocked = GestureOfferSelector.Evaluate(
+            [lockPicking],
+            actorCapabilities: ["manual-dexterity"],
+            availableAnchorNames: []);
+
+        var rejection = Assert.Single(blocked.Rejected);
+        Assert.Equal(new[] { "lock-tool-use" }, rejection.MissingActorCapabilities);
+        Assert.Equal(new[] { "lock-cylinder" }, rejection.MissingAnchorNames);
+        Assert.Empty(blocked.Eligible);
+
+        // Eligibility is not competence scoring and playback is not an authoritative unlock.
+        var playback = new GesturePlayback(Assert.Single(eligible.Eligible).Definition, durationSeconds: 1d);
+        Assert.Equal(GesturePlaybackState.Playing, playback.Start().State);
+        Assert.Equal(GesturePlaybackState.Completed, playback.Advance(1d).State);
+    }
+
+    [Fact]
     public void MissingActorCapabilityAndMissingAnchorAreReportedIndependently()
     {
         var ladder = new GestureOffer(
