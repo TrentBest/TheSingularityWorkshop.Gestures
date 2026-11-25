@@ -17,7 +17,7 @@ The provider offers the procedure only when the actor has both:
 
 The environment must report the semantic anchor `lock-cylinder` as available. A richer environment can also provide `tool-grip`; that optional anchor is not currently required by the reference fixture.
 
-The executable contract is in `ProviderToSurpsInteractionFixtureTests.SurpsLockPickingOfferRequiresDexterityToolUseAndLiveLockAnchors`. It composes the real `GestureOffer`, `GestureOfferSelector`, and `GesturePlayback` APIs. It proves that missing actor capability and missing environment anchor are reported independently, and that an eligible offer can be advanced by a host-supplied time step.
+The executable contract is in `ProviderToSurpsInteractionFixtureTests.SurpsLockPickingOfferRequiresDexterityToolUseAndLiveLockAnchors`. It authors a four-keyframe hand procedure (approach, insert, engage, turn) with lock-cylinder and tool-grip anchors, then composes the real `GestureOffer`, `GestureOfferSelector`, and `GesturePlayback` APIs. It proves that missing actor capability and missing environment anchor are reported independently, and that an eligible offer can be advanced by a host-supplied time step.
 
 ## Ownership boundaries
 
@@ -50,7 +50,7 @@ The probability calculation must not be recomputed from a changing character she
 ## Remaining integration
 
 - Replace fixture-local anchor availability with a real environment provider response and resolved transforms.
-- Add a lock-specific authored Gesture with meaningful hand/tool motion, rather than reusing the generic two-keyframe test helper.
+- Move the fixture's lock-specific authored hand procedure into a provider-owned catalog/asset and validate it against a real articulated hand profile.
 - Connect the SURPS preview host to Gesture selection and playback.
 - Calibrate the capability/difficulty probability model against the existing CORE Spying 2d6 procedure before adopting a percentile replacement.
 - Connect the final result to an authoritative lock state transition and evidence trace.
