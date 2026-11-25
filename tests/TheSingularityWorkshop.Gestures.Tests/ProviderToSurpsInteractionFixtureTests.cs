@@ -62,7 +62,7 @@ public sealed class ProviderToSurpsInteractionFixtureTests
     {
         const string procedureId = "surps.core.spying.lock-picking.insert-and-turn.v1";
         var lockPicking = new GestureOffer(
-            CreateGesture(procedureId, "lock-cylinder"),
+            CreateLockPickingGesture(procedureId),
             requiredActorCapabilities: ["manual-dexterity", "lock-tool-use"],
             requiredAnchorNames: ["lock-cylinder"]);
 
@@ -109,6 +109,28 @@ public sealed class ProviderToSurpsInteractionFixtureTests
         Assert.Equal(new[] { "ladder-rung" }, rejection.MissingAnchorNames);
         Assert.Empty(result.Eligible);
     }
+
+    private static GestureDefinition CreateLockPickingGesture(string id) => new(
+        id,
+        [
+            LockPickingFrame(0d, new Vector3(0f, 0.2f, 0f), Quaternion.Identity),
+            LockPickingFrame(0.35d, new Vector3(0f, 0.1f, 0f), Quaternion.Identity),
+            LockPickingFrame(0.7d, new Vector3(0f, 0.1f, 0.04f),
+                Quaternion.CreateFromAxisAngle(Vector3.UnitZ, -0.12f)),
+            LockPickingFrame(1d, new Vector3(0.02f, 0.1f, 0.04f),
+                Quaternion.CreateFromAxisAngle(Vector3.UnitZ, -0.2f))
+        ],
+        [
+            new GestureAnchor("lock-cylinder", "environment.lock", Pose()),
+            new GestureAnchor("tool-grip", "hand", Pose())
+        ]);
+
+    private static GestureKeyframe LockPickingFrame(
+        double time, Vector3 position, Quaternion rotation) =>
+        new(time, new Dictionary<string, PoseTransform>
+        {
+            ["hand"] = new(position, rotation, Vector3.One)
+        });
 
     private static GestureDefinition CreateGesture(string id, string anchorName) => new(
         id,
