@@ -50,7 +50,7 @@ public sealed class ProviderToSurpsInteractionFixtureTests
 
         // A sampled pose is presentation/evaluation data. It does not assert contact or success.
         var observation = new FixtureObservation(selectedIntent, "ladder-rung", "contact-reported");
-        var physicalOutcome = new FixturePhysicalOutcome(selectedIntent, "climb-completed", authoritative: false);
+        var physicalOutcome = new FixturePhysicalOutcome(selectedIntent, "climb-completed", Authoritative: false);
         Assert.NotSame(observation, physicalOutcome);
         Assert.NotEqual(observation.Kind, physicalOutcome.Result);
         Assert.False(physicalOutcome.Authoritative);
