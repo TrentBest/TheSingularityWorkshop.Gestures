@@ -85,8 +85,10 @@ public sealed class ProviderToSurpsInteractionFixtureTests
 
         // Eligibility is not competence scoring and playback is not an authoritative unlock.
         var playback = new GesturePlayback(Assert.Single(eligible.Eligible).Definition, durationSeconds: 1d);
-        Assert.Equal(GesturePlaybackState.Playing, playback.Start().State);
-        Assert.Equal(GesturePlaybackState.Completed, playback.Advance(1d).State);
+        _ = playback.Start();
+        Assert.Equal(GesturePlaybackState.Playing, playback.State);
+        _ = playback.Advance(1d);
+        Assert.Equal(GesturePlaybackState.Completed, playback.State);
     }
 
     [Fact]
